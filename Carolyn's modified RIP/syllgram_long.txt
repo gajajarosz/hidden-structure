@@ -1,0 +1,266 @@
+File type = "ooTextFile"
+Object class = "OTGrammar 2"
+
+<OptimalityTheory>
+0 ! leak
+6 constraints
+constraint [1]: "NoCoda" 100 100 1 ! NC
+constraint [2]: "Onset" 100 100 1 ! Ons
+constraint [3]: "NoComplexCoda" 100 100 1 ! NCC
+constraint [4]: "NoComplexOnset" 100 100 1 ! NCO
+constraint [5]: "Dep" 100 100 1 ! Dep
+constraint [6]: "Max" 100 100 1 ! Max
+
+0 fixed rankings
+
+27 tableaus
+input [1]: "|CV|" 4
+   candidate [1]: "[CV]" 0 0 0 0 0 0
+   candidate [2]: "[CVC]" 1 0 0 0 1 0
+   candidate [3]: "[V]" 0 1 0 0 0 1
+   candidate [4]: "[]" 0 0 0 0 0 2
+input [2]: "|V|" 4
+   candidate [1]: "[CV]" 0 0 0 0 1 0
+   candidate [2]: "[VC]" 1 1 0 0 1 0
+   candidate [3]: "[V]" 0 1 0 0 0 0
+   candidate [4]: "[]" 0 0 0 0 0 1
+input [3]: "|VC|" 6
+   candidate [1]: "[VC]" 1 1 0 0 0 0
+   candidate [2]: "[CVC]" 1 0 0 0 1 0
+   candidate [3]: "[CVCV]" 0 0 0 0 2 0
+   candidate [4]: "[VCV]" 0 1 0 0 1 0
+   candidate [5]: "[]" 0 0 0 0 0 2
+   candidate [6]: "[V]" 0 1 0 0 0 1
+input [4]: "|CVC|" 4
+   candidate [1]: "[CV]" 0 0 0 0 0 1
+   candidate [2]: "[CVC]" 1 0 0 0 0 0
+   candidate [3]: "[CVCV]" 0 0 0 0 1 0
+   candidate [4]: "[]" 0 0 0 0 0 3
+input [5]: "|CCV|" 4
+   candidate [1]: "[CV]" 0 0 0 0 0 1
+   candidate [2]: "[CCV]" 0 0 0 1 0 0
+   candidate [3]: "[CVCV]" 0 0 0 0 1 0
+   candidate [4]: "[]" 0 0 0 0 0 3
+input [6]: "|VCC|" 11
+   candidate [1]: "[CVCC]" 1 0 1 0 1 0
+   candidate [2]: "[VCC]" 1 1 1 0 0 0
+   candidate [3]: "[CVCV]" 0 0 0 0 2 1
+   candidate [4]: "[CVCCV]" 0 0 0 1 2 0
+   candidate [5]: "[CVCVCV]" 0 0 0 0 3 0
+   candidate [6]: "[CVC]" 1 0 0 0 1 1
+   candidate [7]: "[CCV]" 0 0 0 1 1 1
+   candidate [8]: "[CVCVC]" 1 0 0 0 2 0
+   candidate [9]: "[]" 0 0 0 0 0 3
+   candidate [10]: "[VC]" 1 1 0 0 1 1
+   candidate [11]: "[VCCV]" 1 1 0 0 1 0
+input [7]: "|CVCC|" 7
+   candidate [1]: "[CVCC]" 1 0 1 0 0 0
+   candidate [2]: "[CV]" 0 0 0 0 0 2
+   candidate [3]: "[CVCCV]" 0 0 0 1 1 0
+   candidate [4]: "[CVCVCV]" 0 0 0 0 2 0
+   candidate [5]: "[CVCCV]" 1 0 0 0 1 0
+   candidate [6]: "[CVC]" 1 0 0 0 0 1
+   candidate [7]: "[]" 0 0 0 0 0 4
+input [8]: "|CCVC|" 9
+   candidate [1]: "[CCVC]" 1 0 0 1 0 0
+   candidate [2]: "[CVC]" 1 0 0 0 0 1
+   candidate [3]: "[CCV]" 1 0 0 1 0 1
+   candidate [4]: "[CV]" 1 0 0 0 0 2
+   candidate [5]: "[]" 0 0 0 0 0 4
+   candidate [6]: "[CVCVCV]" 0 0 0 0 2 0
+   candidate [7]: "[CVCVC]" 1 0 0 0 1 0
+   candidate [8]: "[CCVCV]" 1 0 0 1 1 0
+   candidate [9]: "[CVCV]" 0 0 0 0 1 1
+input [9]: "|CCVCC|" 13
+   candidate [1]: "[CCVCC]" 1 0 1 1 0 0
+   candidate [2]: "[CVCC]" 1 0 1 0 0 1
+   candidate [3]: "[CCVC]" 1 0 0 1 0 1
+   candidate [4]: "[CVC]" 1 0 0 0 0 2
+   candidate [5]: "[CV]" 0 0 0 0 0 3
+   candidate [6]: "[]" 0 0 0 0 0 5
+   candidate [7]: "[CVCVCVCV]" 0 0 0 0 3 0
+   candidate [8]: "[CVCVCCV]" 1 0 0 0 2 0
+   candidate [9]: "[CCVCCV]" 1 0 0 1 1 0
+   candidate [10]: "[CCVCCV]" 0 0 0 2 1 0
+   candidate [11]: "[CVCVCC]" 1 0 1 0 1 0
+   candidate [12]: "[CVCVCV]" 0 0 0 0 2 1
+   candidate [13]: "[CVCV]" 0 0 0 0 1 2
+input [10]: "|VV|" 6
+   candidate [1]: "[CVCV]" 0 0 0 0 2 0
+   candidate [2]: "[VV]" 0 2 0 0 0 0
+   candidate [3]: "[CVV]" 0 1 0 0 1 0
+   candidate [4]: "[V]" 0 1 0 0 0 1
+   candidate [5]: "[CV]" 0 0 0 0 1 1
+   candidate [6]: "[]" 0 0 0 0 0 2
+input [11]: "|CVV|"  4
+   candidate [1]: "[]" 0 0 0 0 0 3
+   candidate [2]: "[CVV]" 0 1 0 0 0 0
+   candidate [3]: "[CV]" 0 0 0 0 0 1
+   candidate [4]: "[CVCV]" 0 0 0 0 1 0
+input [12]: "|VVC|" 9
+   candidate [1]: "[]" 0 0 0 0 0 3
+   candidate [2]: "[VVC]" 1 2 0 0 0 0
+   candidate [3]: "[CVVC]" 1 1 0 0 1 0
+   candidate [4]: "[CVCVC]" 1 0 0 0 2 0
+   candidate [5]: "[CVCVCV]" 0 0 0 0 3 0
+   candidate [6]: "[CVC]" 1 0 0 0 1 1
+   candidate [7]: "[CVCV]" 0 0 0 0 2 1
+   candidate [8]: "[CV]" 0 0 0 0 1 2
+   candidate [9]: "[VVCV]" 0 2 0 0 1 0
+input [13]: "|VCV|"  6
+   candidate [1]: "[]" 0 0 0 0 0 3
+   candidate [2]: "[VCV]" 1 2 0 0 0 0
+   candidate [3]: "[VCV]" 0 1 0 0 0 0
+   candidate [4]: "[CV]" 0 0 0 0 0 1
+   candidate [5]: "[CVCV]" 0 0 0 0 1 0
+   candidate [6]: "[VC]" 1 1 0 0 0 1
+input [14]: "|VVCC|" 11
+   candidate [1]: "[]" 0 0 0 0 0 4
+   candidate [2]: "[VVCC]" 1 2 1 0 0 0
+   candidate [3]: "[VVCCV]" 0 2 0 1 1 0
+   candidate [4]: "[CVCVCCV]" 0 0 0 1 3 0
+   candidate [5]: "[CVCVCC]" 1 0 1 0 2 0
+   candidate [6]: "[CVCVCCV]" 1 0 0 0 3 0
+   candidate [7]: "[VVCCV]" 1 2 0 0 1 0
+   candidate [8]: "[CCV]" 0 0 0 0 1 2
+   candidate [9]: "[VCCV]" 1 1 0 0 2 2
+   candidate [10]: "[VVC]" 1 2 0 0 0 1
+   candidate [11]: "[VV]" 0 2 0 0 0 2
+input [15]: "|VCVC|" 9
+   candidate [1]: "[]" 0 0 0 0 0 4
+   candidate [2]: "[VCVC]" 2 2 0 0 0 0
+   candidate [3]: "[VCVC]" 1 1 0 0 0 0
+   candidate [4]: "[CVCVC]" 1 0 0 0 1 0
+   candidate [5]: "[CVC]" 1 0 0 0 0 1
+   candidate [6]: "[CV]" 0 0 0 0 0 2
+   candidate [7]: "[CVCV]" 0 0 0 0 1 1
+   candidate [8]: "[CVCVCV]" 0 0 0 0 2 0
+   candidate [9]: "[VCV]" 0 1 0 0 0 1
+input [16]: "|VCCV|" 10
+   candidate [1]: "[]" 0 0 0 0 0 4
+   candidate [2]: "[VCCV]" 1 1 0 0 0 0
+   candidate [3]: "[VCCV]" 0 1 0 1 0 0
+   candidate [4]: "[CVCCV]" 0 0 0 1 1 0
+   candidate [5]: "[CVCCV]" 1 0 0 0 1 0
+   candidate [6]: "[CCV]" 0 0 0 1 0 1
+   candidate [7]: "[CV]" 0 0 0 0 0 2
+   candidate [8]: "[CVCVCV]" 0 0 0 0 2 0
+   candidate [9]: "[CVCV]" 0 0 0 0 1 1
+   candidate [10]: "[VCV]" 0 1 0 0 0 1
+input [17]: "|CVVC|" 9
+   candidate [1]: "[]" 0 0 0 0 0 4
+   candidate [2]: "[CVVC]" 1 1 0 0 0 0
+   candidate [3]: "[CVCVC]" 1 0 0 0 1 0
+   candidate [4]: "[CVCVCV]" 0 0 0 0 2 0
+   candidate [5]: "[CVV]" 0 1 0 0 0 1
+   candidate [6]: "[CVC]" 1 0 0 0 0 1
+   candidate [7]: "[CVCV]" 0 0 0 0 1 1
+   candidate [8]: "[CV]" 0 0 0 0 0 2
+   candidate [9]: "[CVVCV]" 0 1 0 0 1 0
+input [18]: "|CVCV|" 4
+   candidate [1]: "[]" 0 0 0 0 0 4
+   candidate [2]: "[CVCV]" 0 0 0 0 0 0
+   candidate [3]: "[CVCV]" 1 1 0 0 0 0
+   candidate [4]: "[CVC]" 1 0 0 0 0 1
+input [19]: "|CCVV|" 9
+   candidate [1]: "[]" 0 0 0 0 0 4
+   candidate [2]: "[CCVV]" 0 1 0 1 0 0
+   candidate [3]: "[CVCVV]" 0 1 0 0 1 0
+   candidate [4]: "[CVCVCV]" 0 0 0 0 2 0
+   candidate [5]: "[CCVCV]" 0 0 0 1 1 0
+   candidate [6]: "[CVV]" 0 1 0 0 0 1
+   candidate [7]: "[CV]" 0 0 0 0 0 2
+   candidate [8]: "[CCV]" 0 0 0 1 0 1
+   candidate [9]: "[CVCV]" 0 0 0 0 1 1
+input [20]: "|CVVCC|" 11
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[CVVCC]" 1 1 1 0 0 0
+   candidate [3]: "[CVVCVC]" 1 1 0 0 1 0
+   candidate [4]: "[CVCVCC]" 1 0 1 0 1 0
+   candidate [5]: "[CVCVCVCV]" 0 0 0 0 3 0
+   candidate [6]: "[CVCVCCV]" 0 0 1 0 2 0
+   candidate [7]: "[CVCVCCV]" 1 0 0 0 2 0
+   candidate [8]: "[CVV]" 0 1 0 0 0 2
+   candidate [9]: "[CVC]" 1 0 0 0 0 2
+   candidate [10]: "[CV]" 0 0 0 0 0 3
+   candidate [11]: "[CVVC]" 1 1 0 0 0 1
+input [21]: "|CVCVC|" 4
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[CVCVC]" 1 0 0 0 0 0
+   candidate [3]: "[CVCVCV]" 0 0 0 0 1 0
+   candidate [4]: "[CVCV]" 0 0 0 0 0 1
+input [22]: "|CCVVC|" 13
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[CCVVC]" 1 1 0 1 0 0
+   candidate [3]: "[CVVC]" 1 1 0 0 0 1
+   candidate [4]: "[CCVCVC]" 1 0 0 1 1 0
+   candidate [5]: "[CCVCV]" 0 0 0 1 1 1
+   candidate [6]: "[CVCVVC]" 1 1 0 0 1 0
+   candidate [7]: "[CVCVV]" 0 1 0 0 1 1
+   candidate [8]: "[CCVV]" 0 0 0 1 0 1
+   candidate [9]: "[CVV]" 0 1 0 0 0 2
+   candidate [10]: "[CV]" 0 0 0 0 0 3
+   candidate [11]: "[CCV]" 0 0 0 1 0 2
+   candidate [12]: "[CCVC]" 1 0 0 1 0 1
+   candidate [13]: "[CVC]" 1 0 0 0 0 2
+input [23]: "|VCVCC|" 13
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[VCVCC]" 1 1 1 0 0 0
+   candidate [3]: "[VCVCC]" 2 2 1 0 0 0
+   candidate [4]: "[VCVCCV]" 1 1 0 0 1 0
+   candidate [5]: "[VCVCCV]" 2 2 0 0 1 0
+   candidate [6]: "[CVCVCVCV]" 0 0 0 0 3 0
+   candidate [7]: "[CVCVCCV]" 1 0 0 0 2 0
+   candidate [8]: "[CVCVCC]" 1 0 2 0 1 0
+   candidate [9]: "[CVCC]" 1 0 1 0 0 1
+   candidate [10]: "[CVC]" 1 0 0 0 0 2
+   candidate [11]: "[VCVC]" 2 2 0 0 0 1
+   candidate [12]: "[CV]" 0 0 0 0 0 3
+   candidate [13]: "[CVCVC]" 1 0 0 0 1 1
+input [24]: "|VCCVC|" 15
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[VCCVC]" 1 1 0 0 0 0
+   candidate [3]: "[VCCVC]" 1 1 0 1 0 0
+   candidate [4]: "[CVCCVC]" 2 0 0 0 1 0
+   candidate [5]: "[VCVCVC]" 1 1 0 0 1 0
+   candidate [6]: "[VCVCVCV]" 0 1 0 0 2 0
+   candidate [7]: "[CCVC]" 1 0 0 1 0 1
+   candidate [8]: "[CVC]" 1 0 0 0 0 2
+   candidate [9]: "[CV]" 0 0 0 0 0 3
+   candidate [10]: "[VCCVC]" 2 2 1 0 0 0
+   candidate [11]: "[VCVC]" 1 1 0 0 0 1
+   candidate [12]: "[VCV]" 0 1 0 0 0 2
+   candidate [13]: "[CVCVCVCV]" 0 0 0 0 3 0
+   candidate [14]: "[CVCVCV]" 0 0 0 0 2 1
+   candidate [15]: "[CVCV]" 0 0 0 0 1 2
+input [25]: "|VCCCV|" 17
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[VCCCV]" 1 1 0 1 0 0
+   candidate [3]: "[VCCCV]" 1 1 1 0 0 0
+   candidate [4]: "[VCCV]" 0 1 0 1 0 1
+   candidate [5]: "[VCCV]" 2 0 1 0 0 1
+   candidate [6]: "[CVCCCV]" 1 0 0 1 1 0
+   candidate [7]: "[CVCCCV]" 1 0 1 0 1 0
+   candidate [8]: "[CVCCVCV]" 0 0 0 1 2 0
+   candidate [9]: "[VCV]" 0 1 0 0 0 2
+   candidate [10]: "[VCCV]" 0 1 0 0 0 1
+   candidate [11]: "[CVCCV]" 1 0 0 0 1 1
+   candidate [12]: "[CVCVCVCV]" 0 0 0 0 3 0
+   candidate [13]: "[CVCCVCV]" 1 0 0 0 2 0
+   candidate [14]: "[CCV]" 0 0 0 1 0 2
+   candidate [15]: "[CV]" 0 0 0 0 0 3
+   candidate [16]: "[VCVCVCV]" 0 1 0 0 2 0
+   candidate [17]: "[VCCVCV]" 0 1 0 1 1 0
+input [26]: "|CVCCV|" 6
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[CVCCV]" 0 0 0 1 0 0
+   candidate [3]: "[CVCCV]" 1 0 0 0 0 0
+   candidate [4]: "[CVCVCV]" 0 0 0 0 1 0
+   candidate [5]: "[CVCV]" 0 0 0 0 0 1
+   candidate [6]: "[CVCCV]" 1 1 1 0 0 0
+input [27]: "|CCVCV|" 5
+   candidate [1]: "[]" 0 0 0 0 0 5
+   candidate [2]: "[CCVCV]" 0 0 0 1 0 0
+   candidate [3]: "[CVCV]" 0 0 0 0 0 1
+   candidate [4]: "[CVCV]" 1 1 0 0 0 1
+   candidate [5]: "[CVCVCV]" 0 0 0 0 1 0

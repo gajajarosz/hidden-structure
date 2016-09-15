@@ -1,0 +1,8 @@
+[1] "Syllable: [CV] learned in 100 % of times."
+[1] "Syllable: [V] learned in 40 % of times."
+[1] "Syllable: [VC] learned in 20 % of times."
+[1] "Syllable: [VCC] learned in 20 % of times."
+[1] "Syllable: [CVC] learned in 65 % of times."
+[1] "Syllable: [CVCC] learned in 10 % of times."
+[1] "Syllable: [CCV] learned in 12 % of times."
+[1] "Syllable: [CCVC] learned in 9 % of times."

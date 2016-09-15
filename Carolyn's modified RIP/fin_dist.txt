@@ -1,0 +1,33 @@
+"ooTextFile"
+PairDistribution
+? pairs
+"V"		"V"	1	2	V
+
+"VV"	"V.V"	1	2	V
+"VC"	"VC"	1	4	VC
+"CV"	"CV"	1	1	CV
+"VVC"	"V.VC"	1	2	VVC
+"VCV"	"V.CV"	1	2	VCV
+"VCC"	"VCC"	1	6	VCC
+"CVV"	"CV.V"	1	2	CVV
+"CVC"	"CVC"	1	3	CVC
+"CCV"	"CCV"	1	5	CCV
+"VVCC"	"V.VCC"		1	2	VVCC
+"VCVC"	"V.CVC"		1	2	VCVC
+"VCCV"	"VC.CV"		1	2	VCCV %Complex onset or no coda?
+"CVVC"	"CV.VC"		1	2	CVVC
+"CVCV"	"CV.CV"		1	2	CVCV
+"CVCC"	"CVCC"		1	2	CVCC
+"CCVV"	"CCV.V"		1	2	CCVV
+"CCVC"	"CCVC"		1	2	CCVC
+"VCVCC"	"V.CVCC"	1	2	VCVCC
+"VCCVV"	"VC.CVV"	1	2	VCCVV %Complex onset or no coda?
+"VCCVC"	"V.CCVC"	1	2	VCCVC %Complex onset or no coda?
+"VCCCV" "VC.CCV"	1	2	VCCCV %Complex onset or complex coda?
+"CVVCC"	"CV.VCC"	1	2	CVVCC
+"CVCVV"	"CV.CV.V"	1	2	CVCVV
+"CVCVC"	"CV.CVC"	1	2	CVCVC
+"CVCCV"	"CV.CCV"	1	2	CVCCV %Complex onset or no coda?
+"CCVVC"	"CCV.VC"	1	2	CCVVC
+"CCVCV"	"CCV.CV"	1	2	CCVCV
+"CCVCC"	"CCVCC"		1	2	CCVCC

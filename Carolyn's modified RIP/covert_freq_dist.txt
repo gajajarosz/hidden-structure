@@ -1,0 +1,30 @@
+"ooTextFile"
+PairDistribution
+27 pairs
+"|V|"		"[V]"			1	1	|V|
+"|VC|"		"[VC]"			1	2	|VC|
+"|CV|"		"[CV]"			1	3	|CV|
+"|VCC|"		"[VCC]"			1	4	|VCC|
+"|CVC|"		"[CVC]"			1	5	|CVC|
+"|CCV|"		"[CCV]"			1	6	|CCV|
+"|CVCC|"	"[CVCC]"		1	7	|CVCC|
+"|CCVC|"	"[CCVC]"		1	8	|CCVC|
+"|CCVCC|"	"[CCVCC]"		1	9	|CCVCC|
+"|VV|"		"[VV]"			1	10	|VV|
+"|CVV|"		"[CVV]"			1	11	|CVV|
+"|VVC|"		"[VVC]"			1	12	|VVC|
+"|VCV|"		"[VCV]"			1	13	|VCV|
+"|CCVV|"	"[CCVV]"		1	14	|CCVV|
+"|VVCC|"	"[VVCC]"		1	15	|VVCC|
+"|VCVC|"	"[VCVC]"		1	16	|VCVC|
+"|VCCV|"	"[VCCV]"		350	17	|VCCV|
+"|CVVC|"	"[CVVC]"		1	18	|CVVC|
+"|CVCV|"	"[CVCV]"		1	19	|CVCV|
+"|CVVCC|"	"[CVVCC]"		1	20	|CVVCC|
+"|CVCVC|"	"[CVCVC]"		1	21	|CVCVC|
+"|CCVVC|"	"[CCVVC]"		1	22	|CCVVC|
+"|VCVCC|"	"[VCVCC]"		1	23	|VCVCC|
+"|VCCVC|"	"[VCCVC]"		350	24	|VCCVC|
+"|VCCCV|" 	"[VCCCV]"		350	25	|VCCCV|
+"|CVCCV|"	"[CVCCV]"		350	26	|CVCCV|
+"|CCVCV|"	"[CCVCV]"		1	27	|CCVCV|

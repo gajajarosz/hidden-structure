@@ -1,0 +1,12 @@
+"ooTextFile"
+PairDistribution
+9 pairs
+"|V|"		"[V]"		77	1	|V|
+"|VC|"		"[VC]"		32	2	|VC|
+"|CV|"		"[CV]"		453	3	|CV|
+"|VCC|"		"[VCC]"		5	4	|VCC|
+"|CVC|"		"[CVC]"		188	5	|CVC|
+"|CCV|"		"[CCV]"		86	6	|CCV|
+"|CVCC|"	"[CVCC]"	30	7	|CVCC|
+"|CCVC|"	"[CCVC]"	36	8	|CCVC|
+"|CCVCC|"	"[CCVCC]"	5	9	|CCVCC|

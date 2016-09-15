@@ -1,0 +1,30 @@
+"ooTextFile"
+PairDistribution
+27 pairs
+"|V|"		"[V]"			1	1	|V|
+"|VC|"		"[VC]"			1	2	|VC|
+"|CV|"		"[CV]"			1	3	|CV|
+"|VCC|"		"[VCC]"			1	4	|VCC|
+"|CVC|"		"[CVC]"			1	5	|CVC|
+"|CCV|"		"[CCV]"			1	6	|CCV|
+"|CVCC|"	"[CVCC]"		1	7	|CVCC|
+"|CCVC|"	"[CCVC]"		1	8	|CCVC|
+"|CCVCC|"	"[CCVCC]"		1	9	|CCVCC|
+"|V.V|"		"[V.V]"			1	10	|V.V|
+"|CV.V|"	"[CV.V]"		1	11	|CV.V|
+"|V.VC|"	"[V.VC]"		1	12	|V.VC|
+"|V.CV|"	"[V.CV]"		1	13	|V.CV|
+"|CCV.V|"	"[CCV.V]"		1	14	|CCV.V|
+"|V.VCC|"	"[V.VCC]"		1	15	|V.VCC|
+"|V.CVC|"	"[V.CVC]"		1	16	|V.CVC|
+"|V.CCV|"	"[V.CCV]"		1	17	|V.CCV|
+"|CV.VC|"	"[CV.VC]"		1	18	|CV.VC|
+"|CV.CV|"	"[CV.CV]"		1	19	|CV.CV|
+"|CV.VCC|"	"[CV.VCC]"		1	20	|CV.VCC|
+"|CV.CVC|"	"[CV.CVC]"		1	21	|CV.CVC|
+"|CCV.VC|"	"[CCV.VC]"		1	22	|CCV.VC|
+"|V.CVCC|"	"[V.CVCC]"		1	23	|V.CVCC|
+"|V.CCVC|"	"[V.CCVC]"		1	24	|V.CCVC|
+"|VC.CCV|" 	"[VC.CCV]"		1	25	|VC.CCV|
+"|CV.CCV|"	"[CV.CCV]"		1	26	|CV.CCV|
+"|CCV.CV|"	"[CCV.CV]"		1	27	|CCV.CV|
