@@ -1,7 +1,0 @@
-[1] "Path:  [CV] [V] [CVC] [VC] [CCV] [CCVC] [VCC] [CVCC] [CCVCC] taken 21 times."
-[1] "Path:  [CV] [V] [VC] [CVC] [CCV] [CCVC] [VCC] [CVCC] [CCVCC] taken 54 times."
-[1] "Path:  [CV] [V] [VC] [CVC] [CCVC] [CCV] [VCC] [CVCC] [CCVCC] taken 16 times."
-[1] "Path:  [CV] [VC] [CVC] [V] [CCVC] [CCV] [VCC] [CVCC] [CCVCC] taken 1 times."
-[1] "Path:  [CV] [V] [CVC] [VC] [CCVC] [CCV] [VCC] [CVCC] [CCVCC] taken 3 times."
-[1] "Path:  [CV] [VC] [CVC] [V] [CCV] [CCVC] [VCC] [CVCC] [CCVCC] taken 4 times."
-[1] "Path:  [CV] [V] [CVC] [CCVC] [VC] [CCV] [VCC] [CVCC] [CCVCC] taken 1 times."
