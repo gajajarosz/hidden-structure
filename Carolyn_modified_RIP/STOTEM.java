@@ -1,6 +1,9 @@
-// usage: java STOTEM grammar_file dist_file sample_size num_samples learning_rate model learner noise NegOK?
-// learner - {newRIP, oldRIP, randRIP, oldRIPovert}
-// model - {OT, HG, ME}
+/*
+usage: java STOTEM grammar_file dist_file sample_size num_samples learning_rate model learner noise NegOK?
+learner - {newRIP, oldRIP, randRIP, oldRIPovert}
+model - {OT, HG, ME}
+*/
+
 import java.nio.file.*; //FOR GRAPHING
 import java.io.*;
 
@@ -211,8 +214,10 @@ public class STOTEM {
 				
 				//if equal, exit and keep the ranking
 				if (winner.oform.equals(output.form)){
-				    //System.out.println("Matched form = " + output.form);
-				    //System.out.println("\twith sample:" + gr.gramToString(single));
+				    /*
+				    System.out.println("Matched form = " + output.form);
+				    System.out.println("\twith sample:" + gr.gramToString(single));
+				    */
 					looking = false;
 				}
 			}
@@ -232,8 +237,10 @@ public class STOTEM {
 
 		}else{ 
 			if(learner.equals("randRIP")){
-				//use random RIP This is the baseline, right?
-				//choose a random output for the input
+				/*
+				use random RIP This is the baseline, right?
+				choose a random output for the input
+				*/
 				single = gr.sample(NegOK, noise);
 				//System.out.println("\nSampled:\n" + gr.gramToString(single));
 				rank = gr.find_order(single);
@@ -286,10 +293,12 @@ public class STOTEM {
 	
 	
 }
-	    //noise *= .9;
-	    //System.out.println("noise is " + noise);
+	    /*
+	    noise *= .9;
+	    System.out.println("noise is " + noise);
+	    */
 
-if((fail > 20) && (i > 100)){
+			if((fail > 20) && (i > 100)){
 	break;
 }
 	    //System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));	TO GRAPH
@@ -297,23 +306,31 @@ if ((!(learner.equals("Baseline"))) && evaluate_grammar(100, i, noise)){
 		//System.out.println("-reached perfection early ----- exiting now");		TO GRAPH
 	break;
 }
-	    //System.out.println("Now evaluating nonnoisy grammar");		TO GRAPH
-	    //if(evaluate_grammar(10, i, 0) && learner.equals("Baseline")){
-		//System.out.println("Baseline reached perfection ---- exiting now");		
-		//break;
-	    //}
-}
-	//System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");	TO GRAPH
-	//System.out.print("FINAL ");	TO GRAPH
-evaluate_grammar(1000, i, noise);	
+	    /*
+	    System.out.println("Now evaluating nonnoisy grammar");		TO GRAPH
+	    if(evaluate_grammar(10, i, 0) && learner.equals("Baseline")){
+	    System.out.println("Baseline reached perfection ---- exiting now");
+	    break;
+	    }
+	    */
+		}
+	/*
+	System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");	TO GRAPH
+	System.out.print("FINAL ");	TO GRAPH
+	*/
+		evaluate_grammar(1000, i, noise);
 graph();
-	//System.out.print("FINAL ");		TO GRAPH
-	//evaluate_grammar(1000, i, 0); Nonnoisy
-}
+	/*
+	System.out.print("FINAL ");		TO GRAPH
+	evaluate_grammar(1000, i, 0); Nonnoisy
+	*/
+	}
 
 public static boolean evaluate_grammar(int s, int i, double noi) {
-	//now going to examine resulting grammar
-//this is the error calculation printed at the end of every iteration
+	/*
+now going to examine resulting grammar
+this is the error calculation printed at the end of every iteration
+*/
 	double log_likelihood = 0;
 	int tot = 0;
 	int corr = 0;
@@ -354,14 +371,16 @@ public static boolean evaluate_grammar(int s, int i, double noi) {
 					corr++;
 				}
 				tot++;
-		} //else{
-		//System.out.println("BAD::Found inconsistent sample during evaluation for grammar:\n" + gr.gramToString(gr.grammar));
-		//}
+		} /* else{
+
+		System.out.println("BAD::Found inconsistent sample during evaluation for grammar:\n" + gr.gramToString(gr.grammar));
 		}
-		if(i % 100 ==0){
+		*/
+		}
 		//System.out.println("Output " + output.form + " " + ((float)corr/tot) + " correct - actual freq is " + output.freq); TO GRAPH
-			graphData = graphData + i + "," + ((float)corr/tot) + "," + output.form + "\n";
-			//System.out.println(graphData);
+//System.out.println(graphData);
+		if (i % 100 == 0) {
+			graphData = graphData + i + "," + ((float) corr / tot) + "," + output.form + "\n";
 		}
 		log_likelihood += Math.log(((float)corr/tot))*output.freq;
 		error += (((double)tot-(double)corr)/tot)*(double)output.freq;
