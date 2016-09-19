@@ -1,0 +1,48 @@
+STOTEM file:
+
+Main:
+Input: commandline arguments
+Output: none
++Reads in the grammar file and the distribution file to create the candidates, tableaux, ? and ?.
++Calls learnNewRIP
+
+LearnNewRIP:
+Input: none
+Output: none
+For each iteration:
+	For each sampling round:
+		+Samples an output
+		+Samples an underlying form for the output
+		+Samples a grammar using Sample
+		+Calls optimize functions (optimize, optimizeHG, optimizeME) to get optimal candidate for the chosen form
+		+If there is a mismatch, uses the GLA to update the current grammar
++Calls evaluate to evaluate the grammar
+
+Optimize:
+Input: tableau, input, constraint ranking
+Output: candidate
++Finds optimal candidate for a given ranking and tableau
++If multiple candidates are optimal, prints a warning
++If no optimal candidates exist, prints a warning
++Returns the winning candidate
+
+OptimizeHG:
+Input: tableau, input, constraint weights
+Output: candidate
++Calculates weights of each candidate given the constraint rankings
++Stores candidates in an array sorted by weight
++Returns the last candidate in the array (guarenteed to be optimal or tied for optimal)
+
+OptimizeME:
+Input: tableau, input, grammar
+Output: candidate
++Calculates the harmonies of each candidate given the grammar
++I don't understand how it is picking the winner
++Return the winner
+
+Evaluate:
+Input: # of samples, # of iterations, noise
+Output: true if error is 0.0, false otherwise
++Runs specified number of iterations, for each:
+	+Calculating error and log likelihood
+	+Printing error and log likelihood every 100 iterations
