@@ -1,0 +1,120 @@
+STOTEM file:
+
+Main:
+Input: commandline arguments
+Output: none
++Reads in the grammar file and the distribution file to create the candidates, tableaux, ? and ?.
++Calls learnNewRIP
+
+LearnNewRIP:
+Input: none
+Output: none
+For each iteration:
+	For each sampling round:
+		+Samples an output
+		+Samples an underlying form for the output
+		+Samples a grammar using Sample
+		+Calls optimize functions (optimize, optimizeHG, optimizeME) to get optimal candidate for the chosen form
+		+If there is a mismatch, uses the GLA to update the current grammar
+	+Calls evaluate to evaluate the grammar
+
+Optimize:
+Input: tableau, input, constraint ranking
+Output: candidate
++Finds optimal candidate for a given ranking and tableau
++If multiple candidates are optimal, prints a warning
++If no optimal candidates exist, prints a warning
++Returns the winning candidate
+
+OptimizeHG:
+Input: tableau, input, constraint weights
+Output: candidate
++Calculates weights of each candidate given the constraint rankings
++Stores candidates in an array sorted by weight
++Returns the last candidate in the array (guarenteed to be optimal or tied for optimal)
+
+OptimizeME:
+Input: tableau, input, grammar
+Output: candidate
++Calculates the harmonies of each candidate given the grammar
++I don't understand how it is picking the winner
++Return the winner
+
+Evaluate:
+Input: # of samples, # of iterations, noise
+Output: true if error is 0.0, false otherwise
++Calculates the error and log likelihood
++Prints error and log likelihood every 100 iterations
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+STOT file:
+
+Class file defining constraint sets and providing methods for grammars
+
+Class STOT:
+Input: grammarFile
++Instance contains a uni_gram (uninitialized grammar), a set of constraints, and faith (what is this?) 
+
+Methods:
+
+uni_grammar:
+Input: size
++Initializes all constraint rankings to 5
+
+gram_to_string:
+Input: grammar
+Output: grammar as a string
++Reformats the grammar
+
+sample:
+Input: boolean indicating whether negative weights are ok, noise parameter
+Output: sample of the grammar
++Samples the grammar with the given amount of noise
+
+find_order:
+Input: a sampled grammar
+Output: ranked constraint set
++Sorts the constraints to produce a ranked set
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Distfile file:
+
+Class file for parsing the distribution file
+
+Class DistFile:
++Instance contains an array of morphs, an array of outputs, and a boolean phono, which indicates whether phonotactic learning is done (?)
+
+Methods:
+
+get_i_prob:
+Input: output index and input index
+Output: probability of the input
++Calculates and returns the probability of the given input
+
+to_string:
+Input: none
+Output: string
++Converts to string
+
+Class Morph:
++Instance contains a name, an array of distributions, an array of new distributions (?), an array of forms and an array of outputs
+
+Class Output:
++Instance contains a frequency, a relative frequency (initialized to 0), a form, an array of morphs, and an array of inputs
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+GrammarFile file:
+
+Class file for parsing the constraint set and candidates from the user-provided files
+
+Class GrammarFile:
++Instance contains an array of constraints, an array of tableaux, an array of faith, and an array of structors
+
+Class Candidate:
++Instance contains a violation vector, a form, and an oform
+
+Class Tableau:
++Instance contains an underlying form and an array of candidates
