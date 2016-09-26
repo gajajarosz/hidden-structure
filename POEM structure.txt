@@ -1,0 +1,206 @@
+POEM file:
+
+Main:
+Input: commandline arguments
+Output: none
++Reads in the grammar file and the distribution file to create the candidates, constraint set, and tableaux.
++Calls randomExtension to initialize grammar.
++Calls bias_grammar
++Calls learn_batch_parameter_EM
++Calls learn_sample_parameter
++Calls learn
++Calls learn_online_pos_neg
+
+Learn_batch_parameter_EM:
+Input: none
+Output: none
++Runs i iterations of EM:
+	+Attempts to rank a previously unranked pair of constraints
+		+Runs makeMeConsistent to try to make the PCG consistent
+		+Samples a number of grammars using generate_extension and find_order
+		+Iterates through underlying representations of each candidate:
+			+Calls optimize
+		+Reranks constraints in other order and repeats
+	+Adds best new ranking?
+	+Attempts to speed up learning
+	+Calls evaluate_grammar to see how new grammar performs
++Evaluate final grammar using evaluate_grammar
+
+Learn_batch_maximization:
+Never used
+
+Learn_sample_parameter:
+Input: none
+Output: none
++Runs i iterations of sampling and updating:
+	+Samples an output form
+	+Samples an underlying form
+	+Attempts to rank a previously unranked pair of constraints
+		+Runs makeMeConsistent to try to make the PCG consistent
+		+Samples a number of grammars using generate_extension and find_order
+		+Calls optimize with sampled input and ranking
+	+Reranks constraints in other order and repeats
+	+If one of the rankings is good enough, add to grammar (how is the scaling? Is the learning rate slower?)
+	+Check consistency using makeMeConsistent
+	+Evaluate grammar using evaluate_grammar
++Evaluate final grammar using evaluate_grammar
+
+Learn_online_new:
+Never used
+
+Learn:
+Input: none
+Output: none
++Updates by approximating P(ab), P(ba) over many samples
++Runs i iterations:
+	+Samples an output and an underlying form
+	+Samples a constraint ranking using generate_extension and find_order
+		+Computes winner using optimize
+		+Compares winner to output and updates if correct
+	+Re-estimates when a winner is found
++Calculates sampling error
++Updates grammar?
++Evaluates grammar
+
+Learn_online:
+Never used
+
+Learn_online_pos_neg:
+Input: none
+Output: none
++Naive parameter learner from Yang 2002
++Runs i iterations:
+	+Samples an output and an underlying form
+	+Samples a random cronstraint ranking using generate_extension and find_order
+	+Computes winner using optimize
+	+If winner is output, add constraint ranking to list of successful constraints; if not, punish ranking
+	+Checks to make sure grammar is consistent using makeMeConsistent
+	+Evaluates grammar using evaluate_grammar
++Evaluates final grammar using evaluate_grammar
+
+Evaluate_grammar:
+Input: sample size, number of iterations, verbose?
+Output: none
++Samples s time to check distribution
+	+Samples an output form
+	+Samples a random ranking
+		+Compute winner and compare to output
+		+If equal, add ranking to collected rankings
++Calculates error and prints in verbose mode
+
+Optimize:
+Input: input, constraint ranking
+Output: candidate
++Finds the correct tableau
++Finds optimal candidate for a given ranking
++If multiple candidates are optimal, prints a warning
++If no optimal candidates exist, prints a warning
++Returns the winning candidate
+
+-------------------------------------------------------------------------------------
+
+RandomExtension.java
+
+Class RandomExtension:
++Instance contains:
+ 	grammar: matrix of pairwise constraint rankings
+ 	faith: an array of faithful constraints
+ 	i_cor: an array storing the row indices of constraint pairs
+ 	j_cor: an array storing the column indices of constraint pairs
+
+reEstimate_pairwise:
+Input: n?
+Output: RandomExtension
++Generates an ordering and ?
+
+reEstimate:
+Input: n?
+Output: RandomExtension
+
+uni_grammar:
+Input: size of grammar
+Output: none
++Initializes grammar
+
+bias_grammar:
+Input: none
+Output: none
++Biases grammar towards faithful constraints (weights them highly)?
+
+rand_grammar:
+Input: grammar size
+Output: none
++Generates random grammar?
+
+mode_grammar:
+Input: none
+Output: matrix
++Sets the grammar to the mode setting for each parameter
++What is mode?
+
+generate_extension1:
+Input: single?
+Output: array?
++Sampling method
+
+makeMeConsistent:
+Input: none
+Output: Bool
++Check is PRG is consistent
+
+init_pairs:
+Input: none
+Output: none
++Initializes pairs of constraints
+
+generate_extension:
+Input: grammar matrix
+Output: constraint ranking
++Samples a total order on constraints from PRG
+
+find_order_old:
+Input: extension
+Output: array of ints (order of constraints)
++Finds constraint order from constraint grid
+
+cloneGrammar:
+Input: none
+Output: grammar
++Clones grammar
+
+unBias:
+Input: extension, constraint row, constraint column
+Output: none
++Unbiases one constraint
+
+makeConsistent:
+Input: grammar, constraint row, constraint column
+Output: Boolean
++Checks if rankings of one constraint is consistent in grammar
+
+compensate:
+Input: grammar, constraint row, constraint column, old constraint indices
+Output: none
++Attempts to compensate for choices made probabilistically
++Goes through each third constraint and penalizes the lower of the just-ranked constraint pair
+
+mod_gram:
+Input: grammar, i, j, value
+Output: boolean
++Checks if constraint has been ranked before
++If not, sets its value
+
+toString:
+Input: none
+Output: string
++Converts grammar to string
+
+rankToString:
+Input: rank
+Output: string
++Converts rank to string
+
+gramToString:
+Input: grammar
+Output: string
++Converts grammar to string
