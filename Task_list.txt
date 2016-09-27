@@ -5,4 +5,4 @@ Delete unused variables
 Move update into separate method?
 Delete commented out code
 Simplify main function in POEM to match STOTEM structure
-
+Make sure branches are up to date
