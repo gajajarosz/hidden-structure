@@ -12,6 +12,7 @@ public class POEM {
     private static int sample_size = 0;
     private static int num_samples = 0;
     private static int rank_bias = 0;
+
     private static boolean speed_up = false;
     private static boolean verbose = false;
 
@@ -90,13 +91,6 @@ public class POEM {
 
 			double[][] ext = gr.cloneGrammar();
 			gr.makeMeConsistent(ext);
-			//burn in sampler...
-			//double[][] seed = gr.generate_extension();
-			//double[][] single = gr.generate_extension1(seed);
-			//for (int b = 0; b < 10000; b++){
-			//single = gr.generate_extension1(seed);
-			//}
-			//need to sample s rankings for r >> c
 
 			double[][] single;
 
@@ -189,8 +183,7 @@ public class POEM {
 		    gr.grammar[r][c] = .2*ratio*ratio/(ratio*ratio+1) + .8*gr.grammar[r][c];
 		    gr.grammar[c][r] = 1-gr.grammar[r][c];
 		    */
-
-
+			
 		    if (speed_up) {
 			// this is an attempt to increase the learning rate...
 			if (new_rc > gr.grammar[r][c]) { //bring closer to 1
@@ -228,26 +221,7 @@ public class POEM {
 			break;
 		    }
 		}
-
-		/*if (i % 50 == 0) {
-		    System.out.println("CHECKING LEARNING: current error is " + recent_error + " and 50 iterations ago is was " + prev_error + " and ratio was " + prev_error/recent_error);
-
-		    if (prev_error/recent_error < 0.9 && i > 100) {
-			System.out.println("INSUFFICIENT LEARNING: current error is " + recent_error + " and 50 iterations ago is was " + prev_error);
-			System.exit(0);
-		    }
-		    prev_error = recent_error;
-		    }*/
-		/*System.out.println("Now evaluating mode grammar---");
-		double[][] temp = gr.grammar;
-		gr.grammar = gr.mode_grammar();
-		evaluate_grammar(100, i);
-		gr.grammar = temp;
-		*/
 	    }
-
-
-
 	    long endIterTime = System.currentTimeMillis();
 	    if (verbose){
 		System.out.println("TIMING:: Iteration " + i + " took " + ((endIterTime-startIterTime)/1000.0) + " sec.  Total: " + ((endIterTime-startTime)/1000.0) + " sec. Average: " + ((endIterTime-startTime)/1000.0)/(i+1) + " sec.");
@@ -258,11 +232,6 @@ public class POEM {
 	System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
 	System.out.println("The final grammar is:\n" + gr.gramToString(gr.grammar));
 	evaluate_grammar(10000, i, true);
-	/*System.out.println("Now evaluating mode grammar---");
-	double[][] temp = gr.grammar;
-	gr.grammar = gr.mode_grammar();
-	evaluate_grammar(100, i);
-	*/
     }
 
 
@@ -595,9 +564,6 @@ public static void learn_batch_maximization() {
 	double corr_tot = 0;
 	double bias = .01 * sample_size;
 	double[][] single = gr.generate_extension();
-	/*for (int b = 0; b < 1000; b++){
-	    single = gr.generate_extension1(seed);
-	    }*/
 	double rate = .01;
 	int i = 0;
 	for (i = 0; i < num_samples; i++) {
@@ -640,13 +606,6 @@ public static void learn_batch_maximization() {
 		boolean looking = true;
 		int count = 0;
 		single = gr.generate_extension();
-		/*for (int b = 0; b < 1000; b++){
-		    double[][] temp = gr.generate_extension1(single);
-		    if (temp != null){
-			single = temp;
-		    }
-		}
-		*/
 		double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
 		double acceptance = 0.0;
 		while ((looking) && (count < 100)){
@@ -722,7 +681,6 @@ public static void learn_batch_maximization() {
     }
 
     public static void learn() { //updates by approximating P(ab), P(ba) over many samples
-
 	// there are i iterations of sampling and updating
 	double tot_err = 0.0;
 	double corr_tot = 0;
@@ -792,13 +750,9 @@ public static void learn_batch_maximization() {
 			for(int r=0; r < gr.grammar.length; r++){
 			    for(int c=0; c < r; c++){
 				if(single[r][c] == 1){// this means r >> c in this ranking
-				    //corr_ranks_samp[r][c]++;
 				    output_counts[r][c]++;
-				    //System.out.println("r,c = " + r + ", " + c + " should be 1 -" + single[r][c]);
 				}else{
-				    //corr_ranks_samp[c][r]++;
 				    output_counts[c][r]++;
-				    //System.out.println("c,r = " + c + ", " + r + " should be 1 -" + single[c][r]);
 				}
 			    }
 			}
@@ -816,9 +770,6 @@ public static void learn_batch_maximization() {
 			}
 
 		}
-		if (looking){
-		    //System.out.println("Never found a winner for UR->Output :: " + input + "->" + output.form);
-		}
 
 		//SILLY GAJA, put this in the found winner loop!
 		for(int r=0; r < gr.grammar.length; r++){
@@ -833,7 +784,6 @@ public static void learn_batch_maximization() {
 		    }
 		}
 		//System.out.println("For UR/Output:: " + input + "-->" + output.form + "-- The successful proportions are: \n" + gr.gramToString(output_counts));
-
 		//System.out.println("Acceptance rate was :: " + (double)acceptance/1000);
 	    }
 	    double err = 0.0;
@@ -918,7 +868,6 @@ public static void learn_batch_maximization() {
 		gr.grammar = gr.mode_grammar();
 		evaluate_grammar(10, i);
 		gr.grammar = temp;
-
 	    }
 	}
 	//now going to examine resulting grammar
@@ -933,7 +882,6 @@ public static void learn_batch_maximization() {
     public static void learn_online() { //supposed to be the stepwise EM with mini-batch in Liang & Klein
 
 	// there are i iterations of sampling and updating
-
 	//this number determines the starting counts, amount of 'smoothing'
 	double init_count = 1;
 	double corr_tot = init_count;
@@ -1143,7 +1091,6 @@ public static void learn_online_pos_neg() {
 			    tries[r][c] = 2;
 			    tries[c][r] = 2;
 			}
-
 		    }
 		}
 	    } else{ //parsing was unsuccessful... punish ranking
@@ -1170,7 +1117,6 @@ public static void learn_online_pos_neg() {
 			    tries[r][c] = 2;
 			    tries[c][r] = 2;
 			}
-
 		    }
 		}
 	    }
@@ -1229,10 +1175,8 @@ public static void learn_online_pos_neg() {
 		double[][] single = gr.generate_extension();
 		if (single != null){
 		    int[] rank = gr.find_order(single);
-
 		    //compute learner's winner and compare to actual output
 		    winner = optimize(input, rank);
-
 		    //if equal, add matrix of ranking into collected samples
 		    if (winner.equals(output.form)){
 			corr++;
