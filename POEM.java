@@ -1,4 +1,3 @@
- 
 // read command
 // usage: java POEM grammar_file i_o_file sample_size num_samples ranking_bias
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
@@ -12,22 +11,16 @@ public class POEM {
 
     private static int sample_size = 0;
     private static int num_samples = 0;
-    private static int learner = 0;
-    private static int init_bias = 0;
     private static int rank_bias = 0;
     private static boolean speed_up = false;
     private static boolean verbose = false;
-
-    private static boolean get_cond_prob_debug = false;
-    private static String cur_indent = "";
-    private static double recent_error = 1000.0;
 
     public static void main(String[] args) {
 	if (args.length < 8) {
 	    System.out.println("usage: java POEM grammar_file dist_file sample_size iterations init_bias rank_bias learner_type speed_up verbose");
 	    System.exit(-1);
 	}
-	
+
 	// read in a grammar_file
 	gf = new GrammarFile(args[0]);
 
@@ -37,9 +30,9 @@ public class POEM {
 
 	sample_size = Integer.parseInt(args[2]);
 	num_samples = Integer.parseInt(args[3]);
-	init_bias = Integer.parseInt(args[4]);
+        int init_bias = Integer.parseInt(args[4]);
 	rank_bias = Integer.parseInt(args[5]);
-	learner = Integer.parseInt(args[6]);
+        int learner = Integer.parseInt(args[6]);
 	if(args.length >8) {
 	    speed_up = (Integer.parseInt(args[7]) == 0) ? false : true;
 	    verbose = (Integer.parseInt(args[8]) == 0) ? false : true;
@@ -66,12 +59,12 @@ public class POEM {
 	}else if (learner == 4){
 	    learn_online_pos_neg();
 	}
-	
+
     }
 
     public static void learn_batch_parameter_EM() {
 	// there are i iterations of EM
-	
+
 	long startTime = System.currentTimeMillis();
 	double prev_error = 1000.0;
 	int i = 0;
@@ -82,13 +75,13 @@ public class POEM {
 	    }
 	    //to store successes for each output
 	    double[][][] sum = new double[gr.grammar.length][gr.grammar.length][df.outputs.length];
-	    	    
+
 	    //for each parameter value ...
 	    for(int r=0; r < gr.grammar.length; r++){
 		for(int c=0; c < r; c++){
 		    double old_rc = gr.grammar[r][c];
 		    double old_cr = gr.grammar[c][r];
-		    
+
 		    if (gr.grammar[r][c] != 0.0 && gr.grammar[r][c] != 1.0){
 			//temporarily set r >> c
 			//System.out.println("Parameter Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
@@ -104,9 +97,9 @@ public class POEM {
 			//single = gr.generate_extension1(seed);
 			//}
 			//need to sample s rankings for r >> c
-			
+
 			double[][] single;
-			
+
 			for (int s = 0; s < sample_size; s++) {
 			    single = gr.generate_extension(ext);
 			    if(single != null){
@@ -132,20 +125,12 @@ public class POEM {
 
 			//temporarily set c >> r
 			//System.out.println("Parameter Setting " + gr.constraints[c] + " - " + c + " >> " + gr.constraints[r] + " - " + r);
-			
+
 			gr.grammar[r][c] = 0.0;
 			gr.grammar[c][r] = 1.0;
 			ext = gr.cloneGrammar();
 			gr.makeMeConsistent(ext);
 
-			//burn in sampler...
-			//seed = gr.generate_extension();
-			//single = gr.generate_extension1(seed);
-			//for (int b = 0; b < 10000; b++){
-			//single = gr.generate_extension1(seed);
-			//}
-			//need to sample s rankings for c >> r
-			
 			for (int s = 0; s < sample_size; s++) {
 			    single = gr.generate_extension(ext);
 			    if(single != null){
@@ -168,35 +153,19 @@ public class POEM {
 			    //}
 			}
 			//done sampling c >> r...
-			
+
 			//done sampling for this parameter, reset grammar
 			gr.grammar[r][c] = old_rc;
 			gr.grammar[c][r] = old_cr;
-		    
-			//incorporate the prior probs of rc vs cr
-			//System.out.println("numerator for " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c + " = " + odds[r][c]);
-			//System.out.println("numerator for " + gr.constraints[c] + " - " + c + " >> " + gr.constraints[r] + " - " + r + " = " + odds[c][r]);
-			
-			
-			/*		    odds[r][c] = (odds[r][c]) + Math.log(gr.grammar[r][c]+.0001);
-			//System.out.println("numerator w/ prior for " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c + " = " + odds[r][c]);
-			odds[c][r] = (odds[c][r]) + Math.log(gr.grammar[c][r]+.0001);
-			//System.out.println("numerator w/ prior for " + gr.constraints[c] + " - " + c + " >> " + gr.constraints[r] + " - " + r + " = " + odds[c][r]);
-			*/
-			//double k = odds[r][c]/odds[c][r];
-			//gr.grammar[r][c] = (k)/(k + 1);
-			//gr.grammar[c][r] = 1 - gr.grammar[r][c];
-		    }
+            }
 		}
 	    } //done going through parameters
-	
+
 	    //now going to reset the grammar...
 	    double[][][] output_probs = new double[df.outputs.length][gr.grammar.length][gr.grammar.length];
 	    for(int r=0; r < gr.grammar.length; r++){
 		for(int c=0; c < r; c++){
 		    //System.out.println("UPDATING " + r + " vs " + c);
-		    //double rc_sum = 0.0001;
-		    //double cr_sum = 0.0001;
 		    double rc_sum = 0.0;
 		    double cr_sum = 0.0;
 		    for(int o=0; o < df.outputs.length; o++){
@@ -204,31 +173,24 @@ public class POEM {
 			double o_rc = (((double)sum[r][c][o] +.0001)* ((double)df.outputs[o].freq))/((double)o_prob);
 			double o_cr = (((double)sum[c][r][o] +.0001)* ((double)df.outputs[o].freq))/((double)o_prob);
 			//System.out.println("\tUPDATES for " + df.outputs[o].form + " are " + o_rc*gr.grammar[r][c] + " vs " + o_cr*gr.grammar[c][r] );
-			//if (!((o_prob > 0.0001) && (o_rc/o_cr > .9) && (o_cr/o_rc > .9))) {
 			    rc_sum += o_rc;
 			    cr_sum += o_cr;
-			    //    }
-			//rc_sum += o_rc * Math.exp(1.0 - o_prob); // attempt to skew learning toward problematic forms
-			//cr_sum += o_cr * Math.exp(1.0 - o_prob);
-			//output_probs[o][r][c] = o_rc*gr.grammar[r][c];
-			//output_probs[o][c][r] = o_cr*gr.grammar[c][r];
 		    }
 
 		    double new_rc = ((double)rc_sum*gr.grammar[r][c])/((double)rc_sum*gr.grammar[r][c]+(double)cr_sum*gr.grammar[c][r]);
-		    //double new_rc = ((double)rc_sum)/((double)rc_sum+(double)cr_sum);
 		    double new_cr = 1 - new_rc;
 		    if ( ! speed_up) {
 			gr.grammar[r][c] = new_rc;
 			gr.grammar[c][r] = 1-gr.grammar[r][c];
 		    }
-		    /*		    
+		    /*
 		    // this skews the re-estimate toward 0 and 1
 		    double ratio = (new_rc+.01)/(new_cr+.01);
 		    gr.grammar[r][c] = .2*ratio*ratio/(ratio*ratio+1) + .8*gr.grammar[r][c];
 		    gr.grammar[c][r] = 1-gr.grammar[r][c];
 		    */
-		    
-		        
+
+
 		    if (speed_up) {
 			// this is an attempt to increase the learning rate...
 			if (new_rc > gr.grammar[r][c]) { //bring closer to 1
@@ -241,20 +203,14 @@ public class POEM {
 		    }
 		}
 	    }
-	    
+
 	    if (! gr.makeMeConsistent()) {
 		System.out.println ("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
 		System.exit(-1);
 	    }
-	    
-	    /*
-	    for(int o=0; o < df.outputs.length; o++){
-		System.out.println("P(rank | output) for output + " + df.outputs[o].form + ":\n" + gr.gramToString(output_probs[o]));
-	    }
-	    */
 
 	    if(verbose){
-		System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));	
+		System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
 	    }
 	    if(i % 1 == 0){
 
@@ -288,16 +244,16 @@ public class POEM {
 		evaluate_grammar(100, i);
 		gr.grammar = temp;
 		*/
-	    } 
+	    }
 
-	    
-    
+
+
 	    long endIterTime = System.currentTimeMillis();
 	    if (verbose){
 		System.out.println("TIMING:: Iteration " + i + " took " + ((endIterTime-startIterTime)/1000.0) + " sec.  Total: " + ((endIterTime-startTime)/1000.0) + " sec. Average: " + ((endIterTime-startTime)/1000.0)/(i+1) + " sec.");
 	    }
 	} //end of iterations
-	
+
 	//now going to examine resulting grammar
 	System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
 	System.out.println("The final grammar is:\n" + gr.gramToString(gr.grammar));
@@ -312,45 +268,28 @@ public class POEM {
 
 public static void learn_batch_maximization() {
 	// there are i iterations of maximization
-
-
-	/*for (int r=0; r < gr.grammar.length; r++) {
-	    for (int c=0; c < gr.grammar.length; c++) {
-		gr.grammar[r][c] = Math.random();
-	    }
-	}
-	*/
-
 	int i = 0;
 	for (i = 0; i < num_samples; i++) {
 
 	    double[][] odds = new double[gr.grammar.length][gr.grammar.length];
-	    
+
 	    //for each parameter value ...
 	    for(int r=0; r < gr.grammar.length; r++){
 		for(int c=0; c < r; c++){
 		    double old_rc = gr.grammar[r][c];
 		    double old_cr = gr.grammar[c][r];
-		    
+
 		    //temporarily set r >> c
 		    //System.out.println("Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
 		    gr.grammar[r][c] = 1.0;
 		    gr.grammar[c][r] = 0.0;
-		    
+
 		    //to store successes for each output
 		    double[] sum_rc = new double[df.outputs.length];
 		    double[] sum_cr = new double[df.outputs.length];
-		    
-		    //burn in sampler...
-		    //double[][] seed = gr.generate_extension();
-		    //double[][] single = gr.generate_extension1(seed);
-		    //for (int b = 0; b < 10000; b++){
-		    //single = gr.generate_extension1(seed);
-		    //}
-		    //need to sample s rankings for r >> c
-		    
+
 		    double[][] single = gr.generate_extension();
-		    
+
 		    for (int s = 0; s < sample_size; s++) {
 			single = gr.generate_extension();
 			if(single != null){
@@ -381,14 +320,6 @@ public static void learn_batch_maximization() {
 
 		    gr.grammar[r][c] = 0.0;
 		    gr.grammar[c][r] = 1.0;
-		    
-		    //burn in sampler...
-		    //seed = gr.generate_extension();
-		    //single = gr.generate_extension1(seed);
-		    //for (int b = 0; b < 10000; b++){
-		    //single = gr.generate_extension1(seed);
-		    //}
-		    //need to sample s rankings for c >> r
 
 		    for (int s = 0; s < sample_size; s++) {
 			single = gr.generate_extension();
@@ -407,7 +338,7 @@ public static void learn_batch_maximization() {
 				    }
 				}
 			    }
-			} 
+			}
 		    }
 		    //done sampling c >> r...
 		    for (int o = 0; o < df.outputs.length; o++){
@@ -417,7 +348,7 @@ public static void learn_batch_maximization() {
 		    //done sampling for this parameter, reset grammar
 		    gr.grammar[r][c] = old_rc;
 		    gr.grammar[c][r] = old_cr;
-		    
+
 		    //incorporate the prior probs of rc vs cr
 		    //System.out.println("numerator for " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c + " = " + odds[r][c]);
 		    //System.out.println("numerator for " + gr.constraints[c] + " - " + c + " >> " + gr.constraints[r] + " - " + r + " = " + odds[c][r]);
@@ -427,14 +358,9 @@ public static void learn_batch_maximization() {
 		    //System.out.println("numerator w/ prior for " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c + " = " + odds[r][c]);
 		    odds[c][r] = (odds[c][r]) + Math.log(gr.grammar[c][r]+.0001);
 		    //System.out.println("numerator w/ prior for " + gr.constraints[c] + " - " + c + " >> " + gr.constraints[r] + " - " + r + " = " + odds[c][r]);
-
-		    //double k = odds[r][c]/odds[c][r];
-		    //gr.grammar[r][c] = (k)/(k + 1);
-		    //gr.grammar[c][r] = 1 - gr.grammar[r][c];
-
 		}
 	    } //done going through parameters
-	
+
 	    //now going to reset the grammar...
 	    for(int r=0; r < gr.grammar.length; r++){
 		for(int c=0; c < r; c++){
@@ -444,12 +370,11 @@ public static void learn_batch_maximization() {
 		    gr.grammar[c][r] = 1 - gr.grammar[r][c];
 		}
 	    }
-	    
+
 	    if (! gr.makeMeConsistent()) {
 		System.out.println ("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
 		System.exit(-1);
 	    }
-
 
 	    System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
     	    //now going to examine resulting grammar
@@ -457,18 +382,17 @@ public static void learn_batch_maximization() {
 	    if (evaluate_grammar(1000, i)){
 		System.out.println("-reached perfection early ----- exiting now");
 		break;
-	    }     
+	    }
 
 	} //end of iterations
 
-	
 	//now going to examine resulting grammar
 	System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
 	evaluate_grammar(10000, i);
     }
 
     public static void learn_sample_parameter() {
-	
+
 	// there are i iterations of sampling and updating
 	//double corr_tot = 0;
 	double[][] single = gr.generate_extension();
@@ -479,10 +403,6 @@ public static void learn_batch_maximization() {
 		System.out.println("Starting iteration " + i);
 	    }
 	    double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
-	    //double corr_samp = 0;
-		
-	    //double[][] sample_counts = new double[gr.grammar.length][gr.grammar.length];
-
 	    //each iteration consists of s samples
 	    for (int s = 0; s < sample_size; s++) {
 
@@ -517,7 +437,7 @@ public static void learn_batch_maximization() {
 
 		for(int r=0; r < gr.grammar.length; r++){
 		    for(int c=0; c < r; c++){
-			
+
 			if ((gr.grammar[r][c] == 0) || (gr.grammar[r][c] == 1)){
 			    if (verbose){
 				//System.out.println(" r=" + r + " by c=" + c + " is set, not worth checking probs");
@@ -528,12 +448,12 @@ public static void learn_batch_maximization() {
 
 			    double old_rc = gr.grammar[r][c];
 			    double old_cr = gr.grammar[c][r];
-			    
+
 			    //temporarily set r >> c
 			    //System.out.println("Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
 			    gr.grammar[r][c] = 1.0;
 			    gr.grammar[c][r] = 0.0;
-			
+
 			    int count = 0;
 			    double[][] ext = gr.cloneGrammar();
 			    gr.makeMeConsistent(ext);
@@ -544,15 +464,13 @@ public static void learn_batch_maximization() {
 				if(single != null){
 				    int[] rank = gr.find_order(single);
 				    //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
-				    
+
 				    if(rank != null){
 					//compute learner's winner and compare to actual output
 					winner = optimize(input, rank);
 					//if equal, add matrix of ranking into collected samples
 					if (winner.equals(output.form)){
 					    //System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
-					    //corr_tot++;
-					    //corr_samp++;
 					    output_counts[r][c]++;
 					}
 				    }else{
@@ -560,7 +478,7 @@ public static void learn_batch_maximization() {
 				    }
 				}
 			    }
-			    
+
 			    gr.grammar[r][c] = 0.0;
 			    gr.grammar[c][r] = 1.0;
 
@@ -570,19 +488,17 @@ public static void learn_batch_maximization() {
 			    while (count < 50){
 				//sample a random ranking
 				count++;
-				
+
 				single = gr.generate_extension(ext);
 				if(single != null){
 				    int[] rank = gr.find_order(single);
-				    //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));		    
+				    //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
 				    if(rank != null){
 					//compute learner's winner and compare to actual output
 					winner = optimize(input, rank);
 					//if equal, add matrix of ranking into collected samples
 					if (winner.equals(output.form)){
 					    //System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
-					    //corr_tot++;
-					    //corr_samp++;
 					    output_counts[c][r]++;
 					}
 				    }else{
@@ -590,11 +506,9 @@ public static void learn_batch_maximization() {
 				    }
 				}
 			    }
-			
 			    //reset grammar
 			    gr.grammar[r][c] = old_rc;
 			    gr.grammar[c][r] = old_cr;
-			    
 			}
 		    }
 		}
@@ -623,10 +537,7 @@ public static void learn_batch_maximization() {
 		    }
 
 		    if(sample_size != 1){
-			//gr.grammar[r][c] = new_rc;//unbiased complete re-estimation
-			//gr.grammar[c][r] = 1.0 - new_rc;
-			
-			//making learning rate higher...		
+			//making learning rate higher...
 			if (new_rc > gr.grammar[r][c]) { //bring closer to 1
 			    gr.grammar[r][c] = .5*1 + .5*new_rc;
 			    gr.grammar[c][r] = 1-gr.grammar[r][c];
@@ -634,42 +545,27 @@ public static void learn_batch_maximization() {
 			    gr.grammar[r][c] = .5*new_rc + .5*0;
 			    gr.grammar[c][r] = 1-gr.grammar[r][c];
 			}
-			
+
 		    }else{ //make a small update since we're processing only one output per update
 			//go part of the way that EM would want
 			gr.grammar[r][c] = (1-rate)*gr.grammar[r][c] + rate*new_rc;
 			gr.grammar[c][r] = 1-gr.grammar[r][c];
 		    }
-			
-
-		    //double ratio = (gr.grammar[r][c]+.01)/(gr.grammar[c][r]+.01);
-		    //gr.grammar[r][c] = .05*ratio*ratio/(ratio*ratio+1) + .95*gr.grammar[r][c];
-		    //gr.grammar[c][r] = 1-gr.grammar[r][c];
-		    /*
-		    if(gr.grammar[r][c] > .99){
-			gr.grammar[r][c] = 1.0;
-			gr.grammar[c][r] = 0.0;
-		    }else if (gr.grammar[r][c] < .01){
-			gr.grammar[r][c] = 0.0;
-			gr.grammar[c][r] = 1.0;
-		
-		    }
-		    */
 		}
 	    }
-	    
+
 	    if (! gr.makeMeConsistent()) {
 		System.out.println ("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
 		System.exit(-1);
 	    }
-	    
+
 	    //bias = bias*(i+1)/(i+2);
 	    if(i % 1 == 0){
 
 		if (verbose) {
 		    System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
 		}
-		//now going to examine resulting grammar	    
+		//now going to examine resulting grammar
 
 		if (verbose){
 		    System.out.println("------------------EVALUATING--------------GRAMMAR------AT-------ITERATION-------" + i);
@@ -687,14 +583,14 @@ public static void learn_batch_maximization() {
 	    }
 	}
 	//now going to examine resulting grammar
-	
+
 	System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
 	System.out.println("The final grammar is:\n" + gr.gramToString(gr.grammar));
 	evaluate_grammar(10000, i, true);
     }
 
     public static void learn_online_new() { // this simply rewards successful rankings
-	
+
 	// there are i iterations of sampling and updating
 	double corr_tot = 0;
 	double bias = .01 * sample_size;
@@ -708,7 +604,7 @@ public static void learn_batch_maximization() {
 	    //System.out.println("Starting iteration " + i);
 	    double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
 	    double corr_samp = 0;
-		
+
 	    double[][] sample_counts = new double[gr.grammar.length][gr.grammar.length];
 	    //rate = rate * 0.8;
 	    //each iteration consists of s samples
@@ -755,15 +651,10 @@ public static void learn_batch_maximization() {
 		double acceptance = 0.0;
 		while ((looking) && (count < 100)){
 		    //sample a random ranking
-		    /*double[][] temp = gr.generate_extension1(single);
-		    if (temp != null){
-			single = temp;
-			acceptance++;
-		    }*/
 		    single = gr.generate_extension();
 		    int[] rank = gr.find_order(single);
 		    //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
-		    
+
 		    //compute learner's winner and compare to actual output
 		    winner = optimize(input, rank);
 		    count++;
@@ -786,13 +677,9 @@ public static void learn_batch_maximization() {
 			}
 		    }
 		}
-		//if (looking){
-		//    System.out.println("Never found a winner for UR->Output :: " + input + "->" + output.form);
-		//}
 		for(int r=0; r < gr.grammar.length; r++){
 		    for(int c=0; c < r; c++){
 			if(!(looking)){
-			    
 			    //go 1/100th of the way that EM would want
 			    if(output_counts[r][c] == 1){ //increase [r][c]
 				gr.grammar[r][c] = gr.grammar[r][c]*(1-rate) + 1*rate;
@@ -801,17 +688,6 @@ public static void learn_batch_maximization() {
 				gr.grammar[c][r] = gr.grammar[c][r]*(1-rate) + 1*rate;
 				gr.grammar[r][c] = 1-gr.grammar[c][r];
 			    }
-			    /*
-			    //just increment the successful ranks a la Yang
-			    if(output_counts[r][c] == 1){ //increase [r][c]
-				gr.grammar[c][r] = gr.grammar[c][r]*.99;
-				gr.grammar[r][c] = 1-gr.grammar[c][r];
-			    }else{ //increase [c][r]...
-				gr.grammar[r][c] = gr.grammar[r][c]*.99;
-				gr.grammar[c][r] = 1-gr.grammar[r][c];
-			    }
-
-			    */
 			}
 		    }
 		}
@@ -824,8 +700,7 @@ public static void learn_batch_maximization() {
 
 	    if(i % 1000 == 0){
 		System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
-		//rate = rate*.99;
-		//now going to examine resulting grammar	    
+		//now going to examine resulting grammar
 		if (evaluate_grammar(100, i)){
 		    System.out.println("-reached perfection early ----- exiting now");
 		    break;
@@ -847,15 +722,12 @@ public static void learn_batch_maximization() {
     }
 
     public static void learn() { //updates by approximating P(ab), P(ba) over many samples
-	
+
 	// there are i iterations of sampling and updating
 	double tot_err = 0.0;
 	double corr_tot = 0;
 	double bias = .01 * sample_size;
 	double[][] single = gr.generate_extension();
-	/*for (int b = 0; b < 1000; b++){
-	    single = gr.generate_extension1(seed);
-	    }*/
 	double rate = .5;
 	int i = 0;
 	for (i = 0; i < num_samples; i++) {
@@ -864,9 +736,8 @@ public static void learn_batch_maximization() {
 	    System.out.println("Starting iteration " + i);
 	    double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
 	    double corr_samp = 0;
-		
+
 	    double[][] sample_counts = new double[gr.grammar.length][gr.grammar.length];
-	    //rate = rate * 0.8;
 	    //each iteration consists of s samples
 	    double[] sample_outputs = new double[df.outputs.length];
 	    for (int s = 0; s < sample_size; s++) {
@@ -901,26 +772,14 @@ public static void learn_batch_maximization() {
 		boolean looking = true;
 		int count = 0;
 		single = gr.generate_extension();
-		/*for (int b = 0; b < 1000; b++){
-		    double[][] temp = gr.generate_extension1(single);
-		    if (temp != null){
-			single = temp;
-		    }
-		}
-		*/
 		double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
 		double acceptance = 0.0;
 		while ((looking) && (count < 100)){
 		    //sample a random ranking
-		    /*double[][] temp = gr.generate_extension1(single);
-		    if (temp != null){
-			single = temp;
-			acceptance++;
-		    }*/
 		    single = gr.generate_extension();
 		    int[] rank = gr.find_order(single);
 		    //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
-		    
+
 		    //compute learner's winner and compare to actual output
 		    winner = optimize(input, rank);
 		    count++;
@@ -964,26 +823,17 @@ public static void learn_batch_maximization() {
 		//SILLY GAJA, put this in the found winner loop!
 		for(int r=0; r < gr.grammar.length; r++){
 		    for(int c=0; c < r; c++){
-			//corr_ranks_samp[r][c] += ((double)output_counts[r][c] + .0001)/((double)output_counts[r][c] + (double)output_counts[c][r] + .0002);
-			//corr_ranks_samp[c][r] += ((double)output_counts[c][r] + .0001)/((double)output_counts[r][c] + (double)output_counts[c][r] + .0002);
-
 			if(!(looking)){
-			    //double temprc = ((double)output_counts[r][c])/((double)output_counts[r][c] + (double)output_counts[c][r]);
-			    //System.out.println("for r,c = " + r + ", " + c + " adding " + temprc);
-			    //double tempcr = ((double)output_counts[c][r])/((double)output_counts[r][c] + (double)output_counts[c][r]);
-			    //System.out.println("for c,r  = " + c + ", " + r + " adding " + tempcr);
 			    corr_ranks_samp[r][c] += ((double)output_counts[r][c])/((double)output_counts[r][c] + (double)output_counts[c][r]);
 			    corr_ranks_samp[c][r] += ((double)output_counts[c][r])/((double)output_counts[c][r] + (double)output_counts[r][c]);
 			}else{
 			    corr_ranks_samp[r][c] += .5;
 			    corr_ranks_samp[c][r] += .5;
 			}
-			//output_counts[r][c] = output_counts[r][c]/(output_counts[r][c] + output_counts[c][r] + .0001);
-			//output_counts[c][r] = 1-output_counts[r][c];
 		    }
 		}
 		//System.out.println("For UR/Output:: " + input + "-->" + output.form + "-- The successful proportions are: \n" + gr.gramToString(output_counts));
-		
+
 		//System.out.println("Acceptance rate was :: " + (double)acceptance/1000);
 	    }
 	    double err = 0.0;
@@ -1001,14 +851,6 @@ public static void learn_batch_maximization() {
 
 	    //System.out.println("The sampled grammar is:\n" + gr.gramToString(gr.grammar));
 	    //System.out.println("The sampled proportions are: \n" + gr.gramToString(sample_counts));
-
-	    
-	    /*
-	    System.out.println("Outputs distribution was");
-	    for(int o=0; o < df.outputs.length; o++){
-		System.out.println(o + " :: " + sample_outputs[o]);
-	    }
-	    */
 	    for (int r=0; r < gr.grammar.length; r++) {
 		for (int c=0; c < r; c++) {
 		    double old_r = gr.grammar[r][c];
@@ -1042,7 +884,7 @@ public static void learn_batch_maximization() {
 		    }else if (gr.grammar[r][c] < .02){
 			gr.grammar[r][c] = 0.0;
 			gr.grammar[c][r] = 1.0;
-		
+
 		    }
 		    */
 		    if(rank_bias == 1){
@@ -1064,19 +906,19 @@ public static void learn_batch_maximization() {
 	    //bias = bias*(i+1)/(i+2);
 	    if(i % 1 == 0){
 		System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
-		
-		//now going to examine resulting grammar	    
+
+		//now going to examine resulting grammar
 		if (evaluate_grammar(100, i)){
 		    System.out.println("-reached perfection early ----- exiting now");
 		    break;
 		}
-		
+
 		System.out.println("Now evaluating mode grammar---");
 		double[][] temp = gr.grammar;
 		gr.grammar = gr.mode_grammar();
 		evaluate_grammar(10, i);
 		gr.grammar = temp;
-		
+
 	    }
 	}
 	//now going to examine resulting grammar
@@ -1089,14 +931,14 @@ public static void learn_batch_maximization() {
     }
 
     public static void learn_online() { //supposed to be the stepwise EM with mini-batch in Liang & Klein
-	
+
 	// there are i iterations of sampling and updating
-	
+
 	//this number determines the starting counts, amount of 'smoothing'
 	double init_count = 1;
 	double corr_tot = init_count;
 	double bias = .005*init_count;
-	
+
 	double[][] single = gr.generate_extension();
 	double[][] rank_counts = new double[gr.grammar.length][gr.grammar.length];
 	double[][] batch_counts = new double[gr.grammar.length][gr.grammar.length];
@@ -1126,7 +968,7 @@ public static void learn_batch_maximization() {
 		}
 	    }
 	    //System.out.println("Sampled output form: " + output.form);
-	    
+
 	    //sample a ur for the output form
 	    String input = "";
 	    rand = Math.random();
@@ -1138,7 +980,7 @@ public static void learn_batch_maximization() {
 		}
 	    }
 	    //System.out.println("\tSampled a UR form: " + input);
-	    
+
 	    boolean looking = true;
 	    int count = 0;
 
@@ -1148,7 +990,7 @@ public static void learn_batch_maximization() {
 		if (single != null){
 		    int[] rank = gr.find_order(single);
 		    //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
-		    
+
 		    //compute learner's winner and compare to actual output
 		    winner = optimize(input, rank);
 		    count++;
@@ -1162,20 +1004,20 @@ public static void learn_batch_maximization() {
 				if(single[r][c] == 1){// this means r >> c in this ranking
 				    output_counts[r][c]++;
 				    //add counts for the correct ranking into rank counts
-				    
+
 				}
 			    }
 			}
 		    }
 		}
 	    }
-	    
+
 	    //if parsing was successful, update grammar
-	    if (looking ==false){ 
+	    if (looking ==false){
 		//update grammar using new counts
 		for (int r=0; r < gr.grammar.length; r++) {
 		    for (int c=0; c < gr.grammar.length; c++) {
-			
+
 			double eta = Math.pow((i + 2), -.5);
 
 			double new_rc = ((double)output_counts[r][c])/((double)output_counts[r][c] + (double)output_counts[c][r]);
@@ -1188,29 +1030,13 @@ public static void learn_batch_maximization() {
 			batch_counts[r][c] += new_rc;
 			batch_counts[c][r] += new_cr;
 
-			/* //totally online, no mini-batch
-
-			double new_rc = ((double)output_counts[r][c])/((double)output_counts[r][c] + (double)output_counts[c][r]);
-			double new_cr = ((double)output_counts[c][r])/((double)output_counts[c][r] + (double)output_counts[r][c]);
-			if(looking){
-			    new_rc = .5;
-			    new_cr = .5;
-			}
-
-			rank_counts[r][c] = eta*new_rc + ((double)1.0-eta)*rank_counts[r][c];
-			rank_counts[c][r] = eta*new_cr + ((double)1.0-eta)*rank_counts[c][r];
-			
-			gr.grammar[r][c] = (rank_counts[r][c])/(rank_counts[r][c] + rank_counts[c][r]);  //unbiased complete re-estimation
-			gr.grammar[c][r] = 1-gr.grammar[r][c];
-			*/
-
 			if((i+1) % batch == 0){ //re-estimate after batch
 			    new_rc = ((double)batch_counts[r][c])/((double)batch_counts[r][c] + (double)batch_counts[c][r] + .0001);
 			    new_cr = ((double)batch_counts[c][r])/((double)batch_counts[c][r] + (double)batch_counts[r][c] + .0001);
-			    
+
 			    rank_counts[r][c] = eta*new_rc + ((double)1.0-eta)*rank_counts[r][c];
 			    rank_counts[c][r] = eta*new_cr + ((double)1.0-eta)*rank_counts[c][r];
-			    
+
 			    gr.grammar[r][c] = (rank_counts[r][c])/(rank_counts[r][c] + rank_counts[c][r]);  //unbiased complete re-estimation
 			    gr.grammar[c][r] = 1-gr.grammar[r][c];
 
@@ -1228,7 +1054,7 @@ public static void learn_batch_maximization() {
 		System.out.println ("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
 		System.exit(-1);
 	    }
-	    
+
 	    //now going to examine resulting grammar
 	    if ((i % 100) == 0){
 		System.out.println("Finished iteration " + i);
@@ -1236,9 +1062,9 @@ public static void learn_batch_maximization() {
 		if (evaluate_grammar(100, i)){
 		    System.out.println("-reached perfection early ----- exiting now");
 		    break;
-		}    	
+		}
 	    }
-	    
+
 	}
 	//now going to examine resulting grammar
 	System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
@@ -1254,7 +1080,7 @@ public static void learn_online_pos_neg() {
 	double[][] successes = new double[gr.grammar.length][gr.grammar.length];
 	double[][] failures = new double[gr.grammar.length][gr.grammar.length];
 
-	// there are i iterations of sampling and updating	
+	// there are i iterations of sampling and updating
 	for (i = 0; i < num_samples; i++) {
 	    //sample an output form
 	    DistFile.Output output = null;
@@ -1270,7 +1096,7 @@ public static void learn_online_pos_neg() {
 		}
 	    }
 	    //System.out.println("Sampled output form: " + output.form);
-	    
+
 	    //sample a ur for the output form
 	    String input = "";
 	    rand = Math.random();
@@ -1282,92 +1108,15 @@ public static void learn_online_pos_neg() {
 		}
 	    }
 	    //System.out.println("\tSampled a UR form: " + input);
-	    
+
 	    //sample a random ranking
 	    double[][] single = gr.generate_extension();
 	    int[] rank = gr.find_order(single);
 	    //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
-		
+
 	    //compute learner's winner and compare to actual output
 	    winner = optimize(input, rank);
-	    /*
-	    //if equal, update grammar, rewarding current ranking (Linear reward)
-	    if (winner.equals(output.form)){
-		for(int r=0; r < gr.grammar.length; r++){
-		    for(int c=0; c < r; c++){
-			if(single[r][c] == 1){ // this means r >> c in this ranking
-			    double p = gr.grammar[r][c];
-			    gr.grammar[r][c] = p + rate * (1.0 - p);
-			    gr.grammar[c][r] = 1.0 - gr.grammar[r][c];
-			}else{ // this means c >> r in this ranking
-			    double p = gr.grammar[c][r];
-			    gr.grammar[c][r] = p + rate * (1.0 - p);
-			    gr.grammar[r][c] = 1.0 - gr.grammar[c][r];
-			}
-		    }
-		}
-	    } else{ //parsing was unsuccessful... punish ranking
-		for(int r=0; r < gr.grammar.length; r++){
-		    for(int c=0; c < r; c++){
-			if(single[r][c] == 1){ // this means r >> c in this ranking
-			    double p = gr.grammar[r][c];
-			    gr.grammar[r][c] = p * (1.0 - rate);
-			    gr.grammar[c][r] = 1.0 - gr.grammar[r][c];
-			}else{ // this means c >> r in this ranking
-			    double p = gr.grammar[c][r];
-			    gr.grammar[c][r] = p * (1.0 - rate);
-			    gr.grammar[r][c] = 1.0 - gr.grammar[c][r];
-			}
-		    }
-		}
-	    }
-	    */
-	    /*
-	    // Count linear without cancelling neg and pos
-	    if (winner.equals(output.form)){
-		for(int r=0; r < gr.grammar.length; r++){
-		    for(int c=0; c < r; c++){
-			if(single[r][c] == 1){ // this means r >> c in this ranking
-			    successes[r][c] += 1;
-			    if(successes[r][c] > sample_size){
-				gr.grammar[r][c] = gr.grammar[r][c] + (rate)  * (1- gr.grammar[r][c]);
-				gr.grammar[c][r] = 1- gr.grammar[r][c];
-				successes[r][c] = 0;
-			    }
-			}else{ // this means c >> r in this ranking
-			    successes[c][r] += 1;
-			    if(successes[c][r] > sample_size){
-				gr.grammar[c][r] = gr.grammar[c][r] + (rate)  * (1- gr.grammar[c][r]);
-				gr.grammar[r][c] = 1- gr.grammar[c][r];
-				successes[c][r] = 0;
-			    }
-			}
-		    }
-		}
-	    } else{ //parsing was unsuccessful... punish ranking
-		for(int r=0; r < gr.grammar.length; r++){
-		    for(int c=0; c < r; c++){
-			if(single[r][c] == 1){ // this means r >> c in this ranking
-			    failures[r][c] +=1;
-			    if(failures[r][c] > sample_size){
-				gr.grammar[r][c] = (1-rate) * gr.grammar[r][c];
-				gr.grammar[c][r] = 1- gr.grammar[r][c];
-				failures[r][c] = 0;
-			    }
-			}else{ // this means c >> r in this ranking
-			    failures[c][r] +=1;
-			    if(failures[c][r] > sample_size){
-				gr.grammar[c][r] = (1-rate) * gr.grammar[c][r];
-				gr.grammar[r][c] = 1- gr.grammar[c][r];
-				failures[c][r] = 0;
-			    }
-			}
-		    }
-		}
-	    }
-	    */
 
-	    
 	    // Bayes' update
 	    if (winner.equals(output.form)){
 		for(int r=0; r < gr.grammar.length; r++){
@@ -1394,7 +1143,7 @@ public static void learn_online_pos_neg() {
 			    tries[r][c] = 2;
 			    tries[c][r] = 2;
 			}
-			
+
 		    }
 		}
 	    } else{ //parsing was unsuccessful... punish ranking
@@ -1405,7 +1154,7 @@ public static void learn_online_pos_neg() {
 			}else{ // this means c >> r in this ranking
 			    tries[c][r] +=1;
 			}
-	
+
 			if((i % sample_size) == 0){
 			    double rc = successes[r][c]/tries[r][c];
 			    double cr = successes[c][r]/tries[c][r];
@@ -1425,43 +1174,6 @@ public static void learn_online_pos_neg() {
 		    }
 		}
 	    }
-		/*
-	    } else{ //parsing was unsuccessful... punish ranking
-		for(int r=0; r < gr.grammar.length; r++){
-		    for(int c=0; c < r; c++){
-			if(single[r][c] == 1){ // this means r >> c in this ranking
-			    double p = gr.grammar[c][r];
-			    gr.grammar[c][r] = p + rate * (1.0 - p);
-			    gr.grammar[r][c] = 1.0 - gr.grammar[c][r];
-			}else{ // this means c >> r in this ranking
-			    double p = gr.grammar[r][c];
-			    gr.grammar[r][c] = p + rate * (1.0 - p);
-			    gr.grammar[c][r] = 1.0 - gr.grammar[r][c];
-			}
-		    }
-		}	  
-		} */
-	    /*
-	    //Stupid learning:
-	    //if equal, keep the random ranking
-	    //if not equal, go back to .5
-	    if ((winner.equals(output.form))){
-		for(int r=0; r < gr.grammar.length; r++){
-		    for(int c=0; c < r; c++){
-			gr.grammar[r][c] = single[r][c];
-			gr.grammar[c][r] = single[c][r];       	
-		    }
-		}
-	    }else {
-		for(int r=0; r < gr.grammar.length; r++){
-		    for(int c=0; c < r; c++){
-			gr.grammar[r][c] = 0.5;
-			gr.grammar[c][r] = 0.5;       	
-		    }
-		}
-	    }
-	    */
-
 	    if (! gr.makeMeConsistent()) {
 		System.out.println ("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
 		System.exit(-1);
@@ -1475,22 +1187,15 @@ public static void learn_online_pos_neg() {
 		if (evaluate_grammar(100, i)){
 		    System.out.println("-reached perfection early ----- exiting now");
 		    break;
-		}     	
-		/*
-		System.out.println("Now evaluating mode grammar---");
-		double[][] temp = gr.grammar;
-		gr.grammar = gr.mode_grammar();
-		evaluate_grammar(10, i);
-		gr.grammar = temp;
-		*/
+		}
 	    }
-	    
+
 	}
 	//now going to examine resulting grammar
 	System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
 	evaluate_grammar(1000, i);
     }
- 
+
     public static boolean evaluate_grammar(int s, int i) {
 	return evaluate_grammar(s, i, false);
     }
@@ -1502,12 +1207,12 @@ public static void learn_online_pos_neg() {
 	int corr = 0;
 	double error = 0.0;
 	for(int o=0; o < df.outputs.length; o++){ //for each output form
-	    
+
 	    DistFile.Output output = null;
 	    String winner = "";
 	    double rand = Math.random();
 	    output = df.outputs[o];
-	    
+
 	    //sample s times to check distribution
 	    for( int c=0; c<s; c++){
 		//sample a ur for the output form
@@ -1524,18 +1229,16 @@ public static void learn_online_pos_neg() {
 		double[][] single = gr.generate_extension();
 		if (single != null){
 		    int[] rank = gr.find_order(single);
-		
+
 		    //compute learner's winner and compare to actual output
 		    winner = optimize(input, rank);
-		
+
 		    //if equal, add matrix of ranking into collected samples
 		    if (winner.equals(output.form)){
 			corr++;
 		    }
 		    tot++;
-		} //else{
-		//System.out.println("BAD::Found inconsistent sample during evaluation for grammar:\n" + gr.gramToString(gr.grammar));
-		//}
+		}
 	    }
 	    if(printout){
 		System.out.println("Output " + output.form + " " + ((float)corr/tot) + " correct - actual freq is " + output.freq);
@@ -1546,15 +1249,15 @@ public static void learn_online_pos_neg() {
 	    tot=0;
 	}
 	System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
-	
-	recent_error = error;
+
+        double recent_error = error;
 	if (error == 0.0){
 	    return true;
 	}else{
 	    return false;
 	}
     }
-    
+
     public static String optimize (String input, int[] rank) {
 
 	//find the tableau
@@ -1564,7 +1267,7 @@ public static void learn_online_pos_neg() {
 		tab = gf.tableaux[i];
 	    }
 	}
-	
+
 	//create array that stores information about which candidates are still in the running
 	int[] survivors = new int[tab.cands.length];
 	int num_sur = survivors.length;
@@ -1604,8 +1307,6 @@ public static void learn_online_pos_neg() {
 		//System.out.println("winner for input " + input + " and rank " + gr.rankToString(rank) + " is " + winner);
 	    }
 	}
-
 	return winner;
     }
-
 }
