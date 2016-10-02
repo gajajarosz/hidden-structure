@@ -282,7 +282,7 @@ public class RandomExtension {
 		int size = grammar.length;
 		double[][] ext = cloneGrammar(gram);
 
-		//System.out.println("The current grammar is:\n" + this.gramToString(ext));
+		//System.out.println("The current grammar is:\n" + this.toString(ext));
 
 		// Shuffle the pairs.  We don't use Random.shuffle because we want to shuffle i_cor and j_cor together
 		for (int k = 0; k < (i_cor.length - 1); k++) {
@@ -316,14 +316,14 @@ public class RandomExtension {
 						return null;
 					}
 				}
-				//System.out.println("\tGenerateExtention :: Setting (" + i_pos + ", " + j_pos + "):\n" + gramToString(ext));
+				//System.out.println("\tGenerateExtention :: Setting (" + i_pos + ", " + j_pos + "):\n" +ext);
 				if (!makeConsistent(ext, i_pos, j_pos)) {
 					return null;
 				}
 			}
 		}
 
-		//System.out.println(gramToString(ext));
+		//System.out.println(toString(ext));
 
 		return ext;
 	}
@@ -391,7 +391,7 @@ public class RandomExtension {
 	public void unBias(double[][] ext, int i_pos, int j_pos) {
 		int bo = (int) ext[i_pos][j_pos];
 
-		//System.out.println("Making Unbiased for: (" + i_pos + ", " + j_pos + "):\n" + gramToString(ext));
+		//System.out.println("Making Unbiased for: (" + i_pos + ", " + j_pos + "):\n" +ext);
 
 		// go through the row and unbias
 		for (int j = 0; j < ext.length; j++) {
@@ -407,7 +407,7 @@ public class RandomExtension {
 			}
 		}
 
-		//System.out.println("Result: (" + i_pos + ", " + j_pos + "):\n" + gramToString(ext));
+		//System.out.println("Result: (" + i_pos + ", " + j_pos + "):\n" +ext);
 
 	}
 
@@ -426,7 +426,7 @@ public class RandomExtension {
 					//System.out.println("Tried to make consistent for (" + i_pos + ", " + j_pos + ") -- setting to " + bo);
 					return false;
 				}
-				//System.out.println("Making Consistent: (" + i_pos + ", " + col + "):\n" + gramToString(ext));
+				//System.out.println("Making Consistent: (" + i_pos + ", " + col + "):\n" +ext);
 				if (!makeConsistent(ext, i_pos, col)) {
 					return false;
 				}
@@ -444,7 +444,7 @@ public class RandomExtension {
 					//System.out.println("Tried to make consistent for (" + i_pos + ", " + j_pos + ") -- setting to " + bo);
 					return false;
 				}
-				//System.out.println("Making Consistent: (" + j_pos + ", " + col + "):\n" + gramToString(ext));
+				//System.out.println("Making Consistent: (" + j_pos + ", " + col + "):\n" +ext);
 				if (!makeConsistent(ext, j_pos, col)) {
 					return false;
 				}
@@ -469,7 +469,7 @@ public class RandomExtension {
 				//System.out.println("\tChanging prob of target to " +  new_jx);
 
 				double new_xi = xij / (xij + ixj + ijx);
-				//System.out.println("Before Compensate:\n" + gramToString(ext));
+				//System.out.println("Before Compensate:\n" +ext);
 				//mod_gram(ext, j_pos, x,new_jx);
 
 				ext[j_pos][x] = 0.9 * ext[j_pos][x] + 0.1 * new_jx;
@@ -477,7 +477,7 @@ public class RandomExtension {
 				ext[x][i_pos] = 0.9 * ext[x][i_pos] + 0.1 * new_xi;
 				ext[i_pos][x] = 1 - ext[x][i_pos];
 
-				//System.out.println("After Compensate:\n" + gramToString(ext));
+				//System.out.println("After Compensate:\n" +ext);
 			}
 		}
 	}
@@ -488,7 +488,7 @@ public class RandomExtension {
 		if (((val == 1.0) && (old == 0.0)) ||
 				((val == 0.0) && (old == 1.0))) {
 			//System.out.println("\t\tTried resetting from " + old + " to " + val + " for constraints: " + i + ", " + j);
-			//System.out.println("gram was:\n" + gramToString(gram));
+			//System.out.println("gram was:\n" + gram);
 			return false;
 		} else {
 			gram[i][j] = val;
@@ -499,18 +499,6 @@ public class RandomExtension {
 	}
 
 	public String toString() {
-		return gramToString(grammar);
-	}
-
-	public String rankToString(int[] rank) {
-		String toprint = "" + rank[0];
-		for (int i = 1; i < rank.length; i++) {
-			toprint += " >> " + rank[i];
-		}
-		return toprint;
-	}
-
-	public String gramToString(double[][] grammar) {
 		NumberFormat formatter = NumberFormat.getNumberInstance();
 		int size = grammar.length;
 		double[] weight = new double[size];
@@ -524,7 +512,6 @@ public class RandomExtension {
 		String to_return = "     ";
 
 		for (int i = 0; i < size; i++) {//constraint names at top
-			//	    to_return += " " + formatter.format((double) i);
 			to_return += " " + this.constraints[i];
 		}
 		to_return += "\n";
@@ -568,5 +555,14 @@ public class RandomExtension {
 		}
 		return to_return;
 	}
+
+	public String rankToString(int[] rank) {
+		String toprint = "" + rank[0];
+		for (int i = 1; i < rank.length; i++) {
+			toprint += " >> " + rank[i];
+		}
+		return toprint;
+	}
+
 }
 

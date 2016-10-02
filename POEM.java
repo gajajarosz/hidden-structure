@@ -112,7 +112,7 @@ public class POEM {
 									}
 								}
 							} //else{
-							//System.out.println("Found inconsistent sample for parameters " + r + " >> " + c + "----Grammar:\n" + gr.gramToString(gr.grammar));
+							//System.out.println("Found inconsistent sample for parameters " + r + " >> " + c + "----Grammar:\n" + gr);
 							//}
 						}
 						//done sampling r >> c...
@@ -143,7 +143,7 @@ public class POEM {
 									}
 								}
 							} //else{
-							//System.out.println("Found inconsistent sample for parameters " + c + " >> " + r + "----Grammar:\n" + gr.gramToString(gr.grammar));
+							//System.out.println("Found inconsistent sample for parameters " + c + " >> " + r + "----Grammar:\n" + gr);
 							//}
 						}
 						//done sampling c >> r...
@@ -203,7 +203,7 @@ public class POEM {
 			}
 
 			if (verbose) {
-				System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+				System.out.println("The new grammar is:\n" + gr);
 			}
 			if (i % 1 == 0) {
 
@@ -229,7 +229,7 @@ public class POEM {
 
 		//now going to examine resulting grammar
 		System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-		System.out.println("The final grammar is:\n" + gr.gramToString(gr.grammar));
+		System.out.println("The final grammar is:\n" + gr);
 		evaluate_grammar(10000, i, true);
 	}
 
@@ -344,7 +344,7 @@ public class POEM {
 				System.exit(-1);
 			}
 
-			System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+			System.out.println("The new grammar is:\n" + gr);
 			//now going to examine resulting grammar
 			System.out.println("------------------EVALUATING--------------GRAMMAR------AT-------ITERATION-------" + i);
 			if (evaluate_grammar(1000, i)) {
@@ -531,7 +531,7 @@ public class POEM {
 			if (i % 1 == 0) {
 
 				if (verbose) {
-					System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+					System.out.println("The new grammar is:\n" + gr);
 				}
 				//now going to examine resulting grammar
 
@@ -552,7 +552,7 @@ public class POEM {
 		//now going to examine resulting grammar
 
 		System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-		System.out.println("The final grammar is:\n" + gr.gramToString(gr.grammar));
+		System.out.println("The final grammar is:\n" + gr);
 		evaluate_grammar(10000, i, true);
 	}
 
@@ -656,7 +656,7 @@ public class POEM {
 			}
 
 			if (i % 1000 == 0) {
-				System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+				System.out.println("The new grammar is:\n" + gr);
 				//now going to examine resulting grammar
 				if (evaluate_grammar(100, i)) {
 					System.out.println("-reached perfection early ----- exiting now");
@@ -797,7 +797,7 @@ public class POEM {
 			System.out.println("Sampling Error is " + err);
 			System.out.println("Average Sampling Error per iteration is " + tot_err);
 
-			//System.out.println("The sampled grammar is:\n" + gr.gramToString(gr.grammar));
+			//System.out.println("The sampled grammar is:\n" + gr);
 			//System.out.println("The sampled proportions are: \n" + gr.gramToString(sample_counts));
 			for (int r = 0; r < gr.grammar.length; r++) {
 				for (int c = 0; c < r; c++) {
@@ -853,7 +853,7 @@ public class POEM {
 
 			//bias = bias*(i+1)/(i+2);
 			if (i % 1 == 0) {
-				System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+				System.out.println("The new grammar is:\n" + gr);
 
 				//now going to examine resulting grammar
 				if (evaluate_grammar(100, i)) {
@@ -1004,7 +1004,7 @@ public class POEM {
 			//now going to examine resulting grammar
 			if ((i % 100) == 0) {
 				System.out.println("Finished iteration " + i);
-				System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+				System.out.println("The new grammar is:\n" + gr);
 				if (evaluate_grammar(100, i)) {
 					System.out.println("-reached perfection early ----- exiting now");
 					break;
@@ -1127,7 +1127,7 @@ public class POEM {
 			if ((i % 100000) == 0) {
 				System.out.println("Finished iteration " + i);
 				//rate = rate * .8;
-				System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+				System.out.println("The new grammar is:\n" + gr);
 				if (evaluate_grammar(100, i)) {
 					System.out.println("-reached perfection early ----- exiting now");
 					break;
