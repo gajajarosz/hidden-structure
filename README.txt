@@ -47,11 +47,11 @@ VERBOSE?
 
 To run STOTEM, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT newRIP 2 0
+java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT newRIP 2 0 > output.txt
-java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT newRIP 2 0 | less
+java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0 > output.txt
+java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
@@ -82,9 +82,9 @@ LEARNING RATE
  - set this to OT, HG, or ME (maxent)
 
 LEARNER
- newRIP - is what I called EIP in Jarosz (2013)
- oldRIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
- oldRIPovert - is what I called RRIP in Jarosz (2013)
+ EIP - Jarosz (2013)
+ RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
+ RRIP - is what I called RRIP in Jarosz (2013)
  randRIP - this is a baseline model that doesn’t bother parsing; when there’s an error is simply generates another output randomly and uses that as a ‘winner’ to make an update.
 
  NOISE
