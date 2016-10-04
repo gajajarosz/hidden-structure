@@ -1,3 +1,5 @@
+\\TODO: find hardcoded parameter in POEM
+
 This code is not for public distribution. It is under development and is not very user-friendly. Use at your own risk.
 
 To run POEM, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
@@ -18,12 +20,16 @@ GRAMMAR FILE
 DISTRIBUTION FILE
 - should be in the same format as provided TS1_Dist.txt
 
-SAMPLE SIZE
+SAMPLE SIZE \\TODO: figure out more intuitive option here to distinguish batch and online
 - this means different things for different learning models, but higher numbers mean slower runtime and more consistent performance
 - The batch model (learner 1) should be set to something like 20-100
 - For other model (learner 2), this indicates how many data forms are sampled and processed before the grammar is updated. If it’s set to 1, it will be an online learner, but it can also be set higher to take larger samples before updating.
 
-ITERATIONS
+\\While count < 50 is the bit in POEM where sample size is set for online
+
+\\TODO: add grammar sample size, remove sample size for online and batch (because batch walks through all data)
+
+ITERATIONS\\TODO: figure out difference for batch and online
 - this the number of passes through the data for batch algorithms and the number of times individual data forms are processed for online algorithms
 - reasonable values are something like 100-1000
 
@@ -32,7 +38,7 @@ INITIAL BIAS
 - set this to 0 by default
 
 RANK BIAS
-- set this to 0. This was something I tried for one of the models, but it didn’t work out.
+- set this to 0. This was something I tried for one of the models, but it didn’t work out. \\TODO: take out?
 
 LEARNER
 1 - batch Expectation Driven Learner in Jarosz (submitted). Runs the learning function learn_batch_parameter_EM().
@@ -40,10 +46,10 @@ LEARNER
 3-4 are different learning models that I haven’t published and don’t work as well.
 
 SPEED-UP?
-- set this to 0. If you set it to 1, this will try to increase learning rate for learning model 1.
+- set this to 0. If you set it to 1, this will try to increase learning rate for learning model 1. \\TODO: remove
 
 VERBOSE?
-- setting this to 0 will suppress most of the output making things run faster if all you care about is the final grammar. If you want it to print progress, set this to 1.
+- setting this to 0 will suppress most of the output making things run faster if all you care about is the final grammar. If you want it to print progress, set this to 1. \\TODO: add to STOTEM too
 
 To run STOTEM, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
@@ -68,7 +74,7 @@ DISTRIBUTION FILE
  - should be in the same format as provided TS1_Dist.txt
 
 SAMPLE SIZE
-- set this to 1. This shouldn’t be a parameter.
+- set this to 1. This shouldn’t be a parameter. \\TODO: remove
 
 ITERATIONS
  - this is the number of times individual data forms are processed algorithms
