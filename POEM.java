@@ -47,13 +47,13 @@ public class POEM {
 			System.out.println("\nGRAMMAR:\n" + gr);
 		}
 		if (learner == 1) {
-			learn_batch_parameter_EM();
+			EDL_batch();
 		} else if (learner == 2) {
-			learn_sample_parameter();
+			EDL_online();
 		}
 	}
 
-	public static void learn_batch_parameter_EM() {
+	public static void EDL_batch() {
 		// there are i iterations of EM
 
 		long startTime = System.currentTimeMillis();
@@ -221,7 +221,7 @@ public class POEM {
 		evaluate_grammar(10000, i, true);
 	}
 
-	public static void learn_sample_parameter() {
+	public static void EDL_online() {
 
 		// there are i iterations of sampling and updating
 		//double corr_tot = 0;

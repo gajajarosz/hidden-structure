@@ -11,7 +11,7 @@ Output: none
 +Calls learn
 +Calls learn_online_pos_neg
 
-Learn_batch_parameter_EM:
+EDL_batch:
 Input: none
 Output: none
 +Runs i iterations of EM:
@@ -26,10 +26,7 @@ Output: none
 	+Calls evaluate_grammar to see how new grammar performs
 +Evaluate final grammar using evaluate_grammar
 
-Learn_batch_maximization:
-Never used
-
-Learn_sample_parameter:
+EDL_online:
 Input: none
 Output: none
 +Runs i iterations of sampling and updating:
@@ -40,43 +37,10 @@ Output: none
 		+Samples a number of grammars using generate_extension and find_order
 		+Calls optimize with sampled input and ranking
 	+Reranks constraints in other order and repeats
-	+If one of the rankings is good enough, add to grammar (how is the scaling? Is the learning rate slower?)
+	+If one of the rankings is good enough, add to grammar
 	+Check consistency using makeMeConsistent
 	+Evaluate grammar using evaluate_grammar
 +Evaluate final grammar using evaluate_grammar
-
-Learn_online_new:
-Never used
-
-Learn:
-Input: none
-Output: none
-+Updates by approximating P(ab), P(ba) over many samples
-+Runs i iterations:
-	+Samples an output and an underlying form
-	+Samples a constraint ranking using generate_extension and find_order
-		+Computes winner using optimize
-		+Compares winner to output and updates if correct
-	+Re-estimates when a winner is found
-+Calculates sampling error
-+Updates grammar?
-+Evaluates grammar
-
-Learn_online:
-Never used
-
-Learn_online_pos_neg:
-Input: none
-Output: none
-+Naive parameter learner from Yang 2002
-+Runs i iterations:
-	+Samples an output and an underlying form
-	+Samples a random cronstraint ranking using generate_extension and find_order
-	+Computes winner using optimize
-	+If winner is output, add constraint ranking to list of successful constraints; if not, punish ranking
-	+Checks to make sure grammar is consistent using makeMeConsistent
-	+Evaluates grammar using evaluate_grammar
-+Evaluates final grammar using evaluate_grammar
 
 Evaluate_grammar:
 Input: sample size, number of iterations, verbose?

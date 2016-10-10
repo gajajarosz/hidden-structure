@@ -32,8 +32,8 @@ INITIAL BIAS
 - set this to 0 by default
 
 LEARNER
-1 - batch Expectation Driven Learner in Jarosz (submitted). Runs the learning function learn_batch_parameter_EM().
-2 - online Expectation Driven Learner in Jarosz (submitted). Runs the learning function learn_sample_parameter().
+1 - batch Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_batch().
+2 - online Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_online().
 
 VERBOSE?
 - 0 will suppress most of the output, which will make the program faster.
