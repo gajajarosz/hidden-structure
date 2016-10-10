@@ -28,9 +28,10 @@ SAMPLE SIZE \\TODO: figure out more intuitive option here to distinguish batch a
 
 \\While count < 50 is the bit in POEM where sample size is set for online
 
-\\TODO: add grammar sample size, remove sample size for online and batch (because batch walks through all data)
+\\TODO: remove sample size for online and batch (because batch walks through all data)
 GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
+- reasonable values are 50-1000
 
 ITERATIONS\\TODO: figure out difference for batch and online
 - this the number of passes through the data for batch algorithms and the number of times individual data forms are processed for online algorithms
