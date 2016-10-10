@@ -1,4 +1,4 @@
-// usage: java STOTEM grammar_file dist_file sample_size num_samples learning_rate model learner noise NegOK?
+// usage: java STOTEM grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
 
@@ -13,12 +13,12 @@ public class STOTEM {
     public static boolean NegOK = true;
     public static String learner = "EIP";
     public static double noise = 1;
-    private static int sample_size = 0;
     private static int num_samples = 0;
+    public static boolean verbose = true;
 
     public static void main(String[] args) {
         if (args.length != 9) {
-            System.out.println("usage: java STOTEM grammar_file dist_file sample_size num_samples learning_rate model learner noise NegOK?");
+            System.out.println("usage: java STOTEM grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?");
             System.exit(-1);
         }
 
@@ -29,13 +29,13 @@ public class STOTEM {
         df = new DistFile(args[1]);
         System.out.println("\nLEXICON:\n" + df);
 
-        sample_size = Integer.parseInt(args[2]);
-        num_samples = Integer.parseInt(args[3]);
-        rate = Double.parseDouble(args[4]);
-        model = args[5];
-        learner = args[6];
-        noise = Double.parseDouble(args[7]);
-        NegOK = Boolean.parseBoolean(args[8]);
+        num_samples = Integer.parseInt(args[2]);
+        rate = Double.parseDouble(args[3]);
+        model = args[4];
+        learner = args[5];
+        noise = Double.parseDouble(args[6]);
+        NegOK = Boolean.parseBoolean(args[7]);
+        verbose = Boolean.parseBoolean(args[8]);
 
         //initialize to uniform grammar
         gr = new STOT(gf);
@@ -56,217 +56,215 @@ public class STOTEM {
             System.out.println("Starting iteration " + i);
             //each iteration consists of s samples
             fail = 0;
-            for (int s = 0; s < sample_size; s++) {
 
-                //sample an output form: output
-                DistFile.Output output = null;
-                GrammarFile.Candidate winner = null;
-                boolean update = false;
-                double rand = Math.random();
-                for (int o = 0; o < df.outputs.length; o++) {
-                    rand -= df.outputs[o].relfreq;
-                    if (rand <= 0) {
-                        output = df.outputs[o];
-                        break;
+            //sample an output form: output
+            DistFile.Output output = null;
+            GrammarFile.Candidate winner = null;
+            boolean update = false;
+            double rand = Math.random();
+            for (int o = 0; o < df.outputs.length; o++) {
+                rand -= df.outputs[o].relfreq;
+                if (rand <= 0) {
+                    output = df.outputs[o];
+                    break;
+                }
+            }
+            //System.out.println("Sampled output form: " + output.form);
+
+            //sample a ur for the output form: input
+            String input = "";
+            rand = Math.random();
+            for (int in = 0; in < output.dist.length; in++) {
+                rand -= output.dist[in];
+                if (rand <= 0) {
+                    input = output.inputs[in];
+                    break;
+                }
+            }
+            //System.out.println("\tSampled a UR form: " + input);
+
+            //sample the current grammar's output for this form: optimal
+            GrammarFile.Candidate optimal = null;
+            single = gr.sample(NegOK, noise);
+            if (learner.equals("Baseline")) {
+                single = gr.grammar;
+            }
+            //System.out.println("\nSampled:\n" + gr.gramToString(single));
+            int[] rank = gr.find_order(single);
+            if (model.equals("OT")) {
+                optimal = optimize(null, input, rank);
+            } else if (model.equals("HG")) {
+                optimal = optimizeHG(null, input, single);
+            } else {
+                optimal = optimizeME(null, input, gr.grammar);
+            }
+            //System.out.println("The current optimal form is " + optimal.oform);
+            //System.out.println("The current grammar is:\n" + gr.gramToString(gr.grammar));
+
+            if ((learner.equals("RIP")) || (learner.equals("RRIP"))) {
+                //make a temporary tableau for this output
+                GrammarFile.Tableau tab = new GrammarFile.Tableau();
+                GrammarFile.Candidate[] temp_cands = new GrammarFile.Candidate[3136];
+                int cand_length = 0;
+                for (int k = 0; k < gf.tableaux.length; k++) {
+                    for (int j = 0; j < gf.tableaux[k].cands.length; j++) {
+                        if (gf.tableaux[k].cands[j].oform.equals(output.form)) {
+                            temp_cands[cand_length] = gf.tableaux[k].cands[j];
+                            cand_length++;
+                        }
                     }
-                }
-                //System.out.println("Sampled output form: " + output.form);
 
-                //sample a ur for the output form: input
-                String input = "";
-                rand = Math.random();
-                for (int in = 0; in < output.dist.length; in++) {
-                    rand -= output.dist[in];
-                    if (rand <= 0) {
-                        input = output.inputs[in];
-                        break;
-                    }
                 }
-                //System.out.println("\tSampled a UR form: " + input);
-
-                //sample the current grammar's output for this form: optimal
-                GrammarFile.Candidate optimal = null;
-                single = gr.sample(NegOK, noise);
-                if (learner.equals("Baseline")) {
-                    single = gr.grammar;
+                tab.cands = new GrammarFile.Candidate[cand_length];
+                for (int k = 0; k < cand_length; k++) {
+                    tab.cands[k] = temp_cands[k];
+                    //System.out.println("Found matching candidate: " + tab.cands[k].oform);
                 }
-                //System.out.println("\nSampled:\n" + gr.gramToString(single));
-                int[] rank = gr.find_order(single);
+                GrammarFile.Candidate wouldhavebeen = null;
                 if (model.equals("OT")) {
-                    optimal = optimize(null, input, rank);
+                    wouldhavebeen = optimize(tab, input, rank);
                 } else if (model.equals("HG")) {
-                    optimal = optimizeHG(null, input, single);
+                    wouldhavebeen = optimizeHG(tab, input, single);
                 } else {
-                    optimal = optimizeME(null, input, gr.grammar);
+                    wouldhavebeen = optimizeME(tab, input, gr.grammar);
                 }
-                //System.out.println("The current optimal form is " + optimal.oform);
-                //System.out.println("The current grammar is:\n" + gr.gramToString(gr.grammar));
 
-                if ((learner.equals("RIP")) || (learner.equals("RRIP"))) {
-                    //make a temporary tableau for this output
-                    GrammarFile.Tableau tab = new GrammarFile.Tableau();
-                    GrammarFile.Candidate[] temp_cands = new GrammarFile.Candidate[3136];
-                    int cand_length = 0;
-                    for (int k = 0; k < gf.tableaux.length; k++) {
-                        for (int j = 0; j < gf.tableaux[k].cands.length; j++) {
-                            if (gf.tableaux[k].cands[j].oform.equals(output.form)) {
-                                temp_cands[cand_length] = gf.tableaux[k].cands[j];
-                                cand_length++;
-                            }
-                        }
+                winner = wouldhavebeen;
 
-                    }
-                    tab.cands = new GrammarFile.Candidate[cand_length];
-                    for (int k = 0; k < cand_length; k++) {
-                        tab.cands[k] = temp_cands[k];
-                        //System.out.println("Found matching candidate: " + tab.cands[k].oform);
-                    }
-                    GrammarFile.Candidate wouldhavebeen = null;
+                if (learner.equals("RRIP")) {
+                    //RIP...
+                    single = gr.sample(NegOK, noise);//resample
+                    //System.out.println("\nSampled:\n" + gr.gramToString(single));
+                    rank = gr.find_order(single);
+                    //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
                     if (model.equals("OT")) {
-                        wouldhavebeen = optimize(tab, input, rank);
+                        winner = optimize(tab, input, rank);
                     } else if (model.equals("HG")) {
-                        wouldhavebeen = optimizeHG(tab, input, single);
+                        winner = optimizeHG(tab, input, single);
                     } else {
-                        wouldhavebeen = optimizeME(tab, input, gr.grammar);
+                        winner = optimizeME(tab, input, gr.grammar);
                     }
+                }
 
-                    winner = wouldhavebeen;
-
-                    if (learner.equals("RRIP")) {
-                        //RIP...
-                        single = gr.sample(NegOK, noise);//resample
-                        //System.out.println("\nSampled:\n" + gr.gramToString(single));
-                        rank = gr.find_order(single);
-                        //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
-                        if (model.equals("OT")) {
-                            winner = optimize(tab, input, rank);
-                        } else if (model.equals("HG")) {
-                            winner = optimizeHG(tab, input, single);
-                        } else {
-                            winner = optimizeME(tab, input, gr.grammar);
-                        }
-                    }
-
-                    if (winner.form.equals(wouldhavebeen.form)) {
-                        //System.out.println("Resampling found SAME winner - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
-                    } else {
-                        //System.out.println("Resampling found DIFFERENT overt form - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
-                    }
+                if (winner.form.equals(wouldhavebeen.form)) {
+                    //System.out.println("Resampling found SAME winner - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
+                } else {
+                    //System.out.println("Resampling found DIFFERENT overt form - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
+                }
 
 
-                    if (optimal.form.equals(winner.form)) {
-                        //System.out.println("RIPPed parse = " + winner.form + " matches Optimal = " + optimal.form);
-                    } else {
-                        if (learner.equals("RIP")) {
-                            //there's an error so update grammar
+                if (optimal.form.equals(winner.form)) {
+                    //System.out.println("RIPPed parse = " + winner.form + " matches Optimal = " + optimal.form);
+                } else {
+                    if (learner.equals("RIP")) {
+                        //there's an error so update grammar
+                        update = true;
+                    } else { //this learner only counts overt form mismatches as errors
+                        if (!(optimal.oform.equals(winner.oform))) {
                             update = true;
-                        } else { //this learner only counts overt form mismatches as errors
-                            if (!(optimal.oform.equals(winner.oform))) {
-                                update = true;
-                            } else {
-                                //System.out.println("Structural Mismatch Only - optimal:" + optimal.form + " vs ripped:" + winner.form);
-                            }
-                        }
-                    }
-
-                } else { // This is either EIP or randRIP or Baseline
-                    if (optimal.oform.equals(output.form)) {
-                        //do nothing, it matched..
-                        //System.out.println("Output = " + output.form + " matches optimal = " + optimal.oform);
-                    } else {
-                        //this is an error
-                        if ((learner.equals("EIP"))) {
-                            //determine a correct parse of the output form by sampling until a match is found
-                            boolean looking = true;
-                            int count = 0;
-                            while ((looking) && (count < 1000)) {
-                                single = gr.sample(NegOK, noise);
-                                //System.out.println("\nSampled:\n" + gr.gramToString(single));
-                                rank = gr.find_order(single);
-                                //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
-
-                                //compute learner's winner and compare to actual output
-                                if (model.equals("OT")) {
-                                    winner = optimize(null, input, rank);
-                                } else if (model.equals("HG")) {
-                                    winner = optimizeHG(null, input, single);
-                                } else {
-                                    winner = optimizeME(null, input, gr.grammar);
-                                }
-
-                                count++;
-                                //System.out.println("The current winner form is " + winner.oform);
-
-                                //if equal, exit and keep the ranking
-                                if (winner.oform.equals(output.form)) {
-                                    //System.out.println("Matched form = " + output.form);
-                                    //System.out.println("\twith sample:" + gr.gramToString(single));
-                                    looking = false;
-                                }
-                            }
-
-                            if (looking == false) {
-                                //found a matching parse, update grammar
-                                //System.out.println("UPDATING: Output = " + output.form + "parse = " + winner.form);
-                                update = true;
-                            } else {
-                                System.out.println("Never found a parse");
-                                fail++;
-                                if ((fail > 20) && (i > 100)) {
-                                    System.out.println("stuck in bad grammer ----- exiting now");
-                                    break;
-                                }
-                            }
-
                         } else {
-                            if (learner.equals("randRIP")) {
-                                //use random RIP
-                                //choose a random output for the input
-                                single = gr.sample(NegOK, noise);
-                                //System.out.println("\nSampled:\n" + gr.gramToString(single));
-                                rank = gr.find_order(single);
-                                //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
-
-                                if (model.equals("OT")) {
-                                    winner = optimize(null, input, rank);
-                                } else if (model.equals("HG")) {
-                                    winner = optimizeHG(null, input, single);
-                                } else {
-                                    winner = optimizeME(null, input, gr.grammar);
-                                }
-
-                                //now update grammar
-                                update = true;
-                            } else { //this will be the baseline
-                                gr.uni_grammar(gr.constraints.length);
-                                single = gr.sample(NegOK, noise);
-                                gr.grammar = single;
-                            }
+                            //System.out.println("Structural Mismatch Only - optimal:" + optimal.form + " vs ripped:" + winner.form);
                         }
                     }
                 }
-                // THIS IS THE NORMAL GLA (SYMMETRIC) UPDATE
-                if (update) {
-                    for (int c = 0; c < gr.grammar.length; c++) {
-                        if (model.equals("OT")) {
-                            if (winner.violations[c] > optimal.violations[c]) {
-                                gr.grammar[c] -= r;
-                                if (!(NegOK)) {
-                                    if (gr.grammar[c] < 0) {
-                                        gr.grammar[c] = 0;
-                                    }
-                                }
+
+            } else { // This is either EIP or randRIP or Baseline
+                if (optimal.oform.equals(output.form)) {
+                    //do nothing, it matched..
+                    //System.out.println("Output = " + output.form + " matches optimal = " + optimal.oform);
+                } else {
+                    //this is an error
+                    if ((learner.equals("EIP"))) {
+                        //determine a correct parse of the output form by sampling until a match is found
+                        boolean looking = true;
+                        int count = 0;
+                        while ((looking) && (count < 1000)) {
+                            single = gr.sample(NegOK, noise);
+                            //System.out.println("\nSampled:\n" + gr.gramToString(single));
+                            rank = gr.find_order(single);
+                            //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
+
+                            //compute learner's winner and compare to actual output
+                            if (model.equals("OT")) {
+                                winner = optimize(null, input, rank);
+                            } else if (model.equals("HG")) {
+                                winner = optimizeHG(null, input, single);
                             } else {
-                                if (winner.violations[c] < optimal.violations[c]) {
-                                    gr.grammar[c] += r;
-                                }
+                                winner = optimizeME(null, input, gr.grammar);
                             }
-                        } else { //update rule for HG is weighted by difference...
-                            gr.grammar[c] += r * (double) (optimal.violations[c] - winner.violations[c]);
+
+                            count++;
+                            //System.out.println("The current winner form is " + winner.oform);
+
+                            //if equal, exit and keep the ranking
+                            if (winner.oform.equals(output.form)) {
+                                //System.out.println("Matched form = " + output.form);
+                                //System.out.println("\twith sample:" + gr.gramToString(single));
+                                looking = false;
+                            }
+                        }
+
+                        if (looking == false) {
+                            //found a matching parse, update grammar
+                            //System.out.println("UPDATING: Output = " + output.form + "parse = " + winner.form);
+                            update = true;
+                        } else {
+                            System.out.println("Never found a parse");
+                            fail++;
+                            if ((fail > 20) && (i > 100)) {
+                                System.out.println("stuck in bad grammer ----- exiting now");
+                                break;
+                            }
+                        }
+
+                    } else {
+                        if (learner.equals("randRIP")) {
+                            //use random RIP
+                            //choose a random output for the input
+                            single = gr.sample(NegOK, noise);
+                            //System.out.println("\nSampled:\n" + gr.gramToString(single));
+                            rank = gr.find_order(single);
+                            //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
+
+                            if (model.equals("OT")) {
+                                winner = optimize(null, input, rank);
+                            } else if (model.equals("HG")) {
+                                winner = optimizeHG(null, input, single);
+                            } else {
+                                winner = optimizeME(null, input, gr.grammar);
+                            }
+
+                            //now update grammar
+                            update = true;
+                        } else { //this will be the baseline
+                            gr.uni_grammar(gr.constraints.length);
+                            single = gr.sample(NegOK, noise);
+                            gr.grammar = single;
+                        }
+                    }
+                }
+            }
+            // THIS IS THE NORMAL GLA (SYMMETRIC) UPDATE
+            if (update) {
+                for (int c = 0; c < gr.grammar.length; c++) {
+                    if (model.equals("OT")) {
+                        if (winner.violations[c] > optimal.violations[c]) {
+                            gr.grammar[c] -= r;
                             if (!(NegOK)) {
                                 if (gr.grammar[c] < 0) {
                                     gr.grammar[c] = 0;
                                 }
+                            }
+                        } else {
+                            if (winner.violations[c] < optimal.violations[c]) {
+                                gr.grammar[c] += r;
+                            }
+                        }
+                    } else { //update rule for HG is weighted by difference...
+                        gr.grammar[c] += r * (double) (optimal.violations[c] - winner.violations[c]);
+                        if (!(NegOK)) {
+                            if (gr.grammar[c] < 0) {
+                                gr.grammar[c] = 0;
                             }
                         }
                     }
@@ -341,14 +339,18 @@ public class STOTEM {
                 //}
             }
             if (i % 100 == 0) {
-                System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                if (verbose) {
+                    System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                }
             }
             log_likelihood += Math.log(((float) corr / tot)) * output.freq;
             error += (((double) tot - (double) corr) / tot) * (double) output.freq;
             corr = 0;
             tot = 0;
         }
-        System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+        if (verbose) {
+            System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+        }
         if (error == 0.0) {
             return true;
         } else {

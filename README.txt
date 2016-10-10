@@ -1,5 +1,3 @@
-\\TODO: find hardcoded parameter in POEM
-
 This code is not for public distribution. It is under development and is not very user-friendly. Use at your own risk.
 
 To run POEM, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
@@ -24,9 +22,9 @@ GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-1000
 
-ITERATIONS\\TODO: figure out difference for batch and online
+ITERATIONS
 - this the number of passes through the data for batch algorithms and the number of times individual data forms are processed for online algorithms
-- reasonable values are something like 100-1000
+- reasonable values are something like 100 for the batch version and 10000 for the online version
 
 INITIAL BIAS
 - If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar.
@@ -43,11 +41,11 @@ VERBOSE?
 
 To run STOTEM, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0
+java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1000 .1 OT EIP 2 0 1
 
 You may want to redirect the output to a file or pipe it to less like this:
-java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0 > output.txt
-java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0 | less
+java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1000 .1 OT EIP 2 0 1 > output.txt
+java STOTEM TS2000Grammar_secondary.txt TS1_Dist.txt 1000 .1 OT EIP 2 0 1 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
@@ -62,9 +60,6 @@ GRAMMAR FILE
 
 DISTRIBUTION FILE
  - should be in the same format as provided TS1_Dist.txt
-
-SAMPLE SIZE
-- set this to 1. This shouldn’t be a parameter. \\TODO: remove
 
 ITERATIONS
  - this is the number of times individual data forms are processed algorithms
@@ -88,5 +83,9 @@ LEARNER
  - typical setting is something like 2
 
  NEGOK?
- - should the learner be allowed to posit and use negative weights.
+ - Indicates whether the learner be allowed to use negative weights.
  - Set to 0 to keep weights non-negative.
+
+ VERBOSE?
+ - 0 will suppress most of the output, which will make the program faster.
+ - 1 will print progress as the program runs.
