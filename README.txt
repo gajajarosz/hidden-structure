@@ -23,18 +23,22 @@ DISTRIBUTION FILE
 SAMPLE SIZE \\TODO: figure out more intuitive option here to distinguish batch and online
 - this means different things for different learning models, but higher numbers mean slower runtime and more consistent performance
 - The batch model (learner 1) should be set to something like 20-100
-- For other model (learner 2), this indicates how many data forms are sampled and processed before the grammar is updated. If it’s set to 1, it will be an online learner, but it can also be set higher to take larger samples before updating.
+- For other model (learner 2), this indicates how many data forms are sampled and processed before the grammar is updated.
+- If it’s set to 1, it will be an online learner, but it can also be set higher to take larger samples before updating.
 
 \\While count < 50 is the bit in POEM where sample size is set for online
 
 \\TODO: add grammar sample size, remove sample size for online and batch (because batch walks through all data)
+GRAMMAR SAMPLE SIZE
+-this is the number of times that a grammar is sampled during each round of learning
 
 ITERATIONS\\TODO: figure out difference for batch and online
 - this the number of passes through the data for batch algorithms and the number of times individual data forms are processed for online algorithms
 - reasonable values are something like 100-1000
 
 INITIAL BIAS
-- If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar. You can encode M vs. F in your grammar file - it’s the sixth field of the constraint names section. In the sample file they are all set to 1.
+- If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar.
+- You can encode M vs. F in your grammar file in the 6th field of the constraint names section. In the sample file they are all set to 1.
 - set this to 0 by default
 
 LEARNER
@@ -43,7 +47,8 @@ LEARNER
 3-4 are different learning models that I haven’t published and don’t work as well.
 
 VERBOSE?
-- setting this to 0 will suppress most of the output making things run faster if all you care about is the final grammar. If you want it to print progress, set this to 1. \\TODO: add to STOTEM too
+- 0 will suppress most of the output, which will make the program faster.
+- 1 will print progress as the program runs. \\TODO: add to STOTEM too
 
 To run STOTEM, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
@@ -85,11 +90,12 @@ LEARNER
  EIP - Jarosz (2013)
  RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
  RRIP - is what I called RRIP in Jarosz (2013)
- randRIP - this is a baseline model that doesn’t bother parsing; when there’s an error is simply generates another output randomly and uses that as a ‘winner’ to make an update.
+ randRIP - baseline model without parsing; when there’s an error it generates a random output as the ‘winner’ for the update.
 
  NOISE
  - what’s the variance around the ranking/weighting value
  - typical setting is something like 2
 
  NEGOK?
- - should the learner be allowed to posit and use negative weights. Set to 0 to keep weights non-negative.
+ - should the learner be allowed to posit and use negative weights.
+ - Set to 0 to keep weights non-negative.
