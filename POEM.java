@@ -11,14 +11,11 @@ public class POEM {
 
 	private static int sample_size = 0;
 	private static int num_samples = 0;
-	private static int rank_bias = 0;
-
-	private static boolean speed_up = false;
 	private static boolean verbose = false;
 
 	public static void main(String[] args) {
-		if (args.length < 8) {
-			System.out.println("usage: java POEM grammar_file dist_file sample_size iterations init_bias rank_bias learner_type speed_up verbose");
+		if (args.length < 6) {
+			System.out.println("usage: java POEM grammar_file dist_file sample_size iterations init_bias learner_type verbose");
 			System.exit(-1);
 		}
 
@@ -32,11 +29,9 @@ public class POEM {
 		sample_size = Integer.parseInt(args[2]);
 		num_samples = Integer.parseInt(args[3]);
 		int init_bias = Integer.parseInt(args[4]);
-		rank_bias = Integer.parseInt(args[5]);
-		int learner = Integer.parseInt(args[6]);
-		if (args.length > 8) {
-			speed_up = (Integer.parseInt(args[7]) == 0) ? false : true;
-			verbose = (Integer.parseInt(args[8]) == 0) ? false : true;
+		int learner = Integer.parseInt(args[5]);
+		if (args.length > 6) {
+			verbose = (Integer.parseInt(args[6]) == 0) ? false : true;
 		}
 		if (verbose) {
 			System.out.println("\nLEXICON:\n" + df);
@@ -60,7 +55,6 @@ public class POEM {
 		} else if (learner == 4) {
 			learn_online_pos_neg();
 		}
-
 	}
 
 	public static void learn_batch_parameter_EM() {
@@ -173,16 +167,13 @@ public class POEM {
 
 					double new_rc = ((double) rc_sum * gr.grammar[r][c]) / ((double) rc_sum * gr.grammar[r][c] + (double) cr_sum * gr.grammar[c][r]);
 					double new_cr = 1 - new_rc;
-					if (!speed_up) {
-						gr.grammar[r][c] = new_rc;
-						gr.grammar[c][r] = 1 - gr.grammar[r][c];
-					}
+					gr.grammar[r][c] = new_rc;
+					gr.grammar[c][r] = 1 - gr.grammar[r][c];
 			/*
 		    // this skews the re-estimate toward 0 and 1
 		    double ratio = (new_rc+.01)/(new_cr+.01);
 		    gr.grammar[r][c] = .2*ratio*ratio/(ratio*ratio+1) + .8*gr.grammar[r][c];
 		    gr.grammar[c][r] = 1-gr.grammar[r][c];
-		    */
 
 					if (speed_up) {
 						// this is an attempt to increase the learning rate...
@@ -194,6 +185,7 @@ public class POEM {
 							gr.grammar[c][r] = 1 - gr.grammar[r][c];
 						}
 					}
+				 */
 				}
 			}
 
@@ -835,14 +827,6 @@ public class POEM {
 
 		    }
 		    */
-					if (rank_bias == 1) {
-						//biasing using beta prior with alpha=1, beta=2 or vice versa
-						if (prior.grammar[r][c] > .5) {
-							gr.grammar[r][c] = (corr_ranks_samp[r][c] + bias) / (corr_samp + bias);
-						} else if (prior.grammar[r][c] < .5) {
-							gr.grammar[r][c] = (corr_ranks_samp[r][c]) / (corr_samp + bias);
-						}
-					}
 				}
 			}
 

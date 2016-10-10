@@ -114,6 +114,7 @@ public class STOTEM {
                                 cand_length++;
                             }
                         }
+
                     }
                     tab.cands = new GrammarFile.Candidate[cand_length];
                     for (int k = 0; k < cand_length; k++) {
