@@ -45,7 +45,6 @@ INITIAL BIAS
 LEARNER
 1 - batch Expectation Driven Learner in Jarosz (submitted). Runs the learning function learn_batch_parameter_EM().
 2 - online Expectation Driven Learner in Jarosz (submitted). Runs the learning function learn_sample_parameter().
-3-4 are different learning models that I haven’t published and don’t work as well.
 
 VERBOSE?
 - 0 will suppress most of the output, which will make the program faster.
