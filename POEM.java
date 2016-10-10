@@ -1,5 +1,5 @@
 // read command
-// usage: java POEM grammar_file i_o_file sample_size iterations ranking_bias
+// usage: java POEM grammar_file i_o_file gram_sample_size iterations ranking_bias
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 
 public class POEM {
@@ -9,14 +9,13 @@ public class POEM {
 	public static RandomExtension gr;
 	public static RandomExtension prior;
 
-	private static int sample_size = 0;
+	private static int gram_sample_size = 1;
 	private static int iterations = 0;
 	private static boolean verbose = false;
-    private static int gram_sample_size = 1;
 
 	public static void main(String[] args) {
-		if (args.length < 7) {
-			System.out.println("usage: java POEM grammar_file dist_file sample_size iterations init_bias learner_type verbose grammar_sample_size ");
+		if (args.length < 6) {
+			System.out.println("usage: java POEM grammar_file dist_file grammar_sample_size iterations init_bias learner_type verbose");
 			System.exit(-1);
 		}
 
@@ -27,13 +26,12 @@ public class POEM {
 		df = new DistFile(args[1]);
 		//	df.phono = false;
 
-		sample_size = Integer.parseInt(args[2]);
+		gram_sample_size = Integer.parseInt(args[2]);
 		iterations = Integer.parseInt(args[3]);
 		int init_bias = Integer.parseInt(args[4]);
 		int learner = Integer.parseInt(args[5]);
-		if (args.length > 7) {
+		if (args.length > 6) {
 			verbose = (Integer.parseInt(args[6]) == 0) ? false : true;
-            gram_sample_size = Integer.parseInt(args[7]);
 		}
 		if (verbose) {
 			System.out.println("\nLEXICON:\n" + df);
@@ -86,7 +84,7 @@ public class POEM {
 
 						double[][] single;
 
-						for (int s = 0; s < sample_size; s++) {
+						for (int s = 0; s < gram_sample_size; s++) {
 							single = gr.generate_extension(ext);
 							if (single != null) {
 								int[] rank = gr.find_order(single);
@@ -117,7 +115,7 @@ public class POEM {
 						ext = gr.cloneGrammar();
 						gr.makeMeConsistent(ext);
 
-						for (int s = 0; s < sample_size; s++) {
+						for (int s = 0; s < gram_sample_size; s++) {
 							single = gr.generate_extension(ext);
 							if (single != null) {
 								int[] rank = gr.find_order(single);

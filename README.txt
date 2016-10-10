@@ -20,15 +20,6 @@ GRAMMAR FILE
 DISTRIBUTION FILE
 - should be in the same format as provided TS1_Dist.txt
 
-SAMPLE SIZE \\TODO: figure out more intuitive option here to distinguish batch and online
-- this means different things for different learning models, but higher numbers mean slower runtime and more consistent performance
-- The batch model (learner 1) should be set to something like 20-100
-- For other model (learner 2), this indicates how many data forms are sampled and processed before the grammar is updated.
-- If it’s set to 1, it will be an online learner, but it can also be set higher to take larger samples before updating.
-
-\\While count < 50 is the bit in POEM where sample size is set for online
-
-\\TODO: remove sample size for online and batch (because batch walks through all data)
 GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-1000
