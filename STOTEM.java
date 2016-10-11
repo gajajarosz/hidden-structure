@@ -29,13 +29,14 @@ public class STOTEM {
         df = new DistFile(args[1]);
         System.out.println("\nLEXICON:\n" + df);
 
-        num_samples = Integer.parseInt(args[2]);
-        rate = Double.parseDouble(args[3]);
-        model = args[4];
-        learner = args[5];
-        noise = Double.parseDouble(args[6]);
-        NegOK = Boolean.parseBoolean(args[7]);
-        verbose = Boolean.parseBoolean(args[8]);
+
+        verbose = Boolean.parseBoolean(args[2]);
+        num_samples = Integer.parseInt(args[3]);
+        rate = Double.parseDouble(args[4]);
+        model = args[5];
+        learner = args[6];
+        noise = Double.parseDouble(args[7]);
+        NegOK = Boolean.parseBoolean(args[8]);
 
         //initialize to uniform grammar
         gr = new STOT(gf);

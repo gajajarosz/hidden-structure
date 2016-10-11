@@ -1,5 +1,5 @@
 // read command
-// usage: java POEM grammar_file i_o_file gram_sample_size iterations ranking_bias
+// usage: java POEM grammar_file i_o_file verbose gram_sample_size iterations ranking_bias learner_type
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 
 public class POEM {
@@ -15,7 +15,7 @@ public class POEM {
 
 	public static void main(String[] args) {
 		if (args.length < 6) {
-			System.out.println("usage: java POEM grammar_file dist_file grammar_sample_size iterations init_bias learner_type verbose");
+			System.out.println("usage: java POEM grammar_file dist_file verbose grammar_sample_size iterations init_bias learner_type");
 			System.exit(-1);
 		}
 
@@ -26,13 +26,11 @@ public class POEM {
 		df = new DistFile(args[1]);
 		//	df.phono = false;
 
-		gram_sample_size = Integer.parseInt(args[2]);
-		iterations = Integer.parseInt(args[3]);
-		int init_bias = Integer.parseInt(args[4]);
-		int learner = Integer.parseInt(args[5]);
-		if (args.length > 6) {
-			verbose = (Integer.parseInt(args[6]) == 0) ? false : true;
-		}
+		verbose = (Integer.parseInt(args[2]) == 0) ? false : true;
+		gram_sample_size = Integer.parseInt(args[3]);
+		iterations = Integer.parseInt(args[4]);
+		int init_bias = Integer.parseInt(args[5]);
+		int learner = Integer.parseInt(args[6]);
 		if (verbose) {
 			System.out.println("\nLEXICON:\n" + df);
 		}
