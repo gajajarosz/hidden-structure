@@ -1,4 +1,4 @@
-// usage: java GLA grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?
+// usage: java GLA grammar_file dist_file num_samples verbose? learning_rate model learner noise NegOK?
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
 
@@ -18,7 +18,7 @@ public class GLA {
 
     public static void main(String[] args) {
         if (args.length != 9) {
-            System.out.println("usage: java GLA grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?");
+            System.out.println("usage: java GLA grammar_file dist_file iterations verbose? learning_rate model learner noise NegOK?");
             System.exit(-1);
         }
 
@@ -29,9 +29,8 @@ public class GLA {
         df = new DistFile(args[1]);
         System.out.println("\nLEXICON:\n" + df);
 
-
-        verbose = Boolean.parseBoolean(args[2]);
-        num_samples = Integer.parseInt(args[3]);
+        num_samples = Integer.parseInt(args[2]);
+        verbose = Boolean.parseBoolean(args[3]);
         rate = Double.parseDouble(args[4]);
         model = args[5];
         learner = args[6];

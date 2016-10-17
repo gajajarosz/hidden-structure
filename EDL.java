@@ -15,7 +15,7 @@ public class EDL {
 
 	public static void main(String[] args) {
 		if (args.length < 6) {
-			System.out.println("usage: java EDL grammar_file dist_file verbose grammar_sample_size iterations init_bias learner_type");
+			System.out.println("usage: java EDL grammar_file dist_file iterations verbose grammar_sample_size init_bias learner_type");
 			System.exit(-1);
 		}
 
@@ -26,9 +26,9 @@ public class EDL {
 		df = new DistFile(args[1]);
 		//	df.phono = false;
 
-		verbose = (Integer.parseInt(args[2]) == 0) ? false : true;
-		gram_sample_size = Integer.parseInt(args[3]);
-		iterations = Integer.parseInt(args[4]);
+		iterations = Integer.parseInt(args[2]);
+		verbose = (Integer.parseInt(args[3]) == 0) ? false : true;
+		gram_sample_size = Integer.parseInt(args[4]);
 		int init_bias = Integer.parseInt(args[5]);
 		int learner = Integer.parseInt(args[6]);
 		if (verbose) {

@@ -1,7 +1,7 @@
 This code is not for public distribution. It is under development and is not very user-friendly. Use at your own risk.
 
 Both EDL and GLA are run using the learn.java program. The first four arguments for each are the same:
-\\TODO: rename POEM to EDL
+
 LEARNER NAME
 -This is either EDL or GLA
 
@@ -10,6 +10,13 @@ GRAMMAR FILE
 
 DISTRIBUTION FILE
 - should be in the same format as provided TS1_Dist.txt
+
+ITERATIONS
+ - this is the number of passes through the data
+ - For GLA, reasonable values are around 100-1000 (higher for complex data)
+ - The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
+ - The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
+
 \\TODO: add printing options for every iteration versus final eval
 \\TODO: 3 parameters: how often to do mini-eval; what is printed at each mini-eval; and what is printed at final eval
 \\TODO: Add a parameter controlling how many samples are taken at each intermediate round
@@ -26,10 +33,6 @@ GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-1000
 
-ITERATIONS\\TODO: move iterations to top
-- this the number of passes through the data for batch algorithms and the number of times individual data forms are processed for online algorithms
-- reasonable values are something like 100 for the batch version and 10000 for the online version//TODO: add something explaining difference and what a comparable number of iterations is for each
-
 INITIAL BIAS
 - If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar.
 - You can encode M vs. F in your grammar file in the 6th field of the constraint names section. In the sample file they are all set to 1.
@@ -41,19 +44,15 @@ LEARNER\\TODO: move to first parameter
 
 To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 1
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1 > output.txt
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1 | less
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 1 > output.txt
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 1 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
 If running GLA, the rest of the arguments are:
-
-ITERATIONS
- - this is the number of times individual data forms are processed algorithms
- - reasonable values are something like 100-1000 or higher for very complex data
 
 LEARNING RATE\\TODO: add learning rates to EDL, but keep separate
  - How much constraint ranking/weighting values get bumped when there’s an update
@@ -78,10 +77,10 @@ LEARNER\\TODO: move to first parameter
 
 To run GLA, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1 .1 OT EIP 2 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0 > output.txt
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1 1000 .1 OT EIP 2 0 | less
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1 .1 OT EIP 2 0 > output.txt
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1 .1 OT EIP 2 0 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
