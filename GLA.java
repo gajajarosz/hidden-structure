@@ -1,8 +1,8 @@
-// usage: java STOTEM grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?
+// usage: java GLA grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
 
-public class STOTEM {
+public class GLA {
 
     //class variables
     public static DistFile df;
@@ -18,7 +18,7 @@ public class STOTEM {
 
     public static void main(String[] args) {
         if (args.length != 9) {
-            System.out.println("usage: java STOTEM grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?");
+            System.out.println("usage: java GLA grammar_file dist_file num_samples learning_rate model learner noise NegOK? verbose?");
             System.exit(-1);
         }
 

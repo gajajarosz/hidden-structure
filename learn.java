@@ -11,8 +11,8 @@ public class learn {
         System.out.println(args[0]);
         if (args[0].equals("POEM")) {
             POEM.main(argslist);
-        }else if (args[0].equals("STOTEM")){
-            STOTEM.main(argslist);
+        }else if (args[0].equals("GLA")){
+            GLA.main(argslist);
         }else {
             System.out.println("usage: java main learner grammar_file dist_file verbose grammar_sample_size iterations init_bias learner_type");
             System.exit(-1);
