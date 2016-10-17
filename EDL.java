@@ -15,7 +15,7 @@ public class EDL {
 
 	public static void main(String[] args) {
 		if (args.length < 6) {
-			System.out.println("usage: java EDL grammar_file dist_file iterations verbose grammar_sample_size init_bias learner_type");
+			System.out.println("usage: java EDL grammar_file dist_file iterations verbose learner_type grammar_sample_size init_bias");
 			System.exit(-1);
 		}
 
@@ -28,9 +28,9 @@ public class EDL {
 
 		iterations = Integer.parseInt(args[2]);
 		verbose = (Integer.parseInt(args[3]) == 0) ? false : true;
-		gram_sample_size = Integer.parseInt(args[4]);
-		int init_bias = Integer.parseInt(args[5]);
-		int learner = Integer.parseInt(args[6]);
+        int learner = Integer.parseInt(args[4]);
+		gram_sample_size = Integer.parseInt(args[5]);
+		int init_bias = Integer.parseInt(args[6]);
 		if (verbose) {
 			System.out.println("\nLEXICON:\n" + df);
 		}
