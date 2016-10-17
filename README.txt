@@ -54,13 +54,13 @@ In order to do this you will need java and java runtime environment installed, a
 
 If running GLA, the rest of the arguments are:
 
-LEARNER\\TODO: move to first parameter
+LEARNER
  EIP - Jarosz (2013)
  RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
  RRIP - is what I called RRIP in Jarosz (2013)
  randRIP - baseline model without parsing; when there’s an error it generates a random output as the ‘winner’ for the update.
 
- GRAMMAR TYPE\\TODO: move to second parameter
+ GRAMMAR TYPE
  - set this to OT, HG, or ME (maxent)
 
 LEARNING RATE\\TODO: add learning rates to EDL, but keep separate
