@@ -1,9 +1,9 @@
 This code is not for public distribution. It is under development and is not very user-friendly. Use at your own risk.
 
-Both POEM and GLA are run using the learn.java program. The first four arguments for each are the same:
-\\TODO: rename POEM to EDL and STOTEM to GLA
+Both EDL and GLA are run using the learn.java program. The first four arguments for each are the same:
+\\TODO: rename POEM to EDL
 LEARNER NAME
--This is either POEM or GLA
+-This is either EDL or GLA
 
 GRAMMAR FILE
 - should be in the same format as provided TS2000Grammar_secondary.txt
@@ -16,11 +16,11 @@ DISTRIBUTION FILE
 \\TODO: Add a parameter controlling how accurately you want to measure if you can quit early
 \\TODO: Add a paramter controlling how often you check if you can quit early
 \\TODO: Move the print options to end of arglist and make optional; move description to bottom of file; have default kick in if nothing specified
- VERBOSE?\\TODO: make an int that controls how X many iterations something prints; also it's totally crazy in POEM, fix that
+ VERBOSE?\\TODO: make an int that controls how X many iterations something prints; also it's totally crazy in EDL, fix that
  - 0 will suppress most of the output, which will make the program faster. \\TODO: something is wrong in the output of GLA; eval isn't printing anything
  - 1 will print progress as the program runs.
 
-If running POEM, the rest of the arguments are as follows:
+If running EDL, the rest of the arguments are as follows:
 
 GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
@@ -39,13 +39,13 @@ LEARNER\\TODO: move to first parameter
 1 - batch Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_batch().
 2 - online Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_online().
 
-To run POEM, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
+To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn POEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn POEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1 > output.txt
-java learn POEM TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1 | less
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1 > output.txt
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 1 100 1000 0 1 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 

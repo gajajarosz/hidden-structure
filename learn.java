@@ -9,7 +9,7 @@ public class learn {
         }
         String[] argslist = Arrays.copyOfRange(args,1,args.length);
         System.out.println(args[0]);
-        if (args[0].equals("POEM")) {
+        if (args[0].equals("EDL")) {
             POEM.main(argslist);
         }else if (args[0].equals("GLA")){
             GLA.main(argslist);

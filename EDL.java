@@ -1,8 +1,8 @@
 // read command
-// usage: java POEM grammar_file i_o_file verbose gram_sample_size iterations ranking_bias learner_type
+// usage: java EDL grammar_file i_o_file verbose gram_sample_size iterations ranking_bias learner_type
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 
-public class POEM {
+public class EDL {
 
 	public static DistFile df;
 	public static GrammarFile gf;
@@ -15,7 +15,7 @@ public class POEM {
 
 	public static void main(String[] args) {
 		if (args.length < 6) {
-			System.out.println("usage: java POEM grammar_file dist_file verbose grammar_sample_size iterations init_bias learner_type");
+			System.out.println("usage: java EDL grammar_file dist_file verbose grammar_sample_size iterations init_bias learner_type");
 			System.exit(-1);
 		}
 
