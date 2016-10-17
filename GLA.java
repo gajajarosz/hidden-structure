@@ -1,4 +1,4 @@
-// usage: java GLA grammar_file dist_file num_samples verbose? learner model learning_rate noise NegOK?
+// usage: java GLA grammar_file dist_file num_samples learner model learning_rate noise NegOK? (print parameters...)
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
 
@@ -14,11 +14,17 @@ public class GLA {
     public static String learner = "EIP";
     public static double noise = 1;
     private static int num_samples = 0;
-    public static boolean verbose = true;
+    public static int final_eval = 0;
+    public static int final_eval_sample = 1000;
+    public static int mini_eval = 1;
+    public static int mini_eval_freq = 100;
+    public static int mini_eval_sample = 100;
+    public static int quit_early = 100;
+    public static int quit_early_sample = 100;
 
     public static void main(String[] args) {
-        if (args.length != 9) {
-            System.out.println("usage: java GLA grammar_file dist_file iterations verbose? learner model learning_rate noise NegOK?");
+        if (args.length < 8) {
+            System.out.println("usage: java GLA grammar_file dist_file iterations learner model learning_rate noise NegOK? (print parameters ...)");
             System.exit(-1);
         }
 
@@ -30,12 +36,21 @@ public class GLA {
         System.out.println("\nLEXICON:\n" + df);
 
         num_samples = Integer.parseInt(args[2]);
-        verbose = Boolean.parseBoolean(args[3]);
-        learner = args[4];
-        model = args[5];
-        rate = Double.parseDouble(args[6]);
-        noise = Double.parseDouble(args[7]);
-        NegOK = Boolean.parseBoolean(args[8]);
+        learner = args[3];
+        model = args[4];
+        rate = Double.parseDouble(args[5]);
+        noise = Double.parseDouble(args[6]);
+        NegOK = Boolean.parseBoolean(args[7]);
+        System.out.println(args.length);
+        if (args.length == 15) {
+            final_eval = Integer.parseInt(args[8]);
+            final_eval_sample = Integer.parseInt(args[9]);
+            mini_eval = Integer.parseInt(args[10]);
+            mini_eval_freq = Integer.parseInt(args[11]);
+            mini_eval_sample = Integer.parseInt(args[12]);
+            quit_early = Integer.parseInt(args[13]);
+            quit_early_sample = Integer.parseInt(args[14]);
+        }
 
         //initialize to uniform grammar
         gr = new STOT(gf);
@@ -53,7 +68,9 @@ public class GLA {
         int i = 0;
 
         for (i = 0; i < num_samples; i++) {
-            System.out.println("Starting iteration " + i);
+            if (i%mini_eval_freq==0) {
+                System.out.println("Starting iteration " + i);
+            }
             //each iteration consists of s samples
             fail = 0;
 
@@ -274,22 +291,28 @@ public class GLA {
             if ((fail > 20) && (i > 100)) {
                 break;
             }
-            System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
-            if ((!(learner.equals("Baseline"))) && evaluate_grammar(100, i, noise)) {
-                System.out.println("-reached perfection early ----- exiting now");
-                break;
+            if (i%mini_eval_freq==0) {
+                if (mini_eval == 0 | mini_eval == 1) {
+                    System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+                }
             }
-            System.out.println("Now evaluating nonnoisy grammar");
-            if (evaluate_grammar(10, i, 0) && learner.equals("Baseline")) {
-                System.out.println("Baseline reached perfection ---- exiting now");
-                break;
+            if(i%quit_early==0) {
+                if ((!(learner.equals("Baseline"))) && evaluate_grammar(quit_early_sample, i, noise)) {
+                    System.out.println("-reached perfection early ----- exiting now");
+                    break;
+                }
+                System.out.println("Now evaluating nonnoisy grammar");
+                if (evaluate_grammar(quit_early_sample, i, 0) && learner.equals("Baseline")) {
+                    System.out.println("Baseline reached perfection ---- exiting now");
+                    break;
+                }
             }
         }
         System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
         System.out.print("FINAL ");
-        evaluate_grammar(1000, i, noise);
+        evaluate_grammar(final_eval_sample, i, noise);
         System.out.print("FINAL ");
-        evaluate_grammar(1000, i, 0);
+        evaluate_grammar(final_eval_sample, i, 0);
     }
 
     public static boolean evaluate_grammar(int s, int i, double noi) {
@@ -338,8 +361,13 @@ public class GLA {
                 //System.out.println("BAD::Found inconsistent sample during evaluation for grammar:\n" + gr.gramToString(gr.grammar));
                 //}
             }
-            if (i % 100 == 0) {
-                if (verbose) {
+            if (i == num_samples) {
+                if (final_eval==0) {
+                    System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                }
+            }
+            if (i%mini_eval_freq==0){
+                if(mini_eval==0){
                     System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
                 }
             }
@@ -348,8 +376,15 @@ public class GLA {
             corr = 0;
             tot = 0;
         }
-        if (verbose) {
-            System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+        if (i == num_samples) {
+            if (final_eval == 0 | final_eval == 1) {
+                System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+            }
+        }
+        if (i%mini_eval_freq==0) {
+            if (mini_eval == 0 | mini_eval == 1) {
+                System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+            }
         }
         if (error == 0.0) {
             return true;

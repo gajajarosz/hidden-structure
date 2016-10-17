@@ -38,11 +38,11 @@ INITIAL BIAS
 
 To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 1
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 1 > output.txt
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 1 | less
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 > output.txt
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
@@ -75,35 +75,45 @@ LEARNING RATE\\TODO: add learning rates to EDL, but keep separate
 
 To run GLA, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0 1
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0 1 > output.txt
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0 1 | less
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0 > output.txt
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 PRINT OPTIONS
-\\TODO: Move the print options to end of arglist and make optional; have default kick in if nothing specified
-\\TODO: totally crazy in EDL, fix that
-\\TODO: something is wrong in the output of GLA; eval isn't printing anything
 
 FINAL-EVAL
-\\TODO: what is printed at final eval
+- 0 : prints final grammar; accuracy on each output; total error and log likelihood
+- 1 : prints final grammar; total error and log likelihood
+- Default: 0
+
+FINAL-EVAL_SAMPLE
+-How many samples are used to evaluate in the final evaluation
+-Default: 1000
 
 MINI-EVAL
-\\TODO: what is printed at each mini-eval
+- 0: prints grammar; accuracy on each output; total error and log likelihood
+- 1: prints grammar; total error and log likelihood
+- Default: 1
 
 MINI-EVAL_TIME
-\\TODO: make an int that controls how X many iterations something prints;
+- How often a mini-evaluation round is performed
+- Default: 100
 
 MINI-EVAL_SAMPLE
-\\TODO: Add a parameter controlling how many samples are taken at each intermediate round
+-How many samples are used to evaluate in a mini-evaluation
+-Default: 100
 
 QUIT_EARLY?
-\\TODO: Add a paramter controlling how often you check if you can quit early
+-How often the program checks to see if it can quit early
+-Quits if the learner has already learned everything
+-Default: 100
 
 QUIT_EARLY?_SAMPLE
-\\TODO: Add a parameter controlling how accurately you want to measure if you can quit early
+-How many samples are used to evaluate whether the learner is done learning
+-Default: 100

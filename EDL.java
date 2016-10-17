@@ -1,5 +1,5 @@
 // read command
-// usage: java EDL grammar_file i_o_file verbose gram_sample_size iterations ranking_bias learner_type
+// usage: java EDL grammar_file i_o_file gram_sample_size iterations ranking_bias learner_type (print args)
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 
 public class EDL {
@@ -11,11 +11,17 @@ public class EDL {
 
 	private static int gram_sample_size = 1;
 	private static int iterations = 0;
-	private static boolean verbose = false;
+    public static int final_eval = 0;
+    public static int final_eval_sample = 1000;
+    public static int mini_eval = 1;
+    public static int mini_eval_freq = 100;
+    public static int mini_eval_sample = 100;
+    public static int quit_early = 100;
+    public static int quit_early_sample = 100;
 
 	public static void main(String[] args) {
 		if (args.length < 6) {
-			System.out.println("usage: java EDL grammar_file dist_file iterations verbose learner_type grammar_sample_size init_bias");
+			System.out.println("usage: java EDL grammar_file dist_file iterations learner_type grammar_sample_size init_bias (print args)");
 			System.exit(-1);
 		}
 
@@ -27,13 +33,20 @@ public class EDL {
 		//	df.phono = false;
 
 		iterations = Integer.parseInt(args[2]);
-		verbose = (Integer.parseInt(args[3]) == 0) ? false : true;
-        int learner = Integer.parseInt(args[4]);
-		gram_sample_size = Integer.parseInt(args[5]);
-		int init_bias = Integer.parseInt(args[6]);
-		if (verbose) {
-			System.out.println("\nLEXICON:\n" + df);
-		}
+        int learner = Integer.parseInt(args[3]);
+		gram_sample_size = Integer.parseInt(args[4]);
+		int init_bias = Integer.parseInt(args[5]);
+        if (args.length == 13) {
+            final_eval = Integer.parseInt(args[6]);
+            final_eval_sample = Integer.parseInt(args[7]);
+            mini_eval = Integer.parseInt(args[8]);
+            mini_eval_freq = Integer.parseInt(args[9]);
+            mini_eval_sample = Integer.parseInt(args[10]);
+            quit_early = Integer.parseInt(args[11]);
+            quit_early_sample = Integer.parseInt(args[12]);
+        }
+        System.out.println("\nLEXICON:\n" + df);
+
 		// initialize grammar to uniform - make ll_grammar
 		gr = new RandomExtension(gf);
 		prior = new RandomExtension(gf);
@@ -41,9 +54,7 @@ public class EDL {
 		if (init_bias == 1) {
 			gr.bias_grammar();
 		}
-		if (verbose) {
-			System.out.println("\nGRAMMAR:\n" + gr);
-		}
+        System.out.println("\nGRAMMAR:\n" + gr);
 		if (learner == 1) {
 			EDL_batch();
 		} else if (learner == 2) {
@@ -54,12 +65,10 @@ public class EDL {
 	public static void EDL_batch() {
 		// there are i iterations of EM
 
-		long startTime = System.currentTimeMillis();
 		double prev_error = 1000.0;
 		int i = 0;
 		for (i = 0; i < iterations; i++) {
-			long startIterTime = System.currentTimeMillis();
-			if (verbose) {
+			if (i%mini_eval_freq==0) {
 				System.out.println("Starting iteration " + i);
 			}
 			//to store successes for each output
@@ -188,35 +197,29 @@ public class EDL {
 				System.exit(-1);
 			}
 
-			if (verbose) {
-				System.out.println("The new grammar is:\n" + gr);
-			}
-			if (i % 1 == 0) {
-
-				//now going to examine resulting grammar
-				if (verbose) {
-					System.out.println("------------------EVALUATING--------------GRAMMAR------AT-------ITERATION-------" + i);
-					if (evaluate_grammar(1000, i, true)) {
-						System.out.println("-reached perfection early ----- exiting now");
-						break;
-					}
-				} else {
-					if (evaluate_grammar(100, i)) {
-						System.out.println("-reached perfection early ----- exiting now");
-						break;
-					}
-				}
-			}
-			long endIterTime = System.currentTimeMillis();
-			if (verbose) {
-				System.out.println("TIMING:: Iteration " + i + " took " + ((endIterTime - startIterTime) / 1000.0) + " sec.  Total: " + ((endIterTime - startTime) / 1000.0) + " sec. Average: " + ((endIterTime - startTime) / 1000.0) / (i + 1) + " sec.");
-			}
+			if (i%mini_eval_freq==0) {
+                if (mini_eval == 0 | mini_eval == 1) {
+                    System.out.println("The new grammar is:\n" + gr);
+                }
+            }
+            if (i % quit_early == 0) {
+                if (evaluate_grammar(quit_early_sample, i, true)) {
+                    System.out.println("-reached perfection early ----- exiting now");
+                    break;
+                }
+                if (evaluate_grammar(quit_early_sample, i)) {
+                    System.out.println("-reached perfection early ----- exiting now");
+                    break;
+                }
+            }
 		} //end of iterations
 
 		//now going to examine resulting grammar
-		System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-		System.out.println("The final grammar is:\n" + gr);
-		evaluate_grammar(10000, i, true);
+        if (final_eval==0 | final_eval == 1) {
+            System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
+            System.out.println("The final grammar is:\n" + gr);
+            evaluate_grammar(final_eval_sample, i, true);
+        }
 	}
 
 	public static void EDL_online() {
@@ -227,182 +230,176 @@ public class EDL {
 		int i = 0;
 		double rate = .25;
 		for (i = 0; i < iterations; i++) {
-			if (verbose) {
-				System.out.println("Starting iteration " + i);
-			}
-			double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
-			//each iteration consists of s samples
-			//for (int s = 0; s < sample_size; s++) {
+            if (i%mini_eval_freq==0) {
+                System.out.println("Starting iteration " + i);
+            }
+            double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
+            //each iteration consists of s samples
+            //for (int s = 0; s < sample_size; s++) {
 
-				//sample an output form
-				DistFile.Output output = null;
-				String winner = "tat";
-				double rand = Math.random();
-				int o_index = 0;
-				for (int o = 0; o < df.outputs.length; o++) {
-					rand -= df.outputs[o].relfreq;
-					if (rand <= 0) {
-						output = df.outputs[o];
-						o_index = o;
-						break;
-					}
-				}
-				//System.out.println("Sampled output form: " + output.form);
+            //sample an output form
+            DistFile.Output output = null;
+            String winner = "tat";
+            double rand = Math.random();
+            int o_index = 0;
+            for (int o = 0; o < df.outputs.length; o++) {
+                rand -= df.outputs[o].relfreq;
+                if (rand <= 0) {
+                    output = df.outputs[o];
+                    o_index = o;
+                    break;
+                }
+            }
+            //System.out.println("Sampled output form: " + output.form);
 
-				//sample a ur for the output form
-				String input = "";
-				rand = Math.random();
-				for (int in = 0; in < output.dist.length; in++) {
-					rand -= output.dist[in];
-					if (rand <= 0) {
-						input = output.inputs[in];
-						break;
-					}
-				}
-				//System.out.println("\tSampled a UR form: " + input);
+            //sample a ur for the output form
+            String input = "";
+            rand = Math.random();
+            for (int in = 0; in < output.dist.length; in++) {
+                rand -= output.dist[in];
+                if (rand <= 0) {
+                    input = output.inputs[in];
+                    break;
+                }
+            }
+            //System.out.println("\tSampled a UR form: " + input);
 
-				double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
+            double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
 
-				for (int r = 0; r < gr.grammar.length; r++) {
-					for (int c = 0; c < r; c++) {
+            for (int r = 0; r < gr.grammar.length; r++) {
+                for (int c = 0; c < r; c++) {
 
-						if ((gr.grammar[r][c] == 0) || (gr.grammar[r][c] == 1)) {
-							if (verbose) {
-								//System.out.println(" r=" + r + " by c=" + c + " is set, not worth checking probs");
-							}
-							output_counts[r][c] = gr.grammar[r][c];
-							output_counts[c][r] = gr.grammar[c][r];
-						} else {
+                    if ((gr.grammar[r][c] == 0) || (gr.grammar[r][c] == 1)) {
+                        output_counts[r][c] = gr.grammar[r][c];
+                        output_counts[c][r] = gr.grammar[c][r];
+                    } else {
 
-							double old_rc = gr.grammar[r][c];
-							double old_cr = gr.grammar[c][r];
+                        double old_rc = gr.grammar[r][c];
+                        double old_cr = gr.grammar[c][r];
 
-							//temporarily set r >> c
-							//System.out.println("Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
-							gr.grammar[r][c] = 1.0;
-							gr.grammar[c][r] = 0.0;
+                        //temporarily set r >> c
+                        //System.out.println("Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
+                        gr.grammar[r][c] = 1.0;
+                        gr.grammar[c][r] = 0.0;
 
-							int count = 0;
-							double[][] ext = gr.cloneGrammar();
-							gr.makeMeConsistent(ext);
-							while (count < gram_sample_size) {
-								//sample a random ranking
-								count++;
-								single = gr.generate_extension(ext);
-								if (single != null) {
-									int[] rank = gr.find_order(single);
-									//System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
+                        int count = 0;
+                        double[][] ext = gr.cloneGrammar();
+                        gr.makeMeConsistent(ext);
+                        while (count < gram_sample_size) {
+                            //sample a random ranking
+                            count++;
+                            single = gr.generate_extension(ext);
+                            if (single != null) {
+                                int[] rank = gr.find_order(single);
+                                //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
 
-									if (rank != null) {
-										//compute learner's winner and compare to actual output
-										winner = optimize(input, rank);
-										//if equal, add matrix of ranking into collected samples
-										if (winner.equals(output.form)) {
-											//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
-											output_counts[r][c]++;
-										}
-									} else {
-										System.out.println("Rank was nULL!");
-									}
-								}
-							}
+                                if (rank != null) {
+                                    //compute learner's winner and compare to actual output
+                                    winner = optimize(input, rank);
+                                    //if equal, add matrix of ranking into collected samples
+                                    if (winner.equals(output.form)) {
+                                        //System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
+                                        output_counts[r][c]++;
+                                    }
+                                } else {
+                                    System.out.println("Rank was nULL!");
+                                }
+                            }
+                        }
 
-							gr.grammar[r][c] = 0.0;
-							gr.grammar[c][r] = 1.0;
+                        gr.grammar[r][c] = 0.0;
+                        gr.grammar[c][r] = 1.0;
 
-							ext = gr.cloneGrammar();
-							gr.makeMeConsistent(ext);
-							count = 0;
-							while (count < gram_sample_size) {
-								//sample a random ranking
-								count++;
+                        ext = gr.cloneGrammar();
+                        gr.makeMeConsistent(ext);
+                        count = 0;
+                        while (count < gram_sample_size) {
+                            //sample a random ranking
+                            count++;
 
-								single = gr.generate_extension(ext);
-								if (single != null) {
-									int[] rank = gr.find_order(single);
-									//System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
-									if (rank != null) {
-										//compute learner's winner and compare to actual output
-										winner = optimize(input, rank);
-										//if equal, add matrix of ranking into collected samples
-										if (winner.equals(output.form)) {
-											//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
-											output_counts[c][r]++;
-										}
-									} else {
-										System.out.println("Rank was nULL!");
-									}
-								}
-							}
-							//reset grammar
-							gr.grammar[r][c] = old_rc;
-							gr.grammar[c][r] = old_cr;
-						}
-					}
-				}
-				for (int r = 0; r < gr.grammar.length; r++) {
-					for (int c = 0; c < r; c++) {
-						double o_prob = ((double) output_counts[r][c]) * gr.grammar[r][c] + ((double) output_counts[c][r]) * gr.grammar[c][r];
-						if (o_prob != 0) {
-							corr_ranks_samp[r][c] += ((double) output_counts[r][c]) / ((double) o_prob);
-							corr_ranks_samp[c][r] += ((double) output_counts[c][r]) / ((double) o_prob);
-						}
-					}
-				}
-			//}
+                            single = gr.generate_extension(ext);
+                            if (single != null) {
+                                int[] rank = gr.find_order(single);
+                                //System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
+                                if (rank != null) {
+                                    //compute learner's winner and compare to actual output
+                                    winner = optimize(input, rank);
+                                    //if equal, add matrix of ranking into collected samples
+                                    if (winner.equals(output.form)) {
+                                        //System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
+                                        output_counts[c][r]++;
+                                    }
+                                } else {
+                                    System.out.println("Rank was nULL!");
+                                }
+                            }
+                        }
+                        //reset grammar
+                        gr.grammar[r][c] = old_rc;
+                        gr.grammar[c][r] = old_cr;
+                    }
+                }
+            }
+            for (int r = 0; r < gr.grammar.length; r++) {
+                for (int c = 0; c < r; c++) {
+                    double o_prob = ((double) output_counts[r][c]) * gr.grammar[r][c] + ((double) output_counts[c][r]) * gr.grammar[c][r];
+                    if (o_prob != 0) {
+                        corr_ranks_samp[r][c] += ((double) output_counts[r][c]) / ((double) o_prob);
+                        corr_ranks_samp[c][r] += ((double) output_counts[c][r]) / ((double) o_prob);
+                    }
+                }
+            }
+            //}
 
-			for (int r = 0; r < gr.grammar.length; r++) {
-				for (int c = 0; c < r; c++) {
-					double old_r = gr.grammar[r][c];
-					double new_rc;
-					if (corr_ranks_samp[r][c] + corr_ranks_samp[c][r] != 0) {
-						new_rc = (((double) corr_ranks_samp[r][c]) * gr.grammar[r][c]) / (((double) corr_ranks_samp[r][c]) * gr.grammar[r][c] + ((double) corr_ranks_samp[c][r]) * gr.grammar[c][r]);
-						if ((new_rc > .5) && (new_rc < .5)) {
-							new_rc = gr.grammar[r][c];
-						}
-					} else {
-						new_rc = 0.5;
-					}
+            for (int r = 0; r < gr.grammar.length; r++) {
+                for (int c = 0; c < r; c++) {
+                    double old_r = gr.grammar[r][c];
+                    double new_rc;
+                    if (corr_ranks_samp[r][c] + corr_ranks_samp[c][r] != 0) {
+                        new_rc = (((double) corr_ranks_samp[r][c]) * gr.grammar[r][c]) / (((double) corr_ranks_samp[r][c]) * gr.grammar[r][c] + ((double) corr_ranks_samp[c][r]) * gr.grammar[c][r]);
+                        if ((new_rc > .5) && (new_rc < .5)) {
+                            new_rc = gr.grammar[r][c];
+                        }
+                    } else {
+                        new_rc = 0.5;
+                    }
 
                     //make a small update since we're processing only one output per update
                     //go part of the way that EM would want
                     gr.grammar[r][c] = (1 - rate) * gr.grammar[r][c] + rate * new_rc;
                     gr.grammar[c][r] = 1 - gr.grammar[r][c];
-				}
-			}
+                }
+            }
 
-			if (!gr.makeMeConsistent()) {
-				System.out.println("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
-				System.exit(-1);
-			}
+            if (!gr.makeMeConsistent()) {
+                System.out.println("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
+                System.exit(-1);
+            }
 
-			//bias = bias*(i+1)/(i+2);
-			if (i % 1 == 0) {
+            //bias = bias*(i+1)/(i+2);
+            if (i % mini_eval_freq == 0) {
+                if (mini_eval == 0 | mini_eval == 1) {
+                    System.out.println("The new grammar is:\n" + gr);
+                }
+            }
+            if (i % quit_early == 0) {
+                if (evaluate_grammar(quit_early_sample, i, true)) {
+                    System.out.println("-reached perfection early ----- exiting now");
+                    break;
+                }
+                if (evaluate_grammar(quit_early_sample, i)) {
+                    System.out.println("-reached perfection early ----- exiting now");
+                    break;
+                }
+            }
+        }
 
-				if (verbose) {
-					System.out.println("The new grammar is:\n" + gr);
-				}
-				//now going to examine resulting grammar
-
-				if (verbose) {
-					System.out.println("------------------EVALUATING--------------GRAMMAR------AT-------ITERATION-------" + i);
-					if (evaluate_grammar(100, i, true)) {
-						System.out.println("-reached perfection early ----- exiting now");
-						break;
-					}
-				} else {
-					if (evaluate_grammar(100, i)) {
-						System.out.println("-reached perfection early ----- exiting now");
-						break;
-					}
-				}
-			}
-		}
 		//now going to examine resulting grammar
-
-		System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-		System.out.println("The final grammar is:\n" + gr);
-		evaluate_grammar(10000, i, true);
+        if (final_eval==0 | final_eval == 1) {
+            System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
+            System.out.println("The final grammar is:\n" + gr);
+            evaluate_grammar(final_eval_sample, i, true);
+        }
 	}
 
 	public static boolean evaluate_grammar(int s, int i) {
@@ -447,15 +444,31 @@ public class EDL {
 					tot++;
 				}
 			}
-			if (printout) {
-				System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
-			}
+			if (i%mini_eval_freq==0) {
+                if (mini_eval == 0) {
+                    System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                }
+            }
+            if (i==iterations){
+                if(final_eval==0){
+                    System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                }
+            }
 			log_likelihood += Math.log(((float) corr / tot)) * output.freq;
 			error += (((double) tot - (double) corr) / tot) * (double) output.freq;
 			corr = 0;
 			tot = 0;
 		}
-		System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+		if (i%mini_eval_freq==0) {
+            if (mini_eval == 0 | mini_eval == 1) {
+                System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+            }
+        }
+        if (i==iterations){
+            if(final_eval==0 | final_eval ==1){
+                System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+            }
+        }
 
 		double recent_error = error;
 		if (error == 0.0) {
