@@ -31,7 +31,7 @@ GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-1000
 
-INITIAL BIAS
+INITIAL BIAS//TODO: add to GLA; start constraints ranked high
 - If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar.
 - You can encode M vs. F in your grammar file in the 6th field of the constraint names section. In the sample file they are all set to 1.
 - set this to 0 by default
@@ -85,7 +85,7 @@ In order to do this you will need java and java runtime environment installed, a
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
-PRINT OPTIONS //TODO: explain better
+PRINT OPTIONS //TODO: explain better; add initial print option
 
 FINAL-EVAL
 - 0 : prints final grammar; accuracy on each output; total error and log likelihood
