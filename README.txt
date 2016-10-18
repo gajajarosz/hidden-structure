@@ -85,7 +85,7 @@ In order to do this you will need java and java runtime environment installed, a
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
-PRINT OPTIONS
+PRINT OPTIONS //TODO: explain better
 
 FINAL-EVAL
 - 0 : prints final grammar; accuracy on each output; total error and log likelihood
@@ -101,7 +101,7 @@ MINI-EVAL
 - 1: prints grammar; total error and log likelihood
 - Default: 1
 
-MINI-EVAL_TIME
+MINI-EVAL_FREQ
 - How often a mini-evaluation round is performed
 - Default: 100
 
@@ -116,4 +116,5 @@ QUIT_EARLY?
 
 QUIT_EARLY?_SAMPLE
 -How many samples are used to evaluate whether the learner is done learning
+-The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
 -Default: 100

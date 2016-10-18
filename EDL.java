@@ -379,7 +379,7 @@ public class EDL {
             //bias = bias*(i+1)/(i+2);
             if (i % mini_eval_freq == 0) {
                 if (mini_eval == 0 | mini_eval == 1) {
-                    System.out.println("The new grammar is:\n" + gr);
+                    System.out.println("The new grammar is:\n" + gr);//TODO: add call to evaluate_grammar; restructure so that if both mini_eval and quit_early are to be checked, only one call to evaluate_grammar is made
                 }
             }
             if (i % quit_early == 0) {
