@@ -1,4 +1,4 @@
-// usage: java GLA grammar_file dist_file num_samples fin_sample learner model learning_rate noise NegOK? (print parameters...)
+// usage: java GLA grammar_file dist_file num_samples fin_sample learner model learning_rate noise bias NegOK? (print parameters...)
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
 
@@ -13,6 +13,7 @@ public class GLA {
     public static boolean NegOK = true;
     public static String learner = "EIP";
     public static double noise = 1;
+    public static int bias = 0;
     private static int num_samples = 0;
     public static int final_eval = 0;
     public static int final_eval_sample = 1000;
@@ -24,8 +25,8 @@ public class GLA {
     public static int print_input = 0;
 
     public static void main(String[] args) {
-        if (args.length < 9) {
-            System.out.println("usage: java GLA grammar_file dist_file iterations fin_sample learner model learning_rate noise NegOK? (print parameters ...)");
+        if (args.length < 10) {
+            System.out.println("usage: java GLA grammar_file dist_file iterations fin_sample learner model learning_rate noise bias NegOK? (print parameters ...)");
             System.exit(-1);
         }
 
@@ -38,22 +39,26 @@ public class GLA {
         model = args[5];
         rate = Double.parseDouble(args[6]);
         noise = Double.parseDouble(args[7]);
-        NegOK = Boolean.parseBoolean(args[8]);
+        bias = Integer.parseInt(args[8]);
+        NegOK = Boolean.parseBoolean(args[9]);
         System.out.println(args.length);
-        if (args.length == 16) {
-            print_input = Integer.parseInt(args[9]);
-            final_eval = Integer.parseInt(args[10]);
-            mini_eval = Integer.parseInt(args[11]);
-            mini_eval_freq = Integer.parseInt(args[12]);
-            mini_eval_sample = Integer.parseInt(args[13]);
-            quit_early = Integer.parseInt(args[14]);
-            quit_early_sample = Integer.parseInt(args[15]);
+        if (args.length == 17) {
+            print_input = Integer.parseInt(args[10]);
+            final_eval = Integer.parseInt(args[11]);
+            mini_eval = Integer.parseInt(args[12]);
+            mini_eval_freq = Integer.parseInt(args[13]);
+            mini_eval_sample = Integer.parseInt(args[14]);
+            quit_early = Integer.parseInt(args[15]);
+            quit_early_sample = Integer.parseInt(args[16]);
         }
 
         // read in i_o_file
         df = new DistFile(args[1]);
         //initialize to uniform grammar
         gr = new STOT(gf);
+        if (bias == 1) {
+            gr.bias_grammar();
+        }
 
         if (print_input == 0) {
             System.out.println("\nLEXICON:\n" + df);

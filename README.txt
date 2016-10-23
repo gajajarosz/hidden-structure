@@ -73,17 +73,22 @@ LEARNING RATE\\TODO: add learning rates to EDL, but keep separate
  - what’s the variance around the ranking/weighting value
  - typical setting is something like 2
 
+ INITIAL BIAS//TODO: add to GLA; start constraints ranked high
+ - If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar.
+ - You can encode M vs. F in your grammar file in the 6th field of the constraint names section. In the sample file they are all set to 1.
+ - set this to 0 by default
+
  NEGOK?
  - Indicates whether the learner be allowed to use negative weights.
  - Set to 0 to keep weights non-negative.
 
 To run GLA, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 > output.txt
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 | less
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 > output.txt
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
@@ -128,8 +133,8 @@ QUIT_EARLY?_SAMPLE
 
 For instance, if you want to run GLA and print as much as possible, run:
 
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 0 0 1 100 100 100
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 0 0 0 1 100 100 100
 
 If you want to run GLA as quickly as possible, run:
 
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 1 1 2 1000 100 1000 100
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 1 1 2 1000 100 1000 100
