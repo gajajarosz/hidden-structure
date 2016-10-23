@@ -35,7 +35,7 @@ GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-1000
 
-INITIAL BIAS//TODO: add to GLA; start constraints ranked high
+INITIAL BIAS
 - If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar.
 - You can encode M vs. F in your grammar file in the 6th field of the constraint names section. In the sample file they are all set to 1.
 - set this to 0 by default
@@ -73,7 +73,7 @@ LEARNING RATE\\TODO: add learning rates to EDL, but keep separate
  - what’s the variance around the ranking/weighting value
  - typical setting is something like 2
 
- INITIAL BIAS//TODO: add to GLA; start constraints ranked high
+ INITIAL BIAS
  - If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar.
  - You can encode M vs. F in your grammar file in the 6th field of the constraint names section. In the sample file they are all set to 1.
  - set this to 0 by default
