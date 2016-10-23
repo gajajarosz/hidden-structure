@@ -302,6 +302,9 @@ public class GLA {
             if (i%mini_eval_freq==0) {
                 if (mini_eval == 0 | mini_eval == 1) {
                     System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+                    if (i%quit_early!=0){
+                        evaluate_grammar(mini_eval_sample, i, noise);
+                    }
                 }
             }
             if(i%quit_early==0) {

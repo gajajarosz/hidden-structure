@@ -206,13 +206,12 @@ public class EDL {
 			if (i%mini_eval_freq==0) {
                 if (mini_eval == 0 | mini_eval == 1) {
                     System.out.println("The new grammar is:\n" + gr);
+                    if (i%quit_early!=0){
+                        evaluate_grammar(mini_eval_sample, i);
+                    }
                 }
             }
             if (i % quit_early == 0) {
-                if (evaluate_grammar(quit_early_sample, i, true)) {
-                    System.out.println("-reached perfection early ----- exiting now");
-                    break;
-                }
                 if (evaluate_grammar(quit_early_sample, i)) {
                     System.out.println("-reached perfection early ----- exiting now");
                     break;
@@ -224,7 +223,7 @@ public class EDL {
         if (final_eval==0 | final_eval == 1) {
             System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
             System.out.println("The final grammar is:\n" + gr);
-            evaluate_grammar(final_eval_sample, i, true);
+            evaluate_grammar(final_eval_sample, i);
         }
 	}
 
@@ -385,14 +384,13 @@ public class EDL {
             //bias = bias*(i+1)/(i+2);
             if (i % mini_eval_freq == 0) {
                 if (mini_eval == 0 | mini_eval == 1) {
-                    System.out.println("The new grammar is:\n" + gr);//TODO: add call to evaluate_grammar; restructure so that if both mini_eval and quit_early are to be checked, only one call to evaluate_grammar is made
+                    System.out.println("The new grammar is:\n" + gr);
+                    if (i%quit_early!=0){
+                        evaluate_grammar(mini_eval_sample, i);
+                    }
                 }
             }
             if (i % quit_early == 0) {
-                if (evaluate_grammar(quit_early_sample, i, true)) {
-                    System.out.println("-reached perfection early ----- exiting now");
-                    break;
-                }
                 if (evaluate_grammar(quit_early_sample, i)) {
                     System.out.println("-reached perfection early ----- exiting now");
                     break;
@@ -404,15 +402,11 @@ public class EDL {
         if (final_eval==0 | final_eval == 1) {
             System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
             System.out.println("The final grammar is:\n" + gr);
-            evaluate_grammar(final_eval_sample, i, true);
+            evaluate_grammar(final_eval_sample, i);
         }
 	}
 
 	public static boolean evaluate_grammar(int s, int i) {
-		return evaluate_grammar(s, i, false);
-	}
-
-	public static boolean evaluate_grammar(int s, int i, boolean printout) {
 		//now going to examine resulting grammar
 		double log_likelihood = 0;
 		int tot = 0;
