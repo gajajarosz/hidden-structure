@@ -1,5 +1,5 @@
 // read command
-// usage: java EDL grammar_file i_o_file gram_sample_size iterations ranking_bias learner_type (print args)
+// usage: java EDL grammar_file i_o_file gram_sample_size iterations final_sample ranking_bias learner_type (print args)
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 
 public class EDL {
@@ -18,10 +18,11 @@ public class EDL {
     public static int mini_eval_sample = 100;
     public static int quit_early = 100;
     public static int quit_early_sample = 100;
+    public static int print_input = 0;
 
 	public static void main(String[] args) {
-		if (args.length < 6) {
-			System.out.println("usage: java EDL grammar_file dist_file iterations learner_type grammar_sample_size init_bias (print args)");
+		if (args.length < 7) {
+			System.out.println("usage: java EDL grammar_file dist_file iterations final_sample learner_type grammar_sample_size init_bias (print args)");
 			System.exit(-1);
 		}
 
@@ -33,20 +34,23 @@ public class EDL {
 		//	df.phono = false;
 
 		iterations = Integer.parseInt(args[2]);
-        int learner = Integer.parseInt(args[3]);
-		gram_sample_size = Integer.parseInt(args[4]);
-		int init_bias = Integer.parseInt(args[5]);
-        if (args.length == 13) {
-            final_eval = Integer.parseInt(args[6]);
-            final_eval_sample = Integer.parseInt(args[7]);
-            mini_eval = Integer.parseInt(args[8]);
-            mini_eval_freq = Integer.parseInt(args[9]);
-            mini_eval_sample = Integer.parseInt(args[10]);
-            quit_early = Integer.parseInt(args[11]);
-            quit_early_sample = Integer.parseInt(args[12]);
+        final_eval_sample = Integer.parseInt(args[3]);
+        int learner = Integer.parseInt(args[4]);
+		gram_sample_size = Integer.parseInt(args[5]);
+		int init_bias = Integer.parseInt(args[6]);
+        if (args.length == 14) {
+            print_input = Integer.parseInt(args[7]);
+            final_eval = Integer.parseInt(args[8]);
+            mini_eval = Integer.parseInt(args[9]);
+            mini_eval_freq = Integer.parseInt(args[10]);
+            mini_eval_sample = Integer.parseInt(args[11]);
+            quit_early = Integer.parseInt(args[12]);
+            quit_early_sample = Integer.parseInt(args[13]);
         }
-        System.out.println("\nLEXICON:\n" + df);
 
+        if(print_input==0) {
+            System.out.println("\nLEXICON:\n" + df);
+        }
 		// initialize grammar to uniform - make ll_grammar
 		gr = new RandomExtension(gf);
 		prior = new RandomExtension(gf);
@@ -54,7 +58,9 @@ public class EDL {
 		if (init_bias == 1) {
 			gr.bias_grammar();
 		}
-        System.out.println("\nGRAMMAR:\n" + gr);
+		if(print_input==0) {
+            System.out.println("\nGRAMMAR:\n" + gr);
+        }
 		if (learner == 1) {
 			EDL_batch();
 		} else if (learner == 2) {

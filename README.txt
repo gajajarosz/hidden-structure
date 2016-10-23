@@ -17,6 +17,10 @@ ITERATIONS
  - The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
  - The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
 
+FINAL-EVAL_SAMPLE
+-How many samples are used to evaluate in the final evaluation
+-Default: 1000
+
  ---------------------------------------------------------------------------------------------------------------------------------------
 
 EDL
@@ -38,11 +42,11 @@ INITIAL BIAS//TODO: add to GLA; start constraints ranked high
 
 To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 > output.txt
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1 1000 0 | less
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0 > output.txt
+java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
@@ -75,35 +79,37 @@ LEARNING RATE\\TODO: add learning rates to EDL, but keep separate
 
 To run GLA, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0 > output.txt
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 EIP OT .1 2 0 | less
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 > output.txt
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 | less
 
 In order to do this you will need java and java runtime environment installed, and your computer will have to know where to find java.
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
-PRINT OPTIONS //TODO: explain better; add initial print option
+PRINT OPTIONS
+
+PRINT_INPUT?
+- 0 : prints grammar and input
+- 1 : doesn't print input
 
 FINAL-EVAL
 - 0 : prints final grammar; accuracy on each output; total error and log likelihood
 - 1 : prints final grammar; total error and log likelihood
 - Default: 0
 
-FINAL-EVAL_SAMPLE
--How many samples are used to evaluate in the final evaluation
--Default: 1000
-
 MINI-EVAL
 - 0: prints grammar; accuracy on each output; total error and log likelihood
 - 1: prints grammar; total error and log likelihood
+- 2: prints nothing
 - Default: 1
 
 MINI-EVAL_FREQ
 - How often a mini-evaluation round is performed
 - Default: 100
+- In order to not perform any intermediate evaluation, set to the same number as iterations
 
 MINI-EVAL_SAMPLE
 -How many samples are used to evaluate in a mini-evaluation
@@ -113,8 +119,17 @@ QUIT_EARLY?
 -How often the program checks to see if it can quit early
 -Quits if the learner has already learned everything
 -Default: 100
+- In order to not try to quit early, set to the same number as iterations
 
 QUIT_EARLY?_SAMPLE
 -How many samples are used to evaluate whether the learner is done learning
 -The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
 -Default: 100
+
+For instance, if you want to run GLA and print as much as possible, run:
+
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 0 0 1 100 100 100
+
+If you want to run GLA as quickly as possible, run:
+
+java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 1 1 2 1000 100 1000 100

@@ -1,4 +1,4 @@
-// usage: java GLA grammar_file dist_file num_samples learner model learning_rate noise NegOK? (print parameters...)
+// usage: java GLA grammar_file dist_file num_samples fin_sample learner model learning_rate noise NegOK? (print parameters...)
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
 
@@ -21,41 +21,44 @@ public class GLA {
     public static int mini_eval_sample = 100;
     public static int quit_early = 100;
     public static int quit_early_sample = 100;
+    public static int print_input = 0;
 
     public static void main(String[] args) {
-        if (args.length < 8) {
-            System.out.println("usage: java GLA grammar_file dist_file iterations learner model learning_rate noise NegOK? (print parameters ...)");
+        if (args.length < 9) {
+            System.out.println("usage: java GLA grammar_file dist_file iterations fin_sample learner model learning_rate noise NegOK? (print parameters ...)");
             System.exit(-1);
         }
 
         // read in a grammar_file
         gf = new GrammarFile(args[0]);
 
-        // read in i_o_file
-        df = new DistFile(args[1]);
-        System.out.println("\nLEXICON:\n" + df);
-
         num_samples = Integer.parseInt(args[2]);
-        learner = args[3];
-        model = args[4];
-        rate = Double.parseDouble(args[5]);
-        noise = Double.parseDouble(args[6]);
-        NegOK = Boolean.parseBoolean(args[7]);
+        final_eval_sample = Integer.parseInt(args[3]);
+        learner = args[4];
+        model = args[5];
+        rate = Double.parseDouble(args[6]);
+        noise = Double.parseDouble(args[7]);
+        NegOK = Boolean.parseBoolean(args[8]);
         System.out.println(args.length);
-        if (args.length == 15) {
-            final_eval = Integer.parseInt(args[8]);
-            final_eval_sample = Integer.parseInt(args[9]);
-            mini_eval = Integer.parseInt(args[10]);
-            mini_eval_freq = Integer.parseInt(args[11]);
-            mini_eval_sample = Integer.parseInt(args[12]);
-            quit_early = Integer.parseInt(args[13]);
-            quit_early_sample = Integer.parseInt(args[14]);
+        if (args.length == 16) {
+            print_input = Integer.parseInt(args[9]);
+            final_eval = Integer.parseInt(args[10]);
+            mini_eval = Integer.parseInt(args[11]);
+            mini_eval_freq = Integer.parseInt(args[12]);
+            mini_eval_sample = Integer.parseInt(args[13]);
+            quit_early = Integer.parseInt(args[14]);
+            quit_early_sample = Integer.parseInt(args[15]);
         }
 
+        // read in i_o_file
+        df = new DistFile(args[1]);
         //initialize to uniform grammar
         gr = new STOT(gf);
-        System.out.println("\nGRAMMAR:\n" + gr.gramToString(gr.grammar));
 
+        if (print_input == 0) {
+            System.out.println("\nLEXICON:\n" + df);
+            System.out.println("\nGRAMMAR:\n" + gr.gramToString(gr.grammar));
+        }
         learn_new_RIP();
     }
 
