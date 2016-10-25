@@ -1,6 +1,7 @@
 // read command
 // usage: java EDL grammar_file i_o_file gram_sample_size iterations final_sample ranking_bias learner_type (print args)
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
+import java.util.*;
 
 public class EDL {
 
@@ -19,6 +20,8 @@ public class EDL {
 	public static int quit_early = 100;
 	public static int quit_early_sample = 100;
 	public static int print_input = 0;
+	public static HashMap hm = new HashMap();
+
 
 	public static void main(String[] args) {
 		if (args.length < 7) {
@@ -467,6 +470,10 @@ public class EDL {
 		if (i == iterations) {
 			if (final_eval == 0 | final_eval == 1) {
 				System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+				Object[] all = hm.entrySet().toArray();
+				for(int k=0; k < all.length; k++) {
+					System.out.println(all[k]);
+				}
 			}
 		}
 
@@ -479,7 +486,16 @@ public class EDL {
 	}
 
 	public static String optimize(String input, int[] rank) {
-
+		String n = input+Arrays.toString(rank);
+		int prev;
+		if(hm.containsKey(n)==true){
+			prev = (int)hm.get(n);
+		}
+		else{
+			prev = 0;
+		}
+		prev = prev+1;
+		hm.put(n,prev);
 		//find the tableau
 		GrammarFile.Tableau tab = find_tab(input);
 
