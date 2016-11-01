@@ -2,6 +2,8 @@
 // usage: java EDL grammar_file i_o_file gram_sample_size iterations final_sample ranking_bias learner_type (print args)
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 import java.util.*;
+import org.apache.commons.collections4.Trie;
+import org.apache.commons.collections4.trie.PatriciaTrie;
 
 public class EDL {
 
@@ -20,7 +22,8 @@ public class EDL {
 	public static int quit_early = 100;
 	public static int quit_early_sample = 100;
 	public static int print_input = 0;
-	public static HashMap hm = new HashMap();
+    public static Hashtable<String, GrammarFile.Tableau> tabtable = new Hashtable<String, GrammarFile.Tableau>();
+	public static Hashtable<String, PatriciaTrie<String>> trietable = new Hashtable<String,PatriciaTrie<String>>();
 
 
 	public static void main(String[] args) {
@@ -50,7 +53,6 @@ public class EDL {
 			quit_early = Integer.parseInt(args[12]);
 			quit_early_sample = Integer.parseInt(args[13]);
 		}
-
 		if (print_input == 0) {
 			System.out.println("\nLEXICON:\n" + df);
 		}
@@ -64,6 +66,13 @@ public class EDL {
 		if (print_input == 0) {
 			System.out.println("\nGRAMMAR:\n" + gr);
 		}
+		//for (int i = 0; i < gf.tableaux.length; i++) {
+			for (int j = 0; j < gf.tableaux[0].cands.length; j++) {
+				System.out.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
+			}
+		//}
+
+
 		if (learner == 1) {
 			EDL_batch();
 		} else if (learner == 2) {
@@ -77,7 +86,7 @@ public class EDL {
 		double prev_error = 1000.0;
 		int i = 0;
 		for (i = 0; i < iterations; i++) {
-			if (i % mini_eval_freq == 0) {
+			if (i % mini_eval_freq == 0 ) {
 				System.out.println("Starting iteration " + i);
 			}
 			//to store successes for each output
@@ -207,11 +216,11 @@ public class EDL {
 			}
 
 			if (i % mini_eval_freq == 0) {
-				if (mini_eval == 0 | mini_eval == 1) {
+				if (mini_eval == 0) {
 					System.out.println("The new grammar is:\n" + gr);
-					if (i % quit_early != 0) {
-						evaluate_grammar(mini_eval_sample, i);
-					}
+				}
+				if (i % quit_early != 0) {
+					evaluate_grammar(mini_eval_sample, i);
 				}
 			}
 			if (i % quit_early == 0) {
@@ -470,10 +479,10 @@ public class EDL {
 		if (i == iterations) {
 			if (final_eval == 0 | final_eval == 1) {
 				System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
-				Object[] all = hm.entrySet().toArray();
+				/*Object[] all = hm.entrySet().toArray();
 				for(int k=0; k < all.length; k++) {
 					System.out.println(all[k]);
-				}
+				}*/
 			}
 		}
 
@@ -486,83 +495,98 @@ public class EDL {
 	}
 
 	public static String optimize(String input, int[] rank) {
-		String n = input+Arrays.toString(rank);
-		int prev;
-		if(hm.containsKey(n)==true){
-			prev = (int)hm.get(n);
-		}
-		else{
-			prev = 0;
-		}
-		prev = prev+1;
-		hm.put(n,prev);
-		//find the tableau
-		GrammarFile.Tableau tab = find_tab(input);
+        String w = prevFound(rank,input);
+		if (w!=""){
+			return w;
+		} else {
 
-		//create array that stores information about which candidates are still in the running
-		int[] survivors = new int[tab.cands.length];
-		int num_sur = survivors.length;
-		for (int i = 0; i < survivors.length; i++) {
-			survivors[i] = 1;
-		}
-		int size = rank.length;
-		while ((num_sur > 1) && (size >= 0)) {
+			GrammarFile.Tableau tab = find_tab(input); //find the tableau
+			List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
+			int stop = rank.length;
+
 			for (int j = 0; j < rank.length; j++) {
 				//figuring out minimum violation for remaining candidates
 				int min_vios = -1;
-				for (int i = 0; i < survivors.length; i++) {
-					if (survivors[i] == 1) {
-						if (min_vios == -1) {
-							min_vios = tab.cands[i].violations[rank[j]];
-						} else if (tab.cands[i].violations[rank[j]] < min_vios) {
-							min_vios = tab.cands[i].violations[rank[j]];
-						}
+				List<Integer> cwinners = new ArrayList<Integer>();
+				for (int i = 0; i < winners.size(); i++) {
+					if (min_vios == -1) {
+						min_vios = tab.cands[i].violations[rank[j]];
+						cwinners.add(i);
+					} else if (tab.cands[i].violations[rank[j]] < min_vios) {
+						min_vios = tab.cands[i].violations[rank[j]];
+						cwinners = new ArrayList<Integer>();
+						cwinners.add(i);
+					} else if (tab.cands[i].violations[rank[j]] == min_vios) {
+						cwinners.add(i);
 					}
 				}
+				//System.out.println("Winners remaining: "+cwinners.size());
+				if (cwinners.size() > 0) {
+					winners = cwinners;
+				}
+				if (winners.size() < 2 | cwinners.size() == 0) {
+					stop = j;
+					break;
+				}
+			}
+			//System.out.println("Stoppped at :" +stop);
 
-				//System.out.println("looking at constraint " + rank[j] + " whose minimum is " + min_vios);
-				for (int i = 0; i < survivors.length; i++) {
-					if ((tab.cands[i].violations[rank[j]] > min_vios) && (survivors[i] == 1)) {
-						//System.out.println("candidate " + tab.cands[i].oform + " getting knocked out");
-						survivors[i] = 0;
-						num_sur -= 1;
-					}
+			String winner = tab.cands[winners.get(0)].oform; //If there are more than one winners, this chooses the last one in tableau
+			track(stop, rank, winner, input);
+			return winner;
+		}
+	}
+
+	public static String prevFound(int[] rank, String input){
+		String winner = "";
+		if(trietable.containsKey(input)==false) {
+			return winner;
+		}else{
+			PatriciaTrie<String> trie = trietable.get(input);
+			for (int i=1; i < (rank.length-1); i++){
+				int[] s = Arrays.copyOfRange(rank,0,i);
+				String sub = Arrays.toString(s);
+				if(trie.containsKey(sub)){
+					winner = trie.get(sub);
+					break;
 				}
-				size--;
 			}
 		}
-		/*String winner = "";
-		for (int i = 0; i < survivors.length; i++) {
-			if (survivors[i] == 1) {
-				winner = tab.cands[i].oform;
-				//System.out.println("winner for input " + input + " and rank " + gr.rankToString(rank) + " is " + winner);
-			}
-		}*/
-		String winner = find_win(tab, survivors);
 		return winner;
+	}
+
+	public static void track(int stop, int[] rank, String winner, String input){
+		if(trietable.containsKey(input)==false){
+			trietable.put(input,new PatriciaTrie<String>());
+		}
+		PatriciaTrie<String> trie = trietable.get(input);
+		int[] prefix = Arrays.copyOfRange(rank,0,stop);
+		trie.put(Arrays.toString(prefix),winner);
+	}
+
+	public static List<Integer> initializeList(int l){
+		List<Integer> winners = new ArrayList<Integer>();
+		for (int k = 0; k < l; k++){
+			winners.add(new Integer(k));
+		}
+		return winners;
 	}
 
 	public static GrammarFile.Tableau find_tab(String input) {
-		//find the tableau
-		GrammarFile.Tableau tab = null;
-		for (int i = 0; i < gf.tableaux.length; i++) {
-			if (gf.tableaux[i].uf.equals(input)) {
-				tab = gf.tableaux[i];
-			}
-		}
+        //find the tableau
+        GrammarFile.Tableau tab = null;
+        if (tabtable.containsKey(input)){
+            tab = tabtable.get(input);
+        } else{
+            for (int i = 0; i < gf.tableaux.length; i++) {
+                if (gf.tableaux[i].uf.equals(input)) {
+                    tab = gf.tableaux[i];
+                }
+            }
+            tabtable.put(input, tab);
+        }
 		return tab;
 	}
-
-	public static String find_win(GrammarFile.Tableau tab, int[] survivors) {
-		String winner = "";
-		for (int i = 0; i < survivors.length; i++) {
-			if (survivors[i] == 1) {
-				winner = tab.cands[i].oform;
-			}
-		}
-		return winner;
-	}
-
 
 }
 
