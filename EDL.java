@@ -23,7 +23,7 @@ public class EDL {
 	public static int quit_early_sample = 100;
 	public static int print_input = 0;
     public static Hashtable<String, GrammarFile.Tableau> tabtable = new Hashtable<String, GrammarFile.Tableau>();
-	public static Hashtable<String, PatriciaTrie<String>> trietable = new Hashtable<String,PatriciaTrie<String>>();
+	public static Hashtable<String, WinBundle> intable = new Hashtable<String,WinBundle>();
 
 
 	public static void main(String[] args) {
@@ -496,7 +496,9 @@ public class EDL {
 
 	public static String optimize(String input, int[] rank) {
         String w = prevFound(rank,input);
+		//System.out.println("What prevFound returned: "+w);
 		if (w!=""){
+			System.out.println("Here is what the word was: "+w);
 			return w;
 		} else {
 
@@ -520,7 +522,6 @@ public class EDL {
 						cwinners.add(i);
 					}
 				}
-				//System.out.println("Winners remaining: "+cwinners.size());
 				if (cwinners.size() > 0) {
 					winners = cwinners;
 				}
@@ -529,8 +530,6 @@ public class EDL {
 					break;
 				}
 			}
-			//System.out.println("Stoppped at :" +stop);
-
 			String winner = tab.cands[winners.get(0)].oform; //If there are more than one winners, this chooses the last one in tableau
 			track(stop, rank, winner, input);
 			return winner;
@@ -539,15 +538,27 @@ public class EDL {
 
 	public static String prevFound(int[] rank, String input){
 		String winner = "";
-		if(trietable.containsKey(input)==false) {
-			return winner;
-		}else{
-			PatriciaTrie<String> trie = trietable.get(input);
-			for (int i=1; i < (rank.length-1); i++){
-				int[] s = Arrays.copyOfRange(rank,0,i);
-				String sub = Arrays.toString(s);
-				if(trie.containsKey(sub)){
-					winner = trie.get(sub);
+		if(intable.containsKey(input)) {
+			System.out.println("Contains input");
+			WinBundle bun = intable.get(input);
+			int shortest = bun.start;
+			int longest = bun.stop;
+			HashMap<List<int[]>, String> wins = bun.ht;
+			System.out.println("Rank:" + Arrays.toString(rank));
+			Set<List<int[]>> k = wins.keySet();
+			for (List<int[]> key : k) {
+				System.out.println("key: " + Arrays.toString(key.get(0)));
+			}
+			System.out.println("Start: " + shortest);
+			System.out.println("Stop: " + longest);
+			for (int i = shortest; i < (longest + 1); i++) { //Is this right???
+				List<int[]> sub = Arrays.asList(Arrays.copyOfRange(rank, 0, i + 1));
+				int[] ie = sub.get(0);
+				System.out.println(Arrays.toString(ie));
+
+				if (wins.containsKey(sub)) {
+					System.out.println("Found something!");
+					winner = wins.get(sub);
 					break;
 				}
 			}
@@ -556,18 +567,29 @@ public class EDL {
 	}
 
 	public static void track(int stop, int[] rank, String winner, String input){
-		if(trietable.containsKey(input)==false){
-			trietable.put(input,new PatriciaTrie<String>());
+		if(intable.containsKey(input)) {
+			System.out.println("Already contains!");
+		}else{
+			intable.put(input,new WinBundle(stop,stop));
 		}
-		PatriciaTrie<String> trie = trietable.get(input);
-		int[] prefix = Arrays.copyOfRange(rank,0,stop);
-		trie.put(Arrays.toString(prefix),winner);
+		WinBundle bun = intable.get(input);
+		if(bun.start > stop){
+			bun.start = stop;
+		}
+		if (bun.stop < stop) {
+			bun.stop = stop;
+		}
+		HashMap<List<int[]>, String> wins = bun.ht;
+		List<int[]> pre = Arrays.asList(Arrays.copyOfRange(rank,0,stop+1));
+		System.out.println("Rank is "+Arrays.toString(rank)+"and stop is "+stop);
+		System.out.println("Prefix adding: "+Arrays.toString(pre.get(0)));
+		wins.put(pre,winner);
 	}
 
 	public static List<Integer> initializeList(int l){
 		List<Integer> winners = new ArrayList<Integer>();
 		for (int k = 0; k < l; k++){
-			winners.add(new Integer(k));
+			winners.add(k);
 		}
 		return winners;
 	}
@@ -587,6 +609,5 @@ public class EDL {
         }
 		return tab;
 	}
-
 }
 
