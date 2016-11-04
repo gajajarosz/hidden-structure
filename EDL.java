@@ -543,18 +543,19 @@ public class EDL {
 			WinBundle bun = intable.get(input);
 			int shortest = bun.start;
 			int longest = bun.stop;
-			HashMap<List<int[]>, String> wins = bun.ht;
+			HashMap<Ranking, String> wins = bun.ht;
 			System.out.println("Rank:" + Arrays.toString(rank));
-			Set<List<int[]>> k = wins.keySet();
-			for (List<int[]> key : k) {
-				System.out.println("key: " + Arrays.toString(key.get(0)));
+			Set<Ranking> k = wins.keySet();
+			for (Ranking key : k) {
+				System.out.println("key: " + Arrays.toString(key.ranking));
 			}
 			System.out.println("Start: " + shortest);
 			System.out.println("Stop: " + longest);
 			for (int i = shortest; i < (longest + 1); i++) { //Is this right???
-				List<int[]> sub = Arrays.asList(Arrays.copyOfRange(rank, 0, i + 1));
-				int[] ie = sub.get(0);
-				System.out.println(Arrays.toString(ie));
+				Ranking sub = new Ranking(Arrays.copyOfRange(rank, 0, i + 1));
+				//List<int[]> sub = Arrays.asList(Arrays.copyOfRange(rank, 0, i + 1));
+				//int[] ie = sub.get(0);
+				System.out.println(Arrays.toString(sub.ranking));
 
 				if (wins.containsKey(sub)) {
 					System.out.println("Found something!");
@@ -579,10 +580,12 @@ public class EDL {
 		if (bun.stop < stop) {
 			bun.stop = stop;
 		}
-		HashMap<List<int[]>, String> wins = bun.ht;
-		List<int[]> pre = Arrays.asList(Arrays.copyOfRange(rank,0,stop+1));
+		HashMap<Ranking, String> wins = bun.ht;
+		Ranking pre = new Ranking(Arrays.copyOfRange(rank,0,stop+1));
+		//List<int[]> pre = Arrays.asList(Arrays.copyOfRange(rank,0,stop+1));
 		System.out.println("Rank is "+Arrays.toString(rank)+"and stop is "+stop);
-		System.out.println("Prefix adding: "+Arrays.toString(pre.get(0)));
+		//System.out.println("Prefix adding: "+Arrays.toString(pre.get(0)));
+		System.out.println("Prefix adding: "+Arrays.toString(pre.ranking));
 		wins.put(pre,winner);
 	}
 

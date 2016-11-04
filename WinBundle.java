@@ -4,9 +4,9 @@ public class WinBundle {
     WinBundle(int f, int l) {
         start = f;
         stop = l;
-        ht = new HashMap<List<int[]>, String>();
+        ht = new HashMap<Ranking, String>();
     }
     public int start;
     public int stop;
-    public HashMap<List<int[]>, String> ht;
+    public HashMap<Ranking, String> ht;
 }
