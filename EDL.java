@@ -553,14 +553,18 @@ public class EDL {
 			System.out.println("Stop: " + longest);
 			for (int i = shortest; i < (longest + 1); i++) { //Is this right???
 				Ranking sub = new Ranking(Arrays.copyOfRange(rank, 0, i + 1));
-				//List<int[]> sub = Arrays.asList(Arrays.copyOfRange(rank, 0, i + 1));
-				//int[] ie = sub.get(0);
 				System.out.println(Arrays.toString(sub.ranking));
 
 				if (wins.containsKey(sub)) {
 					System.out.println("Found something!");
 					winner = wins.get(sub);
 					break;
+				}
+				int[] test = new int[2];
+				test[0] = 9;
+				test[1] = 8;
+				if (wins.containsKey(new Ranking(test))){
+					System.out.println("FOund a key98");
 				}
 			}
 		}
@@ -582,9 +586,7 @@ public class EDL {
 		}
 		HashMap<Ranking, String> wins = bun.ht;
 		Ranking pre = new Ranking(Arrays.copyOfRange(rank,0,stop+1));
-		//List<int[]> pre = Arrays.asList(Arrays.copyOfRange(rank,0,stop+1));
 		System.out.println("Rank is "+Arrays.toString(rank)+"and stop is "+stop);
-		//System.out.println("Prefix adding: "+Arrays.toString(pre.get(0)));
 		System.out.println("Prefix adding: "+Arrays.toString(pre.ranking));
 		wins.put(pre,winner);
 	}
