@@ -6,8 +6,10 @@ public class Ranking{
         for (int i=0; i < cons.length;i++){
             ranking[i] = (byte) cons[i];
         }
+        hc = Arrays.hashCode(ranking);
     }
     private byte[] ranking;
+    private int hc;
 
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -21,7 +23,6 @@ public class Ranking{
     }
 
     public int hashCode() {
-        int result = Arrays.hashCode(ranking);
-        return result;
+        return hc;
     }
 }

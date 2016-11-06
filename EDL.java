@@ -2,8 +2,6 @@
 // usage: java EDL grammar_file i_o_file gram_sample_size iterations final_sample ranking_bias learner_type (print args)
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 import java.util.*;
-import org.apache.commons.collections4.Trie;
-import org.apache.commons.collections4.trie.PatriciaTrie;
 
 public class EDL {
 
@@ -22,8 +20,8 @@ public class EDL {
 	public static int quit_early = 100;
 	public static int quit_early_sample = 100;
 	public static int print_input = 0;
-    public static Hashtable<String, GrammarFile.Tableau> tabtable = new Hashtable<String, GrammarFile.Tableau>();
-	public static Hashtable<String, WinBundle> intable = new Hashtable<String,WinBundle>();
+    public static HashMap<String, GrammarFile.Tableau> tabtable = new HashMap<String, GrammarFile.Tableau>();
+	public static HashMap<String, WinBundle> intable = new HashMap<String,WinBundle>();
 
 
 	public static void main(String[] args) {
