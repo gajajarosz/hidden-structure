@@ -2,9 +2,12 @@ import java.util.*;
 
 public class Ranking{
     Ranking(int[] cons){
-        ranking = cons;
+        ranking = new byte[cons.length];
+        for (int i=0; i < cons.length;i++){
+            ranking[i] = (byte) cons[i];
+        }
     }
-    public int[] ranking;
+    private byte[] ranking;
 
     public boolean equals(Object object) {
         if (this == object) return true;
