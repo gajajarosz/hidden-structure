@@ -7,15 +7,15 @@ public class PrefixTree {
         Branch(int s){
             succs = new Node[s];
         }
-        String find(int[] k, int i){
-            next = succs[k[i]];
+        public String find(int[] k, int i){
+            Node next = succs[k[i]];
             if(next==null|i==k.length){
                 return null;
             }else{
-                next.find(k,i+1);
+                return next.find(k,i+1);
             }
         }
-        void put(int[] pre, int i, String v){
+        public void put(int[] pre, int i, String v){
             if(i==pre.length-1){
                 succs[pre[i]]=new Value(v);
             }else{
@@ -33,21 +33,21 @@ public class PrefixTree {
         Value(String v){
             value = v;
         }
-        String find(int[] k, int i){
+        public String find(int[] k, int i){
             return value;
         }
-        void put(int[] pre, int i, String v){
-            throw new Exception("Cannot add branch to value!");
+        public void put(int[] pre, int i, String v){
+            throw new RuntimeException("Cannot add branch to value!");
         }
     }
 
     PrefixTree(int size){
         root = new Branch(size);
     }
-    String find(int[] k){
+    public String find(int[] k){
         return root.find(k,0);
     }
-    void put(int[] pre, String v){
-        return root.put(pre, 0, v);
+    public void put(int[] pre, String v){
+        root.put(pre, 0, v);
     }
 }

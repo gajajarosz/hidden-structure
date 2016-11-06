@@ -21,7 +21,7 @@ public class EDL {
 	public static int quit_early_sample = 100;
 	public static int print_input = 0;
     public static HashMap<String, GrammarFile.Tableau> tabtable = new HashMap<String, GrammarFile.Tableau>();
-	public static HashMap<String, WinBundle> intable = new HashMap<String,WinBundle>();
+	public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
 
 
 	public static void main(String[] args) {
@@ -534,7 +534,7 @@ public class EDL {
 		}
 	}
 
-	public static String prevFound(int[] rank, String input){
+	/*public static String prevFound(int[] rank, String input){
 		String winner = "";
 		if(intable.containsKey(input)) {
 			//System.out.println("Contains input");
@@ -542,13 +542,13 @@ public class EDL {
 			int shortest = bun.start;
 			int longest = bun.stop;
 			HashMap<Ranking, String> wins = bun.ht;
-			/*System.out.println("Rank:" + Arrays.toString(rank));
+			System.out.println("Rank:" + Arrays.toString(rank));
 			Set<Ranking> k = wins.keySet();
 			for (Ranking key : k) {
 				System.out.println("key: " + Arrays.toString(key.ranking));
 			}
 			System.out.println("Start: " + shortest);
-			System.out.println("Stop: " + longest);*/
+			System.out.println("Stop: " + longest);
 			for (int i = shortest; i < (longest + 1); i++) { //Is this right???
 				Ranking sub = new Ranking(Arrays.copyOfRange(rank, 0, i + 1));
 				//System.out.println(Arrays.toString(sub.ranking));
@@ -558,13 +558,35 @@ public class EDL {
 					winner = wins.get(sub);
 					break;
 				}
-				/*int[] test = new int[2];
+				int[] test = new int[2];
 				test[0] = 9;
 				test[1] = 8;
 				if (wins.containsKey(new Ranking(test))){
 					System.out.println("FOund a key98");
-				}*/
+				}
 			}
+		}
+		return winner;
+	}*/
+
+	public static String prevFound(int[] rank, String input) {
+		String winner = "";
+		if (intable.containsKey(input)) {
+			//System.out.println("Contains input");
+			PrefixTree ptree = intable.get(input);
+			/*System.out.println("Rank:" + Arrays.toString(rank));*/
+			winner = ptree.find(rank);
+			if(winner!=null){
+				//System.out.println("Found something!"+winner);
+			} else{
+				winner = "";
+			}
+			/*int[] test = new int[2];
+			test[0] = 9;
+			test[1] = 8;
+			if (ptree.find(test)!=null){
+				System.out.println("FOund a key98");
+			}*/
 		}
 		return winner;
 	}
@@ -573,20 +595,10 @@ public class EDL {
 		if(intable.containsKey(input)) {
 			//System.out.println("Already contains!");
 		}else{
-			intable.put(input,new WinBundle(stop,stop));
+			intable.put(input, new PrefixTree(rank.length));
 		}
-		WinBundle bun = intable.get(input);
-		if(bun.start > stop){
-			bun.start = stop;
-		}
-		if (bun.stop < stop) {
-			bun.stop = stop;
-		}
-		HashMap<Ranking, String> wins = bun.ht;
-		Ranking pre = new Ranking(Arrays.copyOfRange(rank,0,stop+1));
-		//System.out.println("Rank is "+Arrays.toString(rank)+"and stop is "+stop);
-		//System.out.println("Prefix adding: "+Arrays.toString(pre.ranking));
-		wins.put(pre,winner);
+		PrefixTree ptree = intable.get(input);
+		ptree.put(Arrays.copyOfRange(rank,0,stop+1),winner);
 	}
 
 	public static List<Integer> initializeList(int l){
