@@ -9,7 +9,8 @@ public class PrefixTree {
         }
         public String find(int[] k, int i){
             Node next = succs[k[i]];
-            if(next==null|i==k.length){
+            System.out.println("At node: "+k[i]);
+            if(next==null){
                 return null;
             }else{
                 return next.find(k,i+1);
@@ -21,7 +22,6 @@ public class PrefixTree {
             }else{
                 if(succs[pre[i]]==null){
                     succs[pre[i]] = new Branch(succs.length);
-
                 }
                 succs[pre[i]].put(pre,i+1,v);
             }

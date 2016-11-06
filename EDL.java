@@ -574,10 +574,10 @@ public class EDL {
 		if (intable.containsKey(input)) {
 			//System.out.println("Contains input");
 			PrefixTree ptree = intable.get(input);
-			/*System.out.println("Rank:" + Arrays.toString(rank));*/
+			System.out.println("Rank:" + Arrays.toString(rank));
 			winner = ptree.find(rank);
 			if(winner!=null){
-				//System.out.println("Found something!"+winner);
+				// System.out.println("Found something!"+winner);
 			} else{
 				winner = "";
 			}
