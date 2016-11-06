@@ -498,7 +498,7 @@ public class EDL {
         String w = prevFound(rank,input);
 		//System.out.println("What prevFound returned: "+w);
 		if (w!=""){
-			System.out.println("Here is what the word was: "+w);
+			//System.out.println("Here is what the word was: "+w);
 			return w;
 		} else {
 
@@ -539,33 +539,33 @@ public class EDL {
 	public static String prevFound(int[] rank, String input){
 		String winner = "";
 		if(intable.containsKey(input)) {
-			System.out.println("Contains input");
+			//System.out.println("Contains input");
 			WinBundle bun = intable.get(input);
 			int shortest = bun.start;
 			int longest = bun.stop;
 			HashMap<Ranking, String> wins = bun.ht;
-			System.out.println("Rank:" + Arrays.toString(rank));
+			/*System.out.println("Rank:" + Arrays.toString(rank));
 			Set<Ranking> k = wins.keySet();
 			for (Ranking key : k) {
 				System.out.println("key: " + Arrays.toString(key.ranking));
 			}
 			System.out.println("Start: " + shortest);
-			System.out.println("Stop: " + longest);
+			System.out.println("Stop: " + longest);*/
 			for (int i = shortest; i < (longest + 1); i++) { //Is this right???
 				Ranking sub = new Ranking(Arrays.copyOfRange(rank, 0, i + 1));
-				System.out.println(Arrays.toString(sub.ranking));
+				//System.out.println(Arrays.toString(sub.ranking));
 
 				if (wins.containsKey(sub)) {
-					System.out.println("Found something!");
+					//System.out.println("Found something!");
 					winner = wins.get(sub);
 					break;
 				}
-				int[] test = new int[2];
+				/*int[] test = new int[2];
 				test[0] = 9;
 				test[1] = 8;
 				if (wins.containsKey(new Ranking(test))){
 					System.out.println("FOund a key98");
-				}
+				}*/
 			}
 		}
 		return winner;
@@ -573,7 +573,7 @@ public class EDL {
 
 	public static void track(int stop, int[] rank, String winner, String input){
 		if(intable.containsKey(input)) {
-			System.out.println("Already contains!");
+			//System.out.println("Already contains!");
 		}else{
 			intable.put(input,new WinBundle(stop,stop));
 		}
@@ -586,8 +586,8 @@ public class EDL {
 		}
 		HashMap<Ranking, String> wins = bun.ht;
 		Ranking pre = new Ranking(Arrays.copyOfRange(rank,0,stop+1));
-		System.out.println("Rank is "+Arrays.toString(rank)+"and stop is "+stop);
-		System.out.println("Prefix adding: "+Arrays.toString(pre.ranking));
+		//System.out.println("Rank is "+Arrays.toString(rank)+"and stop is "+stop);
+		//System.out.println("Prefix adding: "+Arrays.toString(pre.ranking));
 		wins.put(pre,winner);
 	}
 
