@@ -12,10 +12,10 @@ public class PrefixTree {
         public String find(int[] k, int i){
             Node next = succs[k[i]];
             //System.out.println("At node: "+k[i]);
-            if(next==null){
-                return null;
-            }else{
+            if(next!=null){
                 return next.find(k,i+1);
+            }else{
+                return null;
             }
         }
         public void put(int[] pre, int i, String v){

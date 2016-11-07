@@ -507,14 +507,14 @@ public class EDL {
 			for (int j = 0; j < rank.length; j++) {
 				//figuring out minimum violation for remaining candidates
 				int min_vios = -1;
-				List<Integer> cwinners = new ArrayList<Integer>();
-				for (int i = 0; i < winners.size(); i++) {
+				List<Integer> cwinners = new LinkedList<Integer>();
+				for (int i: winners) {
 					if (min_vios == -1) {
 						min_vios = tab.cands[i].violations[rank[j]];
 						cwinners.add(i);
 					} else if (tab.cands[i].violations[rank[j]] < min_vios) {
 						min_vios = tab.cands[i].violations[rank[j]];
-						cwinners = new ArrayList<Integer>();
+						cwinners.clear();
 						cwinners.add(i);
 					} else if (tab.cands[i].violations[rank[j]] == min_vios) {
 						cwinners.add(i);
