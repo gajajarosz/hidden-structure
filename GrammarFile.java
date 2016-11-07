@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.util.regex.*;
+import java.util.*;
 
 public class GrammarFile {
 	GrammarFile(String fn) {
@@ -56,17 +57,34 @@ public class GrammarFile {
 					this.tableaux[curTab].uf = m4.group(2);
 					int nc = Integer.valueOf(m4.group(3));
 					tableaux[curTab].cands = new Candidate[nc];
+					int l = this.constraints.length;
+					tableaux[curTab].constraints = new int[l];
+					for(int i=0;i<l;i++){
+						tableaux[curTab].constraints[i] = -1;
+					}
 				} else if (m5.matches()) {
 					int ci = Integer.valueOf(m5.group(1)) - 1;
 					tableaux[curTab].cands[ci] = new Candidate(m5.group(2));
 					String vio = m5.group(3);
 					String[] vios = vio.split("\\s+");
 					tableaux[curTab].cands[ci].violations = new int[vios.length];
+					int[] checkc = tableaux[curTab].constraints;
+					//System.out.println(Arrays.toString(vios));
+					for(int l=0;l<checkc.length;l++){
+						int v = Integer.parseInt(vios[l]);
+						if(checkc[l]==-1){
+							tableaux[curTab].constraints[l]=v;
+						}else{
+							if(checkc[l]!=v){
+								tableaux[curTab].constraints[l]=-2;
+							}
+						}
+					}
+					//System.out.println(Arrays.toString(tableaux[curTab].constraints));
 					for (int i = 0; i < vios.length; i++) {
 						tableaux[curTab].cands[ci].violations[i] = Integer.valueOf(vios[i]);
 					}
-					//		    System.out.println("Creating Candidate " + ci + " for " + curTab + ": " +
-					//	       tableaux[curTab].cands[ci].form + " " + tableaux[curTab].cands[ci].oform + " " + vio);
+					//System.out.println("Creating Candidate " + ci + " for " + curTab + ": " + tableaux[curTab].cands[ci].form + " " + tableaux[curTab].cands[ci].oform + " " + vio);
 				} else if (m6.matches()) {
 					structors = m6.group(1).split("\\s+");
 				}
@@ -75,6 +93,13 @@ public class GrammarFile {
 		} catch (IOException ioe) {
 			System.out.println(ioe);
 			return;
+		}
+		for(int i=0;i<tableaux.length;i++){
+			//System.out.println("Tableaux: "+tableaux[i]);
+			//System.out.println("Constriants: "+Arrays.toString(tableaux[i].constraints));
+			/*for(int j=0;j<tableaux[i].constraints.length;j++){
+				System.out.println("Constraint: "+j);
+			}*/
 		}
 	}
 
@@ -97,6 +122,7 @@ public class GrammarFile {
 	public static class Tableau {
 		public String uf;
 		public Candidate[] cands;
+		public int[] constraints;
 	}
 
 	public String[] constraints;

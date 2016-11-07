@@ -118,9 +118,12 @@ public class EDL {
 									//go through each UR for the output
 									for (int in = 0; in < output.dist.length; in++) {
 										String input = output.inputs[in];
-										String winner = optimize(input, rank);
-										if (winner.equals(output.form)) {
-											sum[r][c][o]++;
+										GrammarFile.Tableau tab = find_tab(input); //find the tableau
+										if((tab.constraints[r]!=-5)&&(tab.constraints[c]!=-5)) {
+											String winner = optimize(input, tab, rank);
+											if (winner.equals(output.form)) {
+												sum[r][c][o]++;
+											}
 										}
 									}
 								}
@@ -149,9 +152,12 @@ public class EDL {
 									//go through each UR for the output
 									for (int in = 0; in < output.dist.length; in++) {
 										String input = output.inputs[in];
-										String winner = optimize(input, rank);
-										if (winner.equals(output.form)) {
-											sum[c][r][o]++;
+										GrammarFile.Tableau tab = find_tab(input); //find the tableau
+										if((tab.constraints[r]!=-5)&&(tab.constraints[c]!=-5)) {
+											String winner = optimize(input, tab, rank);
+											if (winner.equals(output.form)) {
+												sum[c][r][o]++;
+											}
 										}
 									}
 								}
@@ -230,7 +236,7 @@ public class EDL {
 		} //end of iterations
 
 		//now going to examine resulting grammar
-		if (final_eval == 0 | final_eval == 1) {
+		if (final_eval == 0 || final_eval == 1) {
 			System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
 			System.out.println("The final grammar is:\n" + gr);
 			evaluate_grammar(final_eval_sample, i);
@@ -310,11 +316,14 @@ public class EDL {
 
 								if (rank != null) {
 									//compute learner's winner and compare to actual output
-									winner = optimize(input, rank);
-									//if equal, add matrix of ranking into collected samples
-									if (winner.equals(output.form)) {
-										//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
-										output_counts[r][c]++;
+									GrammarFile.Tableau tab = find_tab(input); //find the tableau
+									if((tab.constraints[r]!=-5)&&(tab.constraints[c]!=-5)) {
+										winner = optimize(input, tab, rank);
+										//if equal, add matrix of ranking into collected samples
+										if (winner.equals(output.form)) {
+											//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
+											output_counts[r][c]++;
+										}
 									}
 								} else {
 									System.out.println("Rank was nULL!");
@@ -338,11 +347,15 @@ public class EDL {
 								//System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
 								if (rank != null) {
 									//compute learner's winner and compare to actual output
-									winner = optimize(input, rank);
-									//if equal, add matrix of ranking into collected samples
-									if (winner.equals(output.form)) {
-										//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
-										output_counts[c][r]++;
+
+									GrammarFile.Tableau tab = find_tab(input); //find the tableau
+									if((tab.constraints[r]!=-5)&&(tab.constraints[c]!=-5)) {
+										winner = optimize(input, tab, rank);
+										//if equal, add matrix of ranking into collected samples
+										if (winner.equals(output.form)) {
+											//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
+											output_counts[c][r]++;
+										}
 									}
 								} else {
 									System.out.println("Rank was nULL!");
@@ -393,7 +406,7 @@ public class EDL {
 
 			//bias = bias*(i+1)/(i+2);
 			if (i % mini_eval_freq == 0) {
-				if (mini_eval == 0 | mini_eval == 1) {
+				if (mini_eval == 0 || mini_eval == 1) {
 					System.out.println("The new grammar is:\n" + gr);
 					if (i % quit_early != 0) {
 						evaluate_grammar(mini_eval_sample, i);
@@ -409,7 +422,7 @@ public class EDL {
 		}
 
 		//now going to examine resulting grammar
-		if (final_eval == 0 | final_eval == 1) {
+		if (final_eval == 0 || final_eval == 1) {
 			System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
 			System.out.println("The final grammar is:\n" + gr);
 			evaluate_grammar(final_eval_sample, i);
@@ -446,7 +459,9 @@ public class EDL {
 				if (single != null) {
 					int[] rank = gr.find_order(single);
 					//compute learner's winner and compare to actual output
-					winner = optimize(input, rank);
+
+					GrammarFile.Tableau tab = find_tab(input); //find the tableau
+					winner = optimize(input, tab, rank);
 					//if equal, add matrix of ranking into collected samples
 					if (winner.equals(output.form)) {
 						corr++;
@@ -470,12 +485,12 @@ public class EDL {
 			tot = 0;
 		}
 		if (i % mini_eval_freq == 0) {
-			if (mini_eval == 0 | mini_eval == 1) {
+			if (mini_eval == 0 || mini_eval == 1) {
 				System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
 			}
 		}
 		if (i == iterations) {
-			if (final_eval == 0 | final_eval == 1) {
+			if (final_eval == 0 || final_eval == 1) {
 				System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
 				/*Object[] all = hm.entrySet().toArray();
 				for(int k=0; k < all.length; k++) {
@@ -492,15 +507,13 @@ public class EDL {
 		}
 	}
 
-	public static String optimize(String input, int[] rank) {
+	public static String optimize(String input, GrammarFile.Tableau tab, int[] rank) {
         String w = prevFound(rank,input);
 		//System.out.println("What prevFound returned: "+w);
 		if (w!=""){
 			//System.out.println("Here is what the word was: "+w);
 			return w;
 		} else {
-
-			GrammarFile.Tableau tab = find_tab(input); //find the tableau
 			List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
 			int stop = rank.length;
 
@@ -523,7 +536,7 @@ public class EDL {
 				if (cwinners.size() > 0) {
 					winners = cwinners;
 				}
-				if (winners.size() < 2 | cwinners.size() == 0) {
+				if (winners.size() < 2 || cwinners.size() == 0) {
 					stop = j;
 					break;
 				}
