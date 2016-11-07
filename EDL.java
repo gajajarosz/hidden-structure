@@ -573,32 +573,33 @@ public class EDL {
 		String winner = "";
 		if (intable.containsKey(input)) {
 			//System.out.println("Contains input");
+			//System.out.println("Input is: "+input);
 			PrefixTree ptree = intable.get(input);
-			System.out.println("Rank:" + Arrays.toString(rank));
+			//System.out.println("Rank:" + Arrays.toString(rank));
+			//System.out.println(ptree.toString());
 			winner = ptree.find(rank);
 			if(winner!=null){
-				// System.out.println("Found something!"+winner);
+				//System.out.println("Found something!"+winner);
 			} else{
 				winner = "";
 			}
-			/*int[] test = new int[2];
-			test[0] = 9;
-			test[1] = 8;
-			if (ptree.find(test)!=null){
-				System.out.println("FOund a key98");
-			}*/
 		}
 		return winner;
 	}
 
 	public static void track(int stop, int[] rank, String winner, String input){
+		//System.out.println("Stop is: "+stop);
 		if(intable.containsKey(input)) {
 			//System.out.println("Already contains!");
 		}else{
 			intable.put(input, new PrefixTree(rank.length));
 		}
 		PrefixTree ptree = intable.get(input);
-		ptree.put(Arrays.copyOfRange(rank,0,stop+1),winner);
+		//System.out.println(ptree.toString());
+		int[] pre = Arrays.copyOfRange(rank,0,stop+1);
+		//System.out.println("adding prefix: "+Arrays.toString(pre));
+		ptree.put(pre,winner);
+		//System.out.println(ptree.toString());
 	}
 
 	public static List<Integer> initializeList(int l){
