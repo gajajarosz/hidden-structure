@@ -20,6 +20,7 @@ public class EDL {
 	public static int quit_early = 100;
 	public static int quit_early_sample = 100;
 	public static int print_input = 0;
+	public static int maxdepth = 100;
     public static HashMap<String, GrammarFile.Tableau> tabtable = new HashMap<String, GrammarFile.Tableau>();
 	public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
 
@@ -42,7 +43,7 @@ public class EDL {
 		int learner = Integer.parseInt(args[4]);
 		gram_sample_size = Integer.parseInt(args[5]);
 		int init_bias = Integer.parseInt(args[6]);
-		if (args.length == 14) {
+		if (args.length > 13) {
 			print_input = Integer.parseInt(args[7]);
 			final_eval = Integer.parseInt(args[8]);
 			mini_eval = Integer.parseInt(args[9]);
@@ -50,6 +51,9 @@ public class EDL {
 			mini_eval_sample = Integer.parseInt(args[11]);
 			quit_early = Integer.parseInt(args[12]);
 			quit_early_sample = Integer.parseInt(args[13]);
+			if (args.length == 15){
+				maxdepth = Integer.parseInt(args[14]);
+			}
 		}
 		if (print_input == 0) {
 			System.out.println("\nLEXICON:\n" + df);
@@ -609,10 +613,12 @@ public class EDL {
 		}
 		PrefixTree ptree = intable.get(input);
 		//System.out.println(ptree.toString());
-		int[] pre = Arrays.copyOfRange(rank,0,stop+1);
-		//System.out.println("adding prefix: "+Arrays.toString(pre));
-		ptree.put(pre,winner);
-		//System.out.println(ptree.toString());
+		if (stop < maxdepth) {
+			int[] pre = Arrays.copyOfRange(rank, 0, stop + 1);
+			//System.out.println("adding prefix: "+Arrays.toString(pre));
+			ptree.put(pre, winner);
+			//System.out.println(ptree.toString());
+		}
 	}
 
 	public static List<Integer> initializeList(int l){

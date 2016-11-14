@@ -138,3 +138,13 @@ java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 
 If you want to run GLA as quickly as possible, run:
 
 java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 1 1 2 1000 100 1000 100
+
+------------------------------------------------------------------------------------------------------------------------
+
+Advanced options:
+
+For EDL, you can override the maximum depth of the tree that stores winners that have previously been calculated for tableau/ranking combinations.
+By default, the maximum depth of the tree is set to 100, but you can reduce the depth to reduce the amount of memory used by the program.
+For very large input files, this may speed up the program.
+
+To specify the maximum depth, add the maximum depth you want to the end of the print options.
