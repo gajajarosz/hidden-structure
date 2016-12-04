@@ -17,6 +17,9 @@ import javafx.beans.value.*;
 import javafx.scene.text.*;
 
 public class Main extends Application {
+
+    final GLA gla = null;
+
     final ScrollBar sc = new ScrollBar();
 
     @Override

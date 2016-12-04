@@ -1,4 +1,6 @@
 /.idea
-/project/target
-/target
+/gui/project/target
+/console/project/target
+/gui/target
+/console/target
 *.class
