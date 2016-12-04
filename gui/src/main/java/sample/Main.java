@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.beans.value.*;
 import javafx.scene.text.*;
+import learner.*;
 
 public class Main extends Application {
 

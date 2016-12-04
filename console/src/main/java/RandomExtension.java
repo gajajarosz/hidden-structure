@@ -1,3 +1,5 @@
+package learner;
+
 import java.text.NumberFormat;
 
 public class RandomExtension {
