@@ -15,11 +15,10 @@ import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.beans.value.*;
 import javafx.scene.text.*;
+import java.util.Arrays;
 import learner.*;
 
 public class Main extends Application {
-
-    final GLA gla = null;
 
     final ScrollBar sc = new ScrollBar();
 
@@ -260,11 +259,23 @@ public class Main extends Application {
                                         actiontarget.setText("Error: please choose learner type!");
                                     } else{
                                         String chosenLearnerType = emodel.getValue().toString();
+                                        String chosenLearnerNum;
+                                        if(chosenLearnerType=="Online"){
+                                            chosenLearnerNum = "2";
+                                        }else{
+                                            chosenLearnerNum = "1";
+                                        }
                                         if(ss.getText().equals("")){
                                             actiontarget.setText("Error: please specify sample size!");
                                         }else{
                                             String chosenSampleSize = ss.getText();
                                             System.out.println("All EDL parameters ok!");
+                                            String chosenFinEvalSample = finEvalSample.getText();//eventually move
+                                            Boolean chosenBias = iBias.isSelected(); //eventually move
+
+                                            String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize, "0"};
+                                            System.out.println(Arrays.toString(args));
+                                            EDL.main(args);
                                         }
                                     }
                                 } else{
@@ -285,7 +296,12 @@ public class Main extends Application {
                                                     actiontarget.setText("Error: please specify noise!");
                                                 }else{
                                                     String chosenNoise = n.getText();
+                                                    String chosenFinEvalSample = finEvalSample.getText();//eventually move
+                                                    Boolean chosenBias = iBias.isSelected(); //eventually move
                                                     System.out.println("All GLA parameters ok!");
+                                                    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, "0","0"};
+                                                    System.out.println(Arrays.toString(args));
+                                                    GLA.main(args);
                                                 }
                                             }
                                         }
@@ -295,9 +311,7 @@ public class Main extends Application {
                             if(true){
                                 System.out.println("Print/Advanced options");
                             }
-                            Boolean chosenBias = iBias.isSelected();
                             Boolean chosenNeg = nok.isSelected();
-                            String chosenFinEvalSample = finEvalSample.getText();
 
                             String chosenQuitFreq = quitFreq.getText();
                             String chosenQuitSample = quitSample.getText();
