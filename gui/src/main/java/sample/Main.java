@@ -50,6 +50,7 @@ public class Main extends Application {
         final FileChooser grChooser = new FileChooser();
         final Button gramButton = new Button("Upload file");
         grid.add(gramButton,1,1);
+        TextField grPath = new TextField();
 
         gramButton.setOnAction(
                 new EventHandler<ActionEvent>() {
@@ -59,6 +60,7 @@ public class Main extends Application {
                         if (gramfile != null) {
                             //openFile(file);
                             gr.setText(gramfile.getName());
+                            grPath.setText(gramfile.getAbsolutePath());
                         }
                     }
                 });
@@ -70,6 +72,7 @@ public class Main extends Application {
         distfile.getChildren().addAll(distlabel,dist);
         distfile.setSpacing(5);
         grid.add(distfile, 0,2);
+        TextField distPath = new TextField();
 
         final FileChooser distChooser = new FileChooser();
         final Button distButton = new Button("Upload file");
@@ -83,6 +86,7 @@ public class Main extends Application {
                         if (distfile != null) {
                             //openFile(file);
                             dist.setText(distfile.getName());
+                            distPath.setText(distfile.getAbsolutePath());
                         }
                     }
                 });
@@ -237,14 +241,36 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e) {
                 actiontarget.setText("Running...");
+                String chosenBias;
+                if (iBias.isSelected()) {
+                    chosenBias = "1";
+                } else {
+                    chosenBias = "0";
+                }
+                String chosenNeg;
+                if (nok.isSelected()) {
+                    chosenNeg = "1";
+                } else {
+                    chosenNeg = "0";
+                }
+                String chosenQuitFreq = quitFreq.getText();
+                String chosenQuitSample = quitSample.getText();
+                String chosenMaxDepth = maxDepth.getText();
+
+                Boolean chosenPrintInput = printInput.isSelected();
+                String chosenInterEvalFreq = interEvalFreq.getText();
+                Boolean chosenInterEvalGram = interEvalGram.isSelected();
+                Boolean chosenInterEvalAcc = interEvalAcc.isSelected();
+                Boolean chosenFinalGram = finalGram.isSelected();
+                Boolean chosenFinalAcc = finalAcc.isSelected();
                 if(gr.getText().equals("")){
                     actiontarget.setText("Error: please upload grammar file!");
                 } else {
-                    String chosenGrammar = gr.getText();
+                    String chosenGrammar = grPath.getText();
                     if(dist.getText().equals("")){
                         actiontarget.setText("Error: please upload distribution file!");
                     }else{
-                        String chosenDist = dist.getText();
+                        String chosenDist = distPath.getText();
                         if(it.getText().equals("")){
                             actiontarget.setText("Error: please specify iterations!");
                         } else {
@@ -271,9 +297,7 @@ public class Main extends Application {
                                             String chosenSampleSize = ss.getText();
                                             System.out.println("All EDL parameters ok!");
                                             String chosenFinEvalSample = finEvalSample.getText();//eventually move
-                                            Boolean chosenBias = iBias.isSelected(); //eventually move
-
-                                            String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize, "0"};
+                                            String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias};
                                             System.out.println(Arrays.toString(args));
                                             EDL.main(args);
                                         }
@@ -297,9 +321,8 @@ public class Main extends Application {
                                                 }else{
                                                     String chosenNoise = n.getText();
                                                     String chosenFinEvalSample = finEvalSample.getText();//eventually move
-                                                    Boolean chosenBias = iBias.isSelected(); //eventually move
                                                     System.out.println("All GLA parameters ok!");
-                                                    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, "0","0"};
+                                                    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg};
                                                     System.out.println(Arrays.toString(args));
                                                     GLA.main(args);
                                                 }
@@ -308,21 +331,6 @@ public class Main extends Application {
                                     }
                                 }
                             }
-                            if(true){
-                                System.out.println("Print/Advanced options");
-                            }
-                            Boolean chosenNeg = nok.isSelected();
-
-                            String chosenQuitFreq = quitFreq.getText();
-                            String chosenQuitSample = quitSample.getText();
-                            String chosenMaxDepth = maxDepth.getText();
-
-                            Boolean chosenPrintInput = printInput.isSelected();
-                            String chosenInterEvalFreq = interEvalFreq.getText();
-                            Boolean chosenInterEvalGram = interEvalGram.isSelected();
-                            Boolean chosenInterEvalAcc = interEvalAcc.isSelected();
-                            Boolean chosenFinalGram = finalGram.isSelected();
-                            Boolean chosenFinalAcc = finalAcc.isSelected();
                         }
                     }
                 }
