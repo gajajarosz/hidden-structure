@@ -16,6 +16,7 @@ import javafx.geometry.*;
 import javafx.beans.value.*;
 import javafx.scene.text.*;
 import java.util.Arrays;
+import java.io.PrintStream;
 import learner.*;
 
 public class Main extends Application {
@@ -299,7 +300,11 @@ public class Main extends Application {
                                             String chosenFinEvalSample = finEvalSample.getText();//eventually move
                                             String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias};
                                             System.out.println(Arrays.toString(args));
-                                            EDL.main(args);
+                                            new Thread () {
+                                                @Override public void run () {
+                                                    EDL.main(args);
+                                                }
+                                            }.start();
                                         }
                                     }
                                 } else{
@@ -324,7 +329,15 @@ public class Main extends Application {
                                                     System.out.println("All GLA parameters ok!");
                                                     String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg};
                                                     System.out.println(Arrays.toString(args));
-                                                    GLA.main(args);
+                                                    TextArea results = new TextArea();
+                                                    grid.add(results,3,3);
+                                                    new Thread () {
+                                                        @Override public void run () {
+                                                            GLA.main(args);
+                                                        }
+                                                    }.start();
+
+
                                                 }
                                             }
                                         }
@@ -337,6 +350,18 @@ public class Main extends Application {
             }
         });
 
+        TextArea ta = TextAreaBuilder.create()
+                .prefWidth(800)
+                .prefHeight(600)
+                .wrapText(true)
+                .build();
+
+        Console console = new Console(ta);
+        PrintStream ps = new PrintStream(console, true);
+        System.setOut(ps);
+        System.setErr(ps);
+
+        grid.add(ta,3,3);
         Scene scene = new Scene(grid, 650, 550);
         primaryStage.setScene(scene);
         primaryStage.show();
