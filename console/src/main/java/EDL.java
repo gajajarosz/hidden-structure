@@ -25,11 +25,12 @@ public class EDL {
 	public static int maxdepth = 100;
     public static HashMap<String, GrammarFile.Tableau> tabtable = new HashMap<String, GrammarFile.Tableau>();
 	public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
+	public static Writer writer = new SystemWriter();
 
 
 	public static void main(String[] args) {
 		if (args.length < 7) {
-			System.out.println("usage: java EDL grammar_file dist_file iterations final_sample learner_type grammar_sample_size init_bias (print args)");
+			writer.println("usage: java EDL grammar_file dist_file iterations final_sample learner_type grammar_sample_size init_bias (print args)");
 			System.exit(-1);
 		}
 
@@ -58,7 +59,7 @@ public class EDL {
 			}
 		}
 		if (print_input == 0) {
-			System.out.println("\nLEXICON:\n" + df);
+			writer.println("\nLEXICON:\n" + df);
 		}
 		// initialize grammar to uniform - make ll_grammar
 		gr = new RandomExtension(gf);
@@ -68,11 +69,11 @@ public class EDL {
 			gr.bias_grammar();
 		}
 		if (print_input == 0) {
-			System.out.println("\nGRAMMAR:\n" + gr);
+			writer.println("\nGRAMMAR:\n" + gr);
 		}
 		//for (int i = 0; i < gf.tableaux.length; i++) {
 			for (int j = 0; j < gf.tableaux[0].cands.length; j++) {
-				System.out.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
+				writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
 			}
 		//}
 
@@ -91,7 +92,7 @@ public class EDL {
 		int i = 0;
 		for (i = 0; i < iterations; i++) {
 			if (i % mini_eval_freq == 0 ) {
-				System.out.println("Starting iteration " + i);
+				writer.println("Starting iteration " + i);
 			}
 			//to store successes for each output
 			double[][][] sum = new double[gr.grammar.length][gr.grammar.length][df.outputs.length];
@@ -104,7 +105,7 @@ public class EDL {
 
 					if (gr.grammar[r][c] != 0.0 && gr.grammar[r][c] != 1.0) {
 						//temporarily set r >> c
-						//System.out.println("Parameter Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
+						//writer.println("Parameter Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
 						gr.grammar[r][c] = 1.0;
 						gr.grammar[c][r] = 0.0;
 
@@ -117,7 +118,7 @@ public class EDL {
 							single = gr.generate_extension(ext);
 							if (single != null) {
 								int[] rank = gr.find_order(single);
-								//System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
+								//writer.println("\t\tSampled the ranking: " + gr.rankToString(rank));
 								//go through each output
 								for (int o = 0; o < df.outputs.length; o++) {
 									DistFile.Output output = df.outputs[o];
@@ -134,13 +135,13 @@ public class EDL {
 									}
 								}
 							} //else{
-							//System.out.println("Found inconsistent sample for parameters " + r + " >> " + c + "----Grammar:\n" + gr);
+							//writer.println("Found inconsistent sample for parameters " + r + " >> " + c + "----Grammar:\n" + gr);
 							//}
 						}
 						//done sampling r >> c...
 
 						//temporarily set c >> r
-						//System.out.println("Parameter Setting " + gr.constraints[c] + " - " + c + " >> " + gr.constraints[r] + " - " + r);
+						//writer.println("Parameter Setting " + gr.constraints[c] + " - " + c + " >> " + gr.constraints[r] + " - " + r);
 
 						gr.grammar[r][c] = 0.0;
 						gr.grammar[c][r] = 1.0;
@@ -151,7 +152,7 @@ public class EDL {
 							single = gr.generate_extension(ext);
 							if (single != null) {
 								int[] rank = gr.find_order(single);
-								//System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
+								//writer.println("\t\tSampled the ranking: " + gr.rankToString(rank));
 								//go through each output
 								for (int o = 0; o < df.outputs.length; o++) {
 									DistFile.Output output = df.outputs[o];
@@ -168,7 +169,7 @@ public class EDL {
 									}
 								}
 							} //else{
-							//System.out.println("Found inconsistent sample for parameters " + c + " >> " + r + "----Grammar:\n" + gr);
+							//writer.println("Found inconsistent sample for parameters " + c + " >> " + r + "----Grammar:\n" + gr);
 							//}
 						}
 						//done sampling c >> r...
@@ -184,14 +185,14 @@ public class EDL {
 			double[][][] output_probs = new double[df.outputs.length][gr.grammar.length][gr.grammar.length];
 			for (int r = 0; r < gr.grammar.length; r++) {
 				for (int c = 0; c < r; c++) {
-					//System.out.println("UPDATING " + r + " vs " + c);
+					//writer.println("UPDATING " + r + " vs " + c);
 					double rc_sum = 0.0;
 					double cr_sum = 0.0;
 					for (int o = 0; o < df.outputs.length; o++) {
 						double o_prob = ((double) sum[r][c][o] + .0001) * gr.grammar[r][c] + ((double) sum[c][r][o] + .0001) * gr.grammar[c][r];
 						double o_rc = (((double) sum[r][c][o] + .0001) * ((double) df.outputs[o].freq)) / ((double) o_prob);
 						double o_cr = (((double) sum[c][r][o] + .0001) * ((double) df.outputs[o].freq)) / ((double) o_prob);
-						//System.out.println("\tUPDATES for " + df.outputs[o].form + " are " + o_rc*gr.grammar[r][c] + " vs " + o_cr*gr.grammar[c][r] );
+						//writer.println("\tUPDATES for " + df.outputs[o].form + " are " + o_rc*gr.grammar[r][c] + " vs " + o_cr*gr.grammar[c][r] );
 						rc_sum += o_rc;
 						cr_sum += o_cr;
 					}
@@ -221,13 +222,13 @@ public class EDL {
 			}
 
 			if (!gr.makeMeConsistent()) {
-				System.out.println("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
+				writer.println("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
 				System.exit(-1);
 			}
 
 			if (i % mini_eval_freq == 0) {
 				if (mini_eval == 0) {
-					System.out.println("The new grammar is:\n" + gr);
+					writer.println("The new grammar is:\n" + gr);
 				}
 				if (i % quit_early != 0) {
 					evaluate_grammar(mini_eval_sample, i);
@@ -235,7 +236,7 @@ public class EDL {
 			}
 			if (i % quit_early == 0) {
 				if (evaluate_grammar(quit_early_sample, i)) {
-					System.out.println("-reached perfection early ----- exiting now");
+					writer.println("-reached perfection early ----- exiting now");
 					break;
 				}
 			}
@@ -243,8 +244,8 @@ public class EDL {
 
 		//now going to examine resulting grammar
 		if (final_eval == 0 || final_eval == 1) {
-			System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-			System.out.println("The final grammar is:\n" + gr);
+			writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
+			writer.println("The final grammar is:\n" + gr);
 			evaluate_grammar(final_eval_sample, i);
 		}
 	}
@@ -258,7 +259,7 @@ public class EDL {
 		double rate = .25;
 		for (i = 0; i < iterations; i++) {
 			if (i % mini_eval_freq == 0) {
-				System.out.println("Starting iteration " + i);
+				writer.println("Starting iteration " + i);
 			}
 			double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
 			//each iteration consists of s samples
@@ -277,7 +278,7 @@ public class EDL {
 					break;
 				}
 			}
-			//System.out.println("Sampled output form: " + output.form);
+			//writer.println("Sampled output form: " + output.form);
 
 			//sample a ur for the output form
 			String input = "";
@@ -289,7 +290,7 @@ public class EDL {
 					break;
 				}
 			}
-			//System.out.println("\tSampled a UR form: " + input);
+			//writer.println("\tSampled a UR form: " + input);
 
 			double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
 
@@ -305,7 +306,7 @@ public class EDL {
 						double old_cr = gr.grammar[c][r];
 
 						//temporarily set r >> c
-						//System.out.println("Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
+						//writer.println("Setting " + gr.constraints[r] + " - " + r + " >> " + gr.constraints[c] + " - " + c);
 						gr.grammar[r][c] = 1.0;
 						gr.grammar[c][r] = 0.0;
 
@@ -318,7 +319,7 @@ public class EDL {
 							single = gr.generate_extension(ext);
 							if (single != null) {
 								int[] rank = gr.find_order(single);
-								//System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
+								//writer.println("\t\tSampled the ranking: " + gr.rankToString(rank));
 
 								if (rank != null) {
 									//compute learner's winner and compare to actual output
@@ -327,12 +328,12 @@ public class EDL {
 										winner = optimize(input, tab, rank);
 										//if equal, add matrix of ranking into collected samples
 										if (winner.equals(output.form)) {
-											//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
+											//writer.println("\t\t" + output.form + " was correctly generated as " + winner);
 											output_counts[r][c]++;
 										}
 									}
 								} else {
-									System.out.println("Rank was nULL!");
+									writer.println("Rank was nULL!");
 								}
 							}
 						}
@@ -350,7 +351,7 @@ public class EDL {
 							single = gr.generate_extension(ext);
 							if (single != null) {
 								int[] rank = gr.find_order(single);
-								//System.out.println("\t\tSampled the ranking: " + gr.rankToString(rank));
+								//writer.println("\t\tSampled the ranking: " + gr.rankToString(rank));
 								if (rank != null) {
 									//compute learner's winner and compare to actual output
 
@@ -359,12 +360,12 @@ public class EDL {
 										winner = optimize(input, tab, rank);
 										//if equal, add matrix of ranking into collected samples
 										if (winner.equals(output.form)) {
-											//System.out.println("\t\t" + output.form + " was correctly generated as " + winner);
+											//writer.println("\t\t" + output.form + " was correctly generated as " + winner);
 											output_counts[c][r]++;
 										}
 									}
 								} else {
-									System.out.println("Rank was nULL!");
+									writer.println("Rank was nULL!");
 								}
 							}
 						}
@@ -406,14 +407,14 @@ public class EDL {
 			}
 
 			if (!gr.makeMeConsistent()) {
-				System.out.println("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
+				writer.println("Entire Grammar is Inconsistent --- Exiting:\n" + gr);
 				System.exit(-1);
 			}
 
 			//bias = bias*(i+1)/(i+2);
 			if (i % mini_eval_freq == 0) {
 				if (mini_eval == 0 || mini_eval == 1) {
-					System.out.println("The new grammar is:\n" + gr);
+					writer.println("The new grammar is:\n" + gr);
 					if (i % quit_early != 0) {
 						evaluate_grammar(mini_eval_sample, i);
 					}
@@ -421,7 +422,7 @@ public class EDL {
 			}
 			if (i % quit_early == 0) {
 				if (evaluate_grammar(quit_early_sample, i)) {
-					System.out.println("-reached perfection early ----- exiting now");
+					writer.println("-reached perfection early ----- exiting now");
 					break;
 				}
 			}
@@ -429,8 +430,8 @@ public class EDL {
 
 		//now going to examine resulting grammar
 		if (final_eval == 0 || final_eval == 1) {
-			System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-			System.out.println("The final grammar is:\n" + gr);
+			writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
+			writer.println("The final grammar is:\n" + gr);
 			evaluate_grammar(final_eval_sample, i);
 		}
 	}
@@ -477,12 +478,12 @@ public class EDL {
 			}
 			if (i % mini_eval_freq == 0) {
 				if (mini_eval == 0) {
-					System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+					writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
 				}
 			}
 			if (i == iterations) {
 				if (final_eval == 0) {
-					System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+					writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
 				}
 			}
 			log_likelihood += Math.log(((float) corr / tot)) * output.freq;
@@ -492,15 +493,15 @@ public class EDL {
 		}
 		if (i % mini_eval_freq == 0) {
 			if (mini_eval == 0 || mini_eval == 1) {
-				System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+				writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
 			}
 		}
 		if (i == iterations) {
 			if (final_eval == 0 || final_eval == 1) {
-				System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+				writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
 				/*Object[] all = hm.entrySet().toArray();
 				for(int k=0; k < all.length; k++) {
-					System.out.println(all[k]);
+					writer.println(all[k]);
 				}*/
 			}
 		}
@@ -515,9 +516,9 @@ public class EDL {
 
 	public static String optimize(String input, GrammarFile.Tableau tab, int[] rank) {
         String w = prevFound(rank,input);
-		//System.out.println("What prevFound returned: "+w);
+		//writer.println("What prevFound returned: "+w);
 		if (w!=""){
-			//System.out.println("Here is what the word was: "+w);
+			//writer.println("Here is what the word was: "+w);
 			return w;
 		} else {
 			List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
@@ -556,24 +557,24 @@ public class EDL {
 	/*public static String prevFound(int[] rank, String input){
 		String winner = "";
 		if(intable.containsKey(input)) {
-			//System.out.println("Contains input");
+			//writer.println("Contains input");
 			WinBundle bun = intable.get(input);
 			int shortest = bun.start;
 			int longest = bun.stop;
 			HashMap<Ranking, String> wins = bun.ht;
-			System.out.println("Rank:" + Arrays.toString(rank));
+			writer.println("Rank:" + Arrays.toString(rank));
 			Set<Ranking> k = wins.keySet();
 			for (Ranking key : k) {
-				System.out.println("key: " + Arrays.toString(key.ranking));
+				writer.println("key: " + Arrays.toString(key.ranking));
 			}
-			System.out.println("Start: " + shortest);
-			System.out.println("Stop: " + longest);
+			writer.println("Start: " + shortest);
+			writer.println("Stop: " + longest);
 			for (int i = shortest; i < (longest + 1); i++) { //Is this right???
 				Ranking sub = new Ranking(Arrays.copyOfRange(rank, 0, i + 1));
-				//System.out.println(Arrays.toString(sub.ranking));
+				//writer.println(Arrays.toString(sub.ranking));
 
 				if (wins.containsKey(sub)) {
-					//System.out.println("Found something!");
+					//writer.println("Found something!");
 					winner = wins.get(sub);
 					break;
 				}
@@ -581,7 +582,7 @@ public class EDL {
 				test[0] = 9;
 				test[1] = 8;
 				if (wins.containsKey(new Ranking(test))){
-					System.out.println("FOund a key98");
+					writer.println("FOund a key98");
 				}
 			}
 		}
@@ -591,14 +592,14 @@ public class EDL {
 	public static String prevFound(int[] rank, String input) {
 		String winner = "";
 		if (intable.containsKey(input)) {
-			//System.out.println("Contains input");
-			//System.out.println("Input is: "+input);
+			//writer.println("Contains input");
+			//writer.println("Input is: "+input);
 			PrefixTree ptree = intable.get(input);
-			//System.out.println("Rank:" + Arrays.toString(rank));
-			//System.out.println(ptree.toString());
+			//writer.println("Rank:" + Arrays.toString(rank));
+			//writer.println(ptree.toString());
 			winner = ptree.find(rank);
 			if(winner!=null){
-				//System.out.println("Found something!"+winner);
+				//writer.println("Found something!"+winner);
 			} else{
 				winner = "";
 			}
@@ -607,19 +608,19 @@ public class EDL {
 	}
 
 	public static void track(int stop, int[] rank, String winner, String input){
-		//System.out.println("Stop is: "+stop);
+		//writer.println("Stop is: "+stop);
 		if(intable.containsKey(input)) {
-			//System.out.println("Already contains!");
+			//writer.println("Already contains!");
 		}else{
 			intable.put(input, new PrefixTree(rank.length));
 		}
 		PrefixTree ptree = intable.get(input);
-		//System.out.println(ptree.toString());
+		//writer.println(ptree.toString());
 		if (stop < maxdepth) {
 			int[] pre = Arrays.copyOfRange(rank, 0, stop + 1);
-			//System.out.println("adding prefix: "+Arrays.toString(pre));
+			//writer.println("adding prefix: "+Arrays.toString(pre));
 			ptree.put(pre, winner);
-			//System.out.println(ptree.toString());
+			//writer.println(ptree.toString());
 		}
 	}
 

@@ -300,6 +300,9 @@ public class Main extends Application {
                                             String chosenFinEvalSample = finEvalSample.getText();//eventually move
                                             String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias};
                                             System.out.println(Arrays.toString(args));
+                                            final Text EDLresults = new Text();
+                                            grid.add(EDLresults,3,3);
+                                            EDL.writer = new GuiWriter(EDLresults);
                                             new Thread () {
                                                 @Override public void run () {
                                                     EDL.main(args);
@@ -329,9 +332,9 @@ public class Main extends Application {
                                                     System.out.println("All GLA parameters ok!");
                                                     String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg};
                                                     System.out.println(Arrays.toString(args));
-                                                    final Text results = new Text();
-                                                    grid.add(results,3,3);
-                                                    GLA.writer = new GuiWriter(results);
+                                                    final Text GLAresults = new Text();
+                                                    grid.add(GLAresults,3,3);
+                                                    GLA.writer = new GuiWriter(GLAresults);
                                                     new Thread () {
                                                         @Override public void run () {
                                                             GLA.main(args);
