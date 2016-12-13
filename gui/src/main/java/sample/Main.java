@@ -329,8 +329,9 @@ public class Main extends Application {
                                                     System.out.println("All GLA parameters ok!");
                                                     String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg};
                                                     System.out.println(Arrays.toString(args));
-                                                    TextArea results = new TextArea();
+                                                    final Text results = new Text();
                                                     grid.add(results,3,3);
+                                                    GLA.writer = new GuiWriter(results);
                                                     new Thread () {
                                                         @Override public void run () {
                                                             GLA.main(args);
@@ -350,17 +351,7 @@ public class Main extends Application {
             }
         });
 
-        TextArea ta = TextAreaBuilder.create()
-                .prefWidth(800)
-                .prefHeight(600)
-                .wrapText(true)
-                .build();
-
-        Console console = new Console(ta);
-        PrintStream ps = new PrintStream(console, true);
-        System.setOut(ps);
-        System.setErr(ps);
-
+        TextArea ta = new TextArea();
         grid.add(ta,3,3);
         Scene scene = new Scene(grid, 650, 550);
         primaryStage.setScene(scene);

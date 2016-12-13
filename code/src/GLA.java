@@ -1,7 +1,8 @@
-package learner;
 // usage: java GLA grammar_file dist_file num_samples fin_sample learner model learning_rate noise bias NegOK? (print parameters...)
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
+
+package learn.GLA;
 
 public class GLA {
 
@@ -24,11 +25,10 @@ public class GLA {
     public static int quit_early = 100;
     public static int quit_early_sample = 100;
     public static int print_input = 0;
-    public static Writer writer = new SystemWriter();
 
     public static void main(String[] args) {
         if (args.length < 10) {
-            writer.println("usage: java GLA grammar_file dist_file iterations fin_sample learner model learning_rate noise bias NegOK? (print parameters ...)");
+            System.out.println("usage: java GLA grammar_file dist_file iterations fin_sample learner model learning_rate noise bias NegOK? (print parameters ...)");
             System.exit(-1);
         }
 
@@ -43,7 +43,7 @@ public class GLA {
         noise = Double.parseDouble(args[7]);
         bias = Integer.parseInt(args[8]);
         NegOK = Boolean.parseBoolean(args[9]);
-        writer.println(args.length);
+        System.out.println(args.length);
         if (args.length == 17) {
             print_input = Integer.parseInt(args[10]);
             final_eval = Integer.parseInt(args[11]);
@@ -63,8 +63,8 @@ public class GLA {
         }
 
         if (print_input == 0) {
-            writer.println("\nLEXICON:\n" + df);
-            writer.println("\nGRAMMAR:\n" + gr.gramToString(gr.grammar));
+            System.out.println("\nLEXICON:\n" + df);
+            System.out.println("\nGRAMMAR:\n" + gr.gramToString(gr.grammar));
         }
         learn_new_RIP();
     }
@@ -79,7 +79,7 @@ public class GLA {
 
         for (i = 0; i < num_samples; i++) {
             if (i%mini_eval_freq==0) {
-                writer.println("Starting iteration " + i);
+                System.out.println("Starting iteration " + i);
             }
             //each iteration consists of s samples
             fail = 0;
@@ -96,7 +96,7 @@ public class GLA {
                     break;
                 }
             }
-            //writer.println("Sampled output form: " + output.form);
+            //System.out.println("Sampled output form: " + output.form);
 
             //sample a ur for the output form: input
             String input = "";
@@ -108,7 +108,7 @@ public class GLA {
                     break;
                 }
             }
-            //writer.println("\tSampled a UR form: " + input);
+            //System.out.println("\tSampled a UR form: " + input);
 
             //sample the current grammar's output for this form: optimal
             GrammarFile.Candidate optimal = null;
@@ -116,7 +116,7 @@ public class GLA {
             if (learner.equals("Baseline")) {
                 single = gr.grammar;
             }
-            //writer.println("\nSampled:\n" + gr.gramToString(single));
+            //System.out.println("\nSampled:\n" + gr.gramToString(single));
             int[] rank = gr.find_order(single);
             if (model.equals("OT")) {
                 optimal = optimize(null, input, rank);
@@ -125,8 +125,8 @@ public class GLA {
             } else {
                 optimal = optimizeME(null, input, gr.grammar);
             }
-            //writer.println("The current optimal form is " + optimal.oform);
-            //writer.println("The current grammar is:\n" + gr.gramToString(gr.grammar));
+            //System.out.println("The current optimal form is " + optimal.oform);
+            //System.out.println("The current grammar is:\n" + gr.gramToString(gr.grammar));
 
             if ((learner.equals("RIP")) || (learner.equals("RRIP"))) {
                 //make a temporary tableau for this output
@@ -145,7 +145,7 @@ public class GLA {
                 tab.cands = new GrammarFile.Candidate[cand_length];
                 for (int k = 0; k < cand_length; k++) {
                     tab.cands[k] = temp_cands[k];
-                    //writer.println("Found matching candidate: " + tab.cands[k].oform);
+                    //System.out.println("Found matching candidate: " + tab.cands[k].oform);
                 }
                 GrammarFile.Candidate wouldhavebeen = null;
                 if (model.equals("OT")) {
@@ -161,9 +161,9 @@ public class GLA {
                 if (learner.equals("RRIP")) {
                     //RIP...
                     single = gr.sample(NegOK, noise);//resample
-                    //writer.println("\nSampled:\n" + gr.gramToString(single));
+                    //System.out.println("\nSampled:\n" + gr.gramToString(single));
                     rank = gr.find_order(single);
-                    //writer.println("\t\tSampled the ranking: " + gr.gramToString(rank));
+                    //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
                     if (model.equals("OT")) {
                         winner = optimize(tab, input, rank);
                     } else if (model.equals("HG")) {
@@ -174,14 +174,14 @@ public class GLA {
                 }
 
                 if (winner.form.equals(wouldhavebeen.form)) {
-                    //writer.println("Resampling found SAME winner - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
+                    //System.out.println("Resampling found SAME winner - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
                 } else {
-                    //writer.println("Resampling found DIFFERENT overt form - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
+                    //System.out.println("Resampling found DIFFERENT overt form - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
                 }
 
 
                 if (optimal.form.equals(winner.form)) {
-                    //writer.println("RIPPed parse = " + winner.form + " matches Optimal = " + optimal.form);
+                    //System.out.println("RIPPed parse = " + winner.form + " matches Optimal = " + optimal.form);
                 } else {
                     if (learner.equals("RIP")) {
                         //there's an error so update grammar
@@ -190,7 +190,7 @@ public class GLA {
                         if (!(optimal.oform.equals(winner.oform))) {
                             update = true;
                         } else {
-                            //writer.println("Structural Mismatch Only - optimal:" + optimal.form + " vs ripped:" + winner.form);
+                            //System.out.println("Structural Mismatch Only - optimal:" + optimal.form + " vs ripped:" + winner.form);
                         }
                     }
                 }
@@ -198,7 +198,7 @@ public class GLA {
             } else { // This is either EIP or randRIP or Baseline
                 if (optimal.oform.equals(output.form)) {
                     //do nothing, it matched..
-                    //writer.println("Output = " + output.form + " matches optimal = " + optimal.oform);
+                    //System.out.println("Output = " + output.form + " matches optimal = " + optimal.oform);
                 } else {
                     //this is an error
                     if ((learner.equals("EIP"))) {
@@ -207,9 +207,9 @@ public class GLA {
                         int count = 0;
                         while ((looking) && (count < 1000)) {
                             single = gr.sample(NegOK, noise);
-                            //writer.println("\nSampled:\n" + gr.gramToString(single));
+                            //System.out.println("\nSampled:\n" + gr.gramToString(single));
                             rank = gr.find_order(single);
-                            //writer.println("\t\tSampled the ranking: " + gr.gramToString(rank));
+                            //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
 
                             //compute learner's winner and compare to actual output
                             if (model.equals("OT")) {
@@ -221,25 +221,25 @@ public class GLA {
                             }
 
                             count++;
-                            //writer.println("The current winner form is " + winner.oform);
+                            //System.out.println("The current winner form is " + winner.oform);
 
                             //if equal, exit and keep the ranking
                             if (winner.oform.equals(output.form)) {
-                                //writer.println("Matched form = " + output.form);
-                                //writer.println("\twith sample:" + gr.gramToString(single));
+                                //System.out.println("Matched form = " + output.form);
+                                //System.out.println("\twith sample:" + gr.gramToString(single));
                                 looking = false;
                             }
                         }
 
                         if (looking == false) {
                             //found a matching parse, update grammar
-                            //writer.println("UPDATING: Output = " + output.form + "parse = " + winner.form);
+                            //System.out.println("UPDATING: Output = " + output.form + "parse = " + winner.form);
                             update = true;
                         } else {
-                            writer.println("Never found a parse");
+                            System.out.println("Never found a parse");
                             fail++;
                             if ((fail > 20) && (i > 100)) {
-                                writer.println("stuck in bad grammer ----- exiting now");
+                                System.out.println("stuck in bad grammer ----- exiting now");
                                 break;
                             }
                         }
@@ -249,9 +249,9 @@ public class GLA {
                             //use random RIP
                             //choose a random output for the input
                             single = gr.sample(NegOK, noise);
-                            //writer.println("\nSampled:\n" + gr.gramToString(single));
+                            //System.out.println("\nSampled:\n" + gr.gramToString(single));
                             rank = gr.find_order(single);
-                            //writer.println("\t\tSampled the ranking: " + gr.gramToString(rank));
+                            //System.out.println("\t\tSampled the ranking: " + gr.gramToString(rank));
 
                             if (model.equals("OT")) {
                                 winner = optimize(null, input, rank);
@@ -303,7 +303,7 @@ public class GLA {
             }
             if (i%mini_eval_freq==0) {
                 if (mini_eval == 0 | mini_eval == 1) {
-                    writer.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
+                    System.out.println("The new grammar is:\n" + gr.gramToString(gr.grammar));
                     if (i%quit_early!=0){
                         evaluate_grammar(mini_eval_sample, i, noise);
                     }
@@ -311,20 +311,20 @@ public class GLA {
             }
             if(i%quit_early==0) {
                 if ((!(learner.equals("Baseline"))) && evaluate_grammar(quit_early_sample, i, noise)) {
-                    writer.println("-reached perfection early ----- exiting now");
+                    System.out.println("-reached perfection early ----- exiting now");
                     break;
                 }
-                writer.println("Now evaluating nonnoisy grammar");
+                System.out.println("Now evaluating nonnoisy grammar");
                 if (evaluate_grammar(quit_early_sample, i, 0) && learner.equals("Baseline")) {
-                    writer.println("Baseline reached perfection ---- exiting now");
+                    System.out.println("Baseline reached perfection ---- exiting now");
                     break;
                 }
             }
         }
-        writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-        writer.println("FINAL ");
+        System.out.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
+        System.out.print("FINAL ");
         evaluate_grammar(final_eval_sample, i, noise);
-        writer.println("FINAL ");
+        System.out.print("FINAL ");
         evaluate_grammar(final_eval_sample, i, 0);
     }
 
@@ -371,17 +371,17 @@ public class GLA {
                     }
                     tot++;
                 } //else{
-                //writer.println("BAD::Found inconsistent sample during evaluation for grammar:\n" + gr.gramToString(gr.grammar));
+                //System.out.println("BAD::Found inconsistent sample during evaluation for grammar:\n" + gr.gramToString(gr.grammar));
                 //}
             }
             if (i == num_samples) {
                 if (final_eval==0) {
-                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                    System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
                 }
             }
             if (i%mini_eval_freq==0){
                 if(mini_eval==0){
-                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                    System.out.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
                 }
             }
             log_likelihood += Math.log(((float) corr / tot)) * output.freq;
@@ -391,12 +391,12 @@ public class GLA {
         }
         if (i == num_samples) {
             if (final_eval == 0 | final_eval == 1) {
-                writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+                System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
             }
         }
         if (i%mini_eval_freq==0) {
             if (mini_eval == 0 | mini_eval == 1) {
-                writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+                System.out.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
             }
         }
         if (error == 0.0) {
@@ -412,9 +412,9 @@ public class GLA {
         //find the tableau
         if (tab == null) {
             for (int i = 0; i < gf.tableaux.length; i++) {
-                //writer.println("Found UF = " + gf.tableaux[i].uf);
+                //System.out.println("Found UF = " + gf.tableaux[i].uf);
                 if (gf.tableaux[i].uf.equals(input)) {
-                    //writer.println("found a match");
+                    //System.out.println("found a match");
                     tab = gf.tableaux[i];
                 }
             }
@@ -439,10 +439,10 @@ public class GLA {
                 }
             }
 
-            //writer.println("looking at constraint " + rank[j] + " whose minimum is " + min_vios);
+            //System.out.println("looking at constraint " + rank[j] + " whose minimum is " + min_vios);
             for (int i = 0; i < survivors.length; i++) {
                 if ((tab.cands[i].violations[rank[j]] > min_vios) && (survivors[i] == 1)) {
-                    //writer.println("candidate " + tab.cands[i].oform + " getting knocked out");
+                    //System.out.println("candidate " + tab.cands[i].oform + " getting knocked out");
                     survivors[i] = 0;
                     num_sur -= 1;
                 }
@@ -450,16 +450,16 @@ public class GLA {
         }
 
         if (num_sur > 1) {
-            writer.println("WARNING.  Multiple winners (" + num_sur + ") in optimize (input=" + input + ")");
+            System.out.println("WARNING.  Multiple winners (" + num_sur + ") in optimize (input=" + input + ")");
         } else if (num_sur == 0) {
-            writer.println("WARNING.  No Survivors! (" + num_sur + ") in optimize (input=" + input + ")");
+            System.out.println("WARNING.  No Survivors! (" + num_sur + ") in optimize (input=" + input + ")");
         }
 
         GrammarFile.Candidate winner = null;
         for (int i = 0; i < survivors.length; i++) {
             if (survivors[i] == 1) {
                 winner = tab.cands[i];
-                //writer.println("winner for input " + input + " and rank " + gr.rankToString(rank) + " is " + winner);
+                //System.out.println("winner for input " + input + " and rank " + gr.rankToString(rank) + " is " + winner);
             }
         }
         return winner;
@@ -487,8 +487,8 @@ public class GLA {
             index = -1;
             for (int j = 0; j < tab.cands.length; j++) {
                 weights[j] += vector[i] * tab.cands[j].violations[i];
-                //writer.println("Candidate " + tab.cands[j].form + " has " + tab.cands[j].violations[i] + " violations of constraint " + i);
-                //writer.println("current weight = " + weights[j]);
+                //System.out.println("Candidate " + tab.cands[j].form + " has " + tab.cands[j].violations[i] + " violations of constraint " + i);
+                //System.out.println("current weight = " + weights[j]);
                 //keeping track of the minimum weight on each iteration
                 if ((weights[j] < min) || (min == -1)) {
                     min = weights[j];
@@ -525,7 +525,7 @@ public class GLA {
             double exp = Math.pow(2, -harmony);
             sum += exp;
             probs[j] = exp;
-            //writer.println("harmony, candidate = " + probs[j] + ", " + tab.cands[j].form);
+            //System.out.println("harmony, candidate = " + probs[j] + ", " + tab.cands[j].form);
         }
 
         double rand = sum * Math.random();

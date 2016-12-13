@@ -4,3 +4,6 @@
 /gui/target
 /console/target
 *.class
+/target
+/project/target
+/idea-bak
