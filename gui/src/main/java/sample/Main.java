@@ -21,8 +21,6 @@ import learner.*;
 
 public class Main extends Application {
 
-    final ScrollBar sc = new ScrollBar();
-
     @Override
     public void start(Stage primaryStage) {
 
@@ -356,8 +354,11 @@ public class Main extends Application {
 
         TextArea ta = new TextArea();
         grid.add(ta,3,3);
-        Scene scene = new Scene(grid, 650, 550);
+        ScrollPane sp = new ScrollPane();
+        sp.setContent(grid);
+        Scene scene = new Scene(sp, 650, 550);
         primaryStage.setScene(scene);
+
         primaryStage.show();
     }
     public static void main(String[] args) {
