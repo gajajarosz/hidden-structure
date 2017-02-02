@@ -21,3 +21,4 @@ public class Console extends OutputStream
     }
 
 }
+
