@@ -1,5 +1,5 @@
 package learner;
-
+//This is support code for the GUI; it implements a Writer to display output from the learner
 import javafx.application.Platform;
 import javafx.scene.text.*;
 import java.util.*;

@@ -1,4 +1,5 @@
 package sample;
+//GUI code
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -19,26 +20,25 @@ import java.util.Arrays;
 import java.io.PrintStream;
 import learner.*;
 
-public class Main extends Application {
+public class GUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
 
         Desktop desktop = Desktop.getDesktop();
-        primaryStage.setTitle("HS Learner");
-        //Insert explanatory text here
+        primaryStage.setTitle("HS Learner");//title of window
 
-        GridPane grid = new GridPane();
+        GridPane grid = new GridPane();//This is the grid that all elements must be added to
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(20);
         grid.setPadding(new Insets(20, 20, 20, 20));
 
-        Text scenetitle = new Text("Welcome to Gaja's Hidden Structure Learners");
+        Text scenetitle = new Text("Welcome to Gaja's Hidden Structure Learners");//scene title
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label gramlabel = new Label("Grammar file:");
+        Label gramlabel = new Label("Grammar file:");//Grammar file upload box
         Tooltip gramTooltip = new Tooltip();
         gramTooltip.setText("Grammar file stores...");
         Tooltip.install(gramlabel, gramTooltip);
@@ -67,7 +67,7 @@ public class Main extends Application {
                     }
                 });
 
-        Label distlabel = new Label("Distribution File:");
+        Label distlabel = new Label("Distribution File:");//Distibution file upload box
         Tooltip distTooltip = new Tooltip();
         distTooltip.setText("Distribution file stores...");
         Tooltip.install(distlabel, distTooltip);
@@ -96,7 +96,7 @@ public class Main extends Application {
                     }
                 });
 
-        Label itlabel = new Label("Iterations:");
+        Label itlabel = new Label("Iterations:");//Iterations
         Tooltip itTooltip = new Tooltip();
         itTooltip.setText("Reasonable iterations are...");
         Tooltip.install(itlabel, itTooltip);
@@ -114,7 +114,7 @@ public class Main extends Application {
         learner.setPromptText("Learner");
         grid.add(learner,0,4);
 
-        TitledPane edlo = new TitledPane();
+        TitledPane edlo = new TitledPane();//Options for the EDL learner
         GridPane edlogrid = new GridPane();
         edlogrid.setVgap(4);
         edlogrid.setPadding(new Insets(5, 5, 5, 5));
@@ -137,7 +137,7 @@ public class Main extends Application {
         edlo.setVisible(false);
         grid.add(edlo,0,5);
 
-        TitledPane glao = new TitledPane();
+        TitledPane glao = new TitledPane();//Options for the GLA learner
         GridPane glaogrid = new GridPane();
         glaogrid.setVgap(4);
         glaogrid.setPadding(new Insets(5, 5, 5, 5));
@@ -173,7 +173,7 @@ public class Main extends Application {
         glao.setVisible(false);
         grid.add(glao,0,5);
 
-        learner.getSelectionModel().selectedIndexProperty().addListener(
+        learner.getSelectionModel().selectedIndexProperty().addListener(//Display either EDL or GLA options based on which is selected
                 new ChangeListener<Number>() {
                     public void changed(ObservableValue ov, Number value, Number new_value) {
                         if(new_value.intValue()==0){
@@ -190,7 +190,7 @@ public class Main extends Application {
                     }
                 });
 
-        TitledPane ao = new TitledPane();
+        TitledPane ao = new TitledPane();//Advanced options
         GridPane aogrid = new GridPane();
         aogrid.setVgap(4);
         aogrid.setPadding(new Insets(5, 5, 5, 5));
@@ -220,7 +220,7 @@ public class Main extends Application {
         ao.setExpanded(false);
         grid.add(ao,0,6);
 
-        TitledPane eo = new TitledPane();
+        TitledPane eo = new TitledPane();//Efficiency options
         GridPane eogrid = new GridPane();
         eogrid.setVgap(4);
         eogrid.setPadding(new Insets(5, 5, 5, 5));
@@ -250,7 +250,7 @@ public class Main extends Application {
         eo.setExpanded(false);
         grid.add(eo,0,7);
 
-        TitledPane po = new TitledPane();
+        TitledPane po = new TitledPane();//Output options
         GridPane pogrid = new GridPane();
         pogrid.setVgap(4);
         pogrid.setPadding(new Insets(5, 5, 5, 5));
@@ -298,9 +298,9 @@ public class Main extends Application {
 
         //grid.setGridLinesVisible(true);
 
-        Button btn = new Button("Run");
+        Button btn = new Button("Run");//Run the program
         Tooltip runTooltip = new Tooltip();
-        runTooltip.setText("Your parameter preferences will automatically be saved.");
+        runTooltip.setText("Your parameter preferences will automatically be saved.");//Not yet
         Tooltip.install(btn, runTooltip);
         grid.add(btn, 1, 4);
 
@@ -362,9 +362,9 @@ public class Main extends Application {
                                         }else{
                                             chosenLearnerNum = "1";
                                         }
-                                        if(ss.getText().equals("")){
+                                        if(ss.getText().equals("")){//Throw errors if something hasn't been specified
                                             actiontarget.setText("Error: please specify sample size!");
-                                        }else{
+                                        }else{//Else run learner with given parameters
                                             String chosenSampleSize = ss.getText();
                                             System.out.println("All EDL parameters ok!");
                                             String chosenFinEvalSample = finEvalSample.getText();//eventually move
@@ -372,9 +372,9 @@ public class Main extends Application {
                                             System.out.println(Arrays.toString(args));
                                             final Text EDLresults = new Text();
                                             grid.add(EDLresults,3,3);
-                                            EDL.writer = new GuiWriter(EDLresults);
+                                            EDL.writer = new GuiWriter(EDLresults);//Create a writer to output results
                                             new Thread () {
-                                                @Override public void run () {
+                                                @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
                                                     EDL.main(args);
                                                 }
                                             }.start();
@@ -426,7 +426,7 @@ public class Main extends Application {
 
         TextArea ta = new TextArea();
         grid.add(ta,3,3);
-        ScrollPane sp = new ScrollPane();
+        ScrollPane sp = new ScrollPane();//Scroll for GUI
         sp.setContent(grid);
         Scene scene = new Scene(sp, 650, 550);
         primaryStage.setScene(scene);
