@@ -7,7 +7,8 @@ lazy val console = project
 
 lazy val gui = project
   .settings(
-    unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar")))
+    unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
+    )
   .dependsOn(console)
 
 fork in run := true
