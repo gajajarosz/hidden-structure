@@ -8,6 +8,7 @@ lazy val console = project
 lazy val gui = project
   .settings(
   	mainClass in assembly := Some("sample.GUI"),
+  	assemblyJarName in assembly := "gui.jar",
     unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
     )
   .dependsOn(console)

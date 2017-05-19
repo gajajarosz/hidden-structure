@@ -1,0 +1,13 @@
+Dev guide:
+
+Packaging
+----------
+To package the project as a GUI:
++Be in main project directory
++Start SBT (command: sbt)
++Compile project (command: compile)
++Set project to gui (command: project gui)
++Compile project (command: compile)
++Package project using assembly plugin for SBT (command: assembly)
++Project will be packaged into jar file in gui/target/scala-2.10
++You can change the jar name in the gui project setting in the build.sbt file (edit assemblyJarName)
