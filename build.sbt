@@ -18,4 +18,4 @@ fork in run := true
 lazy val root = project.in(file("."))
   .dependsOn(gui, console)
 
-assemblyJarName in assembly := "something.jar"
+assemblyJarName in assembly := "main.jar"

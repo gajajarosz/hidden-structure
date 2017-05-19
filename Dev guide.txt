@@ -1,5 +1,16 @@
 Dev guide:
 
+Running from command line
+--------------------------
++The project currently uses the build tool SBT, which you'll need to install
++To run the project, starting in the main directory, start SBT (command: sbt)
++Compile the main project (command: compile)
++Specify which project you are running, gui or console (command: project gui)
++Compile project (command: compile)
++Run project (command: run)
++Note: if you don't have JAVA_HOME pointing to your java folder, then the css components won't load. 
+ The gui will work, but it will look bad, and you will get a warning that resource "com/sun/javafx/scene/control/skin/modena/modena.css" was not found.
+
 Packaging
 ----------
 To package the project as a GUI:
