@@ -23,3 +23,9 @@ To package the project as a jar:
 +Package project using assembly plugin for SBT (command: assembly)
 +Project will be packaged into jar file in gui/target/scala-2.10
 +You can change the jar name in the gui project setting in the build.sbt file (edit assemblyJarName)
+
+Editing
+----------
++The main file for work on the GUI is GUI.java
++The main files for working on the learners are EDL.java and GLA.java
++To change the arguments in the console program, work in learn.java
