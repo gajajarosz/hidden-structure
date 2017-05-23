@@ -1,5 +1,5 @@
 package learner;
-// usage: java GLA grammar_file dist_file num_samples fin_sample learner model learning_rate noise bias NegOK? (print parameters...)
+// usage: java GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
 
@@ -28,7 +28,7 @@ public class GLA {
 
     public static void main(String[] args) {
         if (args.length < 10) {
-            writer.println("usage: java GLA grammar_file dist_file iterations fin_sample learner model learning_rate noise bias NegOK? (print parameters ...)");
+            writer.println("java GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)");
             System.exit(-1);
         }
 

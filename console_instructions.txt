@@ -49,7 +49,9 @@ INITIAL BIAS
 
 To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0
+java EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
+
+For example: java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0
 
 You may want to redirect the output to a file or pipe it to less like this:
 java learn EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0 > output.txt
@@ -91,7 +93,9 @@ LEARNING RATE\\TODO: add learning rates to EDL, but keep separate
 
 To run GLA, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0
+java GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)
+
+For example: java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0
 
 You may want to redirect the output to a file or pipe it to less like this:
 java learn GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 > output.txt

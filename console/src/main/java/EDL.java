@@ -1,7 +1,7 @@
 package learner;
 
 // read command
-// usage: java EDL grammar_file i_o_file gram_sample_size iterations final_sample ranking_bias learner_type (print args)
+// usage: java EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
 // grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class EDL {
 
 	public static void main(String[] args) {
 		if (args.length < 7) {
-			writer.println("usage: java EDL grammar_file dist_file iterations final_sample learner_type grammar_sample_size init_bias (print args)");
+			writer.println("usage: java EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)");
 			System.exit(-1);
 		}
 
