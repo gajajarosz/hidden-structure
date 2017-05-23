@@ -1,0 +1,96 @@
+Instructions for running the GUI:
+
+1. Upload grammar and distribution files using the file selector buttons.
+2. Choose which program to run: EDL or GLA
+3. Specify the kind of learner you wish to run. There are 2 options for EDL, and 4 for GLA.
+4. Supply program-specific arguments
+5. To change the output that the program produces, you can change the default settings in the Print Parameters menu.
+6. You may also modify other settings, mostly related to efficiency, in the Advanced Options menu.
+
+Description of arguments:
+---------------------------
+
+LEARNER NAME
+-This is either EDL or GLA
+
+GRAMMAR FILE
+- should be in the same format as provided TS2000Grammar_secondary.txt
+
+DISTRIBUTION FILE
+- should be in the same format as provided TS1_Dist.txt
+
+ITERATIONS
+ - this is the number of passes through the data
+ - For GLA, reasonable values are around 100-1000 (higher for complex data)
+ - The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
+ - The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
+
+FINAL-EVAL_SAMPLE
+-How many samples are used to evaluate in the final evaluation
+-Default: 1000
+
+INITIAL BIAS
+ -Sets the learner to begin with an M >> F grammar if the grammar files encodes which constraints are markedness and which are faithfulness. 
+ -To encode M vs. F in your grammar file, modify the 6th field of the constraint names section.
+
+EDL-specific arguments:
+------------------------
+
+LEARNER
+1 - batch Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_batch().
+2 - online Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_online().
+
+GRAMMAR SAMPLE SIZE
+-this is the number of times that a grammar is sampled during each round of learning
+- reasonable values are 50-1000
+
+GLA-specific arguments:
+-------------------------
+
+LEARNER
+ EIP - Jarosz (2013)
+ RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
+ RRIP - is what is called RRIP in Jarosz (2013)
+ randRIP - baseline model without parsing; when there’s an error it generates a random output as the ‘winner’ for the update.
+
+ GRAMMAR TYPE
+ - set this to OT, HG, or ME (maxent)
+
+LEARNING RATE
+ - How much constraint ranking/weighting values get bumped when there’s an update
+ - typical value is something like 0.1
+
+ NOISE
+ - what’s the variance around the ranking/weighting value
+ - typical setting is something like 2
+
+ NEGOK?
+ - Indicates whether the learner be allowed to use negative weights.
+
+Print options:
+---------------
+
+PRINT_INPUT: specifies whether the input to the learner, like the grammar and distribution files, should be printed.
+
+FINAL-EVAL: what should the final evaluation print?
+
+MINI-EVAL: what should be printed at each evaluation round?
+
+MINI-EVAL_FREQ: how often should a mini-evaluation round be performed?
+- In order to not perform any intermediate evaluation, set to the same number as iterations
+
+MINI-EVAL_SAMPLE: how many samples should be used to evaluate in a mini-evaluation?
+
+QUIT_EARLY: how often should the program check to see if it can quit early?
+-Quits if the learner has already learned everything
+- In order to never quit early, set to the same number as iterations
+
+QUIT_EARLY?_SAMPLE: hoow many samples should be used to evaluate whether the learner is done learning?
+-The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
+
+Advanced options:
+------------------
+MAX-DEPTH:
+-For EDL, you can override the maximum depth of the tree that stores winners that have previously been calculated for tableau/ranking combinations.
+-By default, the maximum depth of the tree is set to 100, but you can reduce the depth to reduce the amount of memory used by the program.
+-For very large input files, this may speed up the program.
