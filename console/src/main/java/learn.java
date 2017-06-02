@@ -1,4 +1,5 @@
 package learner;
+//This is the console user interface to the EDL and GLA learners
 
 import java.util.Arrays;
 

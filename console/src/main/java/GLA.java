@@ -1,4 +1,5 @@
 package learner;
+//This is the main file for the GLA learner
 // usage: java GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}

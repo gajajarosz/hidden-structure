@@ -1,8 +1,7 @@
 package learner;
-
-// read command
+//This is the main file for the EDL learner
 // usage: java EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
-// grammar_file contains all tableaux, i_o_file contains possible inputs, morphemes, outputs, & frequencies
+// grammar_file contains all tableaux, dist_file contains possible inputs, morphemes, outputs, & frequencies
 import java.util.*;
 
 public class EDL {
