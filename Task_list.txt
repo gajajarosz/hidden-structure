@@ -1,6 +1,0 @@
-Task list:
-
-Consistent name styles: are we doing camelCase or underscore_case?
-Move update into separate method?
-Simplify main function in POEM to match STOTEM structure
-Fix compiling in intellij
