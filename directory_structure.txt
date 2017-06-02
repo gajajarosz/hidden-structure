@@ -1,0 +1,36 @@
+hidden-structure: home directory
+	Files: 
+		+README.txt: contains general instructions
+		+build.sbt: contains the settings for the sbt configuration tool
+		+console_instructions.txt: provides instructions for running the console version
+		+gui_instructions.txt: provides instructions for running the GUI version
+		+dev_guide.txt: provides instructions for developers working on the project
+		+directory_structure.txt: describes project structure
+		+LICENSE: license for the GNU GPL project
+		+TS1_Dist.txt: a sample distribution file
+		+TS2000Grammar_secondary.txt: a sample grammar file
+	Sub-directories:
+		+console: contains the console version of the project
+			Files:
+				+EDL_structure.txt: describes the structure of the EDL.java file
+				+GLA_structure.txt: describes the structure of the GLA.java file
+				+commons-collections4-4.1-javadoc.jar: support code
+				+commons-collections4-4.1.jar: support code
+			Sub-directories:
+				+out: 
+				+project: contains the scala libraries necessary for sbt
+				+src:
+				+target: contains the scala libraries necessary for sbt
+		+gui: contains the gui version of the project
+			Sub-directories:
+				+out: ???
+				+project: contains the scala libraries necessary for sbt
+				+src > main > java: contains the code for the gui
+					Files:
+						+Console.java
+						+Controller.java
+						+GUI.java: main gui code
+				+target: contains the scala libraries necessary for sbt and the jar
+		+idea-bak: ???
+		+project: contains the scala libraries necessary for sbt
+		+target: contains the scala libraries necessary for sbt
