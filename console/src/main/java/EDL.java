@@ -553,41 +553,6 @@ public class EDL {
 		}
 	}
 
-	/*public static String prevFound(int[] rank, String input){
-		String winner = "";
-		if(intable.containsKey(input)) {
-			//writer.println("Contains input");
-			WinBundle bun = intable.get(input);
-			int shortest = bun.start;
-			int longest = bun.stop;
-			HashMap<Ranking, String> wins = bun.ht;
-			writer.println("Rank:" + Arrays.toString(rank));
-			Set<Ranking> k = wins.keySet();
-			for (Ranking key : k) {
-				writer.println("key: " + Arrays.toString(key.ranking));
-			}
-			writer.println("Start: " + shortest);
-			writer.println("Stop: " + longest);
-			for (int i = shortest; i < (longest + 1); i++) { //Is this right???
-				Ranking sub = new Ranking(Arrays.copyOfRange(rank, 0, i + 1));
-				//writer.println(Arrays.toString(sub.ranking));
-
-				if (wins.containsKey(sub)) {
-					//writer.println("Found something!");
-					winner = wins.get(sub);
-					break;
-				}
-				int[] test = new int[2];
-				test[0] = 9;
-				test[1] = 8;
-				if (wins.containsKey(new Ranking(test))){
-					writer.println("FOund a key98");
-				}
-			}
-		}
-		return winner;
-	}*/
-
 	public static String prevFound(int[] rank, String input) {
 		String winner = "";
 		if (intable.containsKey(input)) {

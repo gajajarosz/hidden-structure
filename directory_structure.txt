@@ -17,20 +17,29 @@ hidden-structure: home directory
 				+commons-collections4-4.1-javadoc.jar: support code
 				+commons-collections4-4.1.jar: support code
 			Sub-directories:
-				+out: 
 				+project: contains the scala libraries necessary for sbt
-				+src:
-				+target: contains the scala libraries necessary for sbt
+				+src > main > java:
+					Files:
+						+DistFile.java: support code for parsing distribution file
+						+EDL.java: main code for the EDL learner
+						+GLA.java: main code for the GLA learner
+						+GrammarFile.java: support code for parsing the grammar file
+						+learn.java: user interface for the console version
+						+Node.java: support code for PrefixTree
+						+PrefixTree.java: support code for the EDL learner
+						+RandomExtension.java: support code for the EDL learner
+						+STOT.java: support code for the GLA learner 
+						+SystemWriter.java: i/o support code (necessary for GUI compatibility)
+						+Writer.java: i/o support code (necessary for GUI compatibility)
+				+target: contains compiled version of the project
 		+gui: contains the gui version of the project
 			Sub-directories:
-				+out: ???
 				+project: contains the scala libraries necessary for sbt
 				+src > main > java: contains the code for the gui
 					Files:
-						+Console.java
-						+Controller.java
+						+GuiWriter.java: support code for the GUI
 						+GUI.java: main gui code
-				+target: contains the scala libraries necessary for sbt and the jar
+				+target: contains compiled version of the project, including the jar files created by the build command
 		+idea-bak: ???
 		+project: contains the scala libraries necessary for sbt
-		+target: contains the scala libraries necessary for sbt
+		+target: contains compiled version of the project

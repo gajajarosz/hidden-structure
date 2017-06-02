@@ -1,4 +1,5 @@
 package learner;
+//Support code for parsing the distribution file for both the GLA and EDL learner
 
 import java.io.*;
 import java.util.regex.*;

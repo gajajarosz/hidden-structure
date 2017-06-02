@@ -1,5 +1,5 @@
 package learner;
-
+//Support code for parsing the grammar file for both the EDL and GLA learner
 import java.io.*;
 import java.util.regex.*;
 import java.util.*;

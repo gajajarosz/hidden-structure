@@ -1,5 +1,5 @@
 package learner;
-
+//Support code for the GLA learner
 import java.text.NumberFormat;
 import java.util.Random;
 
