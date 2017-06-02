@@ -40,6 +40,5 @@ hidden-structure: home directory
 						+GuiWriter.java: support code for the GUI
 						+GUI.java: main gui code
 				+target: contains compiled version of the project, including the jar files created by the build command
-		+idea-bak: ???
 		+project: contains the scala libraries necessary for sbt
 		+target: contains compiled version of the project
