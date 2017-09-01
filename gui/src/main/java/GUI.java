@@ -2,8 +2,8 @@ package sample;
 //GUI code
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import java.io.File;
+import javafx.collections.*;
+import java.io.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.awt.Desktop;
@@ -16,7 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.geometry.*;
 import javafx.beans.value.*;
 import javafx.scene.text.*;
-import java.util.Arrays;
+import java.util.*;
 import java.io.PrintStream;
 import learner.*;
 
@@ -377,6 +377,18 @@ public class GUI extends Application {
                                             new Thread () {
                                                 @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
                                                     EDL.main(args);
+                                                    actiontarget.setText("All done!");
+                                                    String res = ta.getText();
+                                                    try{
+                                                        FileWriter bf = (new FileWriter(new File("EDL_results.txt")));
+                                                        bf.append(res);
+                                                        bf.append("\n");
+                                                        bf.flush();
+                                                        bf.close();
+                                                    }
+                                                    catch (IOException uhoh) {
+                                                        uhoh.printStackTrace();
+                                                    }
                                                 }
                                             }.start();
                                         }
@@ -407,8 +419,21 @@ public class GUI extends Application {
                                                     new Thread () {
                                                         @Override public void run () {
                                                             GLA.main(args);
+                                                            actiontarget.setText("All done!");
+                                                            String res = ta.getText();
+                                                            try{
+                                                                FileWriter bf = (new FileWriter(new File("GLA_results.txt")));
+                                                                bf.append(res);
+                                                                bf.append("\n");
+                                                                bf.flush();
+                                                                bf.close();
+                                                            }
+                                                            catch (IOException uhoh) {
+                                                                uhoh.printStackTrace();
+                                                            }
                                                         }
                                                     }.start();
+
 
 
                                                 }

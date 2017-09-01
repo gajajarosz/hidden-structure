@@ -15,7 +15,9 @@ public class GuiWriter implements Writer {
             alist.add(line.toString());
             Platform.runLater(new Thread() {
                 public void run() {
-                    text.setText(String.join("\n", alist));
+                    for(int i=1; i<alist.size(); i++){
+                        text.appendText("\n"+alist.get(i));
+                    }
                 }
             });
         }
