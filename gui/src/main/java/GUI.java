@@ -325,6 +325,7 @@ public class GUI extends Application {
 
             @Override
             public void handle(ActionEvent e) {
+                ta.setText("");
                 actiontarget.setText("Running...");
                 String chosenBias;
                 if (iBias.isSelected()) {
@@ -389,15 +390,13 @@ public class GUI extends Application {
                                             String chosenFinEvalSample = finEvalSample.getText();//eventually move
                                             String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias};
                                             System.out.println(Arrays.toString(args));
-                                            ta.setText("");
                                             EDL.writer = new GuiWriter(ta);//Create a writer to output results
                                             new Thread () {
                                                 @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
                                                     EDL.main(args);
-                                                    String res = ta.getText();
-                                                    String name = resField.getText();
                                                     actiontarget.setText("Writing results to file...");
                                                     try{
+                                                        String res = ta.getText();
                                                         BufferedWriter bf = new BufferedWriter (new FileWriter(resFile,true));
                                                         bf.append(res);
                                                         bf.append("\n");
@@ -434,14 +433,13 @@ public class GUI extends Application {
                                                     System.out.println("All GLA parameters ok!");
                                                     String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg};
                                                     System.out.println(Arrays.toString(args));
-                                                    ta.setText("");
                                                     GLA.writer = new GuiWriter(ta);
                                                     new Thread () {
                                                         @Override public void run () {
                                                             GLA.main(args);
-                                                            String res = ta.getText();
                                                             actiontarget.setText("Writing results to file...");
                                                             try {
+                                                                String res = ta.getText();
                                                                 BufferedWriter bf = new BufferedWriter(new FileWriter(resFile,true));
                                                                 bf.append(res);
                                                                 bf.append("\n");
