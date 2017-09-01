@@ -12,12 +12,10 @@ public class GuiWriter implements Writer {
         public GuiWriter(TextArea text) { this.text = text; }
         
         public void println(Object line) {
-            alist.add(line.toString());
+            alist.add(line.toString()+"\n");
             Platform.runLater(new Thread() {
                 public void run() {
-                    for(int i=1; i<alist.size(); i++){
-                        text.appendText("\n"+alist.get(i));
-                    }
+                    text.setText(alist+"\n");
                 }
             });
         }
