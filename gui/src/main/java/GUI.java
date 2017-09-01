@@ -26,7 +26,7 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
 
         Desktop desktop = Desktop.getDesktop();
-        primaryStage.setTitle("HS Learner");//title of window
+        primaryStage.setTitle("HS Learning");//title of window
 
         GridPane grid = new GridPane();//This is the grid that all elements must be added to
         grid.setAlignment(Pos.CENTER);
@@ -34,7 +34,7 @@ public class GUI extends Application {
         grid.setVgap(20);
         grid.setPadding(new Insets(20, 20, 20, 20));
 
-        Text scenetitle = new Text("Welcome to Gaja's Hidden Structure Learners");//scene title
+        Text scenetitle = new Text("Hidden Structure Learning");//scene title
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
