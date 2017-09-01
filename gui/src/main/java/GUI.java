@@ -38,6 +38,9 @@ public class GUI extends Application {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
+        TextArea ta = new TextArea();
+        grid.add(ta,2,3);
+
         Label gramlabel = new Label("Grammar file:");//Grammar file upload box
         Tooltip gramTooltip = new Tooltip();
         gramTooltip.setText("Grammar file stores...");
@@ -370,9 +373,7 @@ public class GUI extends Application {
                                             String chosenFinEvalSample = finEvalSample.getText();//eventually move
                                             String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias};
                                             System.out.println(Arrays.toString(args));
-                                            final Text EDLresults = new Text();
-                                            grid.add(EDLresults,3,3);
-                                            EDL.writer = new GuiWriter(EDLresults);//Create a writer to output results
+                                            EDL.writer = new GuiWriter(ta);//Create a writer to output results
                                             new Thread () {
                                                 @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
                                                     EDL.main(args);
@@ -402,9 +403,7 @@ public class GUI extends Application {
                                                     System.out.println("All GLA parameters ok!");
                                                     String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg};
                                                     System.out.println(Arrays.toString(args));
-                                                    final Text GLAresults = new Text();
-                                                    grid.add(GLAresults,3,3);
-                                                    GLA.writer = new GuiWriter(GLAresults);
+                                                    GLA.writer = new GuiWriter(ta);
                                                     new Thread () {
                                                         @Override public void run () {
                                                             GLA.main(args);
@@ -424,8 +423,7 @@ public class GUI extends Application {
             }
         });
 
-        TextArea ta = new TextArea();
-        grid.add(ta,3,3);
+
         ScrollPane sp = new ScrollPane();//Scroll for GUI
         sp.setContent(grid);
         Scene scene = new Scene(sp, 650, 550);

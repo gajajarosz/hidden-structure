@@ -3,12 +3,13 @@ package learner;
 import javafx.application.Platform;
 import javafx.scene.text.*;
 import java.util.*;
+import javafx.scene.control.TextArea;
 
 public class GuiWriter implements Writer {
-        private Text text;
+        private TextArea text;
         final ArrayList<String> alist = new ArrayList<>();            
 
-        public GuiWriter(Text text) { this.text = text; }
+        public GuiWriter(TextArea text) { this.text = text; }
         
         public void println(Object line) {
             alist.add(line.toString());
