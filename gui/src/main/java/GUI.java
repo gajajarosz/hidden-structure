@@ -39,7 +39,7 @@ public class GUI extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
 
         TextArea ta = new TextArea();
-        grid.add(ta,2,3);
+        grid.add(ta,1,4);
 
         Label gramlabel = new Label("Grammar file:");//Grammar file upload box
         Tooltip gramTooltip = new Tooltip();
@@ -305,7 +305,7 @@ public class GUI extends Application {
         Tooltip runTooltip = new Tooltip();
         runTooltip.setText("Your parameter preferences will automatically be saved.");//Not yet
         Tooltip.install(btn, runTooltip);
-        grid.add(btn, 1, 4);
+        grid.add(btn, 1, 3);
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 5);
