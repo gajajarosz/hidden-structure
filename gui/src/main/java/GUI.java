@@ -39,7 +39,7 @@ public class GUI extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
 
         TextArea ta = new TextArea();
-        grid.add(ta,1,4);
+        grid.add(ta,1,5);
 
         Label gramlabel = new Label("Grammar file:");//Grammar file upload box
         Tooltip gramTooltip = new Tooltip();
@@ -99,6 +99,17 @@ public class GUI extends Application {
                     }
                 });
 
+        Label reslabel = new Label("Results file:");//Where to store results
+        Tooltip resTooltip = new Tooltip();
+        resTooltip.setText("The name of the file to append results to.");
+        Tooltip.install(reslabel, resTooltip);
+        TextField resField = new TextField ();
+        resField.setPrefColumnCount(8);
+        HBox resBox = new HBox();
+        resBox.getChildren().addAll(reslabel,resField);
+        resBox.setSpacing(5);
+        grid.add(resBox, 0,3);
+
         Label itlabel = new Label("Iterations:");//Iterations
         Tooltip itTooltip = new Tooltip();
         itTooltip.setText("Reasonable iterations are...");
@@ -108,14 +119,14 @@ public class GUI extends Application {
         HBox iterations = new HBox();
         iterations.getChildren().addAll(itlabel,it);
         iterations.setSpacing(5);
-        grid.add(iterations, 0,3);
+        grid.add(iterations, 0,4);
 
         ComboBox learner = new ComboBox(FXCollections.observableArrayList("EDL","GLA"));
         Tooltip learnTooltip = new Tooltip();
         learnTooltip.setText("The EDL learner is... The GLA learner is...");
         Tooltip.install(learner, learnTooltip);
         learner.setPromptText("Learner");
-        grid.add(learner,0,4);
+        grid.add(learner,0,5);
 
         TitledPane edlo = new TitledPane();//Options for the EDL learner
         GridPane edlogrid = new GridPane();
@@ -181,7 +192,7 @@ public class GUI extends Application {
         glao.setContent(glaogrid);
         glao.setExpanded(false);
         glao.setVisible(false);
-        grid.add(glao,0,5);
+        grid.add(glao,0,6);
 
         learner.getSelectionModel().selectedIndexProperty().addListener(//Display either EDL or GLA options based on which is selected
                 new ChangeListener<Number>() {
@@ -221,7 +232,7 @@ public class GUI extends Application {
         ao.setText("Advanced Options");
         ao.setContent(aogrid);
         ao.setExpanded(false);
-        grid.add(ao,0,6);
+        grid.add(ao,0,7);
 
         TitledPane eo = new TitledPane();//Efficiency options
         GridPane eogrid = new GridPane();
@@ -251,7 +262,7 @@ public class GUI extends Application {
         eo.setText("Efficiency Options");
         eo.setContent(eogrid);
         eo.setExpanded(false);
-        grid.add(eo,0,7);
+        grid.add(eo,0,8);
 
         TitledPane po = new TitledPane();//Output options
         GridPane pogrid = new GridPane();
@@ -297,18 +308,18 @@ public class GUI extends Application {
         po.setText("Print Options");
         po.setContent(pogrid);
         po.setExpanded(false);
-        grid.add(po,0,8);
+        grid.add(po,0,9);
 
         //grid.setGridLinesVisible(true);
 
         Button btn = new Button("Run");//Run the program
         Tooltip runTooltip = new Tooltip();
-        runTooltip.setText("Your parameter preferences will automatically be saved.");//Not yet
+        //runTooltip.setText("Your parameter preferences will automatically be saved.");//Not yet
         Tooltip.install(btn, runTooltip);
         grid.add(btn, 1, 3);
 
         final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 5);
+        grid.add(actiontarget, 1, 4);
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -376,11 +387,13 @@ public class GUI extends Application {
                                             EDL.writer = new GuiWriter(ta);//Create a writer to output results
                                             new Thread () {
                                                 @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
+                                                    ta.setText("");
                                                     EDL.main(args);
-                                                    actiontarget.setText("All done!");
                                                     String res = ta.getText();
+                                                    String name = resField.getText();
+                                                    actiontarget.setText("Writing results to file...");
                                                     try{
-                                                        FileWriter bf = (new FileWriter(new File("EDL_results.txt")));
+                                                        FileWriter bf = (new FileWriter(new File(name+".txt")));
                                                         bf.append(res);
                                                         bf.append("\n");
                                                         bf.flush();
@@ -389,6 +402,7 @@ public class GUI extends Application {
                                                     catch (IOException uhoh) {
                                                         uhoh.printStackTrace();
                                                     }
+                                                    actiontarget.setText("All done!");
                                                 }
                                             }.start();
                                         }
@@ -418,11 +432,13 @@ public class GUI extends Application {
                                                     GLA.writer = new GuiWriter(ta);
                                                     new Thread () {
                                                         @Override public void run () {
+                                                            ta.setText("");
                                                             GLA.main(args);
-                                                            actiontarget.setText("All done!");
                                                             String res = ta.getText();
+                                                            String name = resField.getText();
+                                                            actiontarget.setText("Writing results to file...");
                                                             try{
-                                                                FileWriter bf = (new FileWriter(new File("GLA_results.txt")));
+                                                                FileWriter bf = (new FileWriter(new File(name+".txt")));
                                                                 bf.append(res);
                                                                 bf.append("\n");
                                                                 bf.flush();
@@ -431,11 +447,9 @@ public class GUI extends Application {
                                                             catch (IOException uhoh) {
                                                                 uhoh.printStackTrace();
                                                             }
+                                                            actiontarget.setText("All done!");
                                                         }
                                                     }.start();
-
-
-
                                                 }
                                             }
                                         }
