@@ -149,7 +149,7 @@ public class GUI extends Application {
         edlo.setContent(edlogrid);
         edlo.setExpanded(false);
         edlo.setVisible(false);
-        grid.add(edlo,0,5);
+        grid.add(edlo,0,6);
 
         TitledPane glao = new TitledPane();//Options for the GLA learner
         GridPane glaogrid = new GridPane();
@@ -393,16 +393,16 @@ public class GUI extends Application {
                                                     String name = resField.getText();
                                                     actiontarget.setText("Writing results to file...");
                                                     try{
-                                                        FileWriter bf = (new FileWriter(new File(name+".txt")));
+                                                        BufferedWriter bf = new BufferedWriter (new FileWriter(new File(name+".txt")));
                                                         bf.append(res);
                                                         bf.append("\n");
                                                         bf.flush();
                                                         bf.close();
+                                                        actiontarget.setText("All done!");
                                                     }
                                                     catch (IOException uhoh) {
                                                         uhoh.printStackTrace();
                                                     }
-                                                    actiontarget.setText("All done!");
                                                 }
                                             }.start();
                                         }
@@ -437,17 +437,16 @@ public class GUI extends Application {
                                                             String res = ta.getText();
                                                             String name = resField.getText();
                                                             actiontarget.setText("Writing results to file...");
-                                                            try{
-                                                                FileWriter bf = (new FileWriter(new File(name+".txt")));
+                                                            try {
+                                                                BufferedWriter bf = new BufferedWriter(new FileWriter(new File(name + ".txt")));
                                                                 bf.append(res);
                                                                 bf.append("\n");
                                                                 bf.flush();
                                                                 bf.close();
-                                                            }
-                                                            catch (IOException uhoh) {
+                                                                actiontarget.setText("All done!");
+                                                            } catch (IOException uhoh) {
                                                                 uhoh.printStackTrace();
                                                             }
-                                                            actiontarget.setText("All done!");
                                                         }
                                                     }.start();
                                                 }
