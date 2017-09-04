@@ -7,15 +7,15 @@ import javafx.scene.control.TextArea;
 
 public class GuiWriter implements Writer {
         private TextArea text;
-        final ArrayList<String> alist = new ArrayList<>();            
 
-        public GuiWriter(TextArea text) { this.text = text; }
+        public GuiWriter(TextArea text) {
+            this.text = text;
+        }
         
         public void println(Object line) {
-            alist.add(line.toString()+"\n");
-            Platform.runLater(new Thread() {
+            Platform.runLater(new Runnable() {
                 public void run() {
-                    text.setText(alist+"\n");
+                    text.appendText(line.toString()+"\n");
                 }
             });
         }

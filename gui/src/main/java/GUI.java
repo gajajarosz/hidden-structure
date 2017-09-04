@@ -2,6 +2,7 @@ package sample;
 //GUI code
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.*;
 import java.io.*;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ import javafx.scene.text.*;
 import java.util.*;
 import java.io.PrintStream;
 import learner.*;
+import java.nio.file.*;
 
 public class GUI extends Application {
 
@@ -354,6 +356,7 @@ public class GUI extends Application {
                     resName = "results.txt";
                 }
                 File resFile = new File(resName);
+                String resName_ = resName;
                 if(gr.getText().equals("")){
                     actiontarget.setText("Error: please upload grammar file!");
                 } else {
@@ -394,19 +397,23 @@ public class GUI extends Application {
                                             new Thread () {
                                                 @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
                                                     EDL.main(args);
-                                                    actiontarget.setText("Writing results to file...");
-                                                    try{
-                                                        String res = ta.getText();
-                                                        BufferedWriter bf = new BufferedWriter (new FileWriter(resFile,true));
-                                                        bf.append(res);
-                                                        bf.append("\n");
-                                                        bf.flush();
-                                                        bf.close();
-                                                        actiontarget.setText("All done!");
-                                                    }
-                                                    catch (IOException uhoh) {
-                                                        uhoh.printStackTrace();
-                                                    }
+                                                    Platform.runLater(new Runnable() {
+                                                        public void run() {
+
+                                                            actiontarget.setText("Writing results to file...");
+                                                            try {
+
+                                                                String res = ta.getText();
+                                                                Files.write(
+                                                                        Paths.get(resName_),
+                                                                        res.getBytes(),
+                                                                        StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+                                                                actiontarget.setText("All done!");
+                                                            } catch (IOException uhoh) {
+                                                                uhoh.printStackTrace();
+                                                            }
+                                                        }
+                                                    });
                                                 }
                                             }.start();
                                         }
