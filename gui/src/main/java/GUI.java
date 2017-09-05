@@ -251,6 +251,7 @@ public class GUI extends Application {
         qsTooltip.setText("Determines how many samples are used to evaluate whether a successful grammar has already been learned. High values, like X, will improve accuracy at the expense of efficient performance.");
         Tooltip.install(qsl, qsTooltip);
         TextField maxDepth = new TextField();
+        maxDepth.setText("8");
         Label mdl = new Label("MaxDepth of Ranking Tree: ");
         Tooltip mdTooltip = new Tooltip();
         mdTooltip.setText("Sets a maximum depth of the ranking tree; to increase efficiency, it is possible to cap the depth of data structures. A reasonable value may be X.");
