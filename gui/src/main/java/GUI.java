@@ -355,7 +355,6 @@ public class GUI extends Application {
                 if(resName.equals("")){
                     resName = "results.txt";
                 }
-                File resFile = new File(resName);
                 String resName_ = resName;
                 if(gr.getText().equals("")){
                     actiontarget.setText("Error: please upload grammar file!");
@@ -399,10 +398,8 @@ public class GUI extends Application {
                                                     EDL.main(args);
                                                     Platform.runLater(new Runnable() {
                                                         public void run() {
-
                                                             actiontarget.setText("Writing results to file...");
                                                             try {
-
                                                                 String res = ta.getText();
                                                                 Files.write(
                                                                         Paths.get(resName_),
@@ -444,18 +441,21 @@ public class GUI extends Application {
                                                     new Thread () {
                                                         @Override public void run () {
                                                             GLA.main(args);
-                                                            actiontarget.setText("Writing results to file...");
-                                                            try {
-                                                                String res = ta.getText();
-                                                                BufferedWriter bf = new BufferedWriter(new FileWriter(resFile,true));
-                                                                bf.append(res);
-                                                                bf.append("\n");
-                                                                bf.flush();
-                                                                bf.close();
-                                                                actiontarget.setText("All done!");
-                                                            } catch (IOException uhoh) {
-                                                                uhoh.printStackTrace();
-                                                            }
+                                                            Platform.runLater(new Runnable() {
+                                                                public void run() {
+                                                                    actiontarget.setText("Writing results to file...");
+                                                                    try {
+                                                                        String res = ta.getText();
+                                                                        Files.write(
+                                                                                Paths.get(resName_),
+                                                                                res.getBytes(),
+                                                                                StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+                                                                        actiontarget.setText("All done!");
+                                                                    } catch (IOException uhoh) {
+                                                                        uhoh.printStackTrace();
+                                                                    }
+                                                                }
+                                                            });
                                                         }
                                                     }.start();
                                                 }
@@ -473,7 +473,7 @@ public class GUI extends Application {
 
         ScrollPane sp = new ScrollPane();//Scroll for GUI
         sp.setContent(grid);
-        Scene scene = new Scene(sp, 650, 550);
+        Scene scene = new Scene(sp, 950, 550);
         primaryStage.setScene(scene);
 
         primaryStage.show();
