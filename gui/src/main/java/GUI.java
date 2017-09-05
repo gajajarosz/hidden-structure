@@ -345,12 +345,37 @@ public class GUI extends Application {
                 String chosenQuitSample = quitSample.getText();
                 String chosenMaxDepth = maxDepth.getText();
 
-                Boolean chosenPrintInput = printInput.isSelected();
                 String chosenInterEvalFreq = interEvalFreq.getText();
-                Boolean chosenInterEvalGram = interEvalGram.isSelected();
-                Boolean chosenInterEvalAcc = interEvalAcc.isSelected();
-                Boolean chosenFinalGram = finalGram.isSelected();
-                Boolean chosenFinalAcc = finalAcc.isSelected();
+                String chosenInterEvalGram;
+                if (interEvalGram.isSelected()) {
+                    chosenInterEvalGram = "1";
+                } else {
+                    chosenInterEvalGram = "0";
+                }
+                String chosenPrintInput;
+                if (printInput.isSelected()){
+                    chosenPrintInput = "1";
+                } else {
+                    chosenPrintInput = "0";
+                }
+                String chosenInterEvalAcc;
+                if (interEvalAcc.isSelected()){
+                    chosenInterEvalAcc = "1";
+                } else {
+                    chosenInterEvalAcc = "0";
+                }
+                String chosenFinalGram;
+                if (finalGram.isSelected()){
+                    chosenFinalGram = "1";
+                }else{
+                    chosenFinalGram = "0";
+                }
+                String chosenFinalAcc;
+                if (finalAcc.isSelected()) {
+                    chosenFinalAcc = "1";
+                } else{
+                    chosenFinalAcc = "0";
+                }
                 String resName = resField.getText();
                 if(resName.equals("")){
                     resName = "results.txt";
@@ -390,7 +415,7 @@ public class GUI extends Application {
                                             String chosenSampleSize = ss.getText();
                                             System.out.println("All EDL parameters ok!");
                                             String chosenFinEvalSample = finEvalSample.getText();//eventually move
-                                            String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias};
+                                            String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenPrintInput,chosenFinalGram,chosenInterEvalGram,chosenInterEvalFreq,chosenInterEvalAcc,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
                                             System.out.println(Arrays.toString(args));
                                             EDL.writer = new GuiWriter(ta);//Create a writer to output results
                                             new Thread () {
@@ -435,7 +460,7 @@ public class GUI extends Application {
                                                     String chosenNoise = n.getText();
                                                     String chosenFinEvalSample = finEvalSample.getText();//eventually move
                                                     System.out.println("All GLA parameters ok!");
-                                                    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg};
+                                                    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg, chosenPrintInput, chosenFinalGram, chosenInterEvalGram, chosenInterEvalFreq, chosenInterEvalAcc,chosenQuitFreq, chosenQuitSample};
                                                     System.out.println(Arrays.toString(args));
                                                     GLA.writer = new GuiWriter(ta);
                                                     new Thread () {
