@@ -29,13 +29,19 @@ public class GLA {
 
     public static void main(String[] args) {
         if (args.length < 10) {
-            writer.println("java GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)");
+            writer.println("Too few arguments have been provided to run the program. Exiting...\nusage: run grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)");
             System.exit(-1);
         }
 
         // read in a grammar_file
+	writer.println("Opening grammar file: " + args[0] + "...");
         gf = new GrammarFile(args[0]);
 
+        // read in i_o_file
+	writer.println("Opening distribution file: " + args[1] + "...");
+        df = new DistFile(args[1]);
+
+	writer.println("Now parsing remaining arguments");
         num_samples = Integer.parseInt(args[2]);
         final_eval_sample = Integer.parseInt(args[3]);
         learner = args[4];
@@ -46,17 +52,24 @@ public class GLA {
         NegOK = Boolean.parseBoolean(args[9]);
         writer.println(args.length);
         if (args.length == 17) {
+	    writer.println("Setting print_input? to: " + args[10]);
             print_input = Integer.parseInt(args[10]);
-            final_eval = Integer.parseInt(args[11]);
+	    writer.println("Setting final-eval to: " + args[11]);		    
+	    final_eval = Integer.parseInt(args[11]);
+	    writer.println("Setting mini-eval to: " + args[12]);
             mini_eval = Integer.parseInt(args[12]);
-            mini_eval_freq = Integer.parseInt(args[13]);
+	    writer.println("Setting mini-eval-freq to: " + args[13]);
+	    mini_eval_freq = Integer.parseInt(args[13]);
+	    writer.println("Setting mini-eval-sample to: " + args[14]);
             mini_eval_sample = Integer.parseInt(args[14]);
-            quit_early = Integer.parseInt(args[15]);
-            quit_early_sample = Integer.parseInt(args[16]);
+	    writer.println("Setting quit_early? to: " + args[15]);
+	    quit_early = Integer.parseInt(args[15]);
+            writer.println("Setting quit_early_sample? to: " + args[16]);
+	    quit_early_sample = Integer.parseInt(args[16]);
         }
 
-        // read in i_o_file
-        df = new DistFile(args[1]);
+	writer.println("Finished parsing all the arguments");
+
         //initialize to uniform grammar
         gr = new STOT(gf);
         if (bias == 1) {
@@ -64,8 +77,8 @@ public class GLA {
         }
 
         if (print_input == 0) {
-            writer.println("\nLEXICON:\n" + df);
-            writer.println("\nGRAMMAR:\n" + gr.gramToString(gr.grammar));
+            writer.println("\nSTARTING LEXICON:\n" + df);
+            writer.println("\nSTARTING GRAMMAR:\n" + gr.gramToString(gr.grammar));
         }
         learn_new_RIP();
     }

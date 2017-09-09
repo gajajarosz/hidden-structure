@@ -21,7 +21,7 @@ constraint [12]: "Nonfn" 100 100 1 ! Nonfinal
 
 62 tableaus
 input [1]: "|L-L|" 6
-   candidate [1]: "[L1-L]" 0 1 0 1 1 0 1 0 1 0 1 0
+   candidate [1]: "[L1-L]"  0 1 0 1 1 0 1 0 1 0 1 0
    candidate [2]: "[L1-L]" 0 0 1 0 0 0 0 0 0 0 0 1
    candidate [3]: "[L1-L2]" 0 2 0 0 2 0 0 0 1 1 1 1
    candidate [4]: "[L-L1]" 0 1 0 1 1 1 0 1 0 1 0 1

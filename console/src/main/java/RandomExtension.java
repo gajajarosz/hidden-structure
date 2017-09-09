@@ -119,9 +119,9 @@ public class RandomExtension {
 		for (int i = 0; i < size; i++) {
 			for (int j = i + 1; j < size; j++) {
 				if (this.faith[i] < this.faith[j]) {
-					mod_gram(grammar, i, j, .99);
+					mod_gram(grammar, i, j, .9);
 				} else if (this.faith[j] < this.faith[i]) {
-					mod_gram(grammar, j, i, .99);
+					mod_gram(grammar, j, i, .9);
 				} else {
 					mod_gram(grammar, i, j, .5);
 				}
@@ -515,11 +515,11 @@ public class RandomExtension {
 		String to_return = "     ";
 
 		for (int i = 0; i < size; i++) {//constraint names at top
-			to_return += " " + this.constraints[i];
+		    to_return += " " + String.format("%-5s", this.constraints[i]).substring(0, 5);
 		}
 		to_return += "\n";
 		for (int i = 0; i < size; i++) {
-			to_return += this.constraints[i];
+		    to_return += String.format("%-5s", this.constraints[i]).substring(0, 5);
 			for (int j = 0; j < i; j++) {
 				if (grammar[i][j] <= 0.01) {
 					weight[i] *= .01;
@@ -527,11 +527,12 @@ public class RandomExtension {
 					weight[i] *= grammar[i][j];
 				}
 				if (grammar[i][j] == 1.0) {
-					to_return += " " + " 1   ";
+					to_return += " " + "1    ";
 				} else if (grammar[i][j] == 0.0) {
-					to_return += " " + " 0   ";
+					to_return += " " + "0    ";
 				} else {
-					to_return += " " + formatter.format((double) grammar[i][j]);
+				    //					to_return += " " + formatter.format((double) grammar[i][j]);
+				    to_return += " " + String.format("%-5.2f", (double) grammar[i][j]);
 				}
 			}
 			to_return += "      ";
@@ -542,20 +543,21 @@ public class RandomExtension {
 					weight[i] *= grammar[i][j];
 				}
 				if (grammar[i][j] == 1.0) {
-					to_return += " " + " 1   ";
+					to_return += " " + "1    ";
 				} else if (grammar[i][j] == 0.0) {
-					to_return += " " + " 0   ";
+					to_return += " " + "0    ";
 				} else {
-					to_return += " " + formatter.format((double) grammar[i][j]);
+				    to_return += " " + String.format("%-5.2f", (double) grammar[i][j]);
+				    //					to_return += " " + formatter.format((double) grammar[i][j]);
 				}
 			}
 			to_return += "\n";
 		}
 
-		//now going to make a linearized version
+		/*now going to make a linearized version
 		for (int i = 0; i < size; i++) {
 			to_return += this.constraints[i] + " = " + formatter.format((double) (100.0 + (Math.log((double) weight[i])))) + "\t";
-		}
+			}*/
 		return to_return;
 	}
 
