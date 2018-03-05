@@ -1,0 +1,766 @@
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.54 00.51 00.49 00.53
+B 00.46       00.49 00.47 00.51
+C 00.49 00.51       00.48 00.52
+D 00.51 00.53 00.52       00.58
+E 00.47 00.49 00.48 00.42      
+A = 97.37	B = 97.08	C = 97.22	D = 97.49	E = 96.94	
+Output 1a 0.73 correct - actual freq is 1
+Output 2a 0.66 correct - actual freq is 1
+Output 3a 0.66 correct - actual freq is 1
+Output 4a 0.58 correct - actual freq is 1
+ITERATION 0:: Total error is 1.37 and log likelihood is -1.6904687313784392
+Starting iteration 100
+The new grammar is:
+      A B C D E
+A       01.00 01.00 01.00 01.00
+B 00.00       01.00 01.00 01.00
+C 00.00 00.00       01.00 01.00
+D 00.00 00.00 00.00       01.00
+E 00.00 00.00 00.00 00.00      
+A = 00.00	B = 95.39	C = 90.79	D = 86.18	E = 81.58	
+Output 1a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+-reached perfection early ----- exiting now
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       01.00 01.00 01.00 01.00
+B 00.00       01.00 01.00 01.00
+C 00.00 00.00       01.00 01.00
+D 00.00 00.00 00.00       01.00
+E 00.00 00.00 00.00 00.00      
+A = 00.00	B = 95.39	C = 90.79	D = 86.18	E = 81.58	
+Output 1a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.55 00.55 00.52 00.49
+B 00.45       00.53 00.47 00.56
+C 00.45 00.47       00.50 00.53
+D 00.48 00.53 00.50       00.57
+E 00.51 00.44 00.47 00.43      
+A = 97.42	B = 97.24	C = 97.12	D = 97.39	E = 96.90	
+Output 1a 0.67 correct - actual freq is 1
+Output 2a 0.69 correct - actual freq is 1
+Output 3a 0.52 correct - actual freq is 1
+Output 4a 0.59 correct - actual freq is 1
+ITERATION 0:: Total error is 1.53 and log likelihood is -1.953100517153636
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       00.77 00.72 00.57 00.64
+B 00.23       00.39 00.33 00.61
+C 00.28 00.61       00.45 00.68
+D 00.43 00.67 00.55       00.79
+E 00.36 00.39 00.32 00.21      
+A = 98.40	B = 95.96	C = 97.05	D = 97.92	E = 95.36	
+Output 1a 0.821 correct - actual freq is 1
+Output 2a 0.684 correct - actual freq is 1
+Output 3a 0.528 correct - actual freq is 1
+Output 4a 0.734 correct - actual freq is 1
+ITERATION 10:: Total error is 1.233 and log likelihood is -1.5249347470072563
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.57 00.51 00.51 00.59
+B 00.43       00.52 00.43 00.49
+C 00.49 00.48       00.48 00.50
+D 00.49 00.57 00.52       00.60
+E 00.41 00.51 00.50 00.40      
+A = 97.55	B = 96.97	C = 97.14	D = 97.55	E = 96.82	
+Output 1a 0.72 correct - actual freq is 1
+Output 2a 0.69 correct - actual freq is 1
+Output 3a 0.62 correct - actual freq is 1
+Output 4a 0.66 correct - actual freq is 1
+ITERATION 0:: Total error is 1.31 and log likelihood is -1.5931189095590954
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       00.75 00.48 00.51 00.75
+B 00.25       00.49 00.28 00.42
+C 00.52 00.51       00.55 00.68
+D 00.49 00.72 00.45       00.79
+E 00.25 00.58 00.32 00.21      
+A = 98.02	B = 95.78	C = 97.67	D = 97.93	E = 95.39	
+Output 1a 0.813 correct - actual freq is 1
+Output 2a 0.603 correct - actual freq is 1
+Output 3a 0.551 correct - actual freq is 1
+Output 4a 0.751 correct - actual freq is 1
+ITERATION 10:: Total error is 1.282 and log likelihood is -1.5952323633853438
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.53 00.48 00.48 00.50
+B 00.47       00.48 00.49 00.58
+C 00.52 00.52       00.51 00.50
+D 00.52 00.51 00.49       00.60
+E 00.50 00.42 00.50 00.40      
+A = 97.20	B = 97.23	C = 97.34	D = 97.47	E = 96.82	
+Output 1a 0.67 correct - actual freq is 1
+Output 2a 0.66 correct - actual freq is 1
+Output 3a 0.62 correct - actual freq is 1
+Output 4a 0.61 correct - actual freq is 1
+ITERATION 0:: Total error is 1.44 and log likelihood is -1.7883250375288091
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       00.74 00.61 00.54 00.74
+B 00.26       00.40 00.29 00.47
+C 00.39 00.60       00.55 00.59
+D 00.46 00.71 00.45       00.82
+E 00.26 00.53 00.41 00.18      
+A = 98.30	B = 95.72	C = 97.42	D = 97.88	E = 95.43	
+Output 1a 0.852 correct - actual freq is 1
+Output 2a 0.634 correct - actual freq is 1
+Output 3a 0.56 correct - actual freq is 1
+Output 4a 0.769 correct - actual freq is 1
+ITERATION 10:: Total error is 1.185 and log likelihood is -1.458357882204568
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.52 00.51 00.49 00.49
+B 00.48       00.48 00.49 00.51
+C 00.49 00.52       00.47 00.51
+D 00.51 00.51 00.53       00.57
+E 00.51 00.49 00.49 00.43      
+A = 97.24	B = 97.14	C = 97.21	D = 97.46	E = 97.06	
+Output 1a 0.74 correct - actual freq is 1
+Output 2a 0.6 correct - actual freq is 1
+Output 3a 0.65 correct - actual freq is 1
+Output 4a 0.58 correct - actual freq is 1
+ITERATION 0:: Total error is 1.43 and log likelihood is -1.7874408209145574
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       00.76 00.69 00.53 00.61
+B 00.24       00.50 00.40 00.47
+C 00.31 00.50       00.49 00.63
+D 00.47 00.60 00.51       00.74
+E 00.39 00.53 00.37 00.26      
+A = 98.24	B = 96.19	C = 96.96	D = 97.76	E = 96.06	
+Output 1a 0.805 correct - actual freq is 1
+Output 2a 0.679 correct - actual freq is 1
+Output 3a 0.563 correct - actual freq is 1
+Output 4a 0.685 correct - actual freq is 1
+ITERATION 10:: Total error is 1.268 and log likelihood is -1.5568591611876397
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.50 00.52 00.49 00.56
+B 00.50       00.42 00.47 00.48
+C 00.48 00.58       00.45 00.51
+D 00.51 00.53 00.55       00.55
+E 00.44 00.52 00.49 00.45      
+A = 97.34	B = 96.96	C = 97.26	D = 97.50	E = 97.01	
+Output 1a 0.67 correct - actual freq is 1
+Output 2a 0.75 correct - actual freq is 1
+Output 3a 0.74 correct - actual freq is 1
+Output 4a 0.67 correct - actual freq is 1
+ITERATION 0:: Total error is 1.1700000000000002 and log likelihood is -1.3897422357236555
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       00.75 00.64 00.52 00.57
+B 00.25       00.36 00.37 00.60
+C 00.36 00.64       00.52 00.68
+D 00.48 00.63 00.48       00.79
+E 00.43 00.40 00.32 00.21      
+A = 98.06	B = 96.10	C = 97.48	D = 97.84	E = 95.51	
+Output 1a 0.819 correct - actual freq is 1
+Output 2a 0.629 correct - actual freq is 1
+Output 3a 0.528 correct - actual freq is 1
+Output 4a 0.72 correct - actual freq is 1
+ITERATION 10:: Total error is 1.304 and log likelihood is -1.6304582254667352
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.54 00.51 00.57 00.55
+B 00.46       00.53 00.42 00.54
+C 00.49 00.47       00.54 00.51
+D 00.43 00.58 00.46       00.61
+E 00.45 00.46 00.49 00.39      
+A = 97.54	B = 97.10	C = 97.25	D = 97.34	E = 96.78	
+Output 1a 0.7 correct - actual freq is 1
+Output 2a 0.63 correct - actual freq is 1
+Output 3a 0.65 correct - actual freq is 1
+Output 4a 0.58 correct - actual freq is 1
+ITERATION 0:: Total error is 1.44 and log likelihood is -1.7942205851225985
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       00.79 00.57 00.53 00.69
+B 00.21       00.46 00.21 00.57
+C 00.43 00.54       00.53 00.70
+D 00.47 00.79 00.47       00.80
+E 00.31 00.43 00.30 00.20      
+A = 98.19	B = 95.55	C = 97.56	D = 98.04	E = 95.14	
+Output 1a 0.85 correct - actual freq is 1
+Output 2a 0.65 correct - actual freq is 1
+Output 3a 0.534 correct - actual freq is 1
+Output 4a 0.776 correct - actual freq is 1
+ITERATION 10:: Total error is 1.19 and log likelihood is -1.4742640619435465
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.56 00.54 00.49 00.48
+B 00.44       00.46 00.49 00.50
+C 00.46 00.54       00.45 00.53
+D 00.51 00.51 00.55       00.60
+E 00.52 00.50 00.47 00.40      
+A = 97.38	B = 96.99	C = 97.18	D = 97.53	E = 96.96	
+Output 1a 0.73 correct - actual freq is 1
+Output 2a 0.72 correct - actual freq is 1
+Output 3a 0.63 correct - actual freq is 1
+Output 4a 0.66 correct - actual freq is 1
+ITERATION 0:: Total error is 1.26 and log likelihood is -1.5207656173378834
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       01.00 01.00 01.00 01.00
+B 00.00       01.00 01.00 01.00
+C 00.00 00.00       01.00 01.00
+D 00.00 00.00 00.00       01.00
+E 00.00 00.00 00.00 00.00      
+A = 00.00	B = 95.39	C = 90.79	D = 86.18	E = 81.58	
+Output 1a 1.0 correct - actual freq is 1
+Output 1a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A null C D E
+A       00.50 00.50 00.50 00.50
+null 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	null = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A null C D E
+A       00.53 00.50 00.52 00.54
+null 00.47       00.51 00.51 00.55
+C 00.50 00.49       00.42 00.60
+D 00.48 00.49 00.58       00.53
+E 00.46 00.45 00.40 00.47      
+A = 97.41	null = 97.29	C = 97.22	D = 97.38	E = 96.74	
+Output 1a 0.71 correct - actual freq is 1
+Output 2a 0.72 correct - actual freq is 1
+Output 3a 0.66 correct - actual freq is 1
+Output 4a 0.5 correct - actual freq is 1
+ITERATION 0:: Total error is 1.4100000000000001 and log likelihood is -1.7796569511896387
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A null C D E
+A       01.00 01.00 01.00 01.00
+null 00.00       01.00 01.00 01.00
+C 00.00 00.00       01.00 01.00
+D 00.00 00.00 00.00       01.00
+E 00.00 00.00 00.00 00.00      
+A = 00.00	null = 95.39	C = 90.79	D = 86.18	E = 81.58	
+Output 1a 1.0 correct - actual freq is 1
+Output 1a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A null C D E
+A       00.50 00.50 00.50 00.50
+null 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	null = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A null C D E
+A       00.49 00.51 00.47 00.52
+null 00.51       00.49 00.48 00.48
+C 00.49 00.51       00.50 00.54
+D 00.53 00.52 00.50       00.60
+E 00.48 00.52 00.46 00.40      
+A = 97.21	null = 97.14	C = 97.30	D = 97.50	E = 96.93	
+Output 1a 0.72 correct - actual freq is 1
+Output 2a 0.69 correct - actual freq is 1
+Output 3a 0.61 correct - actual freq is 1
+Output 4a 0.53 correct - actual freq is 1
+ITERATION 0:: Total error is 1.4500000000000002 and log likelihood is -1.8287423368630895
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A null C D E
+A       01.00 01.00 01.00 01.00
+null 00.00       01.00 01.00 01.00
+C 00.00 00.00       01.00 01.00
+D 00.00 00.00 00.00       01.00
+E 00.00 00.00 00.00 00.00      
+A = 00.00	null = 95.39	C = 90.79	D = 86.18	E = 81.58	
+Output 1a 1.0 correct - actual freq is 1
+Output 1a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A null C D E
+A       00.50 00.50 00.50 00.50
+null 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	null = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A null C D E
+A       00.55 00.51 00.49 00.53
+null 00.45       00.50 00.47 00.51
+C 00.49 00.50       00.48 00.52
+D 00.51 00.53 00.52       00.58
+E 00.47 00.49 00.48 00.42      
+A = 97.37	null = 97.08	C = 97.21	D = 97.49	E = 96.94	
+Output 1a 0.63 correct - actual freq is 1
+Output 2a 0.65 correct - actual freq is 1
+Output 3a 0.7 correct - actual freq is 1
+Output 4a 0.56 correct - actual freq is 1
+ITERATION 0:: Total error is 1.46 and log likelihood is -1.8293118719017374
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A null C D E
+A       01.00 01.00 01.00 01.00
+null 00.00       01.00 01.00 01.00
+C 00.00 00.00       01.00 01.00
+D 00.00 00.00 00.00       01.00
+E 00.00 00.00 00.00 00.00      
+A = 00.00	null = 95.39	C = 90.79	D = 86.18	E = 81.58	
+Output 1a 1.0 correct - actual freq is 1
+Output 1a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 3a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+Output 4a 1.0 correct - actual freq is 1
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+ITERATION 100:: Total error is 0.0 and log likelihood is 0.0
+
+LEXICON:
+1a distribution:
+	1a - 1.0
+2a distribution:
+	2a - 1.0
+3a distribution:
+	3a - 1.0
+4a distribution:
+	4a - 1.0
+
+
+GRAMMAR:
+      A B C D E
+A       00.50 00.50 00.50 00.50
+B 00.50       00.50 00.50 00.50
+C 00.50 00.50       00.50 00.50
+D 00.50 00.50 00.50       00.50
+E 00.50 00.50 00.50 00.50      
+A = 97.23	B = 97.23	C = 97.23	D = 97.23	E = 97.23	
+[0, 1, 0, 0, 0]
+[1, 0, 1, 0, 0]
+Starting iteration 0
+The new grammar is:
+      A B C D E
+A       00.63 00.50 00.54 00.53
+B 00.37       00.65 00.52 00.51
+C 00.50 00.35       00.35 00.28
+D 00.46 00.48 00.65       00.58
+E 00.47 00.49 00.72 00.42      
+A = 97.60	B = 97.24	C = 95.92	D = 97.51	E = 97.35	
+Output 1a 0.61 correct - actual freq is 1
+Output 2a 0.75 correct - actual freq is 10
+Output 3a 0.54 correct - actual freq is 1
+Output 4a 0.58 correct - actual freq is 1
+ITERATION 0:: Total error is 3.77 and log likelihood is -4.532030326785298
+Starting iteration 100
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.73 00.67
+B 00.00       01.00 00.21 00.31
+C 00.00 00.00       00.00 00.00
+D 00.27 00.79 01.00       00.50
+E 00.33 00.69 01.00 00.50      
+A = 99.28	B = 92.67	C = 81.58	D = 97.78	E = 97.82	
+Output 1a 0.98 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.63 correct - actual freq is 1
+Output 4a 0.5 correct - actual freq is 1
+ITERATION 100:: Total error is 0.89 and log likelihood is -1.1753853355801263
+Starting iteration 200
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.72 00.74
+B 00.00       01.00 00.26 00.20
+C 00.00 00.00        0    00.00
+D 00.28 00.74  1          00.50
+E 00.26 00.80 01.00 00.50      
+A = 99.36	B = 92.44	C = 81.58	D = 97.75	E = 97.74	
+Output 1a 0.98 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.52 correct - actual freq is 1
+Output 4a 0.44 correct - actual freq is 1
+ITERATION 200:: Total error is 1.06 and log likelihood is -1.4951097494296588
+Starting iteration 300
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.72 00.76
+B 00.00       01.00 00.23 00.22
+C 00.00 00.00        0    00.00
+D 00.28 00.77  1          00.50
+E 00.24 00.78 01.00 00.50      
+A = 99.41	B = 92.41	C = 81.58	D = 97.75	E = 97.63	
+Output 1a 0.97 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.46 correct - actual freq is 1
+Output 4a 0.49 correct - actual freq is 1
+ITERATION 300:: Total error is 1.08 and log likelihood is -1.5203378177628033
+Starting iteration 400
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.71 00.79
+B 00.00       01.00 00.27 00.18
+C 00.00 00.00        0    00.00
+D 00.29 00.73  1          00.50
+E 00.21 00.82 01.00 00.50      
+A = 99.41	B = 92.38	C = 81.58	D = 97.77	E = 97.56	
+Output 1a 0.95 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.58 correct - actual freq is 1
+Output 4a 0.43 correct - actual freq is 1
+ITERATION 400:: Total error is 1.04 and log likelihood is -1.4399905648129
+Starting iteration 500
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.71 00.66
+B 00.00       00.97 00.17 00.18
+C 00.00 00.03        0    00.01
+D 00.29 00.83  1          00.50
+E 00.34 00.82 00.99 00.50      
+A = 99.23	B = 91.89	C = 82.73	D = 97.90	E = 98.02	
+Output 1a 0.96 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.58 correct - actual freq is 1
+Output 4a 0.53 correct - actual freq is 1
+ITERATION 500:: Total error is 0.9299999999999999 and log likelihood is -1.220427547505862
+Starting iteration 600
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.67 00.68
+B 00.00       00.83 00.22 00.17
+C 00.00 00.17        0    00.03
+D 00.33 00.78  1          00.50
+E 00.32 00.83 00.97 00.50      
+A = 99.21	B = 91.88	C = 85.48	D = 97.96	E = 97.97	
+Output 1a 0.98 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.43 correct - actual freq is 1
+Output 4a 0.49 correct - actual freq is 1
+ITERATION 600:: Total error is 1.1 and log likelihood is -1.5775226099301771
+Starting iteration 700
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.75 00.72
+B 00.00       00.63 00.17 00.22
+C 00.00 00.37        0    00.04
+D 00.25 00.83  1          00.50
+E 00.28 00.78 00.96 00.50      
+A = 99.39	B = 91.66	C = 86.68	D = 97.73	E = 97.73	
+Output 1a 0.96 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.45 correct - actual freq is 1
+Output 4a 0.51 correct - actual freq is 1
+ITERATION 700:: Total error is 1.08 and log likelihood is -1.5126743115439845
+Starting iteration 800
+The new grammar is:
+      A B C D E
+A       01.00 01.00 00.66 00.62
+B 00.00       00.50 00.13 00.21
+C 00.00 00.50        0    00.07
+D 00.34 00.87  1          00.50
+E 00.38 00.79 00.93 00.50      
+A = 99.12	B = 91.14	C = 87.42	D = 98.07	E = 98.02	
+Output 1a 0.97 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.48 correct - actual freq is 1
+Output 4a 0.53 correct - actual freq is 1
+ITERATION 800:: Total error is 1.02 and log likelihood is -1.3993067018391057
+Starting iteration 900
+The new grammar is:
+      A B C D E
+A       01.00 00.97 00.65 00.50
+B 00.00       00.47 00.10 00.10
+C 00.03 00.53        0    00.07
+D 00.35 00.90  1          00.50
+E 00.50 00.90 00.93 00.50      
+A = 98.85	B = 90.01	C = 88.60	D = 98.16	E = 98.43	
+Output 1a 0.98 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.5 correct - actual freq is 1
+Output 4a 0.55 correct - actual freq is 1
+ITERATION 900:: Total error is 0.97 and log likelihood is -1.3111868474959283
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      A B C D E
+A       01.00 00.96 00.58 00.51
+B 00.00       00.36 00.08 00.07
+C 00.04 00.64        0    00.08
+D 00.42 00.92  1          00.50
+E 00.49 00.93 00.92 00.50      
+A = 98.74	B = 89.17	C = 89.10	D = 98.36	E = 98.44	
+Output 1a 0.973 correct - actual freq is 1
+Output 1a 0.973 correct - actual freq is 1
+Output 2a 1.0 correct - actual freq is 10
+Output 2a 1.0 correct - actual freq is 10
+Output 3a 0.501 correct - actual freq is 1
+Output 3a 0.501 correct - actual freq is 1
+Output 4a 0.509 correct - actual freq is 1
+Output 4a 0.509 correct - actual freq is 1
+ITERATION 1000:: Total error is 1.017 and log likelihood is -1.3938276665565974
+ITERATION 1000:: Total error is 1.017 and log likelihood is -1.3938276665565974

@@ -44,7 +44,6 @@ LEARNER
 GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-100
-- Default: 100
 
 GLA-specific arguments:
 -------------------------
