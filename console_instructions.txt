@@ -52,11 +52,11 @@ To run EDL, use this syntax at the command prompt. You may want to redirect the 
 
 run grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
 
-For example: run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0
+For example: run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0 > output.txt
-run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 1000 0 | less
+run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 > output.txt
+run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 | less
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -68,7 +68,8 @@ LEARNER
  EIP - Expected Interpretive Parsing in Jarosz (2013)
  RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
  RRIP - Resampling RIP in Jarosz (2013)
- randRIP - baseline model without parsing; when there’s an error it generates a random output as the ‘winner’ for the update.
+ randRIP - baseline model which generates a random output as the ‘winner’ when there’s an error
+ Baseline - baseline model: generates a brand new ranking/weighting when there’s an error
 
  GRAMMAR TYPE
  - set this to OT, HG, or ME (maxent)

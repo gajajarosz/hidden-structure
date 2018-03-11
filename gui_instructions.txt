@@ -86,7 +86,7 @@ QUIT_EARLY: how often should the program check to see if it can quit early?
 -Quits if the learner has already learned everything
 - In order to never quit early, set to the same number as iterations
 
-QUIT_EARLY?_SAMPLE: hoow many samples should be used to evaluate whether the learner is done learning?
+QUIT_EARLY?_SAMPLE: how many samples should be used to evaluate whether the learner is done learning?
 -The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
 
 Advanced options:

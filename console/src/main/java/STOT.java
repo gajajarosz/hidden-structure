@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class STOT {
 
-	public double[] grammar;   //contains mutual ranking probabilities - the grammar
+	public double[] grammar;   //contains mean ranking values for each constraint
 	public String[] constraints;
 	public int[] faith;
 
@@ -19,7 +19,7 @@ public class STOT {
 		grammar = new double[size];
 
 		for (int i = 0; i < size; i++) {
-			grammar[i] = 4.0;
+			grammar[i] = 10.0;
 		}
 	}
 
@@ -43,7 +43,7 @@ public class STOT {
 		int size = grammar.length;
 		for (int i = 0; i < size; i++) {
 			if (this.faith[i] == 1) {
-				grammar[i] = 5.0;
+				grammar[i] -= 5.0;
 			}
 		}
 	}

@@ -28,7 +28,7 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
 
         Desktop desktop = Desktop.getDesktop();
-        primaryStage.setTitle("HS Learning");//title of window
+        primaryStage.setTitle("UMass Hidden Structure Learners");//title of window
 
         GridPane grid = new GridPane();//This is the grid that all elements must be added to
         grid.setAlignment(Pos.CENTER);
@@ -36,7 +36,7 @@ public class GUI extends Application {
         grid.setVgap(20);
         grid.setPadding(new Insets(20, 20, 20, 20));
 
-        Text scenetitle = new Text("Hidden Structure Learning");//scene title
+        Text scenetitle = new Text("Input, Output, & Required Parameters");//scene title
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
@@ -139,7 +139,7 @@ public class GUI extends Application {
         emodelTooltip.setText("Here is an explanation of the different algorithms...");
         Tooltip.install(emodel, emodelTooltip);
         emodel.setPromptText("Learner");
-        TextField ss = new TextField("1000");
+        TextField ss = new TextField("100");
         Label ssl = new Label("Sample Size: ");
         Tooltip ssTooltip = new Tooltip();
         ssTooltip.setText("Here is an explanation of sample size:");

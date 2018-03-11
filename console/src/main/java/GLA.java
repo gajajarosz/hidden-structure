@@ -88,14 +88,13 @@ public class GLA {
         int fail = 0;
         double[] single = gr.sample(NegOK, noise);
         double[] orig_single = single;
+
         // there are i iterations of sampling and updating
         int i = 0;
-
         for (i = 0; i < num_samples; i++) {
             if (i%mini_eval_freq==0) {
                 writer.println("Starting iteration " + i);
             }
-            //each iteration consists of s samples
             fail = 0;
 
             //sample an output form: output
@@ -110,7 +109,6 @@ public class GLA {
                     break;
                 }
             }
-            //writer.println("Sampled output form: " + output.form);
 
             //sample a ur for the output form: input
             String input = "";
@@ -122,7 +120,6 @@ public class GLA {
                     break;
                 }
             }
-            //writer.println("\tSampled a UR form: " + input);
 
             //sample the current grammar's output for this form: optimal
             GrammarFile.Candidate optimal = null;
@@ -130,7 +127,7 @@ public class GLA {
             if (learner.equals("Baseline")) {
                 single = gr.grammar;
             }
-            //writer.println("\nSampled:\n" + gr.gramToString(single));
+
             int[] rank = gr.find_order(single);
             if (model.equals("OT")) {
                 optimal = optimize(null, input, rank);
@@ -139,9 +136,7 @@ public class GLA {
             } else {
                 optimal = optimizeME(null, input, gr.grammar);
             }
-            //writer.println("The current optimal form is " + optimal.oform);
-            //writer.println("The current grammar is:\n" + gr.gramToString(gr.grammar));
-
+	    
             if ((learner.equals("RIP")) || (learner.equals("RRIP"))) {
                 //make a temporary tableau for this output
                 GrammarFile.Tableau tab = new GrammarFile.Tableau();
@@ -186,13 +181,6 @@ public class GLA {
                         winner = optimizeME(tab, input, gr.grammar);
                     }
                 }
-
-                if (winner.form.equals(wouldhavebeen.form)) {
-                    //writer.println("Resampling found SAME winner - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
-                } else {
-                    //writer.println("Resampling found DIFFERENT overt form - old: " + wouldhavebeen.form + " vs resampled:" + winner.form);
-                }
-
 
                 if (optimal.form.equals(winner.form)) {
                     //writer.println("RIPPed parse = " + winner.form + " matches Optimal = " + optimal.form);
@@ -390,12 +378,12 @@ public class GLA {
             }
             if (i == num_samples) {
                 if (final_eval==0) {
-                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
             }
             if (i%mini_eval_freq==0){
                 if(mini_eval==0){
-                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - actual freq is " + output.freq);
+                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
             }
             log_likelihood += Math.log(((float) corr / tot)) * output.freq;
