@@ -408,7 +408,6 @@ public class GLA {
         }
     }
 
-
     public static GrammarFile.Candidate optimize(GrammarFile.Tableau tab, String input, int[] rank) {
 
         //find the tableau

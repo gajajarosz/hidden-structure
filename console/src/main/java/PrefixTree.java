@@ -1,5 +1,6 @@
 package learner;
 //Support code for the EDL learner
+//This improves efficiency by keeping track of the winner for a given ranking/winner pair
 import java.util.*;
 import java.util.stream.*;
 
@@ -13,7 +14,6 @@ public class PrefixTree {
         }
         public String find(int[] k, int i){
             Node next = succs[k[i]];
-            //System.out.println("At node: "+k[i]);
             if(next!=null){
                 return next.find(k,i+1);
             }else{
@@ -21,22 +21,22 @@ public class PrefixTree {
             }
         }
         public void put(int[] pre, int i, String v){
+            //put winner in tree
             if(i==pre.length-1){
-                //System.out.println("Got to pre.length-1: "+pre[i]);
                 succs[pre[i]]=new Value(v);
             }else{
                 if(succs[pre[i]]==null){
-                    //System.out.println("adding new branch at: "+pre[i]);
+                    //If prefix doesn't have any children, add new child
                     succs[pre[i]] = new Branch(succs.length);
                 }else{
                     //System.out.println("branch already existed: "+pre[i]);
                 }
                 succs[pre[i]].put(pre,i+1,v);
-
             }
         }
 
         public String toString(){
+            //print method
             String result = "<div>";
             for(int i=0; i < succs.length;i++){
                 if(succs[i]!=null){
@@ -47,17 +47,18 @@ public class PrefixTree {
             return result;
         }
         public Stream<String> prettyPrint(){
+            //pretty print
             return IntStream.range(0,succs.length).boxed().filter(i->succs[i]!=null).flatMap(i->succs[i].prettyPrint().map(s->i+","+s));
         }
     }
 
     class Value implements Node{
+        //Stores a winner
         String value;
         Value(String v){
             value = v;
         }
         public String find(int[] k, int i){
-            //System.out.println("Found at :"+k[i]);
             return value;
         }
         public void put(int[] pre, int i, String v){

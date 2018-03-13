@@ -485,9 +485,7 @@ public class EDL {
 
     public static String optimize(String input, GrammarFile.Tableau tab, int[] rank) {
         String w = prevFound(rank,input);
-	//writer.println("What prevFound returned: "+w);
 	if (w!=""){
-	    //writer.println("Here is what the word was: "+w);
 	    return w;
 	} else {
 	    List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
@@ -496,42 +494,43 @@ public class EDL {
 	    for (int j = 0; j < rank.length; j++) {
 		//figuring out minimum violation for remaining candidates
 		int min_vios = -1;
-		List<Integer> cwinners = new LinkedList<Integer>();
+		List<Integer> cwinners = new LinkedList<Integer>(); //tracks winning candidates for each constraint
 		for (int i: winners) {
 		    if (min_vios == -1) {
 			min_vios = tab.cands[i].violations[rank[j]];
-			cwinners.add(i);
+			cwinners.add(i); //add the first remaining candidate to cwinner
 		    } else if (tab.cands[i].violations[rank[j]] < min_vios) {
+				//If you find a new minimum number of violations for this constraint, current candidate
+				//becomes the best candidate
 			min_vios = tab.cands[i].violations[rank[j]];
-			cwinners.clear();
+			cwinners.clear(); //remove previous winners (they have more violations)
 			cwinners.add(i);
 		    } else if (tab.cands[i].violations[rank[j]] == min_vios) {
+				//add current candidate to winners if it has an equal number of violations as the minimum
 			cwinners.add(i);
 		    }
 		}
 		if (cwinners.size() > 0) {
-		    winners = cwinners;
+		    winners = cwinners; //remove winners that are not winners on this constraint
 		}
 		if (winners.size() < 2 || cwinners.size() == 0) {
+			//If there is only one remaining candidate or all candidates have been eliminated
 		    stop = j;
 		    break;
 		}
 	    }
 	    String winner = tab.cands[winners.get(0)].oform; //If there are more than one winners, this chooses the last one in tableau
-	    track(stop, rank, winner, input);
+	    track(stop, rank, winner, input); //Add to prefix tree to avoid repeat calculations
 	    return winner;
 	}
     }
 
     public static String prevFound(int[] rank, String input) {
+		//returns the previously found winner if there is one
 	String winner = "";
 	if (intable.containsKey(input)) {
-	    //writer.println("Contains input");
-	    //writer.println("Input is: "+input);
 	    PrefixTree ptree = intable.get(input);
-	    //writer.println("Rank:" + Arrays.toString(rank));
-	    //writer.println(ptree.toString());
-	    winner = ptree.find(rank);
+	    winner = ptree.find(rank); //retrieve stored winner from prefixTree
 	    if(winner!=null){
 		//writer.println("Found something!"+winner);
 	    } else{
@@ -542,19 +541,18 @@ public class EDL {
     }
 
     public static void track(int stop, int[] rank, String winner, String input){
-	//writer.println("Stop is: "+stop);
+		//Keeps track of the prefix tree for each input
 	if(intable.containsKey(input)) {
 	    //writer.println("Already contains!");
 	}else{
+		//Add to table of input / prefix tree pairs if not already in table
 	    intable.put(input, new PrefixTree(rank.length));
 	}
 	PrefixTree ptree = intable.get(input);
-	//writer.println(ptree.toString());
 	if (stop < maxdepth) {
+		//If maxdepth not exceeded:
 	    int[] pre = Arrays.copyOfRange(rank, 0, stop + 1);
-	    //writer.println("adding prefix: "+Arrays.toString(pre));
-	    ptree.put(pre, winner);
-	    //writer.println(ptree.toString());
+	    ptree.put(pre, winner); //insert winner in prefix tree at prefix pre
 	}
     }
 
