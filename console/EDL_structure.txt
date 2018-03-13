@@ -21,7 +21,7 @@ Output: none
 		+Iterates through underlying representations of each candidate:
 			+Calls optimize
 		+Reranks constraints in other order and repeats
-	+Adds best new ranking?
+	+Adds best new ranking
 	+Attempts to speed up learning
 	+Calls evaluate_grammar to see how new grammar performs
 +Evaluate final grammar using evaluate_grammar
@@ -73,12 +73,12 @@ Class RandomExtension:
  	j_cor: an array storing the column indices of constraint pairs
 
 reEstimate_pairwise:
-Input: n?
+Input: n
 Output: RandomExtension
-+Generates an ordering and ?
++Generates an ordering
 
 reEstimate:
-Input: n?
+Input: n
 Output: RandomExtension
 
 uni_grammar:
@@ -89,22 +89,21 @@ Output: none
 bias_grammar:
 Input: none
 Output: none
-+Biases grammar towards faithful constraints (weights them highly)?
++Biases grammar towards faithful constraints (weights them highly)
 
 rand_grammar:
 Input: grammar size
 Output: none
-+Generates random grammar?
++Generates random grammar
 
 mode_grammar:
 Input: none
 Output: matrix
 +Sets the grammar to the mode setting for each parameter
-+What is mode?
 
 generate_extension1:
-Input: single?
-Output: array?
+Input: single
+Output: array
 +Sampling method
 
 makeMeConsistent:

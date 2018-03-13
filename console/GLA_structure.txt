@@ -3,7 +3,7 @@ STOTEM file:
 Main:
 Input: commandline arguments
 Output: none
-+Reads in the grammar file and the distribution file to create the candidates, tableaux, ? and ?.
++Reads in the grammar file and the distribution file to create the candidates, tableaux
 +Calls learnNewRIP
 
 LearnNewRIP:
@@ -37,7 +37,6 @@ OptimizeME:
 Input: tableau, input, grammar
 Output: candidate
 +Calculates the harmonies of each candidate given the grammar
-+I don't understand how it is picking the winner
 +Return the winner
 
 Evaluate:
@@ -54,7 +53,7 @@ Class file defining constraint sets and providing methods for grammars
 
 Class STOT:
 Input: grammarFile
-+Instance contains a uni_gram (uninitialized grammar), a set of constraints, and faith (what is this?) 
++Instance contains a uni_gram (uninitialized grammar), a set of constraints, and faith
 
 Methods:
 
@@ -84,7 +83,7 @@ Distfile file:
 Class file for parsing the distribution file
 
 Class DistFile:
-+Instance contains an array of morphs, an array of outputs, and a boolean phono, which indicates whether phonotactic learning is done (?)
++Instance contains an array of morphs, an array of outputs, and a boolean phono, which indicates whether phonotactic learning is done
 
 Methods:
 
@@ -99,7 +98,7 @@ Output: string
 +Converts to string
 
 Class Morph:
-+Instance contains a name, an array of distributions, an array of new distributions (?), an array of forms and an array of outputs
++Instance contains a name, an array of distributions, an array of new distributions, an array of forms and an array of outputs
 
 Class Output:
 +Instance contains a frequency, a relative frequency (initialized to 0), a form, an array of morphs, and an array of inputs
