@@ -1,9 +1,5 @@
 /.idea
-/gui/project/target
-/console/project/target
-/gui/target
-/console/target
+target
 *.class
 /target
-/project/target
 /idea-bak
