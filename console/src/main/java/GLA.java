@@ -35,11 +35,11 @@ public class GLA {
 
         // read in a grammar_file
 	writer.println("Opening grammar file: " + args[0] + "...");
-        gf = new GrammarFile(args[0]);
+        gf = new GrammarFile(args[0], writer);
 
         // read in i_o_file
 	writer.println("Opening distribution file: " + args[1] + "...");
-        df = new DistFile(args[1]);
+        df = new DistFile(args[1], writer);
 
 	writer.println("Now parsing remaining arguments");
         num_samples = Integer.parseInt(args[2]);

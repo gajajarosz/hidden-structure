@@ -5,12 +5,13 @@ import java.util.regex.*;
 import java.util.*;
 
 public class GrammarFile {
-    public static Writer writer = new SystemWriter();
+   private Writer writer;
 
-    GrammarFile(String fn) {
+    GrammarFile(String fn, Writer writer) {
 	// Load the data from a file
 	BufferedReader stream;
 	boolean ignored = false;
+	this.writer = writer;
 	try {
 	    stream = new BufferedReader(new FileReader(fn));
 	} catch (IOException ioe) {

@@ -8,11 +8,12 @@ import java.util.Set;
 import java.util.Vector;
 
 public class DistFile {
-    public static Writer writer = new SystemWriter();
+	private Writer writer;
 
-    DistFile(String fn) {
+    DistFile(String fn, Writer writer) {
 	// Load the data from a file
 	BufferedReader stream;
+	this.writer = writer;
 	try {
 	    stream = new BufferedReader(new FileReader(fn));
 	} catch (IOException ioe) {

@@ -10,21 +10,24 @@ public class RandomExtension {
     private int[] faith;
     private int[] i_cor; // these store indices of all constraint pairs
     private int[] j_cor;
+	private Writer writer;
 
-    public RandomExtension(GrammarFile gf) {
+    public RandomExtension(GrammarFile gf, Writer writer) {
 	this.uni_grammar(gf.constraints.length);
 	this.constraints = gf.constraints;
 	this.faith = gf.faith;
 	this.init_pairs();
+	this.writer = writer;
     }
 
     public RandomExtension() {
+		this.writer = new SystemWriter();
     }
 
     public static void main(String[] argv) {
 	RandomExtension re = new RandomExtension();
 	re.rand_grammar(Integer.parseInt(argv[0]));
-	System.out.println(re);
+	re.writer.println(re);
 
 	int n_re_es = Integer.parseInt(argv[1]);
 	int k = 0;
@@ -32,7 +35,7 @@ public class RandomExtension {
 	int n = Integer.parseInt(argv[2]);
 	while (k < n_re_es) {
 	    re = re.reEstimate(n);
-	    System.out.println(re);
+	    re.writer.println(re);
 	    k++;
 	}
     }
@@ -63,7 +66,7 @@ public class RandomExtension {
 	}
 
 	err = err / ((grammar.length * (grammar.length - 1)) / 2);
-	System.out.println("Sampling Error is " + err);
+	writer.println("Sampling Error is " + err);
 	RandomExtension re = new RandomExtension();
 	re.grammar = temp;
 	re.constraints = constraints;

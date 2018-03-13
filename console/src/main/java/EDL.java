@@ -35,11 +35,11 @@ public class EDL {
 
 	// read in a grammar_file
 	writer.println("Opening grammar file: " + args[0] + "...");
-	gf = new GrammarFile(args[0]);
+	gf = new GrammarFile(args[0], writer);
 
 	// read in i_o_file
 	writer.println("Opening distribution file: " + args[1] + "...");
-	df = new DistFile(args[1]);
+	df = new DistFile(args[1], writer);
 	//	df.phono = false;
 
 	writer.println("Now parsing remaining arguments");
@@ -79,8 +79,8 @@ public class EDL {
 	    writer.println("\nSTARTING LEXICON:\n" + df);
 	}
 	// initialize grammar to uniform - make ll_grammar
-	gr = new RandomExtension(gf);
-	prior = new RandomExtension(gf);
+	gr = new RandomExtension(gf, writer);
+	prior = new RandomExtension(gf, writer);
 	prior.bias_grammar();
 	if (init_bias == 1) {
 	    gr.bias_grammar();
