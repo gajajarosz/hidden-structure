@@ -4,13 +4,11 @@ In order to run this code, you will need java and java runtime environment insta
 
 
 +The project currently uses the build tool SBT, which you'll need to install (http://www.scala-sbt.org/download.html)
-+To run the project, starting in the main directory, start SBT (command: sbt)
-+Compile the main project (command: compile)
-+Set project to console (command: project console)
-+Compile project (command: compile)
-+Run project with arguments, see below for argument options (command: run learner arg1 arg2 arg3… etc)
++ To compile the project type "sbt compile". This will create two files (1) console.jar and (2) gui.jar.
++ To run the console program, type "java -jar console.jar learner arg1 arg2 ..."
 
 The "learner" argument should be either "EDL" or "GLA".
+
 Both EDL and GLA are run using the learn.java program. The first four arguments for each are the same:
 
 GRAMMAR FILE
@@ -50,13 +48,14 @@ INITIAL BIAS
 
 To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
-run grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
+java -jar console.jar EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
 
-For example: run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0
+For example: java -jar console.jar EDL  TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 > output.txt
-run TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 | less
+
+java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 > output.txt
+java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 | less
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -93,13 +92,13 @@ LEARNING RATE
 
 To run GLA, use this syntax at the command prompt. As with EDL, you may want to redirect the output to a file or pipe it to less.
 
-run grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)
+java -jar console.jar GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)
 
-For example: run TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0
+For example: java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0
 
 You may want to redirect the output to a file or pipe it to less like this:
-run TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 > output.txt
-run TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 | less
+java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 > output.txt
+java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 | less
 
 ----------------------------------------------------------------------------------------------------------------------------
 
@@ -143,11 +142,11 @@ QUIT_EARLY?_SAMPLE
 
 For instance, if you want to run GLA and print as much as possible, run:
 
-run TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 0 0 0 1 100 100 100
+java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 0 0 0 1 100 100 100
 
 If you want to run GLA as quickly as possible, run:
 
-run TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 1 1 2 1000 100 1000 100
+java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 1 1 2 1000 100 1000 100
 
 ------------------------------------------------------------------------------------------------------------------------
 

@@ -1,22 +1,25 @@
 
-lazy val console = project
+lazy val cmdline = project.in(file("console"))
   .settings(
     name := "hs",
     libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.1",
-    mainClass in (Compile, run) := Some("learner.learn")
+    mainClass in (Compile, run) := Some("learner.learn"),
+   	mainClass in assembly := Some("learner.learn"),
+    assemblyOutputPath in assembly := file("./console.jar")
   )
 
 lazy val gui = project
   .settings(
   	mainClass in assembly := Some("sample.GUI"),
-  	assemblyJarName in assembly := "gui.jar",
+    assemblyOutputPath in assembly := file("./gui.jar"),
     unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
     )
-  .dependsOn(console)
+  .dependsOn(cmdline)
 
 fork in run := true
 
 lazy val root = project.in(file("."))
-  .dependsOn(gui, console)
+  .dependsOn(gui, cmdline)
 
-assemblyJarName in assembly := "main.jar"
+compile <<= (compile in Compile)
+  .dependsOn(assembly in gui, assembly in cmdline)
