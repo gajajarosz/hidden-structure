@@ -8,9 +8,9 @@ In order to run this code, you will need java and java runtime environment insta
 +Compile the main project (command: compile)
 +Set project to console (command: project console)
 +Compile project (command: compile)
-+Run project with arguments, see below for argument options (command: run arg1 arg2 arg3… etc)
-+Respond to the prompt that asks you which learner to use
++Run project with arguments, see below for argument options (command: run learner arg1 arg2 arg3… etc)
 
+The "learner" argument should be either "EDL" or "GLA".
 Both EDL and GLA are run using the learn.java program. The first four arguments for each are the same:
 
 GRAMMAR FILE

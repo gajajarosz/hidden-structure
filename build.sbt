@@ -2,7 +2,8 @@
 lazy val console = project
   .settings(
     name := "hs",
-    libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.1"
+    libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.1",
+    mainClass in (Compile, run) := Some("learner.learn")
   )
 
 lazy val gui = project
