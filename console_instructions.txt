@@ -122,7 +122,7 @@ MINI-EVAL
 
 MINI-EVAL_FREQ
 - How often a mini-evaluation round is performed
-- Default: 1
+- Default: 100
 - In order to not perform any intermediate evaluation, set to the same number as iterations
 
 MINI-EVAL_SAMPLE
