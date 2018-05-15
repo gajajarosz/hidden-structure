@@ -46,6 +46,10 @@ INITIAL BIAS
 - See FileFormats_instructions.txt for more info.
 - set this to 0 by default (by default are pairwise ranking probabilities are set to .5)
 
+LEARNING RATE
+- Learning rate, relevant only for Online EDL but currently must be specified for both learners
+- Set to .1 by default
+
 To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
 java -jar console.jar EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)

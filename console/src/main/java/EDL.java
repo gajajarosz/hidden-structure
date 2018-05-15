@@ -13,6 +13,7 @@ public class EDL {
 
     private static int gram_sample_size = 1;
     private static int iterations = 0;
+    public static double rate = .1;
     public static int final_eval = 0;
     public static int final_eval_sample = 1000;
     public static int mini_eval = 1;
@@ -53,24 +54,25 @@ public class EDL {
 	gram_sample_size = Integer.parseInt(args[5]);
 	writer.println("Setting initial bias to: " + args[6]);
 	int init_bias = Integer.parseInt(args[6]);
-	if (args.length > 13) {
-	    writer.println("Setting print_input? to: " + args[7]);
-	    print_input = Integer.parseInt(args[7]);
-	    writer.println("Setting final-eval to: " + args[8]);
-	    final_eval = Integer.parseInt(args[8]);
-	    writer.println("Setting mini-eval to: " + args[9]);
-	    mini_eval = Integer.parseInt(args[9]);
-	    writer.println("Setting mini-eval-freq to: " + args[10]);
-	    mini_eval_freq = Integer.parseInt(args[10]);
-	    writer.println("Setting mini-eval-sample to: " + args[11]);
-	    mini_eval_sample = Integer.parseInt(args[11]);
-	    writer.println("Setting quit_early? to: " + args[12]);
-	    quit_early = Integer.parseInt(args[12]);
-	    writer.println("Setting quit_early_sample? to: " + args[13]);
-	    quit_early_sample = Integer.parseInt(args[13]);
-	    if (args.length == 15){
-		writer.println("Setting max-depth to: " + args[14]);
-		maxdepth = Integer.parseInt(args[14]);
+	rate = Double.parseDouble(args[7]);
+	if (args.length > 14) {
+	    writer.println("Setting print_input? to: " + args[8]);
+	    print_input = Integer.parseInt(args[8]);
+	    writer.println("Setting final-eval to: " + args[9]);
+	    final_eval = Integer.parseInt(args[9]);
+	    writer.println("Setting mini-eval to: " + args[10]);
+	    mini_eval = Integer.parseInt(args[10]);
+	    writer.println("Setting mini-eval-freq to: " + args[11]);
+	    mini_eval_freq = Integer.parseInt(args[11]);
+	    writer.println("Setting mini-eval-sample to: " + args[12]);
+	    mini_eval_sample = Integer.parseInt(args[12]);
+	    writer.println("Setting quit_early? to: " + args[13]);
+	    quit_early = Integer.parseInt(args[13]);
+	    writer.println("Setting quit_early_sample? to: " + args[14]);
+	    quit_early_sample = Integer.parseInt(args[14]);
+	    if (args.length == 16){
+		writer.println("Setting max-depth to: " + args[15]);
+		maxdepth = Integer.parseInt(args[15]);
 	    }
 	}
 	writer.println("Finished parsing all the arguments");
@@ -251,7 +253,6 @@ public class EDL {
 	// sample a ranking
 	double[][] single = gr.generate_extension();
 	int i = 0;
-	double rate = .25;
 	// there are i iterations of sampling and updating
 	for (i = 0; i < iterations; i++) {
 	    if (i % mini_eval_freq == 0) {
