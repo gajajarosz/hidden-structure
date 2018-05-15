@@ -471,7 +471,7 @@ public class GUI extends Application {
                                                                 public void run() {
                                                                     actiontarget.setText("Writing results to file...");
                                                                     try {
-                                                                        String res = ta.getText();
+                                                                        String res = GLA.writer.getText();
                                                                         Files.write(
                                                                                 Paths.get(resName_),
                                                                                 res.getBytes(),

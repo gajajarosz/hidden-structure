@@ -7,15 +7,34 @@ import javafx.scene.control.TextArea;
 
 public class GuiWriter implements Writer {
         private TextArea text;
+        public StringBuilder builder;
+        String displayText;
 
         public GuiWriter(TextArea text) {
+            this.builder = new StringBuilder();
             this.text = text;
+            this.displayText = "";
         }
-        
+
+        public String getText() {
+            return builder.toString();
+        }
+
         public void println(Object line) {
             Platform.runLater(new Runnable() {
                 public void run() {
-                    text.appendText(line.toString()+"\n");
+                    builder.append(line.toString() + "\n");
+
+                    displayText = displayText + line.toString() + "\n";
+                    if (displayText.length() > 5000) {
+                        displayText = displayText.substring(displayText.length() - 5000);
+                    }
+                    text.setText(displayText);
+                    if (!text.isFocused()) {
+                        text.setScrollTop(Double.MAX_VALUE);
+                    }
+                    //text.setText(line.toString());
+//                     text.(line.toString()+"\n");
                 }
             });
         }

@@ -1,28 +1,16 @@
 Dev guide:
 
-Running from command line
+Packaging and running from command line
 --------------------------
 +The project currently uses the build tool SBT, which you'll need to install
 +To run the project, starting in the main directory, start SBT (command: sbt)
-+Compile the main project (command: compile)
-+Specify which project you are running, gui or console (command: project gui)
-+Compile project (command: compile)
-+Run project (command: run)
-+If running command line version, you will need to give the arguments in the run command (see console guide for description of arguments)
++Compile the project (command: compile). This creates two .JAR files gui.jar and console.jar.
++To run the console program, from the command-line run "java -jar console.jar". You will need to give
+ the arguments in the run command (see console guide for description of arguments
++To run the gui program, from the command-line run "java -jar gui.jar"
+
 +Note: if you don't have JAVA_HOME pointing to your java folder, then the css components won't load. 
  The gui will work, but it will look bad, and you will get a warning that resource "com/sun/javafx/scene/control/skin/modena/modena.css" was not found.
-
-Packaging
-----------
-To package the project as a jar:
-+Be in main project directory
-+Start SBT (command: sbt)
-+Compile project (command: compile)
-+Set project to gui (command: project gui)
-+Compile project (command: compile)
-+Package project using assembly plugin for SBT (command: assembly)
-+Project will be packaged into jar file in gui/target/scala-2.10
-+You can change the jar name in the gui project setting in the build.sbt file (edit assemblyJarName)
 
 Editing
 ----------
