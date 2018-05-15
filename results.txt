@@ -36164,3 +36164,1979 @@ Output [H1-H-H-H2-H] 0.94 correct - observed freq is 1
 Output [L1-L-L2-L-L2-L] 0.593 correct - observed freq is 1
 Output [L1-L-L2-L-L-L2-L] 0.266 correct - observed freq is 1
 ITERATION 10:: Total error is 7.070000000000001 and log likelihood is -8.5101017686093
+Opening grammar file: /Users/gajajarosz/hidden-structure/TS2000Grammar_secondary.txt...
+The following lines from the grammar file do not match the specified format and will be ignored: 
+>>>File type = "ooTextFile"
+>>>Object class = "OTGrammar 2"
+>>>
+>>><OptimalityTheory>
+>>>0 ! leak
+>>>
+>>>0 fixed rankings
+>>>
+Opening distribution file: /Users/gajajarosz/hidden-structure/TS1_Dist.txt...
+The following lines from the distribution file do not match the specified format and will be ignored: 
+>>>"ooTextFile"
+>>>PairDistribution
+Now parsing remaining arguments
+Setting iterations to: 10
+Setting Final Evaluation Sample Size to: 1000
+Setting learner to: 1
+Setting grammar sample size to: 100
+Setting initial bias to: 1
+Setting print_input? to: 0
+Setting final-eval to: 1
+Setting mini-eval to: 0
+Setting mini-eval-freq to: 1
+Setting mini-eval-sample to: 0
+Setting quit_early? to: 100
+Setting quit_early_sample? to: 100
+Setting max-depth to: 8
+Finished parsing all the arguments
+
+STARTING LEXICON:
+Surface Representation: [L1-L]	Underlying Representation: |L-L|	Frequency: 1
+Surface Representation: [L1-H]	Underlying Representation: |L-H|	Frequency: 1
+Surface Representation: [H1-L]	Underlying Representation: |H-L|	Frequency: 1
+Surface Representation: [H1-H]	Underlying Representation: |H-H|	Frequency: 1
+Surface Representation: [L1-L-L]	Underlying Representation: |L-L-L|	Frequency: 1
+Surface Representation: [L1-L-H]	Underlying Representation: |L-L-H|	Frequency: 1
+Surface Representation: [L1-H-L]	Underlying Representation: |L-H-L|	Frequency: 1
+Surface Representation: [L1-H-H]	Underlying Representation: |L-H-H|	Frequency: 1
+Surface Representation: [H1-L-L]	Underlying Representation: |H-L-L|	Frequency: 1
+Surface Representation: [H1-L-H]	Underlying Representation: |H-L-H|	Frequency: 1
+Surface Representation: [H1-H-L]	Underlying Representation: |H-H-L|	Frequency: 1
+Surface Representation: [H1-H-H]	Underlying Representation: |H-H-H|	Frequency: 1
+Surface Representation: [L1-L-L2-L]	Underlying Representation: |L-L-L-L|	Frequency: 1
+Surface Representation: [L1-L-L2-H]	Underlying Representation: |L-L-L-H|	Frequency: 1
+Surface Representation: [L1-L-H2-L]	Underlying Representation: |L-L-H-L|	Frequency: 1
+Surface Representation: [L1-L-H2-H]	Underlying Representation: |L-L-H-H|	Frequency: 1
+Surface Representation: [L1-H-L2-L]	Underlying Representation: |L-H-L-L|	Frequency: 1
+Surface Representation: [L1-H-L2-H]	Underlying Representation: |L-H-L-H|	Frequency: 1
+Surface Representation: [L1-H-H2-L]	Underlying Representation: |L-H-H-L|	Frequency: 1
+Surface Representation: [L1-H-H2-H]	Underlying Representation: |L-H-H-H|	Frequency: 1
+Surface Representation: [H1-L-L2-L]	Underlying Representation: |H-L-L-L|	Frequency: 1
+Surface Representation: [H1-L-L2-H]	Underlying Representation: |H-L-L-H|	Frequency: 1
+Surface Representation: [H1-L-H2-L]	Underlying Representation: |H-L-H-L|	Frequency: 1
+Surface Representation: [H1-L-H2-H]	Underlying Representation: |H-L-H-H|	Frequency: 1
+Surface Representation: [H1-H-L2-L]	Underlying Representation: |H-H-L-L|	Frequency: 1
+Surface Representation: [H1-H-L2-H]	Underlying Representation: |H-H-L-H|	Frequency: 1
+Surface Representation: [H1-H-H2-L]	Underlying Representation: |H-H-H-L|	Frequency: 1
+Surface Representation: [H1-H-H2-H]	Underlying Representation: |H-H-H-H|	Frequency: 1
+Surface Representation: [L1-L-L-L2-L]	Underlying Representation: |L-L-L-L-L|	Frequency: 1
+Surface Representation: [L1-L-L-L2-H]	Underlying Representation: |L-L-L-L-H|	Frequency: 1
+Surface Representation: [L1-L-L-H2-L]	Underlying Representation: |L-L-L-H-L|	Frequency: 1
+Surface Representation: [L1-L-L-H2-H]	Underlying Representation: |L-L-L-H-H|	Frequency: 1
+Surface Representation: [L1-L-H-L2-L]	Underlying Representation: |L-L-H-L-L|	Frequency: 1
+Surface Representation: [L1-L-H-L2-H]	Underlying Representation: |L-L-H-L-H|	Frequency: 1
+Surface Representation: [L1-L-H-H2-L]	Underlying Representation: |L-L-H-H-L|	Frequency: 1
+Surface Representation: [L1-L-H-H2-H]	Underlying Representation: |L-L-H-H-H|	Frequency: 1
+Surface Representation: [L1-H-L-L2-L]	Underlying Representation: |L-H-L-L-L|	Frequency: 1
+Surface Representation: [L1-H-L-L2-H]	Underlying Representation: |L-H-L-L-H|	Frequency: 1
+Surface Representation: [L1-H-L-H2-L]	Underlying Representation: |L-H-L-H-L|	Frequency: 1
+Surface Representation: [L1-H-L-H2-H]	Underlying Representation: |L-H-L-H-H|	Frequency: 1
+Surface Representation: [L1-H-H-L2-L]	Underlying Representation: |L-H-H-L-L|	Frequency: 1
+Surface Representation: [L1-H-H-L2-H]	Underlying Representation: |L-H-H-L-H|	Frequency: 1
+Surface Representation: [L1-H-H-H2-L]	Underlying Representation: |L-H-H-H-L|	Frequency: 1
+Surface Representation: [L1-H-H-H2-H]	Underlying Representation: |L-H-H-H-H|	Frequency: 1
+Surface Representation: [H1-L-L-L2-L]	Underlying Representation: |H-L-L-L-L|	Frequency: 1
+Surface Representation: [H1-L-L-L2-H]	Underlying Representation: |H-L-L-L-H|	Frequency: 1
+Surface Representation: [H1-L-L-H2-L]	Underlying Representation: |H-L-L-H-L|	Frequency: 1
+Surface Representation: [H1-L-L-H2-H]	Underlying Representation: |H-L-L-H-H|	Frequency: 1
+Surface Representation: [H1-L-H-L2-L]	Underlying Representation: |H-L-H-L-L|	Frequency: 1
+Surface Representation: [H1-L-H-L2-H]	Underlying Representation: |H-L-H-L-H|	Frequency: 1
+Surface Representation: [H1-L-H-H2-L]	Underlying Representation: |H-L-H-H-L|	Frequency: 1
+Surface Representation: [H1-L-H-H2-H]	Underlying Representation: |H-L-H-H-H|	Frequency: 1
+Surface Representation: [H1-H-L-L2-L]	Underlying Representation: |H-H-L-L-L|	Frequency: 1
+Surface Representation: [H1-H-L-L2-H]	Underlying Representation: |H-H-L-L-H|	Frequency: 1
+Surface Representation: [H1-H-L-H2-L]	Underlying Representation: |H-H-L-H-L|	Frequency: 1
+Surface Representation: [H1-H-L-H2-H]	Underlying Representation: |H-H-L-H-H|	Frequency: 1
+Surface Representation: [H1-H-H-L2-L]	Underlying Representation: |H-H-H-L-L|	Frequency: 1
+Surface Representation: [H1-H-H-L2-H]	Underlying Representation: |H-H-H-L-H|	Frequency: 1
+Surface Representation: [H1-H-H-H2-L]	Underlying Representation: |H-H-H-H-L|	Frequency: 1
+Surface Representation: [H1-H-H-H2-H]	Underlying Representation: |H-H-H-H-H|	Frequency: 1
+Surface Representation: [L1-L-L2-L-L2-L]	Underlying Representation: |L-L-L-L-L-L|	Frequency: 1
+Surface Representation: [L1-L-L2-L-L-L2-L]	Underlying Representation: |L-L-L-L-L-L-L|	Frequency: 1
+
+
+STARTING GRAMMAR:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50 
+FtNnf 0.90        0.50  0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90 
+Iambi 0.90  0.50        0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90 
+Parse 0.50  0.10  0.10        0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50 
+FtBin 0.50  0.10  0.10  0.50        0.50  0.50  0.50  0.50  0.50  0.50  0.50 
+WFL__ 0.50  0.10  0.10  0.50  0.50        0.50  0.50  0.50  0.50  0.50  0.50 
+WFR__ 0.50  0.10  0.10  0.50  0.50  0.50        0.50  0.50  0.50  0.50  0.50 
+MainL 0.50  0.10  0.10  0.50  0.50  0.50  0.50        0.50  0.50  0.50  0.50 
+MainR 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50        0.50  0.50  0.50 
+AFL__ 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50        0.50  0.50 
+AFR__ 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50  0.50        0.50 
+Nonfn 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50       
+
+
+VIOLATION VECTORS FOR THE FIRST TABLEAU:
+[0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+[0, 2, 0, 0, 2, 0, 0, 0, 1, 1, 1, 1]
+[0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1]
+[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+[0, 2, 0, 0, 2, 0, 0, 1, 0, 1, 1, 1]
+Starting iteration 0
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.03  0.73  0.34  0.50  0.38  0.46  0.41  0.87  0.70  0.27  0.90 
+FtNnf 0.97        0.96  0.89  0.93  0.80  0.97  0.93  0.98  0.95  0.92  0.94 
+Iambi 0.27  0.04        0.60  0.86  0.77  0.46  0.49  0.77  0.85  0.54  0.23 
+Parse 0.66  0.11  0.40        0.32  0.56  0.72  0.28  0.63  0.65  0.46  0.74 
+FtBin 0.50  0.07  0.14  0.68        0.41  0.52  0.54  0.20  0.66  0.71  0.45 
+WFL__ 0.62  0.20  0.23  0.44  0.59        0.43  0.32  0.55  0.56  0.50  0.52 
+WFR__ 0.54  0.03  0.54  0.28  0.48  0.57        0.48  0.76  0.76  0.76  0.66 
+MainL 0.59  0.07  0.51  0.72  0.46  0.68  0.52        0.92  0.88  0.76  0.73 
+MainR 0.13  0.02  0.23  0.37  0.80  0.45  0.24  0.08        0.51  0.54  0.40 
+AFL__ 0.30  0.05  0.15  0.35  0.34  0.44  0.24  0.12  0.49        0.55  0.73 
+AFR__ 0.73  0.08  0.46  0.54  0.29  0.50  0.24  0.24  0.46  0.45        0.29 
+Nonfn 0.10  0.06  0.77  0.26  0.55  0.48  0.34  0.27  0.60  0.27  0.71       
+
+Output [L1-L] 0.95 correct - observed freq is 1
+Output [L1-H] 0.91 correct - observed freq is 1
+Output [H1-L] 0.97 correct - observed freq is 1
+Output [H1-H] 0.92 correct - observed freq is 1
+Output [L1-L-L] 0.51 correct - observed freq is 1
+Output [L1-L-H] 0.52 correct - observed freq is 1
+Output [L1-H-L] 0.59 correct - observed freq is 1
+Output [L1-H-H] 0.4 correct - observed freq is 1
+Output [H1-L-L] 0.51 correct - observed freq is 1
+Output [H1-L-H] 0.62 correct - observed freq is 1
+Output [H1-H-L] 0.52 correct - observed freq is 1
+Output [H1-H-H] 0.51 correct - observed freq is 1
+Output [L1-L-L2-L] 0.41 correct - observed freq is 1
+Output [L1-L-L2-H] 0.44 correct - observed freq is 1
+Output [L1-L-H2-L] 0.36 correct - observed freq is 1
+Output [L1-L-H2-H] 0.34 correct - observed freq is 1
+Output [L1-H-L2-L] 0.3 correct - observed freq is 1
+Output [L1-H-L2-H] 0.29 correct - observed freq is 1
+Output [L1-H-H2-L] 0.38 correct - observed freq is 1
+Output [L1-H-H2-H] 0.41 correct - observed freq is 1
+Output [H1-L-L2-L] 0.35 correct - observed freq is 1
+Output [H1-L-L2-H] 0.29 correct - observed freq is 1
+Output [H1-L-H2-L] 0.44 correct - observed freq is 1
+Output [H1-L-H2-H] 0.37 correct - observed freq is 1
+Output [H1-H-L2-L] 0.29 correct - observed freq is 1
+Output [H1-H-L2-H] 0.32 correct - observed freq is 1
+Output [H1-H-H2-L] 0.45 correct - observed freq is 1
+Output [H1-H-H2-H] 0.38 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.25 correct - observed freq is 1
+Output [L1-L-L-L2-H] 0.25 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.27 correct - observed freq is 1
+Output [L1-L-L-H2-H] 0.27 correct - observed freq is 1
+Output [L1-L-H-L2-L] 0.15 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.17 correct - observed freq is 1
+Output [L1-L-H-H2-L] 0.25 correct - observed freq is 1
+Output [L1-L-H-H2-H] 0.29 correct - observed freq is 1
+Output [L1-H-L-L2-L] 0.16 correct - observed freq is 1
+Output [L1-H-L-L2-H] 0.21 correct - observed freq is 1
+Output [L1-H-L-H2-L] 0.36 correct - observed freq is 1
+Output [L1-H-L-H2-H] 0.25 correct - observed freq is 1
+Output [L1-H-H-L2-L] 0.13 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.21 correct - observed freq is 1
+Output [L1-H-H-H2-L] 0.12 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.14 correct - observed freq is 1
+Output [H1-L-L-L2-L] 0.22 correct - observed freq is 1
+Output [H1-L-L-L2-H] 0.16 correct - observed freq is 1
+Output [H1-L-L-H2-L] 0.39 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.38 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.14 correct - observed freq is 1
+Output [H1-L-H-L2-H] 0.23 correct - observed freq is 1
+Output [H1-L-H-H2-L] 0.22 correct - observed freq is 1
+Output [H1-L-H-H2-H] 0.31 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.19 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.24 correct - observed freq is 1
+Output [H1-H-L-H2-L] 0.32 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.36 correct - observed freq is 1
+Output [H1-H-H-L2-L] 0.21 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.12 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.19 correct - observed freq is 1
+Output [H1-H-H-H2-H] 0.29 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.27 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.06 correct - observed freq is 1
+ITERATION 0:: Total error is 40.47 and log likelihood is -74.37080552629398
+Starting iteration 1
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.01  0.78  0.30  0.45  0.45  0.36  0.31  0.91  0.73  0.28  0.86 
+FtNnf 0.99        1.00  0.95  0.96  0.86  0.98  0.93  1.00  0.98  0.96  0.98 
+Iambi 0.22  0.00        0.46  0.86  0.68  0.28  0.24  0.77  0.83  0.45  0.20 
+Parse 0.70  0.05  0.54        0.45  0.51  0.71  0.28  0.77  0.70  0.43  0.81 
+FtBin 0.55  0.04  0.14  0.55        0.45  0.32  0.49  0.19  0.75  0.81  0.56 
+WFL__ 0.55  0.14  0.32  0.49  0.55        0.42  0.24  0.60  0.60  0.57  0.54 
+WFR__ 0.64  0.02  0.72  0.29  0.68  0.58        0.45  0.87  0.86  0.82  0.76 
+MainL 0.69  0.07  0.76  0.72  0.51  0.76  0.55        0.99  0.91  0.89  0.84 
+MainR 0.09  0.00  0.23  0.23  0.81  0.40  0.13  0.01        0.50  0.52  0.41 
+AFL__ 0.27  0.02  0.17  0.30  0.25  0.40  0.14  0.09  0.50        0.57  0.77 
+AFR__ 0.72  0.04  0.55  0.57  0.19  0.43  0.18  0.11  0.48  0.43        0.27 
+Nonfn 0.14  0.02  0.80  0.19  0.44  0.46  0.24  0.16  0.59  0.23  0.73       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 1:: Total error is NaN and log likelihood is NaN
+Starting iteration 2
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.84  0.27  0.45  0.46  0.32  0.22  0.90  0.73  0.27  0.85 
+FtNnf 1.00        1.00  0.98  0.98  0.90  0.98  0.93  1.00  0.99  0.98  0.99 
+Iambi 0.16  0.00        0.36  0.84  0.61  0.17  0.13  0.77  0.80  0.39  0.17 
+Parse 0.73  0.02  0.64        0.47  0.49  0.66  0.23  0.82  0.75  0.50  0.86 
+FtBin 0.55  0.02  0.16  0.53        0.40  0.25  0.38  0.21  0.77  0.83  0.64 
+WFL__ 0.54  0.10  0.39  0.51  0.60        0.35  0.20  0.61  0.64  0.59  0.61 
+WFR__ 0.68  0.02  0.83  0.34  0.75  0.65        0.42  0.92  0.91  0.88  0.86 
+MainL 0.78  0.07  0.87  0.77  0.62  0.80  0.58        1.00  0.95  0.96  0.91 
+MainR 0.10  0.00  0.23  0.18  0.79  0.39  0.08  0.00        0.51  0.56  0.43 
+AFL__ 0.27  0.01  0.20  0.25  0.23  0.36  0.09  0.05  0.49        0.54  0.76 
+AFR__ 0.73  0.02  0.61  0.50  0.17  0.41  0.12  0.04  0.44  0.46        0.29 
+Nonfn 0.15  0.01  0.83  0.14  0.36  0.39  0.14  0.09  0.57  0.24  0.71       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 2:: Total error is NaN and log likelihood is NaN
+Starting iteration 3
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.85  0.26  0.47  0.43  0.24  0.17  0.91  0.76  0.29  0.85 
+FtNnf 1.00        1.00  0.99  0.99  0.94  0.99  0.93  1.00  1.00  0.99  1.00 
+Iambi 0.15  0.00        0.29  0.83  0.56  0.10  0.07  0.76  0.80  0.38  0.18 
+Parse 0.74  0.01  0.71        0.49  0.52  0.61  0.22  0.84  0.78  0.54  0.89 
+FtBin 0.53  0.01  0.17  0.51        0.40  0.20  0.30  0.24  0.78  0.85  0.67 
+WFL__ 0.57  0.06  0.44  0.48  0.60        0.35  0.17  0.62  0.65  0.61  0.65 
+WFR__ 0.76  0.01  0.90  0.39  0.80  0.65        0.39  0.95  0.95  0.93  0.91 
+MainL 0.83  0.07  0.93  0.78  0.70  0.83  0.61        1.00  0.97  0.98  0.95 
+MainR 0.09  0.00  0.24  0.16  0.76  0.38  0.05  0.00        0.50  0.54  0.46 
+AFL__ 0.24  0.00  0.20  0.22  0.22  0.35  0.05  0.03  0.50        0.53  0.76 
+AFR__ 0.71  0.01  0.62  0.46  0.15  0.39  0.07  0.02  0.46  0.47        0.32 
+Nonfn 0.15  0.00  0.82  0.11  0.33  0.35  0.09  0.05  0.54  0.24  0.68       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 3:: Total error is NaN and log likelihood is NaN
+Starting iteration 4
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.86  0.25  0.49  0.42  0.20  0.13  0.91  0.77  0.31  0.87 
+FtNnf 1.00        1.00  1.00  0.99  0.96  0.99  0.94  1.00  1.00  1.00  1.00 
+Iambi 0.14  0.00        0.24  0.81  0.55  0.07  0.03  0.75  0.79  0.41  0.16 
+Parse 0.75  0.00  0.76        0.54  0.51  0.60  0.20  0.85  0.81  0.60  0.91 
+FtBin 0.51  0.01  0.19  0.46        0.41  0.15  0.24  0.28  0.78  0.85  0.71 
+WFL__ 0.58  0.04  0.45  0.49  0.59        0.31  0.13  0.62  0.64  0.60  0.64 
+WFR__ 0.80  0.01  0.93  0.40  0.85  0.69        0.36  0.96  0.97  0.95  0.95 
+MainL 0.87  0.06  0.97  0.80  0.76  0.87  0.64        1.00  0.98  0.99  0.97 
+MainR 0.09  0.00  0.25  0.15  0.72  0.38  0.04  0.00        0.51  0.56  0.46 
+AFL__ 0.23  0.00  0.21  0.19  0.22  0.36  0.03  0.02  0.49        0.55  0.76 
+AFR__ 0.69  0.00  0.59  0.40  0.15  0.40  0.05  0.01  0.44  0.45        0.34 
+Nonfn 0.13  0.00  0.84  0.09  0.29  0.36  0.05  0.03  0.54  0.24  0.66       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 4:: Total error is NaN and log likelihood is NaN
+Starting iteration 5
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.86  0.24  0.46  0.41  0.16  0.09  0.92  0.77  0.34  0.88 
+FtNnf 1.00        1.00  1.00  1.00  0.98  0.99  0.94  1.00  1.00  1.00  1.00 
+Iambi 0.14  0.00        0.19  0.79  0.52  0.05  0.01  0.76  0.78  0.41  0.16 
+Parse 0.76  0.00  0.81        0.57  0.51  0.58  0.16  0.86  0.84  0.65  0.92 
+FtBin 0.54  0.00  0.21  0.43        0.38  0.13  0.18  0.29  0.80  0.87  0.73 
+WFL__ 0.59  0.02  0.48  0.49  0.62        0.28  0.08  0.65  0.66  0.60  0.65 
+WFR__ 0.84  0.01  0.95  0.42  0.87  0.72        0.33  0.98  0.98  0.96  0.97 
+MainL 0.91  0.06  0.99  0.84  0.82  0.92  0.67        1.00  0.99  1.00  0.98 
+MainR 0.08  0.00  0.24  0.14  0.71  0.35  0.02  0.00        0.50  0.54  0.46 
+AFL__ 0.23  0.00  0.22  0.16  0.20  0.34  0.02  0.01  0.50        0.53  0.78 
+AFR__ 0.66  0.00  0.59  0.35  0.13  0.40  0.04  0.00  0.46  0.47        0.35 
+Nonfn 0.12  0.00  0.84  0.08  0.27  0.35  0.03  0.02  0.54  0.22  0.65       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 5:: Total error is NaN and log likelihood is NaN
+Starting iteration 6
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.87  0.22  0.47  0.41  0.13  0.06  0.92  0.77  0.35  0.87 
+FtNnf 1.00        1.00  1.00  1.00  0.99  0.99  0.95  1.00  1.00  1.00  1.00 
+Iambi 0.13  0.00        0.17  0.78  0.51  0.03  0.01  0.76  0.77  0.41  0.15 
+Parse 0.78  0.00  0.83        0.58  0.53  0.53  0.14  0.87  0.88  0.69  0.94 
+FtBin 0.53  0.00  0.22  0.42        0.37  0.12  0.13  0.30  0.82  0.88  0.75 
+WFL__ 0.59  0.01  0.49  0.47  0.63        0.24  0.06  0.67  0.68  0.63  0.67 
+WFR__ 0.87  0.01  0.97  0.47  0.88  0.76        0.30  0.98  0.99  0.97  0.98 
+MainL 0.94  0.05  0.99  0.86  0.87  0.94  0.70        1.00  1.00  1.00  0.99 
+MainR 0.08  0.00  0.24  0.13  0.70  0.33  0.02  0.00        0.50  0.55  0.47 
+AFL__ 0.23  0.00  0.23  0.12  0.18  0.32  0.01  0.00  0.50        0.53  0.78 
+AFR__ 0.65  0.00  0.59  0.31  0.12  0.37  0.03  0.00  0.45  0.47        0.36 
+Nonfn 0.13  0.00  0.85  0.06  0.25  0.33  0.02  0.01  0.53  0.22  0.64       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 6:: Total error is NaN and log likelihood is NaN
+Starting iteration 7
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.86  0.21  0.49  0.40  0.12  0.04  0.92  0.78  0.36  0.87 
+FtNnf 1.00        1.00  1.00  1.00  0.99  0.99  0.95  1.00  1.00  1.00  1.00 
+Iambi 0.14  0.00        0.15  0.76  0.49  0.02  0.00  0.75  0.77  0.40  0.15 
+Parse 0.79  0.00  0.85        0.58  0.52  0.47  0.11  0.88  0.89  0.71  0.95 
+FtBin 0.51  0.00  0.24  0.42        0.37  0.11  0.09  0.30  0.84  0.88  0.74 
+WFL__ 0.60  0.01  0.51  0.48  0.63        0.20  0.05  0.67  0.68  0.63  0.68 
+WFR__ 0.88  0.01  0.98  0.53  0.89  0.80        0.27  0.99  1.00  0.98  0.99 
+MainL 0.96  0.05  1.00  0.89  0.91  0.95  0.73        1.00  1.00  1.00  1.00 
+MainR 0.08  0.00  0.25  0.12  0.70  0.33  0.01  0.00        0.49  0.57  0.49 
+AFL__ 0.22  0.00  0.23  0.11  0.16  0.32  0.00  0.00  0.51        0.52  0.79 
+AFR__ 0.64  0.00  0.60  0.29  0.12  0.37  0.02  0.00  0.43  0.48        0.36 
+Nonfn 0.13  0.00  0.85  0.05  0.26  0.32  0.01  0.00  0.51  0.21  0.64       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 7:: Total error is NaN and log likelihood is NaN
+Starting iteration 8
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.87  0.21  0.48  0.39  0.09  0.03  0.92  0.79  0.35  0.87 
+FtNnf 1.00        1.00  1.00  1.00  0.99  1.00  0.95  1.00  1.00  1.00  1.00 
+Iambi 0.13  0.00        0.12  0.75  0.48  0.01  0.00  0.75  0.76  0.40  0.15 
+Parse 0.79  0.00  0.88        0.58  0.53  0.44  0.10  0.89  0.90  0.74  0.95 
+FtBin 0.52  0.00  0.25  0.42        0.37  0.09  0.06  0.29  0.85  0.88  0.75 
+WFL__ 0.61  0.01  0.52  0.47  0.63        0.17  0.04  0.68  0.69  0.64  0.69 
+WFR__ 0.91  0.00  0.99  0.56  0.91  0.83        0.24  0.99  1.00  0.99  1.00 
+MainL 0.97  0.05  1.00  0.90  0.94  0.96  0.76        1.00  1.00  1.00  1.00 
+MainR 0.08  0.00  0.25  0.11  0.71  0.32  0.01  0.00        0.49  0.58  0.51 
+AFL__ 0.21  0.00  0.24  0.10  0.15  0.31  0.00  0.00  0.51        0.52  0.79 
+AFR__ 0.65  0.00  0.60  0.26  0.12  0.36  0.01  0.00  0.42  0.48        0.36 
+Nonfn 0.13  0.00  0.85  0.05  0.25  0.31  0.00  0.00  0.49  0.21  0.64       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 8:: Total error is NaN and log likelihood is NaN
+Starting iteration 9
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.87  0.20  0.48  0.39  0.08  0.02  0.92  0.78  0.35  0.88 
+FtNnf 1.00        1     1.00  1.00  1.00  1.00  0.95  1.00  1.00  1.00  1.00 
+Iambi 0.13  0           0.10  0.74  0.47  0.01  0.00  0.74  0.75  0.40  0.15 
+Parse 0.80  0.00  0.90        0.59  0.54  0.42  0.08  0.90  0.91  0.75  0.96 
+FtBin 0.52  0.00  0.26  0.41        0.37  0.08  0.04  0.30  0.85  0.89  0.75 
+WFL__ 0.61  0.00  0.53  0.46  0.63        0.15  0.02  0.67  0.70  0.65  0.70 
+WFR__ 0.92  0.00  0.99  0.58  0.92  0.85        0.21  0.99  1.00  0.99  1.00 
+MainL 0.98  0.05  1.00  0.92  0.96  0.98  0.79        1.00  1.00  1.00  1.00 
+MainR 0.08  0.00  0.26  0.10  0.70  0.33  0.01  0.00        0.48  0.59  0.51 
+AFL__ 0.22  0.00  0.25  0.09  0.15  0.30  0.00  0.00  0.52        0.53  0.80 
+AFR__ 0.65  0.00  0.60  0.25  0.11  0.35  0.01  0.00  0.41  0.47        0.36 
+Nonfn 0.12  0.00  0.85  0.04  0.25  0.30  0.00  0.00  0.49  0.20  0.64       
+
+Output [L1-L] NaN correct - observed freq is 1
+Output [L1-H] NaN correct - observed freq is 1
+Output [H1-L] NaN correct - observed freq is 1
+Output [H1-H] NaN correct - observed freq is 1
+Output [L1-L-L] NaN correct - observed freq is 1
+Output [L1-L-H] NaN correct - observed freq is 1
+Output [L1-H-L] NaN correct - observed freq is 1
+Output [L1-H-H] NaN correct - observed freq is 1
+Output [H1-L-L] NaN correct - observed freq is 1
+Output [H1-L-H] NaN correct - observed freq is 1
+Output [H1-H-L] NaN correct - observed freq is 1
+Output [H1-H-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L-L2-H] NaN correct - observed freq is 1
+Output [L1-L-L-H2-L] NaN correct - observed freq is 1
+Output [L1-L-L-H2-H] NaN correct - observed freq is 1
+Output [L1-L-H-L2-L] NaN correct - observed freq is 1
+Output [L1-L-H-L2-H] NaN correct - observed freq is 1
+Output [L1-L-H-H2-L] NaN correct - observed freq is 1
+Output [L1-L-H-H2-H] NaN correct - observed freq is 1
+Output [L1-H-L-L2-L] NaN correct - observed freq is 1
+Output [L1-H-L-L2-H] NaN correct - observed freq is 1
+Output [L1-H-L-H2-L] NaN correct - observed freq is 1
+Output [L1-H-L-H2-H] NaN correct - observed freq is 1
+Output [L1-H-H-L2-L] NaN correct - observed freq is 1
+Output [L1-H-H-L2-H] NaN correct - observed freq is 1
+Output [L1-H-H-H2-L] NaN correct - observed freq is 1
+Output [L1-H-H-H2-H] NaN correct - observed freq is 1
+Output [H1-L-L-L2-L] NaN correct - observed freq is 1
+Output [H1-L-L-L2-H] NaN correct - observed freq is 1
+Output [H1-L-L-H2-L] NaN correct - observed freq is 1
+Output [H1-L-L-H2-H] NaN correct - observed freq is 1
+Output [H1-L-H-L2-L] NaN correct - observed freq is 1
+Output [H1-L-H-L2-H] NaN correct - observed freq is 1
+Output [H1-L-H-H2-L] NaN correct - observed freq is 1
+Output [H1-L-H-H2-H] NaN correct - observed freq is 1
+Output [H1-H-L-L2-L] NaN correct - observed freq is 1
+Output [H1-H-L-L2-H] NaN correct - observed freq is 1
+Output [H1-H-L-H2-L] NaN correct - observed freq is 1
+Output [H1-H-L-H2-H] NaN correct - observed freq is 1
+Output [H1-H-H-L2-L] NaN correct - observed freq is 1
+Output [H1-H-H-L2-H] NaN correct - observed freq is 1
+Output [H1-H-H-H2-L] NaN correct - observed freq is 1
+Output [H1-H-H-H2-H] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] NaN correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] NaN correct - observed freq is 1
+ITERATION 9:: Total error is NaN and log likelihood is NaN
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.87  0.20  0.48  0.39  0.08  0.02  0.92  0.78  0.35  0.88 
+FtNnf 1.00        1     1.00  1.00  1.00  1.00  0.95  1.00  1.00  1.00  1.00 
+Iambi 0.13  0           0.10  0.74  0.47  0.01  0.00  0.74  0.75  0.40  0.15 
+Parse 0.80  0.00  0.90        0.59  0.54  0.42  0.08  0.90  0.91  0.75  0.96 
+FtBin 0.52  0.00  0.26  0.41        0.37  0.08  0.04  0.30  0.85  0.89  0.75 
+WFL__ 0.61  0.00  0.53  0.46  0.63        0.15  0.02  0.67  0.70  0.65  0.70 
+WFR__ 0.92  0.00  0.99  0.58  0.92  0.85        0.21  0.99  1.00  0.99  1.00 
+MainL 0.98  0.05  1.00  0.92  0.96  0.98  0.79        1.00  1.00  1.00  1.00 
+MainR 0.08  0.00  0.26  0.10  0.70  0.33  0.01  0.00        0.48  0.59  0.51 
+AFL__ 0.22  0.00  0.25  0.09  0.15  0.30  0.00  0.00  0.52        0.53  0.80 
+AFR__ 0.65  0.00  0.60  0.25  0.11  0.35  0.01  0.00  0.41  0.47        0.36 
+Nonfn 0.12  0.00  0.85  0.04  0.25  0.30  0.00  0.00  0.49  0.20  0.64       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 0.999 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 0.825 correct - observed freq is 1
+Output [L1-L-H] 0.806 correct - observed freq is 1
+Output [L1-H-L] 0.809 correct - observed freq is 1
+Output [L1-H-H] 0.797 correct - observed freq is 1
+Output [H1-L-L] 0.815 correct - observed freq is 1
+Output [H1-L-H] 0.807 correct - observed freq is 1
+Output [H1-H-L] 0.793 correct - observed freq is 1
+Output [H1-H-H] 0.811 correct - observed freq is 1
+Output [L1-L-L2-L] 0.961 correct - observed freq is 1
+Output [L1-L-L2-H] 0.958 correct - observed freq is 1
+Output [L1-L-H2-L] 0.963 correct - observed freq is 1
+Output [L1-L-H2-H] 0.959 correct - observed freq is 1
+Output [L1-H-L2-L] 0.966 correct - observed freq is 1
+Output [L1-H-L2-H] 0.943 correct - observed freq is 1
+Output [L1-H-H2-L] 0.963 correct - observed freq is 1
+Output [L1-H-H2-H] 0.947 correct - observed freq is 1
+Output [H1-L-L2-L] 0.945 correct - observed freq is 1
+Output [H1-L-L2-H] 0.951 correct - observed freq is 1
+Output [H1-L-H2-L] 0.951 correct - observed freq is 1
+Output [H1-L-H2-H] 0.96 correct - observed freq is 1
+Output [H1-H-L2-L] 0.954 correct - observed freq is 1
+Output [H1-H-L2-H] 0.959 correct - observed freq is 1
+Output [H1-H-H2-L] 0.959 correct - observed freq is 1
+Output [H1-H-H2-H] 0.957 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.94 correct - observed freq is 1
+Output [L1-L-L-L2-H] 0.932 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.956 correct - observed freq is 1
+Output [L1-L-L-H2-H] 0.953 correct - observed freq is 1
+Output [L1-L-H-L2-L] 0.888 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.903 correct - observed freq is 1
+Output [L1-L-H-H2-L] 0.945 correct - observed freq is 1
+Output [L1-L-H-H2-H] 0.925 correct - observed freq is 1
+Output [L1-H-L-L2-L] 0.918 correct - observed freq is 1
+Output [L1-H-L-L2-H] 0.924 correct - observed freq is 1
+Output [L1-H-L-H2-L] 0.944 correct - observed freq is 1
+Output [L1-H-L-H2-H] 0.95 correct - observed freq is 1
+Output [L1-H-H-L2-L] 0.859 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.904 correct - observed freq is 1
+Output [L1-H-H-H2-L] 0.924 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.923 correct - observed freq is 1
+Output [H1-L-L-L2-L] 0.942 correct - observed freq is 1
+Output [H1-L-L-L2-H] 0.945 correct - observed freq is 1
+Output [H1-L-L-H2-L] 0.959 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.938 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.879 correct - observed freq is 1
+Output [H1-L-H-L2-H] 0.885 correct - observed freq is 1
+Output [H1-L-H-H2-L] 0.942 correct - observed freq is 1
+Output [H1-L-H-H2-H] 0.943 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.943 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.926 correct - observed freq is 1
+Output [H1-H-L-H2-L] 0.955 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.959 correct - observed freq is 1
+Output [H1-H-H-L2-L] 0.887 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.89 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.927 correct - observed freq is 1
+Output [H1-H-H-H2-H] 0.962 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.702 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.354 correct - observed freq is 1
+ITERATION 10:: Total error is 5.516000000000002 and log likelihood is -6.253559409622024
+ITERATION 10:: Total error is 5.516000000000002 and log likelihood is -6.253559409622024
+Opening grammar file: /Users/gajajarosz/hidden-structure/TS2000Grammar_secondary.txt...
+The following lines from the grammar file do not match the specified format and will be ignored: 
+>>>File type = "ooTextFile"
+>>>Object class = "OTGrammar 2"
+>>>
+>>><OptimalityTheory>
+>>>0 ! leak
+>>>
+>>>0 fixed rankings
+>>>
+Opening distribution file: /Users/gajajarosz/hidden-structure/TS1_Dist.txt...
+The following lines from the distribution file do not match the specified format and will be ignored: 
+>>>"ooTextFile"
+>>>PairDistribution
+Now parsing remaining arguments
+Setting iterations to: 10
+Setting Final Evaluation Sample Size to: 1000
+Setting learner to: 1
+Setting grammar sample size to: 100
+Setting initial bias to: 1
+Setting print_input? to: 0
+Setting final-eval to: 1
+Setting mini-eval to: 0
+Setting mini-eval-freq to: 1
+Setting mini-eval-sample to: 1
+Setting quit_early? to: 100
+Setting quit_early_sample? to: 100
+Setting max-depth to: 8
+Finished parsing all the arguments
+
+STARTING LEXICON:
+Surface Representation: [L1-L]	Underlying Representation: |L-L|	Frequency: 1
+Surface Representation: [L1-H]	Underlying Representation: |L-H|	Frequency: 1
+Surface Representation: [H1-L]	Underlying Representation: |H-L|	Frequency: 1
+Surface Representation: [H1-H]	Underlying Representation: |H-H|	Frequency: 1
+Surface Representation: [L1-L-L]	Underlying Representation: |L-L-L|	Frequency: 1
+Surface Representation: [L1-L-H]	Underlying Representation: |L-L-H|	Frequency: 1
+Surface Representation: [L1-H-L]	Underlying Representation: |L-H-L|	Frequency: 1
+Surface Representation: [L1-H-H]	Underlying Representation: |L-H-H|	Frequency: 1
+Surface Representation: [H1-L-L]	Underlying Representation: |H-L-L|	Frequency: 1
+Surface Representation: [H1-L-H]	Underlying Representation: |H-L-H|	Frequency: 1
+Surface Representation: [H1-H-L]	Underlying Representation: |H-H-L|	Frequency: 1
+Surface Representation: [H1-H-H]	Underlying Representation: |H-H-H|	Frequency: 1
+Surface Representation: [L1-L-L2-L]	Underlying Representation: |L-L-L-L|	Frequency: 1
+Surface Representation: [L1-L-L2-H]	Underlying Representation: |L-L-L-H|	Frequency: 1
+Surface Representation: [L1-L-H2-L]	Underlying Representation: |L-L-H-L|	Frequency: 1
+Surface Representation: [L1-L-H2-H]	Underlying Representation: |L-L-H-H|	Frequency: 1
+Surface Representation: [L1-H-L2-L]	Underlying Representation: |L-H-L-L|	Frequency: 1
+Surface Representation: [L1-H-L2-H]	Underlying Representation: |L-H-L-H|	Frequency: 1
+Surface Representation: [L1-H-H2-L]	Underlying Representation: |L-H-H-L|	Frequency: 1
+Surface Representation: [L1-H-H2-H]	Underlying Representation: |L-H-H-H|	Frequency: 1
+Surface Representation: [H1-L-L2-L]	Underlying Representation: |H-L-L-L|	Frequency: 1
+Surface Representation: [H1-L-L2-H]	Underlying Representation: |H-L-L-H|	Frequency: 1
+Surface Representation: [H1-L-H2-L]	Underlying Representation: |H-L-H-L|	Frequency: 1
+Surface Representation: [H1-L-H2-H]	Underlying Representation: |H-L-H-H|	Frequency: 1
+Surface Representation: [H1-H-L2-L]	Underlying Representation: |H-H-L-L|	Frequency: 1
+Surface Representation: [H1-H-L2-H]	Underlying Representation: |H-H-L-H|	Frequency: 1
+Surface Representation: [H1-H-H2-L]	Underlying Representation: |H-H-H-L|	Frequency: 1
+Surface Representation: [H1-H-H2-H]	Underlying Representation: |H-H-H-H|	Frequency: 1
+Surface Representation: [L1-L-L-L2-L]	Underlying Representation: |L-L-L-L-L|	Frequency: 1
+Surface Representation: [L1-L-L-L2-H]	Underlying Representation: |L-L-L-L-H|	Frequency: 1
+Surface Representation: [L1-L-L-H2-L]	Underlying Representation: |L-L-L-H-L|	Frequency: 1
+Surface Representation: [L1-L-L-H2-H]	Underlying Representation: |L-L-L-H-H|	Frequency: 1
+Surface Representation: [L1-L-H-L2-L]	Underlying Representation: |L-L-H-L-L|	Frequency: 1
+Surface Representation: [L1-L-H-L2-H]	Underlying Representation: |L-L-H-L-H|	Frequency: 1
+Surface Representation: [L1-L-H-H2-L]	Underlying Representation: |L-L-H-H-L|	Frequency: 1
+Surface Representation: [L1-L-H-H2-H]	Underlying Representation: |L-L-H-H-H|	Frequency: 1
+Surface Representation: [L1-H-L-L2-L]	Underlying Representation: |L-H-L-L-L|	Frequency: 1
+Surface Representation: [L1-H-L-L2-H]	Underlying Representation: |L-H-L-L-H|	Frequency: 1
+Surface Representation: [L1-H-L-H2-L]	Underlying Representation: |L-H-L-H-L|	Frequency: 1
+Surface Representation: [L1-H-L-H2-H]	Underlying Representation: |L-H-L-H-H|	Frequency: 1
+Surface Representation: [L1-H-H-L2-L]	Underlying Representation: |L-H-H-L-L|	Frequency: 1
+Surface Representation: [L1-H-H-L2-H]	Underlying Representation: |L-H-H-L-H|	Frequency: 1
+Surface Representation: [L1-H-H-H2-L]	Underlying Representation: |L-H-H-H-L|	Frequency: 1
+Surface Representation: [L1-H-H-H2-H]	Underlying Representation: |L-H-H-H-H|	Frequency: 1
+Surface Representation: [H1-L-L-L2-L]	Underlying Representation: |H-L-L-L-L|	Frequency: 1
+Surface Representation: [H1-L-L-L2-H]	Underlying Representation: |H-L-L-L-H|	Frequency: 1
+Surface Representation: [H1-L-L-H2-L]	Underlying Representation: |H-L-L-H-L|	Frequency: 1
+Surface Representation: [H1-L-L-H2-H]	Underlying Representation: |H-L-L-H-H|	Frequency: 1
+Surface Representation: [H1-L-H-L2-L]	Underlying Representation: |H-L-H-L-L|	Frequency: 1
+Surface Representation: [H1-L-H-L2-H]	Underlying Representation: |H-L-H-L-H|	Frequency: 1
+Surface Representation: [H1-L-H-H2-L]	Underlying Representation: |H-L-H-H-L|	Frequency: 1
+Surface Representation: [H1-L-H-H2-H]	Underlying Representation: |H-L-H-H-H|	Frequency: 1
+Surface Representation: [H1-H-L-L2-L]	Underlying Representation: |H-H-L-L-L|	Frequency: 1
+Surface Representation: [H1-H-L-L2-H]	Underlying Representation: |H-H-L-L-H|	Frequency: 1
+Surface Representation: [H1-H-L-H2-L]	Underlying Representation: |H-H-L-H-L|	Frequency: 1
+Surface Representation: [H1-H-L-H2-H]	Underlying Representation: |H-H-L-H-H|	Frequency: 1
+Surface Representation: [H1-H-H-L2-L]	Underlying Representation: |H-H-H-L-L|	Frequency: 1
+Surface Representation: [H1-H-H-L2-H]	Underlying Representation: |H-H-H-L-H|	Frequency: 1
+Surface Representation: [H1-H-H-H2-L]	Underlying Representation: |H-H-H-H-L|	Frequency: 1
+Surface Representation: [H1-H-H-H2-H]	Underlying Representation: |H-H-H-H-H|	Frequency: 1
+Surface Representation: [L1-L-L2-L-L2-L]	Underlying Representation: |L-L-L-L-L-L|	Frequency: 1
+Surface Representation: [L1-L-L2-L-L-L2-L]	Underlying Representation: |L-L-L-L-L-L-L|	Frequency: 1
+
+
+STARTING GRAMMAR:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50 
+FtNnf 0.90        0.50  0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90 
+Iambi 0.90  0.50        0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90  0.90 
+Parse 0.50  0.10  0.10        0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50 
+FtBin 0.50  0.10  0.10  0.50        0.50  0.50  0.50  0.50  0.50  0.50  0.50 
+WFL__ 0.50  0.10  0.10  0.50  0.50        0.50  0.50  0.50  0.50  0.50  0.50 
+WFR__ 0.50  0.10  0.10  0.50  0.50  0.50        0.50  0.50  0.50  0.50  0.50 
+MainL 0.50  0.10  0.10  0.50  0.50  0.50  0.50        0.50  0.50  0.50  0.50 
+MainR 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50        0.50  0.50  0.50 
+AFL__ 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50        0.50  0.50 
+AFR__ 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50  0.50        0.50 
+Nonfn 0.50  0.10  0.10  0.50  0.50  0.50  0.50  0.50  0.50  0.50  0.50       
+
+
+VIOLATION VECTORS FOR THE FIRST TABLEAU:
+[0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0]
+[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+[0, 2, 0, 0, 2, 0, 0, 0, 1, 1, 1, 1]
+[0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1]
+[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+[0, 2, 0, 0, 2, 0, 0, 1, 0, 1, 1, 1]
+Starting iteration 0
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.12  0.28  0.69  0.81  0.44  0.33  0.31  0.57  0.63  0.85  0.66 
+FtNnf 0.88        0.94  0.94  0.92  0.89  0.47  0.42  0.91  0.97  0.98  0.98 
+Iambi 0.72  0.06        0.56  0.87  0.40  0.55  0.33  0.81  0.82  0.53  0.70 
+Parse 0.31  0.06  0.44        0.80  0.45  0.69  0.39  0.75  0.46  0.67  0.44 
+FtBin 0.19  0.08  0.13  0.20        0.48  0.80  0.32  0.45  0.58  0.62  0.48 
+WFL__ 0.56  0.11  0.60  0.55  0.52        0.29  0.50  0.58  0.55  0.54  0.22 
+WFR__ 0.67  0.53  0.45  0.31  0.20  0.71        0.43  0.86  0.66  0.53  0.65 
+MainL 0.69  0.58  0.67  0.61  0.68  0.50  0.57        0.92  0.56  0.59  0.77 
+MainR 0.43  0.09  0.19  0.25  0.55  0.42  0.14  0.08        0.67  0.55  0.30 
+AFL__ 0.37  0.03  0.18  0.54  0.42  0.45  0.34  0.44  0.33        0.62  0.15 
+AFR__ 0.15  0.02  0.47  0.33  0.38  0.46  0.47  0.41  0.45  0.38        0.69 
+Nonfn 0.34  0.02  0.30  0.56  0.52  0.78  0.35  0.23  0.70  0.85  0.31       
+
+Output [L1-L] 0.78 correct - observed freq is 1
+Output [L1-H] 0.75 correct - observed freq is 1
+Output [H1-L] 0.84 correct - observed freq is 1
+Output [H1-H] 0.79 correct - observed freq is 1
+Output [L1-L-L] 0.51 correct - observed freq is 1
+Output [L1-L-H] 0.4 correct - observed freq is 1
+Output [L1-H-L] 0.44 correct - observed freq is 1
+Output [L1-H-H] 0.43 correct - observed freq is 1
+Output [H1-L-L] 0.56 correct - observed freq is 1
+Output [H1-L-H] 0.47 correct - observed freq is 1
+Output [H1-H-L] 0.44 correct - observed freq is 1
+Output [H1-H-H] 0.37 correct - observed freq is 1
+Output [L1-L-L2-L] 0.21 correct - observed freq is 1
+Output [L1-L-L2-H] 0.24 correct - observed freq is 1
+Output [L1-L-H2-L] 0.43 correct - observed freq is 1
+Output [L1-L-H2-H] 0.26 correct - observed freq is 1
+Output [L1-H-L2-L] 0.21 correct - observed freq is 1
+Output [L1-H-L2-H] 0.17 correct - observed freq is 1
+Output [L1-H-H2-L] 0.29 correct - observed freq is 1
+Output [L1-H-H2-H] 0.23 correct - observed freq is 1
+Output [H1-L-L2-L] 0.29 correct - observed freq is 1
+Output [H1-L-L2-H] 0.27 correct - observed freq is 1
+Output [H1-L-H2-L] 0.35 correct - observed freq is 1
+Output [H1-L-H2-H] 0.32 correct - observed freq is 1
+Output [H1-H-L2-L] 0.18 correct - observed freq is 1
+Output [H1-H-L2-H] 0.25 correct - observed freq is 1
+Output [H1-H-H2-L] 0.24 correct - observed freq is 1
+Output [H1-H-H2-H] 0.37 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.16 correct - observed freq is 1
+Output [L1-L-L-L2-H] 0.17 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.33 correct - observed freq is 1
+Output [L1-L-L-H2-H] 0.18 correct - observed freq is 1
+Output [L1-L-H-L2-L] 0.14 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.19 correct - observed freq is 1
+Output [L1-L-H-H2-L] 0.13 correct - observed freq is 1
+Output [L1-L-H-H2-H] 0.16 correct - observed freq is 1
+Output [L1-H-L-L2-L] 0.1 correct - observed freq is 1
+Output [L1-H-L-L2-H] 0.12 correct - observed freq is 1
+Output [L1-H-L-H2-L] 0.2 correct - observed freq is 1
+Output [L1-H-L-H2-H] 0.18 correct - observed freq is 1
+Output [L1-H-H-L2-L] 0.16 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.15 correct - observed freq is 1
+Output [L1-H-H-H2-L] 0.2 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.24 correct - observed freq is 1
+Output [H1-L-L-L2-L] 0.27 correct - observed freq is 1
+Output [H1-L-L-L2-H] 0.22 correct - observed freq is 1
+Output [H1-L-L-H2-L] 0.27 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.26 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.06 correct - observed freq is 1
+Output [H1-L-H-L2-H] 0.2 correct - observed freq is 1
+Output [H1-L-H-H2-L] 0.25 correct - observed freq is 1
+Output [H1-L-H-H2-H] 0.2 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.18 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.16 correct - observed freq is 1
+Output [H1-H-L-H2-L] 0.27 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.22 correct - observed freq is 1
+Output [H1-H-H-L2-L] 0.21 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.13 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.18 correct - observed freq is 1
+Output [H1-H-H-H2-H] 0.23 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.13 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.02 correct - observed freq is 1
+ITERATION 0:: Total error is 44.63999999999999 and log likelihood is -89.27663032433534
+Starting iteration 1
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.03  0.43  0.64  0.80  0.31  0.22  0.26  0.65  0.65  0.84  0.64 
+FtNnf 0.97        1.00  0.98  0.96  0.86  0.51  0.47  0.97  0.99  0.99  0.99 
+Iambi 0.57  0.00        0.49  0.88  0.36  0.37  0.18  0.78  0.82  0.42  0.72 
+Parse 0.36  0.02  0.51        0.80  0.53  0.66  0.21  0.80  0.59  0.73  0.49 
+FtBin 0.20  0.04  0.12  0.20        0.48  0.75  0.20  0.43  0.62  0.69  0.55 
+WFL__ 0.69  0.14  0.64  0.47  0.52        0.24  0.39  0.66  0.55  0.56  0.23 
+WFR__ 0.78  0.49  0.63  0.34  0.25  0.76        0.55  0.92  0.81  0.62  0.79 
+MainL 0.74  0.53  0.82  0.79  0.80  0.61  0.45        0.99  0.71  0.74  0.88 
+MainR 0.35  0.03  0.22  0.20  0.57  0.34  0.08  0.01        0.67  0.47  0.35 
+AFL__ 0.35  0.01  0.18  0.41  0.38  0.45  0.19  0.29  0.33        0.64  0.13 
+AFR__ 0.16  0.01  0.58  0.27  0.31  0.44  0.38  0.26  0.53  0.36        0.74 
+Nonfn 0.36  0.01  0.28  0.51  0.45  0.77  0.21  0.12  0.65  0.87  0.26       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 0.0 correct - observed freq is 1
+Output [L1-L-H] 1.0 correct - observed freq is 1
+Output [L1-H-L] 0.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 0.0 correct - observed freq is 1
+Output [H1-L-H] 0.0 correct - observed freq is 1
+Output [H1-H-L] 0.0 correct - observed freq is 1
+Output [H1-H-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-H2-H] 0.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 0.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 1:: Total error is 33.0 and log likelihood is -Infinity
+Starting iteration 2
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.01  0.42  0.56  0.78  0.27  0.15  0.20  0.62  0.66  0.85  0.67 
+FtNnf 0.99        1.00  0.99  0.98  0.92  0.53  0.51  0.99  1.00  1.00  1.00 
+Iambi 0.58  0.00        0.43  0.86  0.28  0.20  0.07  0.78  0.84  0.40  0.70 
+Parse 0.44  0.01  0.57        0.82  0.51  0.57  0.15  0.82  0.65  0.77  0.60 
+FtBin 0.22  0.02  0.14  0.18        0.48  0.63  0.16  0.41  0.74  0.68  0.56 
+WFL__ 0.73  0.08  0.72  0.49  0.52        0.18  0.28  0.71  0.61  0.65  0.27 
+WFR__ 0.85  0.47  0.80  0.43  0.37  0.82        0.51  0.94  0.91  0.74  0.90 
+MainL 0.80  0.49  0.93  0.85  0.84  0.72  0.49        1.00  0.83  0.85  0.91 
+MainR 0.38  0.01  0.22  0.18  0.59  0.29  0.06  0.00        0.70  0.49  0.35 
+AFL__ 0.34  0.00  0.16  0.35  0.26  0.39  0.09  0.17  0.30        0.66  0.14 
+AFR__ 0.15  0.00  0.60  0.23  0.32  0.35  0.26  0.15  0.51  0.34        0.75 
+Nonfn 0.33  0.00  0.30  0.40  0.44  0.73  0.10  0.09  0.65  0.86  0.25       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 1.0 correct - observed freq is 1
+Output [L1-L-H] 0.0 correct - observed freq is 1
+Output [L1-H-L] 1.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 0.0 correct - observed freq is 1
+Output [H1-L-H] 1.0 correct - observed freq is 1
+Output [H1-H-L] 1.0 correct - observed freq is 1
+Output [H1-H-H] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-H] 0.0 correct - observed freq is 1
+Output [L1-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 0.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 0.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 0.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 2:: Total error is 31.0 and log likelihood is -Infinity
+Starting iteration 3
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.47  0.52  0.79  0.25  0.10  0.13  0.59  0.64  0.85  0.68 
+FtNnf 1.00        1.00  1.00  0.99  0.95  0.57  0.56  1.00  1.00  1.00  1.00 
+Iambi 0.53  0.00        0.33  0.82  0.27  0.09  0.03  0.75  0.83  0.35  0.70 
+Parse 0.48  0.00  0.67        0.84  0.56  0.50  0.12  0.82  0.70  0.79  0.60 
+FtBin 0.21  0.01  0.18  0.16        0.46  0.54  0.11  0.42  0.74  0.68  0.57 
+WFL__ 0.75  0.05  0.73  0.44  0.54        0.19  0.21  0.74  0.63  0.70  0.27 
+WFR__ 0.90  0.43  0.91  0.50  0.46  0.81        0.44  0.97  0.96  0.79  0.95 
+MainL 0.87  0.44  0.97  0.88  0.89  0.79  0.56        1.00  0.90  0.93  0.95 
+MainR 0.41  0.00  0.25  0.18  0.58  0.26  0.03  0.00        0.70  0.50  0.37 
+AFL__ 0.36  0.00  0.17  0.30  0.26  0.37  0.04  0.10  0.30        0.68  0.15 
+AFR__ 0.15  0.00  0.65  0.21  0.32  0.30  0.21  0.07  0.50  0.32        0.69 
+Nonfn 0.32  0.00  0.30  0.40  0.43  0.73  0.05  0.05  0.63  0.85  0.31       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 0.0 correct - observed freq is 1
+Output [L1-L-H] 0.0 correct - observed freq is 1
+Output [L1-H-L] 0.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 0.0 correct - observed freq is 1
+Output [H1-L-H] 0.0 correct - observed freq is 1
+Output [H1-H-L] 1.0 correct - observed freq is 1
+Output [H1-H-H] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 0.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 3:: Total error is 22.0 and log likelihood is -Infinity
+Starting iteration 4
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.51  0.51  0.80  0.24  0.08  0.08  0.63  0.67  0.86  0.69 
+FtNnf 1.00        1.00  1.00  0.99  0.96  0.63  0.55  1.00  1.00  1.00  1.00 
+Iambi 0.49  0.00        0.26  0.81  0.26  0.05  0.01  0.71  0.82  0.34  0.69 
+Parse 0.49  0.00  0.74        0.86  0.55  0.44  0.09  0.81  0.75  0.80  0.62 
+FtBin 0.20  0.01  0.19  0.14        0.48  0.46  0.07  0.47  0.75  0.65  0.60 
+WFL__ 0.76  0.04  0.74  0.45  0.52        0.17  0.16  0.76  0.67  0.72  0.25 
+WFR__ 0.92  0.37  0.95  0.56  0.54  0.83        0.42  0.98  0.98  0.83  0.98 
+MainL 0.92  0.45  0.99  0.91  0.93  0.84  0.58        1.00  0.95  0.97  0.97 
+MainR 0.37  0.00  0.29  0.19  0.53  0.24  0.02  0.00        0.70  0.49  0.37 
+AFL__ 0.33  0.00  0.18  0.25  0.25  0.33  0.02  0.05  0.30        0.70  0.16 
+AFR__ 0.14  0.00  0.66  0.20  0.35  0.28  0.17  0.03  0.51  0.30        0.72 
+Nonfn 0.31  0.00  0.31  0.38  0.40  0.75  0.02  0.03  0.63  0.84  0.28       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 1.0 correct - observed freq is 1
+Output [L1-L-H] 1.0 correct - observed freq is 1
+Output [L1-H-L] 1.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 0.0 correct - observed freq is 1
+Output [H1-L-H] 0.0 correct - observed freq is 1
+Output [H1-H-L] 1.0 correct - observed freq is 1
+Output [H1-H-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 4:: Total error is 13.0 and log likelihood is -Infinity
+Starting iteration 5
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.52  0.47  0.79  0.25  0.06  0.04  0.64  0.69  0.87  0.72 
+FtNnf 1.00        1.00  1.00  1.00  0.97  0.68  0.56  1.00  1.00  1.00  1.00 
+Iambi 0.48  0.00        0.23  0.81  0.24  0.02  0.00  0.72  0.81  0.34  0.69 
+Parse 0.53  0.00  0.77        0.86  0.56  0.35  0.07  0.83  0.78  0.81  0.65 
+FtBin 0.21  0.00  0.19  0.14        0.47  0.42  0.05  0.47  0.75  0.67  0.61 
+WFL__ 0.75  0.03  0.76  0.44  0.53        0.13  0.10  0.75  0.70  0.75  0.28 
+WFR__ 0.94  0.32  0.98  0.65  0.58  0.87        0.38  0.99  0.99  0.88  0.99 
+MainL 0.96  0.44  1.00  0.93  0.95  0.90  0.62        1.00  0.98  0.99  0.98 
+MainR 0.36  0.00  0.28  0.17  0.53  0.25  0.01  0.00        0.71  0.50  0.36 
+AFL__ 0.31  0.00  0.19  0.22  0.25  0.30  0.01  0.02  0.29        0.68  0.18 
+AFR__ 0.13  0.00  0.66  0.19  0.33  0.25  0.12  0.01  0.50  0.32        0.73 
+Nonfn 0.28  0.00  0.31  0.35  0.39  0.72  0.01  0.02  0.64  0.82  0.27       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 0.0 correct - observed freq is 1
+Output [L1-L-H] 1.0 correct - observed freq is 1
+Output [L1-H-L] 0.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 1.0 correct - observed freq is 1
+Output [H1-L-H] 1.0 correct - observed freq is 1
+Output [H1-H-L] 1.0 correct - observed freq is 1
+Output [H1-H-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H2-H] 0.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 0.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 5:: Total error is 14.0 and log likelihood is -Infinity
+Starting iteration 6
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.53  0.45  0.80  0.26  0.04  0.03  0.65  0.70  0.86  0.73 
+FtNnf 1.00        1.00  1.00  1.00  0.98  0.74  0.57  1.00  1.00  1.00  1.00 
+Iambi 0.47  0.00        0.20  0.80  0.23  0.01  0.00  0.73  0.79  0.32  0.70 
+Parse 0.55  0.00  0.80        0.88  0.56  0.32  0.04  0.84  0.80  0.82  0.69 
+FtBin 0.20  0.00  0.20  0.12        0.47  0.36  0.03  0.48  0.74  0.68  0.63 
+WFL__ 0.74  0.02  0.77  0.44  0.53        0.11  0.08  0.77  0.69  0.76  0.29 
+WFR__ 0.96  0.26  0.99  0.68  0.64  0.89        0.33  0.99  0.99  0.92  0.99 
+MainL 0.97  0.43  1.00  0.96  0.97  0.92  0.67        1.00  0.99  1.00  0.99 
+MainR 0.35  0.00  0.27  0.16  0.52  0.23  0.01  0.00        0.72  0.49  0.34 
+AFL__ 0.30  0.00  0.21  0.20  0.26  0.31  0.01  0.01  0.28        0.68  0.17 
+AFR__ 0.14  0.00  0.68  0.18  0.32  0.24  0.08  0.00  0.51  0.32        0.75 
+Nonfn 0.27  0.00  0.30  0.31  0.37  0.71  0.01  0.01  0.66  0.83  0.25       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 0.0 correct - observed freq is 1
+Output [L1-L-H] 0.0 correct - observed freq is 1
+Output [L1-H-L] 0.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 1.0 correct - observed freq is 1
+Output [H1-L-H] 0.0 correct - observed freq is 1
+Output [H1-H-L] 0.0 correct - observed freq is 1
+Output [H1-H-H] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 0.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 6:: Total error is 15.0 and log likelihood is -Infinity
+Starting iteration 7
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.53  0.43  0.79  0.25  0.03  0.02  0.65  0.71  0.86  0.74 
+FtNnf 1.00        1.00  1.00  1.00  0.99  0.78  0.57  1.00  1.00  1.00  1.00 
+Iambi 0.47  0.00        0.17  0.79  0.23  0.01  0.00  0.73  0.79  0.31  0.71 
+Parse 0.57  0.00  0.83        0.89  0.55  0.26  0.03  0.85  0.82  0.81  0.71 
+FtBin 0.21  0.00  0.21  0.11        0.47  0.30  0.02  0.47  0.75  0.68  0.63 
+WFL__ 0.75  0.01  0.77  0.45  0.53        0.09  0.05  0.78  0.70  0.75  0.29 
+WFR__ 0.97  0.22  0.99  0.74  0.70  0.91        0.31  0.99  1.00  0.95  1.00 
+MainL 0.98  0.43  1.00  0.97  0.98  0.95  0.69        1.00  0.99  1.00  1.00 
+MainR 0.35  0.00  0.27  0.15  0.53  0.22  0.01  0.00        0.71  0.48  0.34 
+AFL__ 0.29  0.00  0.21  0.18  0.25  0.30  0.00  0.01  0.29        0.67  0.16 
+AFR__ 0.14  0.00  0.69  0.19  0.32  0.25  0.05  0.00  0.52  0.33        0.75 
+Nonfn 0.26  0.00  0.29  0.29  0.37  0.71  0.00  0.00  0.66  0.84  0.25       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 0.0 correct - observed freq is 1
+Output [L1-L-H] 1.0 correct - observed freq is 1
+Output [L1-H-L] 1.0 correct - observed freq is 1
+Output [L1-H-H] 0.0 correct - observed freq is 1
+Output [H1-L-L] 1.0 correct - observed freq is 1
+Output [H1-L-H] 0.0 correct - observed freq is 1
+Output [H1-H-L] 1.0 correct - observed freq is 1
+Output [H1-H-H] 0.0 correct - observed freq is 1
+Output [L1-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H2-H] 0.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 0.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 7:: Total error is 14.0 and log likelihood is -Infinity
+Starting iteration 8
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.55  0.42  0.77  0.25  0.02  0.01  0.64  0.72  0.86  0.74 
+FtNnf 1.00        1.00  1.00  1.00  0.99  0.82  0.57  1.00  1.00  1.00  1.00 
+Iambi 0.45  0.00        0.15  0.79  0.23  0.00  0.00  0.73  0.79  0.31  0.71 
+Parse 0.58  0.00  0.85        0.88  0.56  0.22  0.02  0.85  0.83  0.82  0.73 
+FtBin 0.23  0.00  0.21  0.12        0.47  0.24  0.01  0.48  0.76  0.68  0.65 
+WFL__ 0.75  0.01  0.77  0.44  0.53        0.08  0.04  0.78  0.71  0.76  0.30 
+WFR__ 0.98  0.18  1.00  0.78  0.76  0.92        0.28  1.00  1.00  0.96  1.00 
+MainL 0.99  0.43  1.00  0.98  0.99  0.96  0.72        1.00  1.00  1.00  1.00 
+MainR 0.36  0.00  0.27  0.15  0.52  0.22  0.00  0.00        0.72  0.48  0.35 
+AFL__ 0.28  0.00  0.21  0.17  0.24  0.29  0.00  0.00  0.28        0.66  0.16 
+AFR__ 0.14  0.00  0.69  0.18  0.32  0.24  0.04  0.00  0.52  0.34        0.76 
+Nonfn 0.26  0.00  0.29  0.27  0.35  0.70  0.00  0.00  0.65  0.84  0.24       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 1.0 correct - observed freq is 1
+Output [L1-L-H] 1.0 correct - observed freq is 1
+Output [L1-H-L] 0.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 0.0 correct - observed freq is 1
+Output [H1-L-H] 1.0 correct - observed freq is 1
+Output [H1-H-L] 1.0 correct - observed freq is 1
+Output [H1-H-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 1.0 correct - observed freq is 1
+ITERATION 8:: Total error is 6.0 and log likelihood is -Infinity
+Starting iteration 9
+The new grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.55  0.40  0.78  0.24  0.02  0.01  0.64  0.72  0.86  0.74 
+FtNnf 1.00        1.00  1.00  1.00  1.00  0.84  0.57  1.00  1.00  1.00  1.00 
+Iambi 0.45  0.00        0.15  0.78  0.22  0.00  0.00  0.73  0.79  0.30  0.71 
+Parse 0.60  0.00  0.85        0.89  0.55  0.19  0.02  0.86  0.84  0.82  0.74 
+FtBin 0.22  0.00  0.22  0.11        0.48  0.20  0.01  0.47  0.77  0.68  0.66 
+WFL__ 0.76  0.00  0.78  0.45  0.52        0.06  0.03  0.78  0.72  0.76  0.31 
+WFR__ 0.98  0.16  1.00  0.81  0.80  0.94        0.25  1.00  1.00  0.97  1.00 
+MainL 0.99  0.43  1.00  0.98  0.99  0.97  0.75        1.00  1.00  1.00  1.00 
+MainR 0.36  0.00  0.27  0.14  0.53  0.22  0.00  0.00        0.72  0.49  0.34 
+AFL__ 0.28  0.00  0.21  0.16  0.23  0.28  0.00  0.00  0.28        0.67  0.16 
+AFR__ 0.14  0.00  0.70  0.18  0.32  0.24  0.03  0.00  0.51  0.33        0.76 
+Nonfn 0.26  0.00  0.29  0.26  0.34  0.69  0.00  0.00  0.66  0.84  0.24       
+
+Output [L1-L] 1.0 correct - observed freq is 1
+Output [L1-H] 1.0 correct - observed freq is 1
+Output [H1-L] 1.0 correct - observed freq is 1
+Output [H1-H] 1.0 correct - observed freq is 1
+Output [L1-L-L] 0.0 correct - observed freq is 1
+Output [L1-L-H] 1.0 correct - observed freq is 1
+Output [L1-H-L] 0.0 correct - observed freq is 1
+Output [L1-H-H] 1.0 correct - observed freq is 1
+Output [H1-L-L] 0.0 correct - observed freq is 1
+Output [H1-L-H] 1.0 correct - observed freq is 1
+Output [H1-H-L] 1.0 correct - observed freq is 1
+Output [H1-H-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-L-H-H2-L] 0.0 correct - observed freq is 1
+Output [L1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.0 correct - observed freq is 1
+Output [L1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.0 correct - observed freq is 1
+Output [H1-L-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.0 correct - observed freq is 1
+Output [H1-L-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-L-H-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-L-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-L-H2-L] 0.0 correct - observed freq is 1
+Output [H1-H-L-H2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-L2-H] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-L] 1.0 correct - observed freq is 1
+Output [H1-H-H-H2-H] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 1.0 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.0 correct - observed freq is 1
+ITERATION 9:: Total error is 11.0 and log likelihood is -Infinity
+------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------
+The final grammar is:
+      WSP__ FtNnf Iambi Parse FtBin WFL__ WFR__ MainL MainR AFL__ AFR__ Nonfn
+WSP__       0.00  0.55  0.40  0.78  0.24  0.02  0.01  0.64  0.72  0.86  0.74 
+FtNnf 1.00        1.00  1.00  1.00  1.00  0.84  0.57  1.00  1.00  1.00  1.00 
+Iambi 0.45  0.00        0.15  0.78  0.22  0.00  0.00  0.73  0.79  0.30  0.71 
+Parse 0.60  0.00  0.85        0.89  0.55  0.19  0.02  0.86  0.84  0.82  0.74 
+FtBin 0.22  0.00  0.22  0.11        0.48  0.20  0.01  0.47  0.77  0.68  0.66 
+WFL__ 0.76  0.00  0.78  0.45  0.52        0.06  0.03  0.78  0.72  0.76  0.31 
+WFR__ 0.98  0.16  1.00  0.81  0.80  0.94        0.25  1.00  1.00  0.97  1.00 
+MainL 0.99  0.43  1.00  0.98  0.99  0.97  0.75        1.00  1.00  1.00  1.00 
+MainR 0.36  0.00  0.27  0.14  0.53  0.22  0.00  0.00        0.72  0.49  0.34 
+AFL__ 0.28  0.00  0.21  0.16  0.23  0.28  0.00  0.00  0.28        0.67  0.16 
+AFR__ 0.14  0.00  0.70  0.18  0.32  0.24  0.03  0.00  0.51  0.33        0.76 
+Nonfn 0.26  0.00  0.29  0.26  0.34  0.69  0.00  0.00  0.66  0.84  0.24       
+
+Output [L1-L] 0.997 correct - observed freq is 1
+Output [L1-H] 0.999 correct - observed freq is 1
+Output [H1-L] 0.999 correct - observed freq is 1
+Output [H1-H] 0.996 correct - observed freq is 1
+Output [L1-L-L] 0.688 correct - observed freq is 1
+Output [L1-L-H] 0.696 correct - observed freq is 1
+Output [L1-H-L] 0.72 correct - observed freq is 1
+Output [L1-H-H] 0.71 correct - observed freq is 1
+Output [H1-L-L] 0.685 correct - observed freq is 1
+Output [H1-L-H] 0.699 correct - observed freq is 1
+Output [H1-H-L] 0.713 correct - observed freq is 1
+Output [H1-H-H] 0.719 correct - observed freq is 1
+Output [L1-L-L2-L] 0.962 correct - observed freq is 1
+Output [L1-L-L2-H] 0.949 correct - observed freq is 1
+Output [L1-L-H2-L] 0.967 correct - observed freq is 1
+Output [L1-L-H2-H] 0.968 correct - observed freq is 1
+Output [L1-H-L2-L] 0.963 correct - observed freq is 1
+Output [L1-H-L2-H] 0.958 correct - observed freq is 1
+Output [L1-H-H2-L] 0.963 correct - observed freq is 1
+Output [L1-H-H2-H] 0.959 correct - observed freq is 1
+Output [H1-L-L2-L] 0.963 correct - observed freq is 1
+Output [H1-L-L2-H] 0.949 correct - observed freq is 1
+Output [H1-L-H2-L] 0.965 correct - observed freq is 1
+Output [H1-L-H2-H] 0.963 correct - observed freq is 1
+Output [H1-H-L2-L] 0.961 correct - observed freq is 1
+Output [H1-H-L2-H] 0.953 correct - observed freq is 1
+Output [H1-H-H2-L] 0.966 correct - observed freq is 1
+Output [H1-H-H2-H] 0.957 correct - observed freq is 1
+Output [L1-L-L-L2-L] 0.944 correct - observed freq is 1
+Output [L1-L-L-L2-H] 0.944 correct - observed freq is 1
+Output [L1-L-L-H2-L] 0.952 correct - observed freq is 1
+Output [L1-L-L-H2-H] 0.948 correct - observed freq is 1
+Output [L1-L-H-L2-L] 0.888 correct - observed freq is 1
+Output [L1-L-H-L2-H] 0.912 correct - observed freq is 1
+Output [L1-L-H-H2-L] 0.938 correct - observed freq is 1
+Output [L1-L-H-H2-H] 0.947 correct - observed freq is 1
+Output [L1-H-L-L2-L] 0.934 correct - observed freq is 1
+Output [L1-H-L-L2-H] 0.921 correct - observed freq is 1
+Output [L1-H-L-H2-L] 0.954 correct - observed freq is 1
+Output [L1-H-L-H2-H] 0.934 correct - observed freq is 1
+Output [L1-H-H-L2-L] 0.896 correct - observed freq is 1
+Output [L1-H-H-L2-H] 0.902 correct - observed freq is 1
+Output [L1-H-H-H2-L] 0.94 correct - observed freq is 1
+Output [L1-H-H-H2-H] 0.946 correct - observed freq is 1
+Output [H1-L-L-L2-L] 0.929 correct - observed freq is 1
+Output [H1-L-L-L2-H] 0.938 correct - observed freq is 1
+Output [H1-L-L-H2-L] 0.959 correct - observed freq is 1
+Output [H1-L-L-H2-H] 0.949 correct - observed freq is 1
+Output [H1-L-H-L2-L] 0.913 correct - observed freq is 1
+Output [H1-L-H-L2-H] 0.903 correct - observed freq is 1
+Output [H1-L-H-H2-L] 0.949 correct - observed freq is 1
+Output [H1-L-H-H2-H] 0.944 correct - observed freq is 1
+Output [H1-H-L-L2-L] 0.943 correct - observed freq is 1
+Output [H1-H-L-L2-H] 0.942 correct - observed freq is 1
+Output [H1-H-L-H2-L] 0.943 correct - observed freq is 1
+Output [H1-H-L-H2-H] 0.946 correct - observed freq is 1
+Output [H1-H-H-L2-L] 0.919 correct - observed freq is 1
+Output [H1-H-H-L2-H] 0.928 correct - observed freq is 1
+Output [H1-H-H-H2-L] 0.929 correct - observed freq is 1
+Output [H1-H-H-H2-H] 0.946 correct - observed freq is 1
+Output [L1-L-L2-L-L2-L] 0.661 correct - observed freq is 1
+Output [L1-L-L2-L-L-L2-L] 0.304 correct - observed freq is 1
+ITERATION 10:: Total error is 6.168000000000002 and log likelihood is -7.272282998066471
+ITERATION 10:: Total error is 6.168000000000002 and log likelihood is -7.272282998066471

@@ -41,12 +41,15 @@ public class GrammarFile {
 		if (m1.matches()) {
 		    int c = Integer.valueOf(m1.group(1));
 		    constraints = new String[c];
-		    faith = new int[c];
+		    init = new int[c];
 		    //System.out.println("" + c + " constraints.");
 		} else if (m2.matches()) {
+			// constraint number is group 1
 		    int c = Integer.valueOf(m2.group(1)) - 1;
+		    // constraint name is group 2
 		    constraints[c] = m2.group(2);
-		    faith[c] = Integer.valueOf(m2.group(3));
+		    // intiial ranking numbers
+		    init[c] = Integer.valueOf(m2.group(3));
 		    //System.out.println("Constraint " + c + " is " + constraints[c]);
 		} else if (m3.matches()) {
 		    int c = Integer.valueOf(m3.group(1));
@@ -132,7 +135,7 @@ public class GrammarFile {
     }
 
     public String[] constraints;
-    public int[] faith;
+    public int[] init;
     public Tableau[] tableaux;
     public String[] structors;
 }

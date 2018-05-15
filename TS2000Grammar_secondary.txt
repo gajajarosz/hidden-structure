@@ -5,8 +5,8 @@ Object class = "OTGrammar 2"
 0 ! leak
 12 constraints
 constraint [1]: "WSP__" 100 100 1 ! WSP
-constraint [2]: "FtNnf" 100 100 1 ! FtNonfinal
-constraint [3]: "Iambi" 100 100 1 ! Iambic
+constraint [2]: "FtNnf" 101 100 1 ! FtNonfinal
+constraint [3]: "Iambi" 101 100 1 ! Iambic
 constraint [4]: "Parse" 100 100 1 ! Parse
 constraint [5]: "FtBin" 100 100 1 ! FootBin
 constraint [6]: "WFL__" 100 100 1 ! WFL

@@ -42,9 +42,9 @@ GRAMMAR SAMPLE SIZE
 - reasonable values are 50-100
 
 INITIAL BIAS
-- If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with a stochastically M >> F grammar.
+- If your grammar file encodes ranking preferences for the initial grammar, you can set this to 1 to begin learning with a grammar where pairwise rankings begin at .9 for preferred pairwise rankings.
 - See FileFormats_instructions.txt for more info.
-- set this to 0 by default
+- set this to 0 by default (by default are pairwise ranking probabilities are set to .5)
 
 To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
 
@@ -82,9 +82,9 @@ LEARNING RATE
  - typical setting is something like 2
 
  INITIAL BIAS
- - If your grammar file encodes which constraints are markedness and which are faithfulness, you can set this to 1 to begin with an M >> F grammar. 
+ - If your grammar file encodes ranking preferences for the initial grammar, you can set this to 1 to begin learning with a grammar that sets initial ranking values to the values specified in the grammar file. 
  - See FileFormats_instructions.txt for more info.
- - set this to 0 by default
+ - set this to 0 by default (by default all ranking values are set to 10)
 
  NEGOK?
  - Indicates whether the learner be allowed to use negative weights.
@@ -122,7 +122,7 @@ MINI-EVAL
 
 MINI-EVAL_FREQ
 - How often a mini-evaluation round is performed
-- Default: 100
+- Default: 1
 - In order to not perform any intermediate evaluation, set to the same number as iterations
 
 MINI-EVAL_SAMPLE

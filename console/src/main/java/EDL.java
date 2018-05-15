@@ -16,7 +16,7 @@ public class EDL {
     public static int final_eval = 0;
     public static int final_eval_sample = 1000;
     public static int mini_eval = 1;
-    public static int mini_eval_freq = 100;
+    public static int mini_eval_freq = 1;
     public static int mini_eval_sample = 100;
     public static int quit_early = 100;
     public static int quit_early_sample = 100;
@@ -88,6 +88,8 @@ public class EDL {
 	if (print_input == 0) {
 	    writer.println("\nSTARTING GRAMMAR:\n" + gr);
 	}
+
+	writer.println("\nVIOLATION VECTORS FOR THE FIRST TABLEAU:");
 	for (int j = 0; j < gf.tableaux[0].cands.length; j++) {
 	    writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
 	}

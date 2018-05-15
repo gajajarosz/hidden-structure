@@ -7,12 +7,12 @@ public class STOT {
 
 	public double[] grammar;   //contains mean ranking values for each constraint
 	public String[] constraints;
-	public int[] faith;
+	public int[] init;
 
 	public STOT(GrammarFile gf) {
 		this.uni_grammar(gf.constraints.length);
 		this.constraints = gf.constraints;
-		this.faith = gf.faith;
+		this.init = gf.init;
 	}
 
 	public void uni_grammar(int size) {
@@ -42,9 +42,7 @@ public class STOT {
 	public void bias_grammar() {
 		int size = grammar.length;
 		for (int i = 0; i < size; i++) {
-			if (this.faith[i] == 1) {
-				grammar[i] -= 5.0;
-			}
+			grammar[i] = this.init[i];	
 		}
 	}
 

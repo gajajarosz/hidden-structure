@@ -20,7 +20,7 @@ public class GLA {
     public static int final_eval = 0;
     public static int final_eval_sample = 1000;
     public static int mini_eval = 1;
-    public static int mini_eval_freq = 100;
+    public static int mini_eval_freq = 1;
     public static int mini_eval_sample = 100;
     public static int quit_early = 100;
     public static int quit_early_sample = 100;
@@ -316,8 +316,8 @@ public class GLA {
                     writer.println("-reached perfection early ----- exiting now");
                     break;
                 }
-                writer.println("Now evaluating nonnoisy grammar");
                 if (evaluate_grammar(quit_early_sample, i, 0) && learner.equals("Baseline")) {
+                    writer.println("Now evaluating nonnoisy grammar");
                     writer.println("Baseline reached perfection ---- exiting now");
                     break;
                 }
@@ -326,8 +326,8 @@ public class GLA {
         writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
         writer.println("FINAL ");
         evaluate_grammar(final_eval_sample, i, noise);
-        writer.println("FINAL ");
-        evaluate_grammar(final_eval_sample, i, 0);
+        //writer.println("FINAL ");
+        //evaluate_grammar(final_eval_sample, i, 0);
     }
 
     public static boolean evaluate_grammar(int s, int i, double noi) {

@@ -7,7 +7,7 @@ public class RandomExtension {
 
     public double[][] grammar;   //contains mutual ranking probabilities - the grammar
     private String[] constraints;
-    private int[] faith;
+    private int[] init;
     private int[] i_cor; // these store indices of all constraint pairs
     private int[] j_cor;
 	private Writer writer;
@@ -15,7 +15,7 @@ public class RandomExtension {
     public RandomExtension(GrammarFile gf, Writer writer) {
 	this.uni_grammar(gf.constraints.length);
 	this.constraints = gf.constraints;
-	this.faith = gf.faith;
+	this.init = gf.init;
 	this.init_pairs();
 	this.writer = writer;
     }
@@ -84,15 +84,15 @@ public class RandomExtension {
 	}
     }
 
-    // this function initializes grammar with an M>>F bias based on constraint definitions in grammar file
+    // this function initializes grammar with an initial bias based on constraint definitions in grammar file
     public void bias_grammar() {
 	int size = grammar.length;
 
 	for (int i = 0; i < size; i++) {
 	    for (int j = i + 1; j < size; j++) {
-		if (this.faith[i] < this.faith[j]) {
+		if (this.init[i] > this.init[j]) {
 		    mod_gram(grammar, i, j, .9);
-		} else if (this.faith[j] < this.faith[i]) {
+		} else if (this.init[j] > this.init[i]) {
 		    mod_gram(grammar, j, i, .9);
 		} else {
 		    mod_gram(grammar, i, j, .5);
