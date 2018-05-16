@@ -426,7 +426,7 @@ public class GUI extends Application {
                                                         public void run() {
                                                             actiontarget.setText("Writing results to file...");
                                                             try {
-                                                                String res = ta.getText(); //Display output in textbox
+                                                                String res = EDL.writer.getText(); //Display output in textbox
                                                                 //Write output to file:
                                                                 Files.write(
                                                                         Paths.get(resName_),
