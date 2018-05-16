@@ -1,5 +1,10 @@
 package sample;
 //GUI code
+//To add a new parameter, make three changes:
+//1. Create a display object (textfield, radio, button, etc) and add to the grid
+//2. Validate input in the run event-handler (check to make sure there is a value, save value as string)
+//3. Add input to the list of arguments to the main program
+//If the parameter is for both learners (EDL and GLA), it needs to be added to the list of arguments for each
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -445,7 +450,7 @@ public class GUI extends Application {
                                                                         res.getBytes(),
                                                                         StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                                                                 actiontarget.setText("All done!");
-                                                                EDL.writer.clear();
+                                                                EDL.writer.clear(); //Clear old output (otherwise, each run is written to file multiple times
                                                             } catch (IOException uhoh) {
                                                                 uhoh.printStackTrace();
                                                             }
@@ -494,7 +499,7 @@ public class GUI extends Application {
                                                                                 res.getBytes(),
                                                                                 StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                                                                         actiontarget.setText("All done!");
-                                                                        GLA.writer.clear();
+                                                                        GLA.writer.clear(); //Clear old output (otherwise, each run is written to file multiple times)
                                                                     } catch (IOException uhoh) {
                                                                         uhoh.printStackTrace();
                                                                     }
