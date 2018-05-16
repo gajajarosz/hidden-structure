@@ -414,24 +414,29 @@ public class GUI extends Application {
                                         String chosenLearnerNum;
                                         if(chosenLearnerType=="Online"){
                                             chosenLearnerNum = "2";
-                                        }else{
+                                        } else{
                                             chosenLearnerNum = "1";
                                         }
                                         if(ss.getText().equals("")){//Throw errors if something hasn't been specified
                                             actiontarget.setText("Error: please specify sample size!");
-                                        }else{//Else run learner with given parameters
+                                        }else{
                                             String chosenSampleSize = ss.getText();
-                                            System.out.println("All EDL parameters ok!");
-                                            String chosenFinEvalSample = finEvalSample.getText();//eventually move
-                                            String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenPrintInput,chosenFinalGram,chosenInterEvalGram,chosenInterEvalFreq,chosenInterEvalAcc,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
-                                            System.out.println(Arrays.toString(args));
-                                            EDL.writer = new GuiWriter(ta);//Create a writer to output results
-                                            new Thread () {
-                                                @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
-                                                    EDL.main(args);
-                                                    Platform.runLater(new Runnable() {
-                                                        public void run() {
-                                                            actiontarget.setText("Writing results to file...");
+                                            if(edllr.getText().equals("")) {
+                                                actiontarget.setText("Error: please specify the learning rate!");
+                                            }else{
+                                                //Else run learner with given parameters
+                                                String chosenEDLLearningRate = edllr.getText();
+                                                System.out.println("All EDL parameters ok!");
+                                                String chosenFinEvalSample = finEvalSample.getText();//eventually move
+                                                String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenPrintInput,chosenFinalGram,chosenInterEvalGram,chosenInterEvalFreq,chosenInterEvalAcc,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
+                                                System.out.println(Arrays.toString(args));
+                                                EDL.writer = new GuiWriter(ta);//Create a writer to output results
+                                                new Thread () {
+                                                    @Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
+                                                        EDL.main(args);
+                                                        Platform.runLater(new Runnable() {
+                                                            public void run() {
+                                                                actiontarget.setText("Writing results to file...");
                                                             try {
                                                                 String res = EDL.writer.getText(); //Display output in textbox
                                                                 //Write output to file:
@@ -444,11 +449,12 @@ public class GUI extends Application {
                                                             } catch (IOException uhoh) {
                                                                 uhoh.printStackTrace();
                                                             }
-                                                        }
+                                                        };
                                                     });
                                                 }
                                             }.start();
                                         }
+                                    }
                                     }
                                 } else{
                                     System.out.println("GLA!"); //GLA is beeing run
