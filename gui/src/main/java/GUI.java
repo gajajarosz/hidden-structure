@@ -60,7 +60,7 @@ public class GUI extends Application {
         TextField grPath = new TextField();
 
         gramButton.setOnAction(
-                new EventHandler<ActionEvent>() {
+                new EventHandler<ActionEvent>() { //Filepicker for the grammar file
                     @Override
                     public void handle(final ActionEvent e) {
                         File gramfile = grChooser.showOpenDialog(primaryStage);
@@ -89,7 +89,7 @@ public class GUI extends Application {
         grid.add(distButton,1,2);
 
         distButton.setOnAction(
-                new EventHandler<ActionEvent>() {
+                new EventHandler<ActionEvent>() { //Filepicker for the distribution file
                     @Override
                     public void handle(final ActionEvent e) {
                         File distfile = distChooser.showOpenDialog(primaryStage);
@@ -123,7 +123,7 @@ public class GUI extends Application {
         iterations.setSpacing(5);
         grid.add(iterations, 0,4);
 
-        ComboBox learner = new ComboBox(FXCollections.observableArrayList("EDL","GLA"));
+        ComboBox learner = new ComboBox(FXCollections.observableArrayList("EDL","GLA")); //Learner choice box
         Tooltip learnTooltip = new Tooltip();
         learnTooltip.setText("The EDL learner is... The GLA learner is...");
         Tooltip.install(learner, learnTooltip);
@@ -134,7 +134,7 @@ public class GUI extends Application {
         GridPane edlogrid = new GridPane();
         edlogrid.setVgap(4);
         edlogrid.setPadding(new Insets(5, 5, 5, 5));
-        ComboBox emodel = new ComboBox(FXCollections.observableArrayList("Online","Batch"));
+        ComboBox emodel = new ComboBox(FXCollections.observableArrayList("Online","Batch")); //Type of EDL learner
         Tooltip emodelTooltip = new Tooltip();
         emodelTooltip.setText("Here is an explanation of the different algorithms...");
         Tooltip.install(emodel, emodelTooltip);
@@ -157,7 +157,7 @@ public class GUI extends Application {
         GridPane glaogrid = new GridPane();
         glaogrid.setVgap(4);
         glaogrid.setPadding(new Insets(5, 5, 5, 5));
-        ComboBox gmodel = new ComboBox(FXCollections.observableArrayList("RIP","RRIP","EIP","randRIP"));
+        ComboBox gmodel = new ComboBox(FXCollections.observableArrayList("RIP","RRIP","EIP","randRIP")); //Type of GLA learner
         Tooltip gmodelTooltip = new Tooltip();
         gmodelTooltip.setText("Here is an explanation of the different algorithms...");
         Tooltip.install(gmodel, gmodelTooltip);
@@ -281,7 +281,7 @@ public class GUI extends Application {
         pogrid.add(printInput,1,1);
         pogrid.add(new Separator(),0,2);
 
-        pogrid.add(new Label("Intermediate evaluation:"),0,3);
+        pogrid.add(new Label("Intermediate evaluation:"),0,3); //Intermediate evauation options
         Label eil = new Label("Evaluate @ Iteration: ");
         Tooltip eiTooltip = new Tooltip();
         eiTooltip.setText("Print intermediate evaluations?");
@@ -297,7 +297,7 @@ public class GUI extends Application {
         pogrid.add(interEvalAcc, 1, 6);
         pogrid.add(new Separator(),0,7);
 
-        pogrid.add(new Label("Final evaluation:"),0,8);
+        pogrid.add(new Label("Final evaluation:"),0,8); //Final evaluation options
         Label fil = new Label("Print Grammar?");
         Tooltip fiTooltip = new Tooltip();
         fiTooltip.setText("Print final evaluation?");
@@ -324,36 +324,36 @@ public class GUI extends Application {
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 4);
 
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        btn.setOnAction(new EventHandler<ActionEvent>() { //Call main program with parameters
 
             @Override
             public void handle(ActionEvent e) {
                 ta.setText("");
                 actiontarget.setText("Running...");
                 String chosenBias;
-                if (iBias.isSelected()) {
+                if (iBias.isSelected()) { //If bias parameter is enabed
                     chosenBias = "1";
                 } else {
                     chosenBias = "0";
                 }
                 String chosenNeg;
-                if (nok.isSelected()) {
+                if (nok.isSelected()) { //If NEGOK parameter is enabled
                     chosenNeg = "1";
                 } else {
                     chosenNeg = "0";
                 }
-                String chosenQuitFreq = quitFreq.getText();
-                String chosenQuitSample = quitSample.getText();
-                String chosenMaxDepth = maxDepth.getText();
+                String chosenQuitFreq = quitFreq.getText(); //Quit early frequency
+                String chosenQuitSample = quitSample.getText(); //Number of quit early samples
+                String chosenMaxDepth = maxDepth.getText(); //Max depth option
 
-                String chosenInterEvalFreq = interEvalFreq.getText();
+                String chosenInterEvalFreq = interEvalFreq.getText(); //Intermediate evaluation options
                 String chosenInterEvalGram;
                 if (interEvalGram.isSelected()) {
                     chosenInterEvalGram = "1";
                 } else {
                     chosenInterEvalGram = "0";
                 }
-                String chosenPrintInput;
+                String chosenPrintInput; //Print options
                 if (printInput.isSelected()){
                     chosenPrintInput = "1";
                 } else {
@@ -365,7 +365,7 @@ public class GUI extends Application {
                 } else {
                     chosenInterEvalAcc = "0";
                 }
-                String chosenFinalGram;
+                String chosenFinalGram; //Final evaluation options
                 if (finalGram.isSelected()){
                     chosenFinalGram = "1";
                 }else{
@@ -377,31 +377,31 @@ public class GUI extends Application {
                 } else{
                     chosenFinalAcc = "0";
                 }
-                String resName = resField.getText();
+                String resName = resField.getText(); //Results file name
                 if(resName.equals("")){
-                    resName = "results.txt";
+                    resName = "results.txt"; //Default result files name is results.txt
                 }
                 String resName_ = resName;
                 if(gr.getText().equals("")){
-                    actiontarget.setText("Error: please upload grammar file!");
+                    actiontarget.setText("Error: please upload grammar file!"); //Print error message if no grammar file is uploaded
                 } else {
                     String chosenGrammar = grPath.getText();
-                    if(dist.getText().equals("")){
+                    if(dist.getText().equals("")){ //Print error message if no distribution file is uploaded
                         actiontarget.setText("Error: please upload distribution file!");
                     }else{
                         String chosenDist = distPath.getText();
                         if(it.getText().equals("")){
-                            actiontarget.setText("Error: please specify iterations!");
+                            actiontarget.setText("Error: please specify iterations!"); //Print error if no iterations are specified
                         } else {
                             String chosenIt = it.getText();
                             if(learner.getValue()==null){
-                                actiontarget.setText("Error: please choose learner!");
+                                actiontarget.setText("Error: please choose learner!"); //Print error if no learner is selected
                             } else {
                                 String chosenLearner = learner.getValue().toString();
                                 if(chosenLearner=="EDL") {
                                     System.out.println("EDL!");
                                     if(emodel.getValue()==null){
-                                        actiontarget.setText("Error: please choose learner type!");
+                                        actiontarget.setText("Error: please choose learner type!"); //Print error if no learner type is selected
                                     } else{
                                         String chosenLearnerType = emodel.getValue().toString();
                                         String chosenLearnerNum;
@@ -426,7 +426,8 @@ public class GUI extends Application {
                                                         public void run() {
                                                             actiontarget.setText("Writing results to file...");
                                                             try {
-                                                                String res = ta.getText();
+                                                                String res = ta.getText(); //Display output in textbox
+                                                                //Write output to file:
                                                                 Files.write(
                                                                         Paths.get(resName_),
                                                                         res.getBytes(),
@@ -442,9 +443,9 @@ public class GUI extends Application {
                                         }
                                     }
                                 } else{
-                                    System.out.println("GLA!");
+                                    System.out.println("GLA!"); //GLA is beeing run
                                     if(gmodel.getValue()==null){
-                                        actiontarget.setText("Error: please choose learner type!");
+                                        actiontarget.setText("Error: please choose learner type!"); //Print error message if no learner is selected
                                     }else{
                                         String chosenLearnerType = gmodel.getValue().toString();
                                         if(gramtype.getValue()==null){
@@ -452,26 +453,28 @@ public class GUI extends Application {
                                         }else{
                                             String chosenGrammarType = gramtype.getValue().toString();
                                             if(lr.getText().equals("")){
-                                                actiontarget.setText("Error: please specify learning rate!");
+                                                actiontarget.setText("Error: please specify learning rate!"); //Print error message if no learning rate is selected
                                             }else{
                                                 String chosenLR = lr.getText();
                                                 if(n.getText().equals("")){
-                                                    actiontarget.setText("Error: please specify noise!");
+                                                    actiontarget.setText("Error: please specify noise!"); //Print error message if no noise parameter is given
                                                 }else{
                                                     String chosenNoise = n.getText();
                                                     String chosenFinEvalSample = finEvalSample.getText();//eventually move
                                                     System.out.println("All GLA parameters ok!");
+                                                    //Put all arguments together:
                                                     String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg, chosenPrintInput, chosenFinalGram, chosenInterEvalGram, chosenInterEvalFreq, chosenInterEvalAcc,chosenQuitFreq, chosenQuitSample};
-                                                    System.out.println(Arrays.toString(args));
+                                                    System.out.println(Arrays.toString(args)); //Print arguments
                                                     GLA.writer = new GuiWriter(ta);
                                                     new Thread () {
-                                                        @Override public void run () {
+                                                        @Override public void run () { //New thread to run main program so that GUI doesn't freeze up
                                                             GLA.main(args);
                                                             Platform.runLater(new Runnable() {
                                                                 public void run() {
                                                                     actiontarget.setText("Writing results to file...");
                                                                     try {
-                                                                        String res = GLA.writer.getText();
+                                                                        String res = GLA.writer.getText(); //Check to make sure this is consistent with above
+                                                                        //Write output to file:
                                                                         Files.write(
                                                                                 Paths.get(resName_),
                                                                                 res.getBytes(),
@@ -496,12 +499,11 @@ public class GUI extends Application {
             }
         });
 
-
+        //Window options:
         ScrollPane sp = new ScrollPane();//Scroll for GUI
         sp.setContent(grid);
-        Scene scene = new Scene(sp, 950, 550);
+        Scene scene = new Scene(sp, 950, 550); //Size of GUI window
         primaryStage.setScene(scene);
-
         primaryStage.show();
     }
     public static void main(String[] args) {

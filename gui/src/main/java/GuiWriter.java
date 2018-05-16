@@ -26,6 +26,8 @@ public class GuiWriter implements Writer {
                     builder.append(line.toString() + "\n");
 
                     displayText = displayText + line.toString() + "\n";
+                    //If the text window in the GUI has more than 5000 characters displayed,
+                    //crop output to avoid slowing the program
                     if (displayText.length() > 5000) {
                         displayText = displayText.substring(displayText.length() - 5000);
                     }
