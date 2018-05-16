@@ -139,14 +139,21 @@ public class GUI extends Application {
         emodelTooltip.setText("Here is an explanation of the different algorithms...");
         Tooltip.install(emodel, emodelTooltip);
         emodel.setPromptText("Learner");
-        TextField ss = new TextField("100");
+        TextField ss = new TextField("100"); //Sample size textfield
         Label ssl = new Label("Sample Size: ");
         Tooltip ssTooltip = new Tooltip();
         ssTooltip.setText("Here is an explanation of sample size:");
         Tooltip.install(ssl, ssTooltip);
+        TextField edllr = new TextField("0.1"); //Learning rate text field
+        Label edllrl = new Label("Learning rate: ");
+        Tooltip edllrTooltip = new Tooltip();
+        edllrTooltip.setText("This only applies to the online version.");
+        Tooltip.install(edllrl, edllrTooltip);
         edlogrid.add(emodel,0,0);
         edlogrid.add(ssl, 0, 1);
         edlogrid.add(ss, 1, 1);
+        edlogrid.add(edllrl,0,2);
+        edlogrid.add(edllr,1,2);
         edlo.setText("EDL Options");
         edlo.setContent(edlogrid);
         edlo.setExpanded(false);
