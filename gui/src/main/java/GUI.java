@@ -428,7 +428,7 @@ public class GUI extends Application {
                                                 String chosenEDLLearningRate = edllr.getText();
                                                 System.out.println("All EDL parameters ok!");
                                                 String chosenFinEvalSample = finEvalSample.getText();//eventually move
-                                                String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenPrintInput,chosenFinalGram,chosenInterEvalGram,chosenInterEvalFreq,chosenInterEvalAcc,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
+                                                String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenEDLLearningRate,chosenPrintInput,chosenFinalGram,chosenInterEvalGram,chosenInterEvalFreq,chosenInterEvalAcc,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
                                                 System.out.println(Arrays.toString(args));
                                                 EDL.writer = new GuiWriter(ta);//Create a writer to output results
                                                 new Thread () {
