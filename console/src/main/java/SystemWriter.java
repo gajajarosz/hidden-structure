@@ -5,6 +5,6 @@ public class SystemWriter implements Writer {
             System.out.println(line);
         }
         public String getText() { throw new RuntimeException("getText only implemented for GUI"); }
-        public void clear() {throw new RuntimeException("clear only implemented for GUI")}
+        public void clear() {throw new RuntimeException("clear only implemented for GUI"); }
     }
     
