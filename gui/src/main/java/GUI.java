@@ -433,6 +433,7 @@ public class GUI extends Application {
                                                                         res.getBytes(),
                                                                         StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                                                                 actiontarget.setText("All done!");
+                                                                EDL.writer.clear();
                                                             } catch (IOException uhoh) {
                                                                 uhoh.printStackTrace();
                                                             }
@@ -480,6 +481,7 @@ public class GUI extends Application {
                                                                                 res.getBytes(),
                                                                                 StandardOpenOption.APPEND, StandardOpenOption.CREATE);
                                                                         actiontarget.setText("All done!");
+                                                                        GLA.writer.clear();
                                                                     } catch (IOException uhoh) {
                                                                         uhoh.printStackTrace();
                                                                     }

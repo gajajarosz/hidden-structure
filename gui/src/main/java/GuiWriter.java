@@ -20,6 +20,10 @@ public class GuiWriter implements Writer {
             return builder.toString();
         }
 
+        public void clear() {
+            displayText = "";
+        }
+
         public void println(Object line) {
             Platform.runLater(new Runnable() {
                 public void run() {
