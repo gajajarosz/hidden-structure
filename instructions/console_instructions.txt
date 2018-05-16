@@ -54,12 +54,12 @@ To run EDL, use this syntax at the command prompt. You may want to redirect the 
 
 java -jar console.jar EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
 
-For example: java -jar console.jar EDL  TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0
+For example: java -jar console.jar EDL  TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 .1
 
 You may want to redirect the output to a file or pipe it to less like this:
 
-java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 > output.txt
-java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 | less
+java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 .1 > output.txt
+java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 .1 | less
 
 ----------------------------------------------------------------------------------------------------------------------------
 

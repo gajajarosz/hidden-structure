@@ -12,7 +12,7 @@ Description of arguments:
 ---------------------------
 
 LEARNER NAME
--This is either EDL or GLA
+- This is either EDL or GLA
 
 GRAMMAR FILE
 - should be in the same format as provided TS2000Grammar_secondary.txt
@@ -21,18 +21,18 @@ DISTRIBUTION FILE
 - should be in the same format as provided TS1_Dist.txt
 
 ITERATIONS
- - this is the number of passes through the data
- - For GLA, reasonable values are around 100-1000 (higher for complex data)
- - The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
- - The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
+- this is the number of passes through the data
+- For GLA, reasonable values are around 100-1000 (higher for complex data)
+- The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
+- The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
 
 FINAL-EVAL_SAMPLE
 -How many samples are used to evaluate in the final evaluation
 -Default: 1000
 
 INITIAL BIAS
- -Sets the learner to begin with an M >> F grammar if the grammar files encodes which constraints are markedness and which are faithfulness. 
- -To encode M vs. F in your grammar file, modify the 6th field of the constraint names section.
+- Default 0 (GLA starts out with all ranking values at 10, and EDL with all pairwise rankings set to .5)
+- Set to 1 if you want to start with a biased initial grammar. The initial ranking will be read from the grammar file. See FileFormats_instructions.txt in the instructions directory for how the the specified numbers will be used by GLA and EDL.
 
 EDL-specific arguments:
 ------------------------
@@ -44,6 +44,11 @@ LEARNER
 GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-100
+
+LEARNING RATE (for Online EDL only)
+ - How much pairwise ranking probabilities get bumped when there’s an update
+ - typical value is something like 0.1
+
 
 GLA-specific arguments:
 -------------------------

@@ -6,15 +6,17 @@ This is the first release of a suite of constraint-based hidden structure learni
 - Expectation Driven Learning (EDL: Jarosz 2015, Jarosz 2016b, Nazarov 2016, Nazarov & Jarosz 2017, Nazarov 2018) for pairwise ranking grammars (Jarosz 2015) 
 ———— There are both batch and online versions of EDL
 
-V1 can handle structural ambiguity (e.g. hidden prosodic structure) but assumes underlying representations are provided to the learner
+V1 can handle structural ambiguity (e.g. hidden prosodic structure) but assumes underlying representations are provided to the learner.
 
 RUNNING THE PROGRAM
 
 There are two ways to run this program:
 
-GUI version: The easiest way to is download and run the JAR. This lets you interact with the learners through a Java GUI. Instructions can be found in the gui_instructions.txt file.
+GUI version: The easiest way to is download and run the GUI jar file (gui.jar). This lets you interact with the learners through a Java GUI. Instructions can be found in the gui_instructions.txt file in the instructions directory.
 
-Console version: If you are interesting in modifying the underlying code, you can download the source files directly from GitHub and run them on the command-line. You will need to have the build tool SBT installed, and you will have to compile and run the code through SBT. Instructions can be found in the console_instructions.txt file.
+Console version: If you are interested in running code at the command line, you should use the console.jar file. You will need to have the build tool SBT installed, and you will have to compile and run the code through SBT. Instructions can be found in the console_instructions.txt file in the instructions directory.
+
+Development: If you are interested in working with the source code and/or making modifications, see information in the development directory.
 
 SOFTWARE CREDITS, CITING, & CONTACT INFO
 
@@ -28,7 +30,7 @@ Documentation was prepared jointly.
 
 Contact Gaja Jarosz (last name __ at __ linguist.umass.edu) with questions.
 
-Sample grammar and distribution files in the main directory:
+Sample grammar and distribution files in the sample_files directory:
 — TS... languages were defined by Tesar & Smolensky (2000), and the learning files were created by Paul Boersma
 - Pater2008... language is defined by Pater (2008) and written by Gaja Jarosz
 
