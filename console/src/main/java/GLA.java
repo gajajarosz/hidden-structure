@@ -380,8 +380,7 @@ public class GLA {
                 if (final_eval==0) {
                     writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
-            }
-            if (i%mini_eval_freq==0){
+            } else if (i%mini_eval_freq==0){
                 if(mini_eval==0){
                     writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
