@@ -165,6 +165,24 @@ public class GUI extends Application {
         edlo.setVisible(false);
         grid.add(edlo,0,6);
 
+        //This event listener hides the learning rate label and textfield if batch is selected
+        emodel.getSelectionModel().selectedIndexProperty().addListener(//Display either EDL or GLA options based on which is selected
+                new ChangeListener<Number>() {
+                    public void changed(ObservableValue ov, Number value, Number new_value) {
+                        System.out.println(new_value);
+                        System.out.println(new_value.intValue());
+                        if(new_value.intValue()==1){
+                            System.out.println("True!");
+                            edllrl.setVisible(false);
+                            edllr.setVisible(false);
+                            //edllrl.setExpanded(false);
+                        }else{
+                            edllrl.setVisible(true);
+                            edllr.setVisible(true);
+                        }
+                    }
+                });
+
         TitledPane glao = new TitledPane();//Options for the GLA learner
         GridPane glaogrid = new GridPane();
         glaogrid.setVgap(4);
