@@ -38,15 +38,15 @@ EDL-specific arguments:
 ------------------------
 
 LEARNER
-1 - batch Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_batch().
-2 - online Expectation Driven Learner in Jarosz (submitted). Runs the learning function EDL_online().
+1 - batch Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_batch().
+2 - online Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_online().
 
 GRAMMAR SAMPLE SIZE
 -this is the number of times that a grammar is sampled during each round of learning
 - reasonable values are 50-100
 
 LEARNING RATE (for Online EDL only)
- - How much pairwise ranking probabilities get bumped when there’s an update
+ - How much pairwise ranking probabilities get nudged when there’s an update
  - typical value is something like 0.1
 
 
@@ -63,7 +63,7 @@ LEARNER
  - set this to OT, HG, or ME (maxent)
 
 LEARNING RATE
- - How much constraint ranking/weighting values get bumped when there’s an update
+ - How much constraint ranking/weighting values get nudged when there’s an update
  - typical value is something like 0.1
 
  NOISE

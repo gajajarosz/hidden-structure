@@ -78,7 +78,7 @@ LEARNER
  - set this to OT, HG, or ME (maxent)
 
 LEARNING RATE
- - How much constraint ranking/weighting values get bumped when there’s an update
+ - How much constraint ranking/weighting values get nudged when there’s an update
  - typical value is something like 0.1
 
  NOISE

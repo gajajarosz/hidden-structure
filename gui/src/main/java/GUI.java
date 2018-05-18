@@ -50,7 +50,7 @@ public class GUI extends Application {
 
         Label gramlabel = new Label("Grammar file:");//Grammar file upload box
         Tooltip gramTooltip = new Tooltip();
-        gramTooltip.setText("Grammar file stores...");
+        gramTooltip.setText("Grammar file contains constraints and tableaux");
         Tooltip.install(gramlabel, gramTooltip);
         TextField gr = new TextField ();
         gr.setPrefColumnCount(8);
@@ -79,7 +79,7 @@ public class GUI extends Application {
 
         Label distlabel = new Label("Distribution File:");//Distibution file upload box
         Tooltip distTooltip = new Tooltip();
-        distTooltip.setText("Distribution file stores...");
+        distTooltip.setText("Distribution file stores data forms and their frequencies");
         Tooltip.install(distlabel, distTooltip);
         TextField dist = new TextField ();
         dist.setPrefColumnCount(8);
@@ -108,7 +108,7 @@ public class GUI extends Application {
 
         Label reslabel = new Label("Results file:");//Where to store results
         Tooltip resTooltip = new Tooltip();
-        resTooltip.setText("The name of the file to append results to.");
+        resTooltip.setText("The name of the output file to print results to.");
         Tooltip.install(reslabel, resTooltip);
         TextField resField = new TextField ();
         resField.setPrefColumnCount(8);
@@ -119,7 +119,7 @@ public class GUI extends Application {
 
         Label itlabel = new Label("Iterations:");//Iterations
         Tooltip itTooltip = new Tooltip();
-        itTooltip.setText("Reasonable iterations are...");
+        itTooltip.setText("Reasonable iterations are 1000 for online learners \nand 100 for batch learners");
         Tooltip.install(itlabel, itTooltip);
         TextField it = new TextField ("1000");
         it.setPrefColumnCount(4);
@@ -130,7 +130,7 @@ public class GUI extends Application {
 
         ComboBox learner = new ComboBox(FXCollections.observableArrayList("EDL","GLA")); //Learner choice box
         Tooltip learnTooltip = new Tooltip();
-        learnTooltip.setText("The EDL learner is... The GLA learner is...");
+        learnTooltip.setText("Select the GLA (Boersma 1998) or the EDL (Jarosz 2015)");
         Tooltip.install(learner, learnTooltip);
         learner.setPromptText("Learner");
         grid.add(learner,0,5);
@@ -141,18 +141,18 @@ public class GUI extends Application {
         edlogrid.setPadding(new Insets(5, 5, 5, 5));
         ComboBox emodel = new ComboBox(FXCollections.observableArrayList("Online","Batch")); //Type of EDL learner
         Tooltip emodelTooltip = new Tooltip();
-        emodelTooltip.setText("Here is an explanation of the different algorithms...");
+        emodelTooltip.setText("Select online or batch EDL (Jarosz 2015)");
         Tooltip.install(emodel, emodelTooltip);
         emodel.setPromptText("Learner");
         TextField ss = new TextField("100"); //Sample size textfield
         Label ssl = new Label("Sample Size: ");
         Tooltip ssTooltip = new Tooltip();
-        ssTooltip.setText("Here is an explanation of sample size:");
+        ssTooltip.setText("How many samples should be taken to test each pairwise \nranking during learning?");
         Tooltip.install(ssl, ssTooltip);
         TextField edllr = new TextField("0.1"); //Learning rate text field
         Label edllrl = new Label("Learning rate: ");
         Tooltip edllrTooltip = new Tooltip();
-        edllrTooltip.setText("This only applies to the online version.");
+        edllrTooltip.setText("This only applies to the online version. \nSet to .1 by default.");
         Tooltip.install(edllrl, edllrTooltip);
         edlogrid.add(emodel,0,0);
         edlogrid.add(ssl, 0, 1);
@@ -171,24 +171,24 @@ public class GUI extends Application {
         glaogrid.setPadding(new Insets(5, 5, 5, 5));
         ComboBox gmodel = new ComboBox(FXCollections.observableArrayList("RIP","RRIP","EIP","randRIP")); //Type of GLA learner
         Tooltip gmodelTooltip = new Tooltip();
-        gmodelTooltip.setText("Here is an explanation of the different algorithms...");
+        gmodelTooltip.setText("RIP (Boersma 2003), RRIP (Jarosz 2015), EIP (Jarosz 2015), \nrandRIP just selects a random candidate as the parse");
         Tooltip.install(gmodel, gmodelTooltip);
         gmodel.setPromptText("Learner");
         glaogrid.add(gmodel,0,0);
         ComboBox gramtype = new ComboBox(FXCollections.observableArrayList("OT","HG","MaxEnt"));
         Tooltip typeTooltip = new Tooltip();
-        typeTooltip.setText("Here is an explanation of the different types...");
+        typeTooltip.setText("OT and HG can be used with any parsing method. \nME should use RIP.");
         Tooltip.install(gramtype, typeTooltip);
         gramtype.setPromptText("Grammar Type");
         TextField lr = new TextField("0.1");
         Label lrl = new Label("Learning Rate: ");
         Tooltip lrTooltip = new Tooltip();
-        lrTooltip.setText("Reasonable learning rates are...");
+        lrTooltip.setText("How much weights or ranking values are nudged when updated. \nA common learning rate is around .1");
         Tooltip.install(lrl, lrTooltip);
         TextField n = new TextField("2");
         Label nl = new Label("Noise: ");
         Tooltip nTooltip = new Tooltip();
-        nTooltip.setText("Here is of noise:");
+        nTooltip.setText("How variable weights or ranking values are in OT or HG. \nNoise is often set to 2");
         Tooltip.install(nl, nTooltip);
         CheckBox nok = new CheckBox();
         Label nokl = new Label("NegOK?");
@@ -232,12 +232,12 @@ public class GUI extends Application {
         CheckBox iBias = new CheckBox();
         Label ibl = new Label("Initial Bias");
         Tooltip ibTooltip = new Tooltip();
-        ibTooltip.setText("Initial Bias means that faithfulness constraints are ranked above markedness constraints in the starting grammar.");
+        ibTooltip.setText("Initial Bias means that the weights or ranks given in the grammar file \nwill be used to initialize the grammar");
         Tooltip.install(ibl, ibTooltip);
         TextField finEvalSample = new TextField("1000");
         Label fesl = new Label("Final Evaluation Sampling: ");
         Tooltip fesTooltip = new Tooltip();
-        fesTooltip.setText("Final Evaluation Sampling is the number of samples used to evaluate the final grammar. Reasonable values are...");
+        fesTooltip.setText("Final Evaluation Sampling is the number of samples used \nto evaluate the final grammar.");
         Tooltip.install(fesl, fesTooltip);
         aogrid.add(ibl, 0, 1);
         aogrid.add(iBias, 1, 1);
@@ -255,18 +255,18 @@ public class GUI extends Application {
         TextField quitFreq = new TextField("100");
         Label qfl = new Label("Check to Quit Early @ Iteration: ");
         Tooltip qfTooltip = new Tooltip();
-        qfTooltip.setText("How often the program checks to see if a successful grammar has already been learned. If the learning problem is simple, setting a small number of generations will likely make the program more efficient; it the learning problem is difficult and early success if unlikely, then a high value here will increase efficiency.");
+        qfTooltip.setText("How often the program checks to see if a successful grammar\nhas already been learned. If the learning problem is simple,\nsetting a small number of generations will likely make \nthe program more efficient; if the learning problem is difficult \nand early success if unlikely, then a high value here will increase efficiency.");
         Tooltip.install(qfl, qfTooltip);
         TextField quitSample = new TextField("100");
         Label qsl = new Label("Sampling for Quit Early: ");
         Tooltip qsTooltip = new Tooltip();
-        qsTooltip.setText("Determines how many samples are used to evaluate whether a successful grammar has already been learned. High values, like X, will improve accuracy at the expense of efficient performance.");
+        qsTooltip.setText("How many samples are used to evaluate whether a successful grammar\nhas already been learned. High values, above 100,\nwill improve accuracy at the expense of efficient performance.");
         Tooltip.install(qsl, qsTooltip);
         TextField maxDepth = new TextField();
         maxDepth.setText("8");
         Label mdl = new Label("MaxDepth of Ranking Tree: ");
         Tooltip mdTooltip = new Tooltip();
-        mdTooltip.setText("Sets a maximum depth of the ranking tree; to increase efficiency, it is possible to cap the depth of data structures. A reasonable value may be X.");
+        mdTooltip.setText("Sets a maximum depth of the ranking tree; to increase efficiency, \nit is possible to cap the depth of data structures.\nA reasonable value may be 8. For grammars with more than \naround 12 constraints this number may need to be lowered to avoid \nrunnig out of memory.");
         Tooltip.install(mdl, mdTooltip);
         eogrid.add(qfl, 0, 0);
         eogrid.add(quitFreq, 1, 0);
@@ -286,7 +286,7 @@ public class GUI extends Application {
         CheckBox printInput = new CheckBox();
         Label pil = new Label("Print Input?");
         Tooltip piTooltip = new Tooltip();
-        piTooltip.setText("Print user input at the beginning of the program?");
+        piTooltip.setText("Print user input at the beginning of the run?");
         Tooltip.install(pil, piTooltip);
         pogrid.add(new Label("At beginning of program:"),0,0);
         pogrid.add(pil,0,1);
@@ -296,7 +296,7 @@ public class GUI extends Application {
         pogrid.add(new Label("Intermediate evaluation:"),0,3); //Intermediate evauation options
         Label eil = new Label("Evaluate @ Iteration: ");
         Tooltip eiTooltip = new Tooltip();
-        eiTooltip.setText("Print intermediate evaluations?");
+        eiTooltip.setText("How often should learner be evaluated on their progress?");
         Tooltip.install(eil, eiTooltip);
         pogrid.add(eil,0,4);
         TextField interEvalFreq = new TextField("100");
