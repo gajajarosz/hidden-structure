@@ -157,6 +157,8 @@ java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP
 Advanced options
 
 MAX-DEPTH (EDL only):
--To speed-up run-time we use a tree to keep track of previously generated winners for a given input and ranking prefix. This avoids repeating the optimization process over and over again, but for high numbers of constraints, this can cause the program to run out of memory if the tree is allowed to get too big. This parameter controls the maximum depth (size) of the tree.
+-To speed-up run-time we use a tree to keep track of previously generated winners for a given input and ranking prefix.
+  This avoids repeating the optimization process over and over again, but for high numbers of constraints, this can cause the program to run out of memory if the tree is allowed to get too big.
+  This parameter controls the maximum depth (size) of the tree.
 -By default, the maximum depth of the tree is set to 8, but you can reduce the depth to reduce the amount of memory used by the program.
 -To specify the maximum depth, add the maximum depth you want to the end of the print options.

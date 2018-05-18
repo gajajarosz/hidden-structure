@@ -300,30 +300,33 @@ public class GUI extends Application {
         Tooltip.install(eil, eiTooltip);
         pogrid.add(eil,0,4);
         TextField interEvalFreq = new TextField("100");
+        pogrid.add(interEvalFreq,1,4);
+
+        Label eisl = new Label("Sampling for Intermediate Evaluation: ");
+        Tooltip eisTooltip = new Tooltip();
+        eisTooltip.setText("How many samples are used to evaluate whether a successful grammar\nhas already been learned. High values, above 100,\nwill improve accuracy at the expense of efficient performance.");
+        Tooltip.install(eisl, eisTooltip);
+        pogrid.add(eisl,0,5);
+        TextField interEvalSample = new TextField("100");
+        pogrid.add(interEvalSample,1,5);
+
         CheckBox interEvalGram = new CheckBox();
         CheckBox interEvalAcc = new CheckBox();
-        pogrid.add(interEvalFreq,1,4);
-        pogrid.add(new Label("Print Grammar?"), 0, 5);
-        pogrid.add(interEvalGram, 1, 5);
-        pogrid.add(new Label("Print Accuracy Per Output?"), 0, 6);
-        pogrid.add(interEvalAcc, 1, 6);
-        pogrid.add(new Separator(),0,7);
 
-        pogrid.add(new Label("Final evaluation:"),0,8); //Final evaluation options
-        Label fil = new Label("Print Grammar?");
-        Tooltip fiTooltip = new Tooltip();
-        fiTooltip.setText("Print final evaluation?");
-        Tooltip.install(fil, fiTooltip);
-        CheckBox finalGram =new CheckBox();
+        pogrid.add(new Label("Print Grammar?"), 0, 6);
+        pogrid.add(interEvalGram, 1, 6);
+        pogrid.add(new Label("Print Accuracy Per Output?"), 0, 7);
+        pogrid.add(interEvalAcc, 1, 7);
+        pogrid.add(new Separator(),0,8);
+
+        pogrid.add(new Label("Final evaluation:"),0,9); //Final evaluation options
         CheckBox finalAcc = new CheckBox();
-        pogrid.add(fil, 0, 9);
-        pogrid.add(finalGram, 1, 9);
-        pogrid.add(new Label("Print Accuracy Per Output?"), 0, 10);
-        pogrid.add(finalAcc, 1, 10);
+        pogrid.add(new Label("Print Accuracy Per Output?"), 0, 11);
+        pogrid.add(finalAcc, 1, 11);
         po.setText("Print Options");
         po.setContent(pogrid);
         po.setExpanded(false);
-        grid.add(po,0,9);
+        grid.add(po,0,10);
 
         //grid.setGridLinesVisible(true);
 
@@ -359,29 +362,22 @@ public class GUI extends Application {
                 String chosenMaxDepth = maxDepth.getText(); //Max depth option
 
                 String chosenInterEvalFreq = interEvalFreq.getText(); //Intermediate evaluation options
-                String chosenInterEvalGram;
-                if (interEvalGram.isSelected()) {
-                    chosenInterEvalGram = "1";
-                } else {
-                    chosenInterEvalGram = "0";
-                }
+                String chosenInterEvalSample = interEvalSample.getText();
                 String chosenPrintInput; //Print options
                 if (printInput.isSelected()){
-                    chosenPrintInput = "1";
-                } else {
                     chosenPrintInput = "0";
-                }
-                String chosenInterEvalAcc;
-                if (interEvalAcc.isSelected()){
-                    chosenInterEvalAcc = "1";
                 } else {
-                    chosenInterEvalAcc = "0";
+                    chosenPrintInput = "1";
                 }
-                String chosenFinalGram; //Final evaluation options
-                if (finalGram.isSelected()){
-                    chosenFinalGram = "1";
-                }else{
-                    chosenFinalGram = "0";
+                String chosenInterEval;
+                if (interEvalGram.isSelected()){
+                    if(interEvalAcc.isSelected()) {
+                        chosenInterEval = "0";
+                    }else{
+                        chosenInterEval = "1";
+                    }
+                } else {
+                    chosenInterEval = "2";
                 }
                 String chosenFinalAcc;
                 if (finalAcc.isSelected()) {
@@ -433,7 +429,7 @@ public class GUI extends Application {
                                                 String chosenEDLLearningRate = edllr.getText();
                                                 System.out.println("All EDL parameters ok!");
                                                 String chosenFinEvalSample = finEvalSample.getText();//eventually move
-                                                String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenEDLLearningRate,chosenPrintInput,chosenFinalGram,chosenInterEvalGram,chosenInterEvalFreq,chosenInterEvalAcc,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
+                                                String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenEDLLearningRate,chosenPrintInput,chosenFinalAcc,chosenInterEval,chosenInterEvalFreq,chosenInterEvalSample,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
                                                 System.out.println(Arrays.toString(args));
                                                 EDL.writer = new GuiWriter(ta);//Create a writer to output results
                                                 new Thread () {
@@ -482,7 +478,7 @@ public class GUI extends Application {
                                                     String chosenFinEvalSample = finEvalSample.getText();//eventually move
                                                     System.out.println("All GLA parameters ok!");
                                                     //Put all arguments together:
-                                                    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg, chosenPrintInput, chosenFinalGram, chosenInterEvalGram, chosenInterEvalFreq, chosenInterEvalAcc,chosenQuitFreq, chosenQuitSample};
+                                                    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerType, chosenGrammarType, chosenLR, chosenNoise, chosenBias,chosenNeg, chosenPrintInput, chosenFinalAcc, chosenInterEval, chosenInterEvalFreq, chosenInterEvalSample, chosenQuitFreq, chosenQuitSample};
                                                     System.out.println(Arrays.toString(args)); //Print arguments
                                                     GLA.writer = new GuiWriter(ta);
                                                     new Thread () {
