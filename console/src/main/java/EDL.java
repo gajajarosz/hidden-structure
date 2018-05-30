@@ -225,18 +225,20 @@ public class EDL {
 	    }
 
 	    if (i % mini_eval_freq == 0) {
-		if (mini_eval == 0) {
-		    writer.println("The new grammar is:\n" + gr);
-		}
-		if (i % quit_early != 0) {
-		    evaluate_grammar(mini_eval_sample, i);
-		}
+			if (mini_eval == 0 || mini_eval == 1) {
+		    	writer.println("The new grammar is:\n" + gr);
+			}
+			if (i % quit_early != 0) {
+		    	evaluate_grammar(mini_eval_sample, i);
+			}
 	    }
+
 	    if (i % quit_early == 0) {
-		if (evaluate_grammar(quit_early_sample, i)) {
-		    writer.println("-reached perfection early ----- exiting now");
-		    break;
-		}
+			if (evaluate_grammar(quit_early_sample, i)) {
+		    	writer.println("-reached perfection early ----- exiting now");
+		    	i = iterations;
+		    	break;
+			}
 	    }
 	} //end of iterations
 
@@ -389,18 +391,19 @@ public class EDL {
 	    }
 
 	    if (i % mini_eval_freq == 0) {
-		if (mini_eval == 0 || mini_eval == 1) {
-		    writer.println("The new grammar is:\n" + gr);
+			if (mini_eval == 0 || mini_eval == 1) {
+		    	writer.println("The new grammar is:\n" + gr);
+			}
 		    if (i % quit_early != 0) {
-			evaluate_grammar(mini_eval_sample, i);
-		    }
-		}
+				evaluate_grammar(mini_eval_sample, i);
+			}
 	    }
 	    if (i % quit_early == 0) {
-		if (evaluate_grammar(quit_early_sample, i)) {
-		    writer.println("-reached perfection early ----- exiting now");
-		    break;
-		}
+			if (evaluate_grammar(quit_early_sample, i)) {
+		    	writer.println("-reached perfection early ----- exiting now");
+		    	i = iterations;
+		    	break;
+			}
 	    }
 	}
 
@@ -453,31 +456,30 @@ public class EDL {
 		}
 	    }
 	    if (i % mini_eval_freq == 0) {
-		if (mini_eval == 0) {
-		    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
-		}
-	    }
-	    if (i == iterations) {
-		if (final_eval == 0) {
-		    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
-		}
+			if (mini_eval == 0) {
+		    	writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
+			}
+	    }else{
+		    if (i == iterations) {
+				if (final_eval == 0) {
+			    	writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
+				}
+	    	}
 	    }
 	    log_likelihood += Math.log(((float) corr / tot)) * output.freq;
 	    error += (((double) tot - (double) corr) / tot) * (double) output.freq;
 	    corr = 0;
 	    tot = 0;
 	}
-	if (i % mini_eval_freq == 0) {
-	    if (mini_eval == 0 || mini_eval == 1) {
-		writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
-	    }
-	}
 	if (i == iterations) {
 	    if (final_eval == 0 || final_eval == 1) {
-		writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
-	    }
+			writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
+	   }
+	}else{
+		if (i % mini_eval_freq == 0) {
+		    writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+		}
 	}
-
 	double recent_error = error;
 	if (error == 0.0) {
 	    return true;

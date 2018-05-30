@@ -313,6 +313,7 @@ public class GLA {
             }
             if(i%quit_early==0) {
                 if ((!(learner.equals("Baseline"))) && evaluate_grammar(quit_early_sample, i, noise)) {
+                    i=num_samples;
                     writer.println("-reached perfection early ----- exiting now");
                     break;
                 }
@@ -392,11 +393,10 @@ public class GLA {
         }
         if (i == num_samples) {
             if (final_eval == 0 | final_eval == 1) {
-                writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+                writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
             }
-        }
-        if (i%mini_eval_freq==0) {
-            if (mini_eval == 0 | mini_eval == 1) {
+        } else {
+            if (i%mini_eval_freq==0) {
                 writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
             }
         }

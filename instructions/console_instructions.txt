@@ -121,7 +121,7 @@ FINAL-EVAL
 MINI-EVAL
 - 0: prints grammar; accuracy on each output; total error and log likelihood
 - 1: prints grammar; total error and log likelihood
-- 2: prints nothing
+- 2: prints total error and log likelihood
 - Default: 1
 
 MINI-EVAL_FREQ

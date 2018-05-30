@@ -388,20 +388,20 @@ public class GUI extends Application {
                     chosenPrintInput = "1";
                 }
                 String chosenInterEval;
-                if (interEvalGram.isSelected()){
-                    if(interEvalAcc.isSelected()) {
-                        chosenInterEval = "0";
-                    }else{
-                        chosenInterEval = "1";
-                    }
+                if (interEvalAcc.isSelected()){
+                    chosenInterEval = "0";
                 } else {
-                    chosenInterEval = "2";
+                    if(interEvalGram.isSelected()) {
+                        chosenInterEval = "1";
+                    }else{
+                        chosenInterEval = "2";
+                    }
                 }
                 String chosenFinalAcc;
                 if (finalAcc.isSelected()) {
-                    chosenFinalAcc = "1";
-                } else{
                     chosenFinalAcc = "0";
+                } else{
+                    chosenFinalAcc = "1";
                 }
                 String resName = resField.getText(); //Results file name
                 if(resName.equals("")){
