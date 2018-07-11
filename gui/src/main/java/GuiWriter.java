@@ -6,26 +6,26 @@ import java.util.*;
 import javafx.scene.control.TextArea;
 
 public class GuiWriter implements Writer {
-        private TextArea text;
-        public StringBuilder builder;
-        String displayText;
+    private TextArea text;
+    public StringBuilder builder;
+    String displayText;
 
-        public GuiWriter(TextArea text) {
-            this.builder = new StringBuilder();
-            this.text = text;
-            this.displayText = "";
-        }
+    public GuiWriter(TextArea text) {
+	this.builder = new StringBuilder();
+	this.text = text;
+	this.displayText = "";
+    }
 
-        public String getText() {
-            return builder.toString();
-        }
+    public String getText() {
+	return builder.toString();
+    }
 
-        public void clear() {
-            displayText = "";
-        }
+    public void clear() {
+	displayText = "";
+    }
 
-        public void println(Object line) {
-            Platform.runLater(new Runnable() {
+    public void println(Object line) {
+	Platform.runLater(new Runnable() {
                 public void run() {
                     builder.append(line.toString() + "\n");
 
@@ -40,8 +40,8 @@ public class GuiWriter implements Writer {
                         text.setScrollTop(Double.MAX_VALUE);
                     }
                     //text.setText(line.toString());
-//                     text.(line.toString()+"\n");
+		    //                     text.(line.toString()+"\n");
                 }
             });
-        }
     }
+}

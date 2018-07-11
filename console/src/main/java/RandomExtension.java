@@ -10,7 +10,7 @@ public class RandomExtension {
     private int[] init;
     private int[] i_cor; // these store indices of all constraint pairs
     private int[] j_cor;
-	private Writer writer;
+    private Writer writer;
 
     public RandomExtension(GrammarFile gf, Writer writer) {
 	this.uni_grammar(gf.constraints.length);
@@ -21,7 +21,7 @@ public class RandomExtension {
     }
 
     public RandomExtension() {
-		this.writer = new SystemWriter();
+	this.writer = new SystemWriter();
     }
 
     public static void main(String[] argv) {

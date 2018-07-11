@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.Vector;
 
 public class DistFile {
-	private Writer writer;
+    private Writer writer;
 
     DistFile(String fn, Writer writer) {
 	// Load the data from a file

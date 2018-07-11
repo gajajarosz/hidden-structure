@@ -225,20 +225,20 @@ public class EDL {
 	    }
 
 	    if (i % mini_eval_freq == 0) {
-			if (mini_eval == 0 || mini_eval == 1) {
-		    	writer.println("The new grammar is:\n" + gr);
-			}
-			if (i % quit_early != 0) {
-		    	evaluate_grammar(mini_eval_sample, i);
-			}
+		if (mini_eval == 0 || mini_eval == 1) {
+		    writer.println("The new grammar is:\n" + gr);
+		}
+		if (i % quit_early != 0) {
+		    evaluate_grammar(mini_eval_sample, i);
+		}
 	    }
 
 	    if (i % quit_early == 0) {
-			if (evaluate_grammar(quit_early_sample, i)) {
-		    	writer.println("-reached perfection early ----- exiting now");
-		    	i = iterations;
-		    	break;
-			}
+		if (evaluate_grammar(quit_early_sample, i)) {
+		    writer.println("-reached perfection early ----- exiting now");
+		    i = iterations;
+		    break;
+		}
 	    }
 	} //end of iterations
 
@@ -391,19 +391,19 @@ public class EDL {
 	    }
 
 	    if (i % mini_eval_freq == 0) {
-			if (mini_eval == 0 || mini_eval == 1) {
-		    	writer.println("The new grammar is:\n" + gr);
-			}
-		    if (i % quit_early != 0) {
-				evaluate_grammar(mini_eval_sample, i);
-			}
+		if (mini_eval == 0 || mini_eval == 1) {
+		    writer.println("The new grammar is:\n" + gr);
+		}
+		if (i % quit_early != 0) {
+		    evaluate_grammar(mini_eval_sample, i);
+		}
 	    }
 	    if (i % quit_early == 0) {
-			if (evaluate_grammar(quit_early_sample, i)) {
-		    	writer.println("-reached perfection early ----- exiting now");
-		    	i = iterations;
-		    	break;
-			}
+		if (evaluate_grammar(quit_early_sample, i)) {
+		    writer.println("-reached perfection early ----- exiting now");
+		    i = iterations;
+		    break;
+		}
 	    }
 	}
 
@@ -456,14 +456,14 @@ public class EDL {
 		}
 	    }
 	    if (i % mini_eval_freq == 0) {
-			if (mini_eval == 0) {
-		    	writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
-			}
+		if (mini_eval == 0) {
+		    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
+		}
 	    }else{
-		    if (i == iterations) {
-				if (final_eval == 0) {
-			    	writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
-				}
+		if (i == iterations) {
+		    if (final_eval == 0) {
+			writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
+		    }
 	    	}
 	    }
 	    log_likelihood += Math.log(((float) corr / tot)) * output.freq;
@@ -473,12 +473,12 @@ public class EDL {
 	}
 	if (i == iterations) {
 	    if (final_eval == 0 || final_eval == 1) {
-			writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
-	   }
+		writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
+	    }
 	}else{
-		if (i % mini_eval_freq == 0) {
-		    writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
-		}
+	    if (i % mini_eval_freq == 0) {
+		writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+	    }
 	}
 	double recent_error = error;
 	if (error == 0.0) {
@@ -505,13 +505,13 @@ public class EDL {
 			min_vios = tab.cands[i].violations[rank[j]];
 			cwinners.add(i); //add the first remaining candidate to cwinner
 		    } else if (tab.cands[i].violations[rank[j]] < min_vios) {
-				//If you find a new minimum number of violations for this constraint, current candidate
-				//becomes the best candidate
+			//If you find a new minimum number of violations for this constraint, current candidate
+			//becomes the best candidate
 			min_vios = tab.cands[i].violations[rank[j]];
 			cwinners.clear(); //remove previous winners (they have more violations)
 			cwinners.add(i);
 		    } else if (tab.cands[i].violations[rank[j]] == min_vios) {
-				//add current candidate to winners if it has an equal number of violations as the minimum
+			//add current candidate to winners if it has an equal number of violations as the minimum
 			cwinners.add(i);
 		    }
 		}
@@ -519,7 +519,7 @@ public class EDL {
 		    winners = cwinners; //remove winners that are not winners on this constraint
 		}
 		if (winners.size() < 2 || cwinners.size() == 0) {
-			//If there is only one remaining candidate or all candidates have been eliminated
+		    //If there is only one remaining candidate or all candidates have been eliminated
 		    stop = j;
 		    break;
 		}
@@ -531,7 +531,7 @@ public class EDL {
     }
 
     public static String prevFound(int[] rank, String input) {
-		//returns the previously found winner if there is one
+	//returns the previously found winner if there is one
 	String winner = "";
 	if (intable.containsKey(input)) {
 	    PrefixTree ptree = intable.get(input);
@@ -546,16 +546,16 @@ public class EDL {
     }
 
     public static void track(int stop, int[] rank, String winner, String input){
-		//Keeps track of the prefix tree for each input
+	//Keeps track of the prefix tree for each input
 	if(intable.containsKey(input)) {
 	    //writer.println("Already contains!");
 	}else{
-		//Add to table of input / prefix tree pairs if not already in table
+	    //Add to table of input / prefix tree pairs if not already in table
 	    intable.put(input, new PrefixTree(rank.length));
 	}
 	PrefixTree ptree = intable.get(input);
 	if (stop < maxdepth) {
-		//If maxdepth not exceeded:
+	    //If maxdepth not exceeded:
 	    int[] pre = Arrays.copyOfRange(rank, 0, stop + 1);
 	    ptree.put(pre, winner); //insert winner in prefix tree at prefix pre
 	}

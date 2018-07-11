@@ -5,7 +5,7 @@ import java.util.regex.*;
 import java.util.*;
 
 public class GrammarFile {
-   private Writer writer;
+    private Writer writer;
 
     GrammarFile(String fn, Writer writer) {
 	// Load the data from a file
@@ -44,7 +44,7 @@ public class GrammarFile {
 		    init = new int[c];
 		    //System.out.println("" + c + " constraints.");
 		} else if (m2.matches()) {
-			// constraint number is group 1
+		    // constraint number is group 1
 		    int c = Integer.valueOf(m2.group(1)) - 1;
 		    // constraint name is group 2
 		    constraints[c] = m2.group(2);
