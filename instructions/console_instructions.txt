@@ -5,160 +5,175 @@ In order to run this code, you will need java and java runtime environment insta
 
 +The project currently uses the build tool SBT, which you'll need to install (http://www.scala-sbt.org/download.html)
 + To compile the project type "sbt compile". This will create two files (1) console.jar and (2) gui.jar.
-+ To run the console program, type "java -jar console.jar learner arg1 arg2 ..."
++ To run the console program, type "java -jar console.jar learner sample_files/learner_SampleParameter.txt"
 
-The "learner" argument should be either "EDL" or "GLA".
+The "learner" argument should be either "EDL" or "GLA". The parameter txt file is either EDL_SampleParameter.txt or GLA_SampleParameter.txt
 
-Both EDL and GLA are run using the learn.java program. The first four arguments for each are the same:
+Both EDL and GLA are run using the learn.java program and the EDL/GLA_SampleParameter.txt files are located sample_files. The various parameters can be updated in the corresponding txt files. The following arguments, and subsequent parameters, are shared by both EDL and GLA:
 
-GRAMMAR FILE
+"GRAMMAR_FILE"
 - should be in the same format as provided TS2000Grammar_secondary.txt. Any lines in the file that don’t match this format will be ignored. This format is based on the format used in Praat. See FileFormats_instructions.txt for more info.
+Default: TS2000Grammar_secondary.txt
 
-DISTRIBUTION FILE
+"DIST_FILE"
 - should be in the same format as provided TS1_Dist.txt. Any lines in the file that don’t match this format will be ignored. This format is based on the format used in Praat. See FileFormats_instructions.txt for more info.
+Default: TS1_Dist.txt
 
-ITERATIONS
- - this is the number of passes through the data
- - For GLA, reasonable values are around 100-1000 (higher for complex data)
- - The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
- - The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
-
-FINAL-EVAL_SAMPLE
+"FINAL_EVAL_SAMPLE"
 -How many samples are used to evaluate in the final evaluation
--Default: 1000
+Default: 1000
+
+"INITIAL_BIAS"
+- If your grammar file encodes ranking preferences for the initial grammar, you can set this to 1 to begin learning with a grammar where pairwise rankings begin at .9 for preferred pairwise rankings.
+- See FileFormats_instructions.txt for more info.
+Default:0
 
  ---------------------------------------------------------------------------------------------------------------------------
 
 EDL
 
-If running EDL, the rest of the arguments are as follows:
+The following arguments are those specific to running EDL. Values can be edited in the EDL_SampleParameter.txt file:
 
-LEARNER
-1 - batch Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_batch().
-2 - online Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_online().
+"LEARNER"
+1 - batch - Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_batch()
+2 - online - Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_online()
+Default:1
 
-GRAMMAR SAMPLE SIZE
+"GRAMMAR_SAMPLE_SIZE"
 - this is the number of times that a grammar is sampled when each pair of constraints is considered during learning
 - reasonable values are 50-100
+Default:100
 
-INITIAL BIAS
-- If your grammar file encodes ranking preferences for the initial grammar, you can set this to 1 to begin learning with a grammar where pairwise rankings begin at .9 for preferred pairwise rankings.
-- See FileFormats_instructions.txt for more info.
-- set this to 0 by default (by default are pairwise ranking probabilities are set to .5)
-
-LEARNING RATE
+"LEARNING_RATE"	
 - Learning rate, relevant only for Online EDL but currently must be specified for both learners
-- Set to .1 by default
+Default:0.1
 
-To run EDL, use this syntax at the command prompt. You may want to redirect the output to a file or pipe it to less.
+"ITERATIONS" 
+- this is the number of passes through the data
+- For GLA, reasonable values are around 100-1000 (higher for complex data)
+- The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
+- The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
+Default: 200
 
-java -jar console.jar EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
+"MAXDEPTH"
+-To speed-up run-time we use a tree to keep track of previously generated winners for a given input and ranking prefix.
+  This avoids repeating the optimization process over and over again, but for high numbers of constraints, this can cause the program to run out of memory if the tree is allowed to get too big.
+  This parameter controls the maximum depth (size) of the tree.
+-By default, the maximum depth of the tree is set to 8, but you can reduce the depth to reduce the amount of memory used by the program.
+-To specify the maximum depth, edit the second column in the EDL_SampleParameter.txt file after "MAXDEPTH" : 
 
-For example: java -jar console.jar EDL  TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 .1
+To run EDL, use this syntax at the command prompt:
 
-You may want to redirect the output to a file or pipe it to less like this:
+java -jar console.jar EDL sample_files/EDL_SampleParameter.txt
 
-java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 .1 > output.txt
-java -jar console.jar EDL TS2000Grammar_secondary.txt TS1_Dist.txt 100 1000 1 100 0 .1 | less
+
+____You may want to redirect the output to a file or pipe it to less like this:
+
+java -jar console.jar EDL sample_files/EDL_SampleParameter.txt > output.txt
+java -jar console.jar EDL sample_files/EDL_SampleParameter.txt | less_____
 
 ----------------------------------------------------------------------------------------------------------------------------
 
 GLA
 
-If running GLA, the rest of the arguments are:
+The following arguments are those specific to running GLA. Values can be edited in the GLA_SampleParameter.txt file:
 
-LEARNER
- EIP - Expected Interpretive Parsing in Jarosz (2013)
- RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
- RRIP - Resampling RIP in Jarosz (2013)
- randRIP - baseline model which generates a random output as the ‘winner’ when there’s an error
- Baseline - baseline model: generates a brand new ranking/weighting when there’s an error
+"LEARNER"
+EIP - Expected Interpretive Parsing in Jarosz (2013)
+RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
+RRIP - Resampling RIP in Jarosz (2013)
+randRIP - baseline model which generates a random output as the ‘winner’ when there’s an error
+Baseline - baseline model: generates a brand new ranking/weighting when there’s an error
+Default:EIP
 
- GRAMMAR TYPE
- - set this to OT, HG, or ME (maxent)
+"LEARNING_MODEL"
+- set this to OT, HG, or ME (maxent)
+Default: OT
 
-LEARNING RATE
- - How much constraint ranking/weighting values get nudged when there’s an update
- - typical value is something like 0.1
+"LEARNING_RATE"	
+- How much constraint ranking/weighting values get nudged when there’s an update
+Default: 0.1
 
- NOISE
- - what’s the variance around the ranking/weighting value
- - typical setting is something like 2
+"NOISE_BIAS"
+- what’s the variance around the ranking/weighting value
+Default: 2
 
- INITIAL BIAS
- - If your grammar file encodes ranking preferences for the initial grammar, you can set this to 1 to begin learning with a grammar that sets initial ranking values to the values specified in the grammar file. 
- - See FileFormats_instructions.txt for more info.
- - set this to 0 by default (by default all ranking values are set to 10)
+"NEGOK"	
+- Indicates whether the learner be allowed to use negative weights.
+- Set to 0 to keep weights non-negative (any negative weight is replaced with 0 in updating and in sampling).
+Default: 0
 
- NEGOK?
- - Indicates whether the learner be allowed to use negative weights.
- - Set to 0 to keep weights non-negative (any negative weight is replaced with 0 in updating and in sampling).
+"NUM_SAMPLES"
+- Similar to "ITERATIONS"
+Default: 1000
 
-To run GLA, use this syntax at the command prompt. As with EDL, you may want to redirect the output to a file or pipe it to less.
+To run GLA, use this syntax at the command prompt:
 
-java -jar console.jar GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)
+java -jar console.jar GLA sample_files/GLA_SampleParameter.txt
 
-For example: java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0
+____You may want to redirect the output to a file or pipe it to less like this:
 
-You may want to redirect the output to a file or pipe it to less like this:
-java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 > output.txt
-java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 | less
+java -jar console.jar GLA sample_files/GLA_SampleParameter.txt > output.txt
+java -jar console.jar GLA sample_files/GLA_SampleParameter.txt | less_____
 
 ----------------------------------------------------------------------------------------------------------------------------
 
 Print options
 
-PRINT_INPUT?
+"PRINT_INPUT"
 - 0 : prints grammar and input
 - 1 : doesn't print input
 - Default: 0
 
-FINAL-EVAL
+"FINAL_EVAL"
 - 0 : prints final grammar; accuracy on each output; total error and log likelihood
 - 1 : prints final grammar; total error and log likelihood
 - Default: 0
 
-MINI-EVAL
+"MINI_EVAL"
 - 0: prints grammar; accuracy on each output; total error and log likelihood
 - 1: prints grammar; total error and log likelihood
 - 2: prints total error and log likelihood
 - Default: 1
 
-MINI-EVAL_FREQ
+"MINI_EVAL_FREQ"
 - How often a mini-evaluation round is performed
-- Default: 1
 - In order to not perform any intermediate evaluation, set to the same number as iterations
+- Default: 1
 
-MINI-EVAL_SAMPLE
+"MINI_EVAL_SAMPLE"
 -How many samples are used to evaluate in a mini-evaluation
 -Default: 100
 
-QUIT_EARLY?
+"QUIT_EARLY"
 -How often the program checks to see if it can quit early
 -Quits if the learner has already learned everything
--Default: 100
 - In order to not try to quit early, set to the same number as iterations
+-Default: 100
 
-QUIT_EARLY?_SAMPLE
+"QUIT_EARLY_SAMPLE"
 -How many samples are used to evaluate whether the learner is done learning
 -The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
 -Default: 100
 
-For instance, if you want to run GLA and print as much as possible, run:
+----------------------------------------------------------------------------------------------------------------------------
 
-java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 0 0 0 1 100 100 100
+Updating the sample parameter txt files
 
-If you want to run GLA as quickly as possible, run:
+In order to specify particular values you want to run, edit the *second* column of either the EDL or GLA _SampleParameter.txt files. Editing the files is not necessary as the program will run with the default settings. Save after editing the files; you do *not* need to re-compile the program. 
 
-java -jar console.jar GLA TS2000Grammar_secondary.txt TS1_Dist.txt 1000 1000 EIP OT .1 2 0 0 1 1 2 1000 100 1000 100
+For example, if you want to run EDL with 100 iterations:
 
-------------------------------------------------------------------------------------------------------------------------
+-Open EDL_SampleParameter.txt
+-Edit the default "200" after iterations to read "100".
 
-Advanced options
+from
+	"ITERATIONS"		:	200
 
-MAX-DEPTH (EDL only):
--To speed-up run-time we use a tree to keep track of previously generated winners for a given input and ranking prefix.
-  This avoids repeating the optimization process over and over again, but for high numbers of constraints, this can cause the program to run out of memory if the tree is allowed to get too big.
-  This parameter controls the maximum depth (size) of the tree.
--By default, the maximum depth of the tree is set to 8, but you can reduce the depth to reduce the amount of memory used by the program.
--To specify the maximum depth, add the maximum depth you want to the end of the print options.
+to
+	"ITERATIONS"		:	100
+
+-Save
+
+The program will now run accordingly. Avoid changing the left most column, as this will result in an error.
+
