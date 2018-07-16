@@ -3,14 +3,17 @@ package learner;
 // usage: java EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
 // grammar_file contains all tableaux, dist_file contains possible inputs, morphemes, outputs, & frequencies
 import java.util.*;
+import java.io.*;
+import java.util.regex.*;
+
 
 public class EDL {
-
+    
     public static DistFile df;
     public static GrammarFile gf;
     public static RandomExtension gr;
     public static RandomExtension prior;
-
+    
     private static int gram_sample_size = 1;
     private static int iterations = 0;
     public static double rate = .1;
@@ -23,552 +26,670 @@ public class EDL {
     public static int quit_early_sample = 100;
     public static int print_input = 0;
     public static int maxdepth = 8;
+    public static int learner = 2;
+    public static int init_bias = 0;
     public static HashMap<String, GrammarFile.Tableau> tabtable = new HashMap<String, GrammarFile.Tableau>();
     public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
     public static Writer writer = new SystemWriter();
-
-
+    public static BufferedReader stream;
+    
     public static void main(String[] args) {
-	if (args.length < 7) {
-	    writer.println("Too few arguments have been provided to run the program. Exiting...\nusage: run grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)");
-	    System.exit(0);
-	}
-
-	// read in a grammar_file
-	writer.println("Opening grammar file: " + args[0] + "...");
-	gf = new GrammarFile(args[0], writer);
-
-	// read in i_o_file
-	writer.println("Opening distribution file: " + args[1] + "...");
-	df = new DistFile(args[1], writer);
-	//	df.phono = false;
-
-	writer.println("Now parsing remaining arguments");
-	writer.println("Setting iterations to: " + args[2]);
-	iterations = Integer.parseInt(args[2]);
-	writer.println("Setting Final Evaluation Sample Size to: " + args[3]);
-	final_eval_sample = Integer.parseInt(args[3]);
-	writer.println("Setting learner to: " + args[4]);
-	int learner = Integer.parseInt(args[4]);
-	writer.println("Setting grammar sample size to: " + args[5]);
-	gram_sample_size = Integer.parseInt(args[5]);
-	writer.println("Setting initial bias to: " + args[6]);
-	int init_bias = Integer.parseInt(args[6]);
-	rate = Double.parseDouble(args[7]);
-	if (args.length > 14) {
-	    writer.println("Setting print_input? to: " + args[8]);
-	    print_input = Integer.parseInt(args[8]);
-	    writer.println("Setting final-eval to: " + args[9]);
-	    final_eval = Integer.parseInt(args[9]);
-	    writer.println("Setting mini-eval to: " + args[10]);
-	    mini_eval = Integer.parseInt(args[10]);
-	    writer.println("Setting mini-eval-freq to: " + args[11]);
-	    mini_eval_freq = Integer.parseInt(args[11]);
-	    writer.println("Setting mini-eval-sample to: " + args[12]);
-	    mini_eval_sample = Integer.parseInt(args[12]);
-	    writer.println("Setting quit_early? to: " + args[13]);
-	    quit_early = Integer.parseInt(args[13]);
-	    writer.println("Setting quit_early_sample? to: " + args[14]);
-	    quit_early_sample = Integer.parseInt(args[14]);
-	    if (args.length == 16){
-		writer.println("Setting max-depth to: " + args[15]);
-		maxdepth = Integer.parseInt(args[15]);
-	    }
-	}
-	writer.println("Finished parsing all the arguments");
-	
-	if (print_input == 0) {
-	    writer.println("\nSTARTING LEXICON:\n" + df);
-	}
-	// initialize grammar to uniform - make ll_grammar
-	gr = new RandomExtension(gf, writer);
-	prior = new RandomExtension(gf, writer);
-	prior.bias_grammar();
-	if (init_bias == 1) {
-	    gr.bias_grammar();
-	}
-	if (print_input == 0) {
-	    writer.println("\nSTARTING GRAMMAR:\n" + gr);
-	}
-
-	writer.println("\nVIOLATION VECTORS FOR THE FIRST TABLEAU:");
-	for (int j = 0; j < gf.tableaux[0].cands.length; j++) {
-	    writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
-	}
-
-	if (learner == 1) {
-	    EDL_batch();
-	} else if (learner == 2) {
-	    EDL_online();
-	}
+        if(args.length == 1) {
+            System.out.println("Opening parameter file: " + args[0] + "...");
+            
+            try {
+                stream = new BufferedReader(new FileReader(args[0]));
+            } catch (IOException ioe) {
+                writer.println(ioe + "\nUnable to find the parameter file with the name " + args[0] + ". Exiting...");
+                System.exit(-1);
+                return;
+            }
+            
+            try {
+                String line;
+                Pattern pattern = Pattern.compile("^\"(.+)\"\\s+:\\s+(.+).*$");
+                
+                while ((line = stream.readLine()) != null) {
+                    Matcher m1 = pattern.matcher(line);
+                    if (m1.matches()) {
+                        String parameter = m1.group(1);
+                        writer.println("Parameter is:___" + parameter + "___");
+                        
+                        if (parameter.equals("GRAMMAR_FILE")) {
+                            String gramdirectory = m1.group(2);
+                            writer.println("Opening grammar file: " + gramdirectory + "...");
+                            gf = new GrammarFile(gramdirectory, writer);
+                            
+                        } else if (parameter.equals("DIST_FILE")) {
+                            String distdirectory = m1.group(2);
+                            writer.println("Opening distribution file: " + distdirectory + "...");
+                            df = new DistFile(distdirectory, writer);
+                            
+                        } else if (parameter.equals("ITERATIONS")) {
+                            iterations = Integer.valueOf(m1.group(2));
+                            /*int int_iterations = Integer.valueOf(m1.group(2));*/
+                            writer.println("Setting iterations to: " + iterations);
+                            
+                        } else if (parameter.equals("LEARNER")) {
+                            /*int learner = Integer.valueOf(m1.group(2));*/
+                            learner = Integer.valueOf(m1.group(2));
+                            writer.println("Setting learner to: " + learner);
+                            
+                        } else if (parameter.equals("LEARNING_RATE")) {
+                            /*double rate = Double.parseDouble(m1.group(2));*/
+                            rate = Double.parseDouble(m1.group(2));
+                            writer.println("Setting learning rate to: " + rate);
+                            
+                        } else if (parameter.equals("INITIAL_BIAS")) {
+                            /*int init_bias = Integer.valueOf(m1.group(2));*/
+                            init_bias = Integer.valueOf(m1.group(2));
+                            writer.println("Setting initial bias to: " + init_bias);
+                            
+                        } else if (parameter.equals("GRAMMAR_SAMPLE_SIZE")) {
+                            /*int gram_sample_size = Integer.valueOf(m1.group(2));*/
+                            gram_sample_size = Integer.valueOf(m1.group(2));
+                            writer.println("Setting grammar sample size to: " + gram_sample_size);
+                            
+                        } else if (parameter.equals("FINAL_EVAL_SAMPLE")) {
+                            /*int final_eval_sample = Integer.valueOf(m1.group(2));*/
+                            final_eval_sample = Integer.valueOf(m1.group(2));
+                            writer.println("Setting final sample size to: " + final_eval_sample);
+                            
+                        } else if (parameter.equals("FINAL_EVAL")) {
+                            /*int final_eval = Integer.valueOf(m1.group(2));*/
+                            final_eval = Integer.valueOf(m1.group(2));
+                            writer.println("Setting final evaluation size to: " + final_eval);
+                            
+                        } else if (parameter.equals("MINI_EVAL")) {
+                            /*int mini_eval = Integer.valueOf(m1.group(2));*/
+                            mini_eval = Integer.valueOf(m1.group(2));
+                            writer.println("Setting mini evaluation size to: " + mini_eval);
+                            
+                        } else if (parameter.equals("MINI_EVAL_FREQ")) {
+                            /*int mini_eval_freq = Integer.valueOf(m1.group(2));*/
+                            mini_eval_freq = Integer.valueOf(m1.group(2));
+                            writer.println("Setting mini evaluation frequency to: " + mini_eval_freq);
+                            
+                        } else if (parameter.equals("MINI_EVAL_SAMPLE")) {
+                            /*int mini_eval_sample = Integer.valueOf(m1.group(2));*/
+                            mini_eval_sample = Integer.valueOf(m1.group(2));
+                            writer.println("Setting mini evaluation sample size to: " + mini_eval_sample);
+                            
+                        } else if (parameter.equals("QUIT_EARLY")) {
+                            /*int quit_early = Integer.valueOf(m1.group(2));*/
+                            quit_early = Integer.valueOf(m1.group(2));
+                            writer.println("Setting quit early to: " + quit_early);
+                            
+                        } else if (parameter.equals("QUIT_EARLY_SAMPLE")) {
+                            /*int quit_early_sample = Integer.valueOf(m1.group(2));*/
+                            quit_early_sample = Integer.valueOf(m1.group(2));
+                            writer.println("Setting quit early sample to: " + quit_early_sample);
+                            
+                        } else if (parameter.equals("PRINT_INPUT")) {
+                            /*int print_input = Integer.valueOf(m1.group(2));*/
+                            print_input = Integer.valueOf(m1.group(2));
+                            writer.println("Setting quit early sample to: " + print_input);
+                            
+                        } else if (parameter.equals("MAXDEPTH")) {
+                            /*int maxdepth = Integer.valueOf(m1.group(2));*/
+                            maxdepth = Integer.valueOf(m1.group(2));
+                            writer.println("Setting MAXDEPTH to: " + maxdepth);
+                            
+                        }
+                        else {
+                            writer.println("The following lines from the parameter file do not match the specified format and will be ignored: \n>>>" + line);
+                        }
+                    }
+                }
+                
+            } catch (IOException ioe) {
+                writer.println(ioe + "\nError reading the parameter file: " + args[0] + ". Exiting...");
+                System.exit(-1);
+            }
+        }
+        else if(args.length > 1) {
+            
+            // read in a grammar_file
+            writer.println("Opening grammar file: " + args[0] + "...");
+            gf = new GrammarFile(args[0], writer);
+            
+            // read in i_o_file
+            writer.println("Opening distribution file: " + args[1] + "...");
+            df = new DistFile(args[1], writer);
+            //  df.phono = false;
+            
+            writer.println("Now parsing remaining arguments");
+            writer.println("Setting iterations to: " + args[2]);
+            iterations = Integer.parseInt(args[2]);
+            writer.println("Setting Final Evaluation Sample Size to: " + args[3]);
+            final_eval_sample = Integer.parseInt(args[3]);
+            writer.println("Setting learner to: " + args[4]);
+            int learner = Integer.parseInt(args[4]);
+            writer.println("Setting grammar sample size to: " + args[5]);
+            gram_sample_size = Integer.parseInt(args[5]);
+            writer.println("Setting initial bias to: " + args[6]);
+            int init_bias = Integer.parseInt(args[6]);
+            rate = Double.parseDouble(args[7]);
+            if (args.length > 14) {
+                writer.println("Setting print_input? to: " + args[8]);
+                print_input = Integer.parseInt(args[8]);
+                writer.println("Setting final-eval to: " + args[9]);
+                final_eval = Integer.parseInt(args[9]);
+                writer.println("Setting mini-eval to: " + args[10]);
+                mini_eval = Integer.parseInt(args[10]);
+                writer.println("Setting mini-eval-freq to: " + args[11]);
+                mini_eval_freq = Integer.parseInt(args[11]);
+                writer.println("Setting mini-eval-sample to: " + args[12]);
+                mini_eval_sample = Integer.parseInt(args[12]);
+                writer.println("Setting quit_early? to: " + args[13]);
+                quit_early = Integer.parseInt(args[13]);
+                writer.println("Setting quit_early_sample? to: " + args[14]);
+                quit_early_sample = Integer.parseInt(args[14]);
+                if (args.length == 16){
+                    writer.println("Setting max-depth to: " + args[15]);
+                    maxdepth = Integer.parseInt(args[15]);
+                }
+            }
+        }
+        else {
+            writer.println("\nNo args found. Exiting...");
+            System.exit(-1);
+            return;
+        }
+        writer.println("Finished parsing all the arguments");
+        
+        if (print_input == 0) {
+            writer.println("\nSTARTING LEXICON:\n" + df);
+        }
+        // initialize grammar to uniform - make ll_grammar
+        gr = new RandomExtension(gf, writer);
+        prior = new RandomExtension(gf, writer);
+        prior.bias_grammar();
+        if (init_bias == 1) {
+            gr.bias_grammar();
+        }
+        if (print_input == 0) {
+            writer.println("\nSTARTING GRAMMAR:\n" + gr);
+        }
+        
+        writer.println("\nVIOLATION VECTORS FOR THE FIRST TABLEAU:");
+        for (int j = 0; j < gf.tableaux[0].cands.length; j++) {
+            writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
+        }
+        
+        if (learner == 1) {
+            EDL_batch();
+        } else if (learner == 2) {
+            EDL_online();
+        }
     }
-
+    
     public static void EDL_batch() {
-	// there are i iterations (passes through the full data set)
-
-	double prev_error = 1000.0;
-	int i = 0;
-	for (i = 0; i < iterations; i++) {
-	    if (i % mini_eval_freq == 0 ) {
-		writer.println("Starting iteration " + i);
-	    }
-	    //to store successes for each output
-	    double[][][] sum = new double[gr.grammar.length][gr.grammar.length][df.outputs.length];
-
-	    //for each parameter value ...
-	    for (int r = 0; r < gr.grammar.length; r++) {
-		for (int c = 0; c < r; c++) {
-		    double old_rc = gr.grammar[r][c];
-		    double old_cr = gr.grammar[c][r];
-
-		    if (gr.grammar[r][c] != 0.0 && gr.grammar[r][c] != 1.0) {
-			//temporarily set r >> c
-			gr.grammar[r][c] = 1.0;
-			gr.grammar[c][r] = 0.0;
-
-			double[][] ext = gr.cloneGrammar();
-			gr.makeMeConsistent(ext);
-
-			double[][] single;
-
-			// generate s samples from the grammar
-			for (int s = 0; s < gram_sample_size; s++) {
-			    single = gr.generate_extension(ext);
-			    if (single != null) {
-				// find the total order corresponding to the sampled matrix
-				int[] rank = gr.find_order(single);
-				//go through each output
-				for (int o = 0; o < df.outputs.length; o++) {
-				    DistFile.Output output = df.outputs[o];
-				    //go through each UR for that output
-				    for (int in = 0; in < output.dist.length; in++) {
-					String input = output.inputs[in];
-					GrammarFile.Tableau tab = find_tab(input); //find the tableau
-					String winner = optimize(input, tab, rank);
-					if (winner.equals(output.form)) {
-					    // this sum divided by a constant (s) estimates the joint probability of o and r>c
-					    sum[r][c][o]++;
-					    
-					}
-				    }
-				}
-			    }
-			}
-			//done sampling r >> c...
-
-			// now temporarily set c >> r
-			gr.grammar[r][c] = 0.0;
-			gr.grammar[c][r] = 1.0;
-			ext = gr.cloneGrammar();
-			gr.makeMeConsistent(ext);
-
-			// generate s samples from the grammar
-			for (int s = 0; s < gram_sample_size; s++) {
-			    single = gr.generate_extension(ext);
-			    if (single != null) {
-				int[] rank = gr.find_order(single);
-				//go through each output
-				for (int o = 0; o < df.outputs.length; o++) {
-				    DistFile.Output output = df.outputs[o];
-				    //go through each UR for the output
-				    for (int in = 0; in < output.dist.length; in++) {
-					String input = output.inputs[in];
-					GrammarFile.Tableau tab = find_tab(input); //find the tableau
-					String winner = optimize(input, tab, rank);
-					if (winner.equals(output.form)) {
-					    // this sum divided by a constant (s) estimates the joint probability of o and c>r
-					    sum[c][r][o]++;
-					}
-				    }
-				}
-			    } 
-			}
-			//done sampling c >> r...
-
-			//done sampling for this parameter, reset grammar
-			gr.grammar[r][c] = old_rc;
-			gr.grammar[c][r] = old_cr;
-		    }
-		}
-	    } //done going through parameters
-
-	    //now going to reset the grammar...
-	    double[][][] output_probs = new double[df.outputs.length][gr.grammar.length][gr.grammar.length];
-	    // for each pairwise ranking
-	    for (int r = 0; r < gr.grammar.length; r++) {
-		for (int c = 0; c < r; c++) {
-		    double rc_sum = 0.0;
-		    double cr_sum = 0.0;
-		    // go through each output
-		    for (int o = 0; o < df.outputs.length; o++) {
-			// o_prob is proportional to the estimated probability of the output given current grammar
-			// smoothing since sometimes with small samples observed output is never sampled, leading to 0 denominator
-			double o_prob = ((double) sum[r][c][o] + .0001) * gr.grammar[r][c] + ((double) sum[c][r][o] + .0001) * gr.grammar[c][r];
-			// estimate expected count of r>c given o multiplied out by frequency
-			double o_rc = (((double) sum[r][c][o] + .0001) * ((double) df.outputs[o].freq)) / ((double) o_prob);
-			// estimate expected count of c>r given o multiplied out by frequency
-			double o_cr = (((double) sum[c][r][o] + .0001) * ((double) df.outputs[o].freq)) / ((double) o_prob);
-			// sum up expected counts over all outputs
-			rc_sum += o_rc;
-			cr_sum += o_cr;
-		    }
-
-		    // update the grammar
-		    gr.grammar[r][c] = ((double) rc_sum * gr.grammar[r][c]) / ((double) rc_sum * gr.grammar[r][c] + (double) cr_sum * gr.grammar[c][r]);
-		    gr.grammar[c][r] = 1 - gr.grammar[r][c];
-		}
-	    }
-
-	    if (!gr.makeMeConsistent()) {
-		writer.println("Grammar is Inconsistent after updating --- Exiting:\n" + gr);
-		System.exit(-1);
-	    }
-
-	    if (i % mini_eval_freq == 0) {
-		if (mini_eval == 0 || mini_eval == 1) {
-		    writer.println("The new grammar is:\n" + gr);
-		}
-		if (i % quit_early != 0) {
-		    evaluate_grammar(mini_eval_sample, i);
-		}
-	    }
-
-	    if (i % quit_early == 0) {
-		if (evaluate_grammar(quit_early_sample, i)) {
-		    writer.println("-reached perfection early ----- exiting now");
-		    i = iterations;
-		    break;
-		}
-	    }
-	} //end of iterations
-
-	//now going to examine final grammar
-	if (final_eval == 0 || final_eval == 1) {
-	    writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-	    writer.println("The final grammar is:\n" + gr);
-	    evaluate_grammar(final_eval_sample, i);
-	}
+        // there are i iterations (passes through the full data set)
+        
+        double prev_error = 1000.0;
+        int i = 0;
+        for (i = 0; i < iterations; i++) {
+            if (i % mini_eval_freq == 0 ) {
+                writer.println("Starting iteration " + i);
+            }
+            //to store successes for each output
+            double[][][] sum = new double[gr.grammar.length][gr.grammar.length][df.outputs.length];
+            
+            //for each parameter value ...
+            for (int r = 0; r < gr.grammar.length; r++) {
+                for (int c = 0; c < r; c++) {
+                    double old_rc = gr.grammar[r][c];
+                    double old_cr = gr.grammar[c][r];
+                    
+                    if (gr.grammar[r][c] != 0.0 && gr.grammar[r][c] != 1.0) {
+                        //temporarily set r >> c
+                        gr.grammar[r][c] = 1.0;
+                        gr.grammar[c][r] = 0.0;
+                        
+                        double[][] ext = gr.cloneGrammar();
+                        gr.makeMeConsistent(ext);
+                        
+                        double[][] single;
+                        
+                        // generate s samples from the grammar
+                        for (int s = 0; s < gram_sample_size; s++) {
+                            single = gr.generate_extension(ext);
+                            if (single != null) {
+                                // find the total order corresponding to the sampled matrix
+                                int[] rank = gr.find_order(single);
+                                //go through each output
+                                for (int o = 0; o < df.outputs.length; o++) {
+                                    DistFile.Output output = df.outputs[o];
+                                    //go through each UR for that output
+                                    for (int in = 0; in < output.dist.length; in++) {
+                                        String input = output.inputs[in];
+                                        GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                                        String winner = optimize(input, tab, rank);
+                                        if (winner.equals(output.form)) {
+                                            // this sum divided by a constant (s) estimates the joint probability of o and r>c
+                                            sum[r][c][o]++;
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //done sampling r >> c...
+                        
+                        // now temporarily set c >> r
+                        gr.grammar[r][c] = 0.0;
+                        gr.grammar[c][r] = 1.0;
+                        ext = gr.cloneGrammar();
+                        gr.makeMeConsistent(ext);
+                        
+                        // generate s samples from the grammar
+                        for (int s = 0; s < gram_sample_size; s++) {
+                            single = gr.generate_extension(ext);
+                            if (single != null) {
+                                int[] rank = gr.find_order(single);
+                                //go through each output
+                                for (int o = 0; o < df.outputs.length; o++) {
+                                    DistFile.Output output = df.outputs[o];
+                                    //go through each UR for the output
+                                    for (int in = 0; in < output.dist.length; in++) {
+                                        String input = output.inputs[in];
+                                        GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                                        String winner = optimize(input, tab, rank);
+                                        if (winner.equals(output.form)) {
+                                            // this sum divided by a constant (s) estimates the joint probability of o and c>r
+                                            sum[c][r][o]++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //done sampling c >> r...
+                        
+                        //done sampling for this parameter, reset grammar
+                        gr.grammar[r][c] = old_rc;
+                        gr.grammar[c][r] = old_cr;
+                    }
+                }
+            } //done going through parameters
+            
+            //now going to reset the grammar...
+            double[][][] output_probs = new double[df.outputs.length][gr.grammar.length][gr.grammar.length];
+            // for each pairwise ranking
+            for (int r = 0; r < gr.grammar.length; r++) {
+                for (int c = 0; c < r; c++) {
+                    double rc_sum = 0.0;
+                    double cr_sum = 0.0;
+                    // go through each output
+                    for (int o = 0; o < df.outputs.length; o++) {
+                        // o_prob is proportional to the estimated probability of the output given current grammar
+                        // smoothing since sometimes with small samples observed output is never sampled, leading to 0 denominator
+                        double o_prob = ((double) sum[r][c][o] + .0001) * gr.grammar[r][c] + ((double) sum[c][r][o] + .0001) * gr.grammar[c][r];
+                        // estimate expected count of r>c given o multiplied out by frequency
+                        double o_rc = (((double) sum[r][c][o] + .0001) * ((double) df.outputs[o].freq)) / ((double) o_prob);
+                        // estimate expected count of c>r given o multiplied out by frequency
+                        double o_cr = (((double) sum[c][r][o] + .0001) * ((double) df.outputs[o].freq)) / ((double) o_prob);
+                        // sum up expected counts over all outputs
+                        rc_sum += o_rc;
+                        cr_sum += o_cr;
+                    }
+                    
+                    // update the grammar
+                    gr.grammar[r][c] = ((double) rc_sum * gr.grammar[r][c]) / ((double) rc_sum * gr.grammar[r][c] + (double) cr_sum * gr.grammar[c][r]);
+                    gr.grammar[c][r] = 1 - gr.grammar[r][c];
+                }
+            }
+            
+            if (!gr.makeMeConsistent()) {
+                writer.println("Grammar is Inconsistent after updating --- Exiting:\n" + gr);
+                System.exit(-1);
+            }
+            
+            if (i % mini_eval_freq == 0) {
+                if (mini_eval == 0 || mini_eval == 1) {
+                    writer.println("The new grammar is:\n" + gr);
+                }
+                if (i % quit_early != 0) {
+                    evaluate_grammar(mini_eval_sample, i);
+                }
+            }
+            
+            if (i % quit_early == 0) {
+                if (evaluate_grammar(quit_early_sample, i)) {
+                    writer.println("-reached perfection early ----- exiting now");
+                    i = iterations;
+                    break;
+                }
+            }
+        } //end of iterations
+        
+        //now going to examine final grammar
+        if (final_eval == 0 || final_eval == 1) {
+            writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
+            writer.println("The final grammar is:\n" + gr);
+            evaluate_grammar(final_eval_sample, i);
+        }
     }
-
+    
     public static void EDL_online() {
-
-	// sample a ranking
-	double[][] single = gr.generate_extension();
-	int i = 0;
-	// there are i iterations of sampling and updating
-	for (i = 0; i < iterations; i++) {
-	    if (i % mini_eval_freq == 0) {
-		writer.println("Starting iteration " + i);
-	    }
-	    double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
-
-	    //sample one output form
-	    DistFile.Output output = null;
-	    String winner = "tat";
-	    double rand = Math.random();
-	    int o_index = 0;
-	    for (int o = 0; o < df.outputs.length; o++) {
-		rand -= df.outputs[o].relfreq;
-		if (rand <= 0) {
-		    output = df.outputs[o];
-		    o_index = o;
-		    break;
-		}
-	    }
-	    //writer.println("Sampled output form: " + output.form);
-
-	    //sample a ur for the output form
-	    String input = "";
-	    rand = Math.random();
-	    for (int in = 0; in < output.dist.length; in++) {
-		rand -= output.dist[in];
-		if (rand <= 0) {
-		    input = output.inputs[in];
-		    break;
-		}
-	    }
-	    //writer.println("\tSampled a UR form: " + input);
-
-	    // this keeps track of how many samples are successful at generating the observed output for each pairwise ranking
-	    double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
-
-	    // go through each pairwise ranking
-	    for (int r = 0; r < gr.grammar.length; r++) {
-		for (int c = 0; c < r; c++) {
-
-		    // if this ranking hasn't already been categorically set, consider both pairwise rankings
-		    if ((gr.grammar[r][c] == 0) || (gr.grammar[r][c] == 1)) {
-			output_counts[r][c] = gr.grammar[r][c];
-			output_counts[c][r] = gr.grammar[c][r];
-		    } else {
-
-			double old_rc = gr.grammar[r][c];
-			double old_cr = gr.grammar[c][r];
-
-			// temporarily set r >> c in a copied grammar ext
-			gr.grammar[r][c] = 1.0;
-			gr.grammar[c][r] = 0.0;
-			double[][] ext = gr.cloneGrammar();
-			gr.makeMeConsistent(ext);
-
-			// take s samples from temporary grammar and count matches
-			for (int s = 0; s < gram_sample_size; s++) {
-			    single = gr.generate_extension(ext);
-			    if (single != null) {
-				int[] rank = gr.find_order(single);
-				if (rank != null) {
-				    //compute learner's winner and compare to actual output
-				    GrammarFile.Tableau tab = find_tab(input); //find the tableau
-				    winner = optimize(input, tab, rank);
-				    if (winner.equals(output.form)) {
-					output_counts[r][c]++;
-				    }
-				} else {
-				    writer.println("Rank was nULL!");
-				}
-			    }
-			}
-
-			// temporarily set the grammar the other way
-			gr.grammar[r][c] = 0.0;
-			gr.grammar[c][r] = 1.0;
-			ext = gr.cloneGrammar();
-			gr.makeMeConsistent(ext);
-
-			// take s samples and count number of matches
-			for (int s = 0; s < gram_sample_size; s++) {
-			    single = gr.generate_extension(ext);
-			    if (single != null) {
-				int[] rank = gr.find_order(single);
-				if (rank != null) {
-				    //compute learner's winner and compare to actual output
-				    GrammarFile.Tableau tab = find_tab(input); //find the tableau
-				    winner = optimize(input, tab, rank);
-				    //if equal, add matrix of ranking into collected samples
-				    if (winner.equals(output.form)) {
-					//writer.println("\t\t" + output.form + " was correctly generated as " + winner);
-					output_counts[c][r]++;
-				    }
-				} else {
-				    writer.println("Rank was nULL!");
-				}
-			    }
-			}
-			//reset grammar to original state
-			gr.grammar[r][c] = old_rc;
-			gr.grammar[c][r] = old_cr;
-		    }
-		}
-	    }
-
-	    // update each pairwise ranking based on number of successes it got
-	    for (int r = 0; r < gr.grammar.length; r++) {
-		for (int c = 0; c < r; c++) {
-		    double rc_o = 0.0;
-		    double cr_o = 0.0;
-
-		    // o_prob is proportional to estimated probability of the output
-		    double o_prob = (((double) output_counts[r][c])+ .0001) * gr.grammar[r][c] + (((double) output_counts[c][r])+ .0001) * gr.grammar[c][r];
-
-		    // estimated probability of r>>c given output
-		    rc_o = ((double) output_counts[r][c]+ .0001) / ((double) o_prob);
-		    // estimated probability of c>>r given output
-		    cr_o = ((double) output_counts[c][r]+ .0001) / ((double) o_prob);
-		  			
-		    double new_rc;
-		    new_rc = (((double) rc_o) * gr.grammar[r][c]) / (((double) rc_o) * gr.grammar[r][c] + ((double) cr_o) * gr.grammar[c][r]);
-		     
-		    //make a small update since we're processing only one output per update
-		    //go part of the way that EM would want
-		    gr.grammar[r][c] = (1 - rate) * gr.grammar[r][c] + rate * new_rc;
-		    gr.grammar[c][r] = 1 - gr.grammar[r][c];
-		}
-	    }
-
-	    if (!gr.makeMeConsistent()) {
-		writer.println("Updated Grammar is Inconsistent --- Exiting:\n" + gr);
-		System.exit(-1);
-	    }
-
-	    if (i % mini_eval_freq == 0) {
-		if (mini_eval == 0 || mini_eval == 1) {
-		    writer.println("The new grammar is:\n" + gr);
-		}
-		if (i % quit_early != 0) {
-		    evaluate_grammar(mini_eval_sample, i);
-		}
-	    }
-	    if (i % quit_early == 0) {
-		if (evaluate_grammar(quit_early_sample, i)) {
-		    writer.println("-reached perfection early ----- exiting now");
-		    i = iterations;
-		    break;
-		}
-	    }
-	}
-
-	//now going to examine resulting grammar
-	if (final_eval == 0 || final_eval == 1) {
-	    writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
-	    writer.println("The final grammar is:\n" + gr);
-	    evaluate_grammar(final_eval_sample, i);
-	}
+        
+        // sample a ranking
+        double[][] single = gr.generate_extension();
+        int i = 0;
+        // there are i iterations of sampling and updating
+        for (i = 0; i < iterations; i++) {
+            if (i % mini_eval_freq == 0) {
+                writer.println("Starting iteration " + i);
+            }
+            double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
+            
+            //sample one output form
+            DistFile.Output output = null;
+            String winner = "tat";
+            double rand = Math.random();
+            int o_index = 0;
+            for (int o = 0; o < df.outputs.length; o++) {
+                rand -= df.outputs[o].relfreq;
+                if (rand <= 0) {
+                    output = df.outputs[o];
+                    o_index = o;
+                    break;
+                }
+            }
+            //writer.println("Sampled output form: " + output.form);
+            
+            //sample a ur for the output form
+            String input = "";
+            rand = Math.random();
+            for (int in = 0; in < output.dist.length; in++) {
+                rand -= output.dist[in];
+                if (rand <= 0) {
+                    input = output.inputs[in];
+                    break;
+                }
+            }
+            //writer.println("\tSampled a UR form: " + input);
+            
+            // this keeps track of how many samples are successful at generating the observed output for each pairwise ranking
+            double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
+            
+            // go through each pairwise ranking
+            for (int r = 0; r < gr.grammar.length; r++) {
+                for (int c = 0; c < r; c++) {
+                    
+                    // if this ranking hasn't already been categorically set, consider both pairwise rankings
+                    if ((gr.grammar[r][c] == 0) || (gr.grammar[r][c] == 1)) {
+                        output_counts[r][c] = gr.grammar[r][c];
+                        output_counts[c][r] = gr.grammar[c][r];
+                    } else {
+                        
+                        double old_rc = gr.grammar[r][c];
+                        double old_cr = gr.grammar[c][r];
+                        
+                        // temporarily set r >> c in a copied grammar ext
+                        gr.grammar[r][c] = 1.0;
+                        gr.grammar[c][r] = 0.0;
+                        double[][] ext = gr.cloneGrammar();
+                        gr.makeMeConsistent(ext);
+                        
+                        // take s samples from temporary grammar and count matches
+                        for (int s = 0; s < gram_sample_size; s++) {
+                            single = gr.generate_extension(ext);
+                            if (single != null) {
+                                int[] rank = gr.find_order(single);
+                                if (rank != null) {
+                                    //compute learner's winner and compare to actual output
+                                    GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                                    winner = optimize(input, tab, rank);
+                                    if (winner.equals(output.form)) {
+                                        output_counts[r][c]++;
+                                    }
+                                } else {
+                                    writer.println("Rank was nULL!");
+                                }
+                            }
+                        }
+                        
+                        // temporarily set the grammar the other way
+                        gr.grammar[r][c] = 0.0;
+                        gr.grammar[c][r] = 1.0;
+                        ext = gr.cloneGrammar();
+                        gr.makeMeConsistent(ext);
+                        
+                        // take s samples and count number of matches
+                        for (int s = 0; s < gram_sample_size; s++) {
+                            single = gr.generate_extension(ext);
+                            if (single != null) {
+                                int[] rank = gr.find_order(single);
+                                if (rank != null) {
+                                    //compute learner's winner and compare to actual output
+                                    GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                                    winner = optimize(input, tab, rank);
+                                    //if equal, add matrix of ranking into collected samples
+                                    if (winner.equals(output.form)) {
+                                        //writer.println("\t\t" + output.form + " was correctly generated as " + winner);
+                                        output_counts[c][r]++;
+                                    }
+                                } else {
+                                    writer.println("Rank was nULL!");
+                                }
+                            }
+                        }
+                        //reset grammar to original state
+                        gr.grammar[r][c] = old_rc;
+                        gr.grammar[c][r] = old_cr;
+                    }
+                }
+            }
+            
+            // update each pairwise ranking based on number of successes it got
+            for (int r = 0; r < gr.grammar.length; r++) {
+                for (int c = 0; c < r; c++) {
+                    double rc_o = 0.0;
+                    double cr_o = 0.0;
+                    
+                    // o_prob is proportional to estimated probability of the output
+                    double o_prob = (((double) output_counts[r][c])+ .0001) * gr.grammar[r][c] + (((double) output_counts[c][r])+ .0001) * gr.grammar[c][r];
+                    
+                    // estimated probability of r>>c given output
+                    rc_o = ((double) output_counts[r][c]+ .0001) / ((double) o_prob);
+                    // estimated probability of c>>r given output
+                    cr_o = ((double) output_counts[c][r]+ .0001) / ((double) o_prob);
+                    
+                    double new_rc;
+                    new_rc = (((double) rc_o) * gr.grammar[r][c]) / (((double) rc_o) * gr.grammar[r][c] + ((double) cr_o) * gr.grammar[c][r]);
+                    
+                    //make a small update since we're processing only one output per update
+                    //go part of the way that EM would want
+                    gr.grammar[r][c] = (1 - rate) * gr.grammar[r][c] + rate * new_rc;
+                    gr.grammar[c][r] = 1 - gr.grammar[r][c];
+                }
+            }
+            
+            if (!gr.makeMeConsistent()) {
+                writer.println("Updated Grammar is Inconsistent --- Exiting:\n" + gr);
+                System.exit(-1);
+            }
+            
+            if (i % mini_eval_freq == 0) {
+                if (mini_eval == 0 || mini_eval == 1) {
+                    writer.println("The new grammar is:\n" + gr);
+                }
+                if (i % quit_early != 0) {
+                    evaluate_grammar(mini_eval_sample, i);
+                }
+            }
+            if (i % quit_early == 0) {
+                if (evaluate_grammar(quit_early_sample, i)) {
+                    writer.println("-reached perfection early ----- exiting now");
+                    i = iterations;
+                    break;
+                }
+            }
+        }
+        
+        //now going to examine resulting grammar
+        if (final_eval == 0 || final_eval == 1) {
+            writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
+            writer.println("The final grammar is:\n" + gr);
+            evaluate_grammar(final_eval_sample, i);
+        }
     }
-
+    
     public static boolean evaluate_grammar(int s, int i) {
-	//now going to examine resulting grammar
-	double log_likelihood = 0;
-	int tot = 0;
-	int corr = 0;
-	double error = 0.0;
-	for (int o = 0; o < df.outputs.length; o++) { //for each output form
-
-	    DistFile.Output output = null;
-	    String winner = "";
-	    double rand = Math.random();
-	    output = df.outputs[o];
-
-	    //sample s times to check distribution
-	    for (int c = 0; c < s; c++) {
-		//sample a ur for the output form
-		String input = "";
-		rand = Math.random();
-		for (int in = 0; in < output.dist.length; in++) {
-		    rand -= output.dist[in];
-		    if (rand < 0) {
-			input = output.inputs[in];
-			break;
-		    }
-		}
-		//sample a random ranking
-		double[][] single = gr.generate_extension();
-		if (single != null) {
-		    int[] rank = gr.find_order(single);
-		    //compute learner's winner and compare to actual output
-
-		    GrammarFile.Tableau tab = find_tab(input); //find the tableau
-		    winner = optimize(input, tab, rank);
-		    //if equal, add matrix of ranking into collected samples
-		    if (winner.equals(output.form)) {
-			corr++;
-		    }
-		    tot++;
-		}
-	    }
-	    if (i % mini_eval_freq == 0) {
-		if (mini_eval == 0) {
-		    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
-		}
-	    }else{
-		if (i == iterations) {
-		    if (final_eval == 0) {
-			writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
-		    }
-	    	}
-	    }
-	    log_likelihood += Math.log(((float) corr / tot)) * output.freq;
-	    error += (((double) tot - (double) corr) / tot) * (double) output.freq;
-	    corr = 0;
-	    tot = 0;
-	}
-	if (i == iterations) {
-	    if (final_eval == 0 || final_eval == 1) {
-		writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
-	    }
-	}else{
-	    if (i % mini_eval_freq == 0) {
-		writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
-	    }
-	}
-	double recent_error = error;
-	if (error == 0.0) {
-	    return true;
-	} else {
-	    return false;
-	}
+        //now going to examine resulting grammar
+        double log_likelihood = 0;
+        int tot = 0;
+        int corr = 0;
+        double error = 0.0;
+        for (int o = 0; o < df.outputs.length; o++) { //for each output form
+            
+            DistFile.Output output = null;
+            String winner = "";
+            double rand = Math.random();
+            output = df.outputs[o];
+            
+            //sample s times to check distribution
+            for (int c = 0; c < s; c++) {
+                //sample a ur for the output form
+                String input = "";
+                rand = Math.random();
+                for (int in = 0; in < output.dist.length; in++) {
+                    rand -= output.dist[in];
+                    if (rand < 0) {
+                        input = output.inputs[in];
+                        break;
+                    }
+                }
+                //sample a random ranking
+                double[][] single = gr.generate_extension();
+                if (single != null) {
+                    int[] rank = gr.find_order(single);
+                    //compute learner's winner and compare to actual output
+                    
+                    GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                    winner = optimize(input, tab, rank);
+                    //if equal, add matrix of ranking into collected samples
+                    if (winner.equals(output.form)) {
+                        corr++;
+                    }
+                    tot++;
+                }
+            }
+            if (i % mini_eval_freq == 0) {
+                if (mini_eval == 0) {
+                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
+                }
+            }else{
+                if (i == iterations) {
+                    if (final_eval == 0) {
+                        writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
+                    }
+                }
+            }
+            log_likelihood += Math.log(((float) corr / tot)) * output.freq;
+            error += (((double) tot - (double) corr) / tot) * (double) output.freq;
+            corr = 0;
+            tot = 0;
+        }
+        if (i == iterations) {
+            if (final_eval == 0 || final_eval == 1) {
+                writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
+            }
+        }else{
+            if (i % mini_eval_freq == 0) {
+                writer.println("ITERATION " + i + ":: Total error is " + error + " and log likelihood is " + log_likelihood);
+            }
+        }
+        double recent_error = error;
+        if (error == 0.0) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
+    
     public static String optimize(String input, GrammarFile.Tableau tab, int[] rank) {
         String w = prevFound(rank,input);
-	if (w!=""){
-	    return w;
-	} else {
-	    List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
-	    int stop = rank.length;
-
-	    for (int j = 0; j < rank.length; j++) {
-		//figuring out minimum violation for remaining candidates
-		int min_vios = -1;
-		List<Integer> cwinners = new LinkedList<Integer>(); //tracks winning candidates for each constraint
-		for (int i: winners) {
-		    if (min_vios == -1) {
-			min_vios = tab.cands[i].violations[rank[j]];
-			cwinners.add(i); //add the first remaining candidate to cwinner
-		    } else if (tab.cands[i].violations[rank[j]] < min_vios) {
-			//If you find a new minimum number of violations for this constraint, current candidate
-			//becomes the best candidate
-			min_vios = tab.cands[i].violations[rank[j]];
-			cwinners.clear(); //remove previous winners (they have more violations)
-			cwinners.add(i);
-		    } else if (tab.cands[i].violations[rank[j]] == min_vios) {
-			//add current candidate to winners if it has an equal number of violations as the minimum
-			cwinners.add(i);
-		    }
-		}
-		if (cwinners.size() > 0) {
-		    winners = cwinners; //remove winners that are not winners on this constraint
-		}
-		if (winners.size() < 2 || cwinners.size() == 0) {
-		    //If there is only one remaining candidate or all candidates have been eliminated
-		    stop = j;
-		    break;
-		}
-	    }
-	    String winner = tab.cands[winners.get(0)].oform; //If there are more than one winners, this chooses the last one in tableau
-	    track(stop, rank, winner, input); //Add to prefix tree to avoid repeat calculations
-	    return winner;
-	}
+        if (w!=""){
+            return w;
+        } else {
+            List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
+            int stop = rank.length;
+            
+            for (int j = 0; j < rank.length; j++) {
+                //figuring out minimum violation for remaining candidates
+                int min_vios = -1;
+                List<Integer> cwinners = new LinkedList<Integer>(); //tracks winning candidates for each constraint
+                for (int i: winners) {
+                    if (min_vios == -1) {
+                        min_vios = tab.cands[i].violations[rank[j]];
+                        cwinners.add(i); //add the first remaining candidate to cwinner
+                    } else if (tab.cands[i].violations[rank[j]] < min_vios) {
+                        //If you find a new minimum number of violations for this constraint, current candidate
+                        //becomes the best candidate
+                        min_vios = tab.cands[i].violations[rank[j]];
+                        cwinners.clear(); //remove previous winners (they have more violations)
+                        cwinners.add(i);
+                    } else if (tab.cands[i].violations[rank[j]] == min_vios) {
+                        //add current candidate to winners if it has an equal number of violations as the minimum
+                        cwinners.add(i);
+                    }
+                }
+                if (cwinners.size() > 0) {
+                    winners = cwinners; //remove winners that are not winners on this constraint
+                }
+                if (winners.size() < 2 || cwinners.size() == 0) {
+                    //If there is only one remaining candidate or all candidates have been eliminated
+                    stop = j;
+                    break;
+                }
+            }
+            String winner = tab.cands[winners.get(0)].oform; //If there are more than one winners, this chooses the last one in tableau
+            track(stop, rank, winner, input); //Add to prefix tree to avoid repeat calculations
+            return winner;
+        }
     }
-
+    
     public static String prevFound(int[] rank, String input) {
-	//returns the previously found winner if there is one
-	String winner = "";
-	if (intable.containsKey(input)) {
-	    PrefixTree ptree = intable.get(input);
-	    winner = ptree.find(rank); //retrieve stored winner from prefixTree
-	    if(winner!=null){
-		//writer.println("Found something!"+winner);
-	    } else{
-		winner = "";
-	    }
-	}
-	return winner;
+        //returns the previously found winner if there is one
+        String winner = "";
+        if (intable.containsKey(input)) {
+            PrefixTree ptree = intable.get(input);
+            winner = ptree.find(rank); //retrieve stored winner from prefixTree
+            if(winner!=null){
+                //writer.println("Found something!"+winner);
+            } else{
+                winner = "";
+            }
+        }
+        return winner;
     }
-
+    
     public static void track(int stop, int[] rank, String winner, String input){
-	//Keeps track of the prefix tree for each input
-	if(intable.containsKey(input)) {
-	    //writer.println("Already contains!");
-	}else{
-	    //Add to table of input / prefix tree pairs if not already in table
-	    intable.put(input, new PrefixTree(rank.length));
-	}
-	PrefixTree ptree = intable.get(input);
-	if (stop < maxdepth) {
-	    //If maxdepth not exceeded:
-	    int[] pre = Arrays.copyOfRange(rank, 0, stop + 1);
-	    ptree.put(pre, winner); //insert winner in prefix tree at prefix pre
-	}
+        //Keeps track of the prefix tree for each input
+        if(intable.containsKey(input)) {
+            //writer.println("Already contains!");
+        }else{
+            //Add to table of input / prefix tree pairs if not already in table
+            intable.put(input, new PrefixTree(rank.length));
+        }
+        PrefixTree ptree = intable.get(input);
+        if (stop < maxdepth) {
+            //If maxdepth not exceeded:
+            int[] pre = Arrays.copyOfRange(rank, 0, stop + 1);
+            ptree.put(pre, winner); //insert winner in prefix tree at prefix pre
+        }
     }
-
+    
     public static List<Integer> initializeList(int l){
-	List<Integer> winners = new ArrayList<Integer>();
-	for (int k = 0; k < l; k++){
-	    winners.add(k);
-	}
-	return winners;
+        List<Integer> winners = new ArrayList<Integer>();
+        for (int k = 0; k < l; k++){
+            winners.add(k);
+        }
+        return winners;
     }
-
+    
     public static GrammarFile.Tableau find_tab(String input) {
         //find the tableau
         GrammarFile.Tableau tab = null;
@@ -582,7 +703,7 @@ public class EDL {
             }
             tabtable.put(input, tab);
         }
-	return tab;
+        return tab;
     }
 }
 
