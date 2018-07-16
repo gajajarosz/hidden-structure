@@ -4,12 +4,12 @@ package learner;
 import java.util.Arrays;
 
 public class learn {
-
+    
     public static void main(String[] args) {
-        if (args.length < 8) {
-            System.out.println("Too few arguments have been specified to run the program. Exiting...\nusage: run learner grammar_file dist_file iterations fin_sample learner_type grammar_sample_size init_bias (print args) (maxdepth)");
-            System.exit(-1);
-        }
+        /*if (args.length < 8) {
+         System.out.println("Too few arguments have been specified to run the program. Exiting...\nusage: run learner grammar_file dist_file iterations fin_sample learner_type grammar_sample_size init_bias (print args) (maxdepth)");
+         System.exit(-1);
+         }*/
         String[] argslist = Arrays.copyOfRange(args,1,args.length);
         System.out.println(args[0]);
         if (args[0].equals("EDL")) {
@@ -21,5 +21,5 @@ public class learn {
             System.exit(-1);
         }
     }
-
+    
 }
