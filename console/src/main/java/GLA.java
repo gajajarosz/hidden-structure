@@ -3,9 +3,12 @@ package learner;
 // usage: java GLA grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)
 // learner - {EIP, RIP, randRIP, RRIP}
 // model - {OT, HG, ME}
+import java.util.*;
+import java.io.*;
+import java.util.regex.*;
 
 public class GLA {
-
+    
     //class variables
     public static DistFile df;
     public static GrammarFile gf;
@@ -26,69 +29,174 @@ public class GLA {
     public static int quit_early_sample = 100;
     public static int print_input = 0;
     public static Writer writer = new SystemWriter();
-
+    public static BufferedReader stream;
+    
     public static void main(String[] args) {
-        if (args.length < 10) {
-            writer.println("Too few arguments have been provided to run the program. Exiting...\nusage: run grammar_file dist_file num_samples final_eval_sample learner model learning_rate noise bias NegOK? (print parameters)");
+        if(args.length == 1) {
+            System.out.println("Opening parameter file: " + args[0] + "...");
+            
+            try {
+                stream = new BufferedReader(new FileReader(args[0]));
+            } catch (IOException ioe) {
+                writer.println(ioe + "\nUnable to find the parameter file with the name " + args[0] + ". Exiting...");
+                System.exit(-1);
+                return;
+            }
+            
+            try {
+                String line;
+                Pattern pattern = Pattern.compile("^\"(.+)\"\\s+:\\s+(.+).*$");
+                
+                while ((line = stream.readLine()) != null) {
+                    Matcher m1 = pattern.matcher(line);
+                    if (m1.matches()) {
+                        String parameter = m1.group(1);
+                        writer.println("Parameter is:___" + parameter + "___");
+                        
+                        if (parameter.equals("GRAMMAR_FILE")) {
+                            String gramdirectory = m1.group(2);
+                            writer.println("Opening grammar file: " + gramdirectory + "...");
+                            gf = new GrammarFile(gramdirectory, writer);
+                        } else if (parameter.equals("DIST_FILE")) {
+                            String distdirectory = m1.group(2);
+                            writer.println("Opening distribution file: " + distdirectory + "...");
+                            df = new DistFile(distdirectory, writer);
+                            
+                        } else if (parameter.equals("NUM_SAMPLES")) {
+                            num_samples = Integer.valueOf(m1.group(2));
+                            writer.println("Setting number of samples to: " + num_samples);
+                            
+                        } else if (parameter.equals("FINAL_EVAL_SAMPLE")) {
+                            final_eval_sample = Integer.valueOf(m1.group(2));
+                            writer.println("Setting final evaluation sample to: " + final_eval_sample);
+                            
+                        } else if (parameter.equals("LEARNING_MODEL")) {
+                            model = String.valueOf(m1.group(2));
+                            writer.println("Setting learning model to: " + model);
+                            
+                        } else if (parameter.equals("LEARNER")) {
+                            learner = String.valueOf(m1.group(2));
+                            writer.println("Setting learner to: " + learner);
+                            
+                        } else if (parameter.equals("LEARNING_RATE")) {
+                            rate = Double.parseDouble(m1.group(2));
+                            writer.println("Setting learning rate to: " + rate);
+                            
+                        } else if (parameter.equals("NOISE_BIAS")) {
+                            noise = Double.parseDouble(m1.group(2));
+                            writer.println("Setting noise bias to: " + noise);
+                            
+                        } else if (parameter.equals("INITIAL_BIAS")) {
+                            bias = Integer.valueOf(m1.group(2));
+                            writer.println("Setting initial bias to: " + bias);
+                            
+                        } else if (parameter.equals("NEGOK")) {
+                            NegOK = Boolean.valueOf(m1.group(2));
+                            writer.println("Setting NEGOK to: " + NegOK);
+                            
+                        } else if (parameter.equals("FINAL_EVAL")) {
+                            final_eval = Integer.valueOf(m1.group(2));
+                            writer.println("Setting final evaluation sample size to: " + final_eval);
+                            
+                        } else if (parameter.equals("MINI_EVAL")) {
+                            mini_eval = Integer.valueOf(m1.group(2));
+                            writer.println("Setting mini evaluation size to: " + mini_eval);
+                            
+                        } else if (parameter.equals("MINI_EVAL_FREQ")) {
+                            mini_eval_freq = Integer.valueOf(m1.group(2));
+                            writer.println("Setting mini evaluation frequency to: " + mini_eval_freq);
+                            
+                        } else if (parameter.equals("MINI_EVAL_SAMPLE")) {
+                            mini_eval_sample = Integer.valueOf(m1.group(2));
+                            writer.println("Setting mini evaluation sample to: " + mini_eval_sample);
+                            
+                        } else if (parameter.equals("QUIT_EARLY")) {
+                            quit_early = Integer.valueOf(m1.group(2));
+                            writer.println("Setting quit_early to: " + quit_early);
+                            
+                        } else if (parameter.equals("QUIT_EARLY_SAMPLE")) {
+                            quit_early_sample = Integer.valueOf(m1.group(2));
+                            writer.println("Setting quit early sample to: " + quit_early_sample);
+                            
+                        } else if (parameter.equals("PRINT_INPUT")) {
+                            print_input = Integer.valueOf(m1.group(2));
+                            writer.println("Setting print input to: " + print_input);
+                            
+                        } else {
+                            writer.println("The following lines from the parameter file do not match the specified format and will be ignored: \n>>>" + line);
+                        }
+                    }
+                }
+                
+            } catch (IOException ioe) {
+                writer.println(ioe + "\nError reading the parameter file: " + args[0] + ". Exiting...");
+                System.exit(-1);
+            }
+            
+        }
+        else if(args.length > 1) {
+            System.out.println("Paramter file not in use. Moving on " + args[0] + "...");
+            writer.println("Opening grammar file: " + args[0] + "...");
+            gf = new GrammarFile(args[0], writer);
+            
+            writer.println("Opening distribution file: " + args[1] + "...");
+            df = new DistFile(args[1], writer);
+            
+            writer.println("Now parsing remaining arguments");
+            num_samples = Integer.parseInt(args[2]);
+            final_eval_sample = Integer.parseInt(args[3]);
+            learner = args[4];
+            model = args[5];
+            rate = Double.parseDouble(args[6]);
+            noise = Double.parseDouble(args[7]);
+            bias = Integer.parseInt(args[8]);
+            NegOK = Boolean.parseBoolean(args[9]);
+            writer.println(args.length);
+            
+            if (args.length == 17) {
+                writer.println("Setting print_input? to: " + args[10]);
+                print_input = Integer.parseInt(args[10]);
+                writer.println("Setting final-eval to: " + args[11]);
+                final_eval = Integer.parseInt(args[11]);
+                writer.println("Setting mini-eval to: " + args[12]);
+                mini_eval = Integer.parseInt(args[12]);
+                writer.println("Setting mini-eval-freq to: " + args[13]);
+                mini_eval_freq = Integer.parseInt(args[13]);
+                writer.println("Setting mini-eval-sample to: " + args[14]);
+                mini_eval_sample = Integer.parseInt(args[14]);
+                writer.println("Setting quit_early? to: " + args[15]);
+                quit_early = Integer.parseInt(args[15]);
+                writer.println("Setting quit_early_sample? to: " + args[16]);
+                quit_early_sample = Integer.parseInt(args[16]);
+            }
+        }
+        else {
+            writer.println("\nNo args found. Exiting...");
             System.exit(-1);
+            return;
         }
-
-        // read in a grammar_file
-	writer.println("Opening grammar file: " + args[0] + "...");
-        gf = new GrammarFile(args[0], writer);
-
-        // read in i_o_file
-	writer.println("Opening distribution file: " + args[1] + "...");
-        df = new DistFile(args[1], writer);
-
-	writer.println("Now parsing remaining arguments");
-        num_samples = Integer.parseInt(args[2]);
-        final_eval_sample = Integer.parseInt(args[3]);
-        learner = args[4];
-        model = args[5];
-        rate = Double.parseDouble(args[6]);
-        noise = Double.parseDouble(args[7]);
-        bias = Integer.parseInt(args[8]);
-        NegOK = Boolean.parseBoolean(args[9]);
-        writer.println(args.length);
-        if (args.length == 17) {
-	    writer.println("Setting print_input? to: " + args[10]);
-            print_input = Integer.parseInt(args[10]);
-	    writer.println("Setting final-eval to: " + args[11]);		    
-	    final_eval = Integer.parseInt(args[11]);
-	    writer.println("Setting mini-eval to: " + args[12]);
-            mini_eval = Integer.parseInt(args[12]);
-	    writer.println("Setting mini-eval-freq to: " + args[13]);
-	    mini_eval_freq = Integer.parseInt(args[13]);
-	    writer.println("Setting mini-eval-sample to: " + args[14]);
-            mini_eval_sample = Integer.parseInt(args[14]);
-	    writer.println("Setting quit_early? to: " + args[15]);
-	    quit_early = Integer.parseInt(args[15]);
-            writer.println("Setting quit_early_sample? to: " + args[16]);
-	    quit_early_sample = Integer.parseInt(args[16]);
-        }
-
-	writer.println("Finished parsing all the arguments");
-
+        
+        writer.println("Finished parsing all the arguments");
+        
         //initialize to uniform grammar
         gr = new STOT(gf);
         if (bias == 1) {
             gr.bias_grammar();
         }
-
+        
         if (print_input == 0) {
             writer.println("\nSTARTING LEXICON:\n" + df);
             writer.println("\nSTARTING GRAMMAR:\n" + gr.gramToString(gr.grammar));
         }
         learn_new_RIP();
     }
-
+    
     public static void learn_new_RIP() {
         double r = rate;
         int fail = 0;
         double[] single = gr.sample(NegOK, noise);
         double[] orig_single = single;
-
+        
         // there are i iterations of sampling and updating
         int i = 0;
         for (i = 0; i < num_samples; i++) {
@@ -96,7 +204,7 @@ public class GLA {
                 writer.println("Starting iteration " + i);
             }
             fail = 0;
-
+            
             //sample an output form: output
             DistFile.Output output = null;
             GrammarFile.Candidate winner = null;
@@ -109,7 +217,7 @@ public class GLA {
                     break;
                 }
             }
-
+            
             //sample a ur for the output form: input
             String input = "";
             rand = Math.random();
@@ -120,14 +228,14 @@ public class GLA {
                     break;
                 }
             }
-
+            
             //sample the current grammar's output for this form: optimal
             GrammarFile.Candidate optimal = null;
             single = gr.sample(NegOK, noise);
             if (learner.equals("Baseline")) {
                 single = gr.grammar;
             }
-
+            
             int[] rank = gr.find_order(single);
             if (model.equals("OT")) {
                 optimal = optimize(null, input, rank);
@@ -136,7 +244,7 @@ public class GLA {
             } else {
                 optimal = optimizeME(null, input, gr.grammar);
             }
-	    
+            
             if ((learner.equals("RIP")) || (learner.equals("RRIP"))) {
                 //make a temporary tableau for this output
                 GrammarFile.Tableau tab = new GrammarFile.Tableau();
@@ -149,7 +257,7 @@ public class GLA {
                             cand_length++;
                         }
                     }
-
+                    
                 }
                 tab.cands = new GrammarFile.Candidate[cand_length];
                 for (int k = 0; k < cand_length; k++) {
@@ -164,9 +272,9 @@ public class GLA {
                 } else {
                     wouldhavebeen = optimizeME(tab, input, gr.grammar);
                 }
-
+                
                 winner = wouldhavebeen;
-
+                
                 if (learner.equals("RRIP")) {
                     //RIP...
                     single = gr.sample(NegOK, noise);//resample
@@ -181,7 +289,7 @@ public class GLA {
                         winner = optimizeME(tab, input, gr.grammar);
                     }
                 }
-
+                
                 if (optimal.form.equals(winner.form)) {
                     //writer.println("RIPPed parse = " + winner.form + " matches Optimal = " + optimal.form);
                 } else {
@@ -196,7 +304,7 @@ public class GLA {
                         }
                     }
                 }
-
+                
             } else { // This is either EIP or randRIP or Baseline
                 if (optimal.oform.equals(output.form)) {
                     //do nothing, it matched..
@@ -212,7 +320,7 @@ public class GLA {
                             //writer.println("\nSampled:\n" + gr.gramToString(single));
                             rank = gr.find_order(single);
                             //writer.println("\t\tSampled the ranking: " + gr.gramToString(rank));
-
+                            
                             //compute learner's winner and compare to actual output
                             if (model.equals("OT")) {
                                 winner = optimize(null, input, rank);
@@ -221,10 +329,10 @@ public class GLA {
                             } else {
                                 winner = optimizeME(null, input, gr.grammar);
                             }
-
+                            
                             count++;
                             //writer.println("The current winner form is " + winner.oform);
-
+                            
                             //if equal, exit and keep the ranking
                             if (winner.oform.equals(output.form)) {
                                 //writer.println("Matched form = " + output.form);
@@ -232,7 +340,7 @@ public class GLA {
                                 looking = false;
                             }
                         }
-
+                        
                         if (looking == false) {
                             //found a matching parse, update grammar
                             //writer.println("UPDATING: Output = " + output.form + "parse = " + winner.form);
@@ -245,7 +353,7 @@ public class GLA {
                                 break;
                             }
                         }
-
+                        
                     } else {
                         if (learner.equals("randRIP")) {
                             //use random RIP
@@ -254,7 +362,7 @@ public class GLA {
                             //writer.println("\nSampled:\n" + gr.gramToString(single));
                             rank = gr.find_order(single);
                             //writer.println("\t\tSampled the ranking: " + gr.gramToString(rank));
-
+                            
                             if (model.equals("OT")) {
                                 winner = optimize(null, input, rank);
                             } else if (model.equals("HG")) {
@@ -262,7 +370,7 @@ public class GLA {
                             } else {
                                 winner = optimizeME(null, input, gr.grammar);
                             }
-
+                            
                             //now update grammar
                             update = true;
                         } else { //this will be the baseline
@@ -299,7 +407,7 @@ public class GLA {
                     }
                 }
             }
-
+            
             if ((fail > 20) && (i > 100)) {
                 break;
             }
@@ -330,7 +438,7 @@ public class GLA {
         //writer.println("FINAL ");
         //evaluate_grammar(final_eval_sample, i, 0);
     }
-
+    
     public static boolean evaluate_grammar(int s, int i, double noi) {
         //now going to examine resulting grammar
         double log_likelihood = 0;
@@ -354,12 +462,12 @@ public class GLA {
                         break;
                     }
                 }
-
+                
                 //sample a random ranking
                 double[] single = gr.sample(NegOK, noi);
                 if (single != null) {
                     int[] rank = gr.find_order(single);
-
+                    
                     //compute learner's winner and compare to actual output
                     if (model.equals("OT")) {
                         winner = optimize(null, input, rank).oform;
@@ -406,9 +514,9 @@ public class GLA {
             return false;
         }
     }
-
+    
     public static GrammarFile.Candidate optimize(GrammarFile.Tableau tab, String input, int[] rank) {
-
+        
         //find the tableau
         if (tab == null) {
             for (int i = 0; i < gf.tableaux.length; i++) {
@@ -419,7 +527,7 @@ public class GLA {
                 }
             }
         }
-
+        
         //create array that stores information about which candidates are still in the running
         int[] survivors = new int[tab.cands.length];
         int num_sur = survivors.length;
@@ -438,7 +546,7 @@ public class GLA {
                     }
                 }
             }
-
+            
             //writer.println("looking at constraint " + rank[j] + " whose minimum is " + min_vios);
             for (int i = 0; i < survivors.length; i++) {
                 if ((tab.cands[i].violations[rank[j]] > min_vios) && (survivors[i] == 1)) {
@@ -448,13 +556,13 @@ public class GLA {
                 }
             }
         }
-
+        
         if (num_sur > 1) {
             writer.println("WARNING.  Multiple winners (" + num_sur + ") in optimize (input=" + input + ")");
         } else if (num_sur == 0) {
             writer.println("WARNING.  No Survivors! (" + num_sur + ") in optimize (input=" + input + ")");
         }
-
+        
         GrammarFile.Candidate winner = null;
         for (int i = 0; i < survivors.length; i++) {
             if (survivors[i] == 1) {
@@ -464,9 +572,9 @@ public class GLA {
         }
         return winner;
     }
-
+    
     public static GrammarFile.Candidate optimizeHG(GrammarFile.Tableau tab, String input, double[] vector) {
-
+        
         //find the tableau
         if (tab == null) {
             for (int i = 0; i < gf.tableaux.length; i++) {
@@ -475,10 +583,10 @@ public class GLA {
                 }
             }
         }
-
+        
         //create array to store weights of candidates
         double[] weights = new double[tab.cands.length];
-
+        
         //go through constraints and add their violations*weight for each candidate
         double min = -1;
         int index = -1;
@@ -500,9 +608,9 @@ public class GLA {
         winner = tab.cands[index];
         return winner;
     }
-
+    
     public static GrammarFile.Candidate optimizeME(GrammarFile.Tableau tab, String input, double[] gram) {
-
+        
         //find the tableau
         if (tab == null) {
             for (int i = 0; i < gf.tableaux.length; i++) {
@@ -511,10 +619,10 @@ public class GLA {
                 }
             }
         }
-
+        
         //create array to store candidate unnormalized probabilities
         double[] probs = new double[tab.cands.length];
-
+        
         //go through constraints and add their violations*weight for each candidate
         double sum = 0.0;
         for (int j = 0; j < tab.cands.length; j++) { //go through each candidate j
@@ -527,9 +635,9 @@ public class GLA {
             probs[j] = exp;
             //writer.println("harmony, candidate = " + probs[j] + ", " + tab.cands[j].form);
         }
-
+        
         double rand = sum * Math.random();
-
+        
         //find which candidate rand corresponds to
         int index = -1;
         for (int j = 0; j < tab.cands.length; j++) { //go through each candidate j
@@ -539,7 +647,7 @@ public class GLA {
                 break;
             }
         }
-
+        
         GrammarFile.Candidate winner = null;
         winner = tab.cands[index];
         return winner;
