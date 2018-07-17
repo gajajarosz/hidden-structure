@@ -96,7 +96,7 @@ public class GLA {
                             
                         } else if (parameter.equals("FINAL_EVAL")) {
                             final_eval = Integer.valueOf(m1.group(2));
-                            writer.println("Setting final evaluation sample size to: " + final_eval);
+                            writer.println("Setting final evaluation to: " + final_eval);
                             
                         } else if (parameter.equals("MINI_EVAL")) {
                             mini_eval = Integer.valueOf(m1.group(2));
