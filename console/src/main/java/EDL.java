@@ -1,6 +1,6 @@
 package learner;
 // This is the main file for the EDL learner
-// usage: java EDL grammar_file dist_file iterations final_eval_sample learn_type gram_sample_size ranking_bias (print args) (maxdepth)
+// usage: java EDL grammar_file dist_file iterations final_eval_sample learn_type sample_size ranking_bias (print args) (maxdepth)
 // grammar_file contains all tableaux, dist_file contains possible inputs, morphemes, outputs, & frequencies
 import java.util.*;
 import java.io.*;
@@ -10,12 +10,14 @@ import java.util.regex.*;
 public class EDL {
     
     public static DistFile df;
+    public static String distdirectory;
+    public static String urdirectory;
     public static GrammarFile gf;
     public static RandomExtension gr;
     public static RandomExtension prior;
     
-    private static int gram_sample_size = 1;
-    private static int iterations = 0;
+    private static int sample_size = 50;
+    private static int iterations = 100;
     public static double rate = .1;
     public static int final_eval = 0;
     public static int final_eval_sample = 1000;
@@ -26,8 +28,11 @@ public class EDL {
     public static int quit_early_sample = 100;
     public static int print_input = 0;
     public static int maxdepth = 8;
-    public static int learner = 2;
+    public static int learner = 1;
     public static int init_bias = 0;
+    public static boolean ur_learning = false;
+    public static int phono_iterations = 0;
+    public static boolean phono = false;
     public static HashMap<String, GrammarFile.Tableau> tabtable = new HashMap<String, GrammarFile.Tableau>();
     public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
     public static Writer writer = new SystemWriter();
@@ -35,7 +40,7 @@ public class EDL {
     
     public static void main(String[] args) {
         if(args.length == 1) {
-            System.out.println("Opening parameter file: " + args[0] + "...");
+            writer.println("Opening parameter file: " + args[0] + "...");
             
             try {
                 stream = new BufferedReader(new FileReader(args[0]));
@@ -53,88 +58,88 @@ public class EDL {
                     Matcher m1 = pattern.matcher(line);
                     if (m1.matches()) {
                         String parameter = m1.group(1);
-                        writer.println("Parameter is:___" + parameter + "___");
-                        
+
                         if (parameter.equals("GRAMMAR_FILE")) {
                             String gramdirectory = m1.group(2);
                             writer.println("Opening grammar file: " + gramdirectory + "...");
                             gf = new GrammarFile(gramdirectory, writer);
-                            
                         } else if (parameter.equals("DIST_FILE")) {
-                            String distdirectory = m1.group(2);
+                            distdirectory = m1.group(2);
                             writer.println("Opening distribution file: " + distdirectory + "...");
                             df = new DistFile(distdirectory, writer);
-                            
                         } else if (parameter.equals("ITERATIONS")) {
                             iterations = Integer.valueOf(m1.group(2));
-                            /*int int_iterations = Integer.valueOf(m1.group(2));*/
                             writer.println("Setting iterations to: " + iterations);
-                            
                         } else if (parameter.equals("LEARNER")) {
-                            /*int learner = Integer.valueOf(m1.group(2));*/
-                            learner = Integer.valueOf(m1.group(2));
-                            writer.println("Setting learner to: " + learner);
-                            
+                            if (m1.group(2).equals("online") || m1.group(2).equals("2")){
+                                learner = 2;
+                                writer.println("Setting learner to: online");
+                            } else {
+                                writer.println("Setting learner to: batch");
+                            } 
+                        } else if (parameter.equals("UR_LEARNING")) {
+                            if (m1.group(2).equals("true") || m1.group(2).equals("1")){
+                                ur_learning = true;
+                                writer.println("Setting UR learning to: true");
+                            } else {
+                                writer.println("Setting UR learning to: false");
+                            }
+                        } else if (parameter.equals("UR_FILE")) {
+                            urdirectory = m1.group(2);
+                            writer.println("Setting UR file to: " + urdirectory);
+                        } else if (parameter.equals("PHONO_ITERATIONS")) {
+                            phono_iterations = Integer.valueOf(m1.group(2));
+                            writer.println("Setting phonotactic learning iterations to: " + phono_iterations);
                         } else if (parameter.equals("LEARNING_RATE")) {
-                            /*double rate = Double.parseDouble(m1.group(2));*/
                             rate = Double.parseDouble(m1.group(2));
                             writer.println("Setting learning rate to: " + rate);
-                            
                         } else if (parameter.equals("INITIAL_BIAS")) {
-                            /*int init_bias = Integer.valueOf(m1.group(2));*/
-                            init_bias = Integer.valueOf(m1.group(2));
-                            writer.println("Setting initial bias to: " + init_bias);
-                            
-                        } else if (parameter.equals("GRAMMAR_SAMPLE_SIZE")) {
-                            /*int gram_sample_size = Integer.valueOf(m1.group(2));*/
-                            gram_sample_size = Integer.valueOf(m1.group(2));
-                            writer.println("Setting grammar sample size to: " + gram_sample_size);
-                            
+                            if (m1.group(2).equals("true") || m1.group(2).equals("1")){
+                                init_bias = 1;
+                                writer.println("Setting initial bias to: true");
+                            } else {
+                                writer.println("Setting initial bias to: false");                                
+                            }
+                        } else if (parameter.equals("SAMPLE_SIZE")) {
+                            sample_size = Integer.valueOf(m1.group(2));
+                            writer.println("Setting sample size to: " + sample_size);
                         } else if (parameter.equals("FINAL_EVAL_SAMPLE")) {
-                            /*int final_eval_sample = Integer.valueOf(m1.group(2));*/
                             final_eval_sample = Integer.valueOf(m1.group(2));
                             writer.println("Setting final sample size to: " + final_eval_sample);
-                            
-                        } else if (parameter.equals("FINAL_EVAL")) {
-                            /*int final_eval = Integer.valueOf(m1.group(2));*/
-                            final_eval = Integer.valueOf(m1.group(2));
-                            writer.println("Setting final evaluation size to: " + final_eval);
-                            
+                        } else if (parameter.equals("FINAL_EVAL_ACC")) {
+                            if (m1.group(2).equals("true") || m1.group(2).equals("0")){
+                                final_eval = 0;
+                                writer.println("Setting final evaluation accuracy to: true");
+                            } else {
+                                final_eval = 1;
+                                writer.println("Setting final evaluation accuracy to: false");
+                            }
                         } else if (parameter.equals("MINI_EVAL")) {
-                            /*int mini_eval = Integer.valueOf(m1.group(2));*/
                             mini_eval = Integer.valueOf(m1.group(2));
                             writer.println("Setting mini evaluation size to: " + mini_eval);
-                            
                         } else if (parameter.equals("MINI_EVAL_FREQ")) {
-                            /*int mini_eval_freq = Integer.valueOf(m1.group(2));*/
                             mini_eval_freq = Integer.valueOf(m1.group(2));
                             writer.println("Setting mini evaluation frequency to: " + mini_eval_freq);
-                            
                         } else if (parameter.equals("MINI_EVAL_SAMPLE")) {
-                            /*int mini_eval_sample = Integer.valueOf(m1.group(2));*/
                             mini_eval_sample = Integer.valueOf(m1.group(2));
-                            writer.println("Setting mini evaluation sample size to: " + mini_eval_sample);
-                            
-                        } else if (parameter.equals("QUIT_EARLY")) {
-                            /*int quit_early = Integer.valueOf(m1.group(2));*/
+                            writer.println("Setting mini evaluation sample size to: " + mini_eval_sample);                            
+                        } else if (parameter.equals("QUIT_EARLY_FREQ")) {
                             quit_early = Integer.valueOf(m1.group(2));
-                            writer.println("Setting quit early to: " + quit_early);
-                            
+                            writer.println("Setting quit early frequency to: " + quit_early);                            
                         } else if (parameter.equals("QUIT_EARLY_SAMPLE")) {
-                            /*int quit_early_sample = Integer.valueOf(m1.group(2));*/
                             quit_early_sample = Integer.valueOf(m1.group(2));
                             writer.println("Setting quit early sample to: " + quit_early_sample);
-                            
                         } else if (parameter.equals("PRINT_INPUT")) {
-                            /*int print_input = Integer.valueOf(m1.group(2));*/
-                            print_input = Integer.valueOf(m1.group(2));
-                            writer.println("Setting quit early sample to: " + print_input);
-                            
+                            if (m1.group(2).equals("false") || m1.group(2).equals("1")){
+                                // 1 means not printing input here
+                                print_input = 1;
+                                writer.println("Setting print input to: false");
+                            } else {
+                                writer.println("Setting print input to: true");
+                            } 
                         } else if (parameter.equals("MAXDEPTH")) {
-                            /*int maxdepth = Integer.valueOf(m1.group(2));*/
                             maxdepth = Integer.valueOf(m1.group(2));
                             writer.println("Setting MAXDEPTH to: " + maxdepth);
-                            
                         }
                         else {
                             writer.println("The following lines from the parameter file do not match the specified format and will be ignored: \n>>>" + line);
@@ -154,10 +159,9 @@ public class EDL {
             gf = new GrammarFile(args[0], writer);
             
             // read in i_o_file
-            writer.println("Opening distribution file: " + args[1] + "...");
-            df = new DistFile(args[1], writer);
-            //  df.phono = false;
-            
+            distdirectory = args[1];
+            writer.println("Opening distribution file: " + distdirectory + "...");
+            df = new DistFile(distdirectory, writer);            
             writer.println("Now parsing remaining arguments");
             writer.println("Setting iterations to: " + args[2]);
             iterations = Integer.parseInt(args[2]);
@@ -166,28 +170,37 @@ public class EDL {
             writer.println("Setting learner to: " + args[4]);
             int learner = Integer.parseInt(args[4]);
             writer.println("Setting grammar sample size to: " + args[5]);
-            gram_sample_size = Integer.parseInt(args[5]);
+            sample_size = Integer.parseInt(args[5]);
             writer.println("Setting initial bias to: " + args[6]);
             int init_bias = Integer.parseInt(args[6]);
+            writer.println("Setting learning rate to: " + args[7]);
             rate = Double.parseDouble(args[7]);
-            if (args.length > 14) {
-                writer.println("Setting print_input? to: " + args[8]);
-                print_input = Integer.parseInt(args[8]);
-                writer.println("Setting final-eval to: " + args[9]);
-                final_eval = Integer.parseInt(args[9]);
-                writer.println("Setting mini-eval to: " + args[10]);
-                mini_eval = Integer.parseInt(args[10]);
-                writer.println("Setting mini-eval-freq to: " + args[11]);
-                mini_eval_freq = Integer.parseInt(args[11]);
-                writer.println("Setting mini-eval-sample to: " + args[12]);
-                mini_eval_sample = Integer.parseInt(args[12]);
-                writer.println("Setting quit_early? to: " + args[13]);
-                quit_early = Integer.parseInt(args[13]);
-                writer.println("Setting quit_early_sample? to: " + args[14]);
-                quit_early_sample = Integer.parseInt(args[14]);
-                if (args.length == 16){
-                    writer.println("Setting max-depth to: " + args[15]);
-                    maxdepth = Integer.parseInt(args[15]);
+            writer.println("Setting ur learning to: " + args[8]);
+            ur_learning = Boolean.valueOf(args[8]);
+            if (ur_learning){
+                writer.println("Setting UR file to: " + args[9]);
+                urdirectory = args[9];
+                writer.println("Setting phonotactic learning iterations to: " + args[10]);
+                phono_iterations = Integer.valueOf(args[10]);
+            }
+            if (args.length > 17) {
+                writer.println("Setting print_input? to: " + args[11]);
+                print_input = Integer.parseInt(args[11]);
+                writer.println("Setting final-eval to: " + args[12]);
+                final_eval = Integer.parseInt(args[12]);
+                writer.println("Setting mini-eval to: " + args[13]);
+                mini_eval = Integer.parseInt(args[13]);
+                writer.println("Setting mini-eval-freq to: " + args[14]);
+                mini_eval_freq = Integer.parseInt(args[14]);
+                writer.println("Setting mini-eval-sample to: " + args[15]);
+                mini_eval_sample = Integer.parseInt(args[15]);
+                writer.println("Setting quit_early? to: " + args[16]);
+                quit_early = Integer.parseInt(args[16]);
+                writer.println("Setting quit_early_sample? to: " + args[17]);
+                quit_early_sample = Integer.parseInt(args[17]);
+                if (args.length == 19){
+                    writer.println("Setting max-depth to: " + args[18]);
+                    maxdepth = Integer.parseInt(args[18]);
                 }
             }
         }
@@ -198,6 +211,15 @@ public class EDL {
         }
         writer.println("Finished parsing all the arguments");
         
+        // if  ur learning, then we need to read URs in 
+        if(ur_learning){
+            df.read_URs(urdirectory);
+        }
+
+        if (phono_iterations > 0){
+            phono = true;
+        }
+
         if (print_input == 0) {
             writer.println("\nSTARTING LEXICON:\n" + df);
         }
@@ -233,6 +255,11 @@ public class EDL {
             if (i % mini_eval_freq == 0 ) {
                 writer.println("Starting iteration " + i);
             }
+
+            if (phono && phono_iterations == i){
+                writer.println("ENDING PHONOTACTIC LEARNING AT ITERATION: " + i);
+                phono = false;
+            }
             //to store successes for each output
             double[][][] sum = new double[gr.grammar.length][gr.grammar.length][df.outputs.length];
             
@@ -252,8 +279,8 @@ public class EDL {
                         
                         double[][] single;
                         
-                        // generate s samples from the grammar
-                        for (int s = 0; s < gram_sample_size; s++) {
+                        // generate sample_size samples from the grammar
+                        for (int s = 0; s < sample_size; s++) {
                             single = gr.generate_extension(ext);
                             if (single != null) {
                                 // find the total order corresponding to the sampled matrix
@@ -261,16 +288,16 @@ public class EDL {
                                 //go through each output
                                 for (int o = 0; o < df.outputs.length; o++) {
                                     DistFile.Output output = df.outputs[o];
-                                    //go through each UR for that output
-                                    for (int in = 0; in < output.dist.length; in++) {
-                                        String input = output.inputs[in];
-                                        GrammarFile.Tableau tab = find_tab(input); //find the tableau
-                                        String winner = optimize(input, tab, rank);
-                                        if (winner.equals(output.form)) {
-                                            // this sum divided by a constant (s) estimates the joint probability of o and r>c
-                                            sum[r][c][o]++;
-                                            
-                                        }
+
+                                    String input = output.input;
+                                    if (ur_learning){
+                                        input = output.sample_UR();
+                                    }
+                                    GrammarFile.Tableau tab = find_tab(input);
+                                    String winner = optimize(input, tab, rank);
+                                    if (winner.equals(output.form)) {
+                                        // this sum divided by a constant (s) estimates the joint probability of o and r>c
+                                        sum[r][c][o]++;
                                     }
                                 }
                             }
@@ -283,23 +310,24 @@ public class EDL {
                         ext = gr.cloneGrammar();
                         gr.makeMeConsistent(ext);
                         
-                        // generate s samples from the grammar
-                        for (int s = 0; s < gram_sample_size; s++) {
+                        // generate sample_size samples from the grammar
+                        for (int s = 0; s < sample_size; s++) {
                             single = gr.generate_extension(ext);
                             if (single != null) {
                                 int[] rank = gr.find_order(single);
                                 //go through each output
                                 for (int o = 0; o < df.outputs.length; o++) {
                                     DistFile.Output output = df.outputs[o];
-                                    //go through each UR for the output
-                                    for (int in = 0; in < output.dist.length; in++) {
-                                        String input = output.inputs[in];
-                                        GrammarFile.Tableau tab = find_tab(input); //find the tableau
-                                        String winner = optimize(input, tab, rank);
-                                        if (winner.equals(output.form)) {
-                                            // this sum divided by a constant (s) estimates the joint probability of o and c>r
-                                            sum[c][r][o]++;
-                                        }
+
+                                    String input = output.input;
+                                    if (ur_learning){
+                                        input = output.sample_UR();
+                                    }
+                                    GrammarFile.Tableau tab = find_tab(input);
+                                    String winner = optimize(input, tab, rank);
+                                    if (winner.equals(output.form)) {
+                                        // this sum divided by a constant (s) estimates the joint probability of o and r>c
+                                        sum[c][r][o]++;
                                     }
                                 }
                             }
@@ -311,8 +339,81 @@ public class EDL {
                         gr.grammar[c][r] = old_cr;
                     }
                 }
-            } //done going through parameters
+            } 
+            //done going through grammar parameters
             
+            // now test lexicon parameters if ur learning is on and phonotactic learning is off
+            if (ur_learning && !phono){
+                //initialize all morph counts
+                for(int m=1; m < df.morphs.length; m++){
+                    df.morphs[m].one_counts = new double[df.morphs[m].dist.length];
+                    df.morphs[m].zero_counts = new double[df.morphs[m].dist.length];
+                }
+                //go through each output
+                for(int o=0; o < df.outputs.length; o++){
+                    DistFile.Output output = df.outputs[o];
+                    double[][] single = gr.generate_extension();
+                    //for each morpheme
+                    for (int m = 0; m < output.morphs.length; m++){
+                    //for each UR parameter
+                        for (int p=0; p < output.morphs[m].dist.length; p++){
+                            // remember the current setting of the parameter before testing it both ways
+                            double o_prob = output.morphs[m].dist[p];
+                            double temp_zero = 0.0;
+                            double temp_one = 0.0;
+                            if(output.morphs[m].max_values[p] != 0){
+                                //set it each way and sample
+                                
+                                //set it to 0
+                                output.morphs[m].dist[p] = 0.0;
+
+                                //Sample the other parameters sample_size times
+                                for (int s = 0; s < sample_size; s++) {
+                                    single = gr.generate_extension();
+                                    if(single != null){
+                                        int[] rank = gr.find_order(single);
+                                        String input = output.sample_UR();
+                                        GrammarFile.Tableau tab = find_tab(input);
+                                        String winner = optimize(input, tab, rank);
+                                        if (winner.equals(output.form)){
+                                            //update the expected counts for the Lexicon
+                                            temp_zero++;
+                                        }
+                                    }
+                                }
+                                
+                                //set it to 1
+                                output.morphs[m].dist[p] = 1.0;
+                                
+                                //Sample the other parameters sample_size times
+                                for (int s = 0; s < sample_size; s++) {
+                                    single = gr.generate_extension();
+                                    if(single != null){
+                                        int[] rank = gr.find_order(single);
+                                        String input = output.sample_UR();
+                                        GrammarFile.Tableau tab = find_tab(input);
+                                        String winner = optimize(input, tab, rank);
+                                        if (winner.equals(output.form)){
+                                            //update the expected counts for the Lexicon
+                                            temp_one++;
+                                        }
+                                    }
+                                }
+                                output.morphs[m].dist[p] = o_prob;
+                                
+                            } else {  //we're looking at a UR with only one form
+                                //doesn't matter how many times it's successful since we'll just normalize
+                                temp_zero = sample_size;
+                            }
+                            double temp_prob = (temp_one+.0001)*o_prob + (temp_zero+.0001)*(1.0-o_prob);
+                            output.morphs[m].one_counts[p] += ((temp_one+.0001)*o_prob)/(temp_prob)*output.freq;
+                            output.morphs[m].zero_counts[p] += ((temp_zero+.0001)*(1.0-o_prob))/(temp_prob)*output.freq;
+                            
+                        }
+                    }
+                }
+            }
+
             //now going to reset the grammar...
             double[][][] output_probs = new double[df.outputs.length][gr.grammar.length][gr.grammar.length];
             // for each pairwise ranking
@@ -345,9 +446,21 @@ public class EDL {
                 System.exit(-1);
             }
             
+            //now going to reset the lexicon if doing UR learning
+            if(ur_learning && !phono){
+                for(int m=1; m < df.morphs.length; m++){
+                    for(int p=0; p < df.morphs[m].dist.length; p++){
+                    df.morphs[m].dist[p] = (df.morphs[m].one_counts[p])/(df.morphs[m].one_counts[p]+df.morphs[m].zero_counts[p]);
+                    }
+                }
+            }
+
             if (i % mini_eval_freq == 0) {
                 if (mini_eval == 0 || mini_eval == 1) {
                     writer.println("The new grammar is:\n" + gr);
+                    if (ur_learning){
+                        writer.println("The new lexicon is:\n" + df);
+                    }
                 }
                 if (i % quit_early != 0) {
                     evaluate_grammar(mini_eval_sample, i);
@@ -367,6 +480,9 @@ public class EDL {
         if (final_eval == 0 || final_eval == 1) {
             writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
             writer.println("The final grammar is:\n" + gr);
+            if (ur_learning){
+                writer.println("The final lexicon is:\n" + df);
+            }
             evaluate_grammar(final_eval_sample, i);
         }
     }
@@ -381,11 +497,16 @@ public class EDL {
             if (i % mini_eval_freq == 0) {
                 writer.println("Starting iteration " + i);
             }
-            double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
+
+            if (phono && phono_iterations == i){
+                writer.println("ENDING PHONOTACTIC LEARNING AT ITERATION: " + i);
+                phono = false;
+            }
+
+            //double[][] corr_ranks_samp = new double[gr.grammar.length][gr.grammar.length];
             
             //sample one output form
             DistFile.Output output = null;
-            String winner = "tat";
             double rand = Math.random();
             int o_index = 0;
             for (int o = 0; o < df.outputs.length; o++) {
@@ -397,19 +518,7 @@ public class EDL {
                 }
             }
             //writer.println("Sampled output form: " + output.form);
-            
-            //sample a ur for the output form
-            String input = "";
-            rand = Math.random();
-            for (int in = 0; in < output.dist.length; in++) {
-                rand -= output.dist[in];
-                if (rand <= 0) {
-                    input = output.inputs[in];
-                    break;
-                }
-            }
-            //writer.println("\tSampled a UR form: " + input);
-            
+
             // this keeps track of how many samples are successful at generating the observed output for each pairwise ranking
             double[][] output_counts = new double[gr.grammar.length][gr.grammar.length];
             
@@ -432,15 +541,19 @@ public class EDL {
                         double[][] ext = gr.cloneGrammar();
                         gr.makeMeConsistent(ext);
                         
-                        // take s samples from temporary grammar and count matches
-                        for (int s = 0; s < gram_sample_size; s++) {
+                        // take sample_size samples from temporary grammar and count matches
+                        for (int s = 0; s < sample_size; s++) {
                             single = gr.generate_extension(ext);
                             if (single != null) {
                                 int[] rank = gr.find_order(single);
                                 if (rank != null) {
+                                    String input = output.input;
+                                    if (ur_learning){
+                                        input = output.sample_UR();
+                                    }
                                     //compute learner's winner and compare to actual output
                                     GrammarFile.Tableau tab = find_tab(input); //find the tableau
-                                    winner = optimize(input, tab, rank);
+                                    String winner = optimize(input, tab, rank);
                                     if (winner.equals(output.form)) {
                                         output_counts[r][c]++;
                                     }
@@ -456,15 +569,19 @@ public class EDL {
                         ext = gr.cloneGrammar();
                         gr.makeMeConsistent(ext);
                         
-                        // take s samples and count number of matches
-                        for (int s = 0; s < gram_sample_size; s++) {
+                        // take sample_size samples and count number of matches
+                        for (int s = 0; s < sample_size; s++) {
                             single = gr.generate_extension(ext);
                             if (single != null) {
                                 int[] rank = gr.find_order(single);
                                 if (rank != null) {
+                                    String input = output.input;
+                                    if (ur_learning){
+                                        input = output.sample_UR();
+                                    }
                                     //compute learner's winner and compare to actual output
                                     GrammarFile.Tableau tab = find_tab(input); //find the tableau
-                                    winner = optimize(input, tab, rank);
+                                    String winner = optimize(input, tab, rank);
                                     //if equal, add matrix of ranking into collected samples
                                     if (winner.equals(output.form)) {
                                         //writer.println("\t\t" + output.form + " was correctly generated as " + winner);
@@ -481,7 +598,72 @@ public class EDL {
                     }
                 }
             }
-            
+            // test UR parameters if doing UR learning...
+            if (ur_learning && !phono){
+ 
+                //for each morpheme in the output form
+                for (int m = 0; m < output.morphs.length; m++){
+                    //writer.println("Examining morpheme: " + output.morphs[m].name);
+                    //initialize all morph counts
+                    output.morphs[m].one_counts = new double[output.morphs[m].dist.length];
+                    output.morphs[m].zero_counts = new double[output.morphs[m].dist.length];
+                    //for each UR parameter in each morpheme
+                    for (int p=0; p < output.morphs[m].dist.length; p++){
+                        //writer.println("\tExamining parameter: " + p);
+                        // remember the current setting of the parameter before testing it both ways
+                        double o_prob = output.morphs[m].dist[p];
+                        if(output.morphs[m].max_values[p] != 0){
+                            //set it each way and sample
+                            
+                            //set it to 0
+                            output.morphs[m].dist[p] = 0.0;
+
+                            //Sample the other parameters sample_size times
+                            for (int s = 0; s < sample_size; s++) {
+                                single = gr.generate_extension();
+                                if(single != null){
+                                    int[] rank = gr.find_order(single);
+                                    String input = output.sample_UR();
+                                    GrammarFile.Tableau tab = find_tab(input);
+                                    String winner = optimize(input, tab, rank);
+                                    if (winner.equals(output.form)){
+                                        //update the expected counts for the Lexicon
+                                        output.morphs[m].zero_counts[p]++;
+                                    }
+                                }
+                            }
+                            
+                            //set it to 1
+                            output.morphs[m].dist[p] = 1.0;
+                            
+                            //Sample the other parameters sample_size times
+                            for (int s = 0; s < sample_size; s++) {
+                                single = gr.generate_extension();
+                                if(single != null){
+                                    int[] rank = gr.find_order(single);
+                                    String input = output.sample_UR();
+                                    GrammarFile.Tableau tab = find_tab(input);
+                                    String winner = optimize(input, tab, rank);
+                                    if (winner.equals(output.form)){
+                                        //update the expected counts for the Lexicon
+                                        output.morphs[m].one_counts[p]++;
+                                    }
+                                }
+                            }
+                            output.morphs[m].dist[p] = o_prob;
+                            
+                        } else {  //we're looking at a UR with only one form
+                            //doesn't matter how many times it's successful since we'll just normalize
+                            output.morphs[m].zero_counts[p] = sample_size;
+                        }
+                        //writer.println("\t\tZero matches: " + output.morphs[m].zero_counts[p]);
+                        //writer.println("\t\tOne matches: " + output.morphs[m].one_counts[p]);
+                        //double temp_prob = (temp_one+.01)*o_prob + (temp_zero+.01)*(1.0-o_prob);
+                        //output.morphs[m].one_counts[p] = temp_one;
+                        //output.morphs[m].zero_counts[p] = temp_zero;
+                    }
+                }
+            }   
             // update each pairwise ranking based on number of successes it got
             for (int r = 0; r < gr.grammar.length; r++) {
                 for (int c = 0; c < r; c++) {
@@ -511,9 +693,23 @@ public class EDL {
                 System.exit(-1);
             }
             
+            //now going to reset the lexicon if doing UR learning
+            if(ur_learning && !phono){
+                for(int m=0; m < output.morphs.length; m++){
+                    for(int p=0; p < output.morphs[m].dist.length; p++){
+                        double new_p = ((double)output.morphs[m].one_counts[p]+ .0001)*(output.morphs[m].dist[p])/(((double)output.morphs[m].one_counts[p]+ .0001)*(output.morphs[m].dist[p])+((double)output.morphs[m].zero_counts[p]+ .0001)*(1-output.morphs[m].dist[p]));
+                        output.morphs[m].dist[p] = (1-rate)*output.morphs[m].dist[p]+rate*new_p;
+                    }
+                }
+            }
+
             if (i % mini_eval_freq == 0) {
                 if (mini_eval == 0 || mini_eval == 1) {
                     writer.println("The new grammar is:\n" + gr);
+                    if (ur_learning){
+                        writer.println("The new lexicon is:\n" + df);
+                    }
+
                 }
                 if (i % quit_early != 0) {
                     evaluate_grammar(mini_eval_sample, i);
@@ -532,6 +728,9 @@ public class EDL {
         if (final_eval == 0 || final_eval == 1) {
             writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
             writer.println("The final grammar is:\n" + gr);
+            if (ur_learning){
+                writer.println("The new lexicon is:\n" + df);
+            }
             evaluate_grammar(final_eval_sample, i);
         }
     }
@@ -552,15 +751,11 @@ public class EDL {
             //sample s times to check distribution
             for (int c = 0; c < s; c++) {
                 //sample a ur for the output form
-                String input = "";
-                rand = Math.random();
-                for (int in = 0; in < output.dist.length; in++) {
-                    rand -= output.dist[in];
-                    if (rand < 0) {
-                        input = output.inputs[in];
-                        break;
-                    }
+                String input = output.input;
+                if (ur_learning){
+                    input = output.sample_UR();
                 }
+ 
                 //sample a random ranking
                 double[][] single = gr.generate_extension();
                 if (single != null) {
@@ -577,7 +772,7 @@ public class EDL {
                 }
             }
             if (i % mini_eval_freq == 0) {
-                if (mini_eval == 0) {
+                if (mini_eval == 0 || (i == iterations && final_eval==0)) {
                     writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
             }else{

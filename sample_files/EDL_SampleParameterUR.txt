@@ -1,0 +1,28 @@
+"GRAMMAR_FILE"		:	sample_files/PAKAGrammar.txt
+"DIST_FILE"		:	sample_files/PAKA_Dist4.txt
+"FINAL_EVAL_SAMPLE"	:	1000
+"ITERATIONS"   		:	100
+"LEARNING_RATE"		:	0.1
+"INITIAL_BIAS"		:	false
+
+/*EDL Options*/
+"LEARNER"		:	batch
+"SAMPLE_SIZE"		:  	50
+"MAXDEPTH"		:	8
+
+/*EDL UR Options*/
+"UR_LEARNING"		:	true
+"UR_FILE"		:	sample_files/PAKA_URDist.txt
+"PHONO_ITERATIONS"	:	0
+
+/*PRINT OPTIONS*/
+"PRINT_INPUT"		:	true
+"FINAL_EVAL_ACC" 	: 	true
+"MINI_EVAL"		:	1
+"MINI_EVAL_FREQ"	:	1
+"MINI_EVAL_SAMPLE"	:	100
+"QUIT_EARLY_FREQ"	:	1
+"QUIT_EARLY_SAMPLE"	:	100
+
+
+

@@ -1,22 +1,27 @@
 "GRAMMAR_FILE"		:	sample_files/TS2000Grammar_secondary.txt
 "DIST_FILE"		:	sample_files/TS1_Dist.txt
 "FINAL_EVAL_SAMPLE"	:	1000
-"INITIAL_BIAS"		:	0
+"ITERATIONS"   		:	1000
+"LEARNING_RATE"		:	0.1
+"INITIAL_BIAS"		:	false
 
 /*EDL Options*/
-"LEARNER"		:	2
-"GRAMMAR_SAMPLE_SIZE"	:  	100
-"LEARNING_RATE"		:	0.1
-"ITERATIONS"   		:	200
+"LEARNER"		:	online
+"SAMPLE_SIZE"		:  	100
 "MAXDEPTH"		:	8
 
+/*EDL UR Options*/
+"UR_LEARNING"		:	false
+"UR_FILE"		:	NA
+"PHONO_ITERATIONS"	:	0
+
 /*PRINT OPTIONS*/
-"PRINT_INPUT"		:	0
-"FINAL_EVAL" 		: 	0
+"PRINT_INPUT"		:	true
+"FINAL_EVAL_ACC" 	: 	true
 "MINI_EVAL"		:	1
-"MINI_EVAL_FREQ"	:	1
+"MINI_EVAL_FREQ"	:	100
 "MINI_EVAL_SAMPLE"	:	100
-"QUIT_EARLY"		:	100
+"QUIT_EARLY_FREQ"	:	100
 "QUIT_EARLY_SAMPLE"	:	100
 
 

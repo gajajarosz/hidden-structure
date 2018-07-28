@@ -8,8 +8,9 @@ Instructions for running the GUI:
 6. You may also modify other settings, mostly related to efficiency, in the Advanced Options menu.
 7. Once all settings have been filled in, click the RUN button to start the program. Output will appear in the text box on the right.
 
-Description of arguments:
----------------------------
+-------------------------
+Description of arguments
+-------------------------
 
 LEARNER NAME
 - This is either EDL or GLA
@@ -34,8 +35,9 @@ INITIAL BIAS
 - Default 0 (GLA starts out with all ranking values at 10, and EDL with all pairwise rankings set to .5)
 - Set to 1 if you want to start with a biased initial grammar. The initial ranking will be read from the grammar file. See FileFormats_instructions.txt in the instructions directory for how the the specified numbers will be used by GLA and EDL.
 
-EDL-specific arguments:
-------------------------
+-------------------------
+EDL-specific arguments
+-------------------------
 
 LEARNER
 1 - batch Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_batch().
@@ -49,8 +51,22 @@ LEARNING RATE (for Online EDL only)
  - How much pairwise ranking probabilities get nudged when there’s an update
  - typical value is something like 0.1
 
+UR LEARNING?
+- unchecked: learner uses the provided URs in the Distribution file for learning
+- checked: learner has to learn UR features, and these are specified in the UR_FILE
 
-GLA-specific arguments:
+UR FILE
+- file that specifies the range of URs and their binary features for each morpheme in the data (Distribution) file
+- this file is only consulted if UR LEARNING is checked
+
+PHONO_ITERATIONS
+- How many iterations of phonotactic learning (learning without adjusting the URs) should occur
+- In order for any UR learning to occur, this value must be less than the value specified for ITERATIONS
+- The learner initially sets all UR features to uniform (e.g. 50% probability of each feature value) 
+- this value is consulted only if UR_LEARNING is checked
+
+-------------------------
+GLA-specific arguments
 -------------------------
 
 LEARNER
@@ -73,30 +89,36 @@ LEARNING RATE
  NEGOK?
  - Indicates whether the learner be allowed to use negative weights.
 
-Print options:
----------------
+-------------------------
+PRINT OPTIONS
+-------------------------
 
-PRINT_INPUT: specifies whether the input to the learner, like the grammar and distribution files, should be printed.
+PRINT_INPUT?: specifies whether the input to the learner, like the grammar and distribution files, should be printed.
+
+INTERMEDIATE EVAL
+
+PRINT GRAMMAR?: should the current grammar be printed at each evaluation round?
+PRINT ACCURACY PER OUTPUT?: should the current grammar’s predictions for each data point be printed at each evaluation round?
+
+EVALUATION FREQ: how often should an intermediate evaluation round be performed?
+- In order to not perform any intermediate evaluation, set to the same number as iterations
+
+SAMPLE SIZE: how many samples should be used to evaluate in an intermediate evaluation?
 
 FINAL-EVAL: what should the final evaluation print?
 
-MINI-EVAL: what should be printed at each evaluation round?
+-------------------------
+EFFICIENCY OPTIONS
+-------------------------
 
-MINI-EVAL_FREQ: how often should a mini-evaluation round be performed?
-- In order to not perform any intermediate evaluation, set to the same number as iterations
-
-MINI-EVAL_SAMPLE: how many samples should be used to evaluate in a mini-evaluation?
-
-QUIT_EARLY: how often should the program check to see if it can quit early?
+QUIT_EARLY_FREQ: how often should the program check to see if it can quit early?
 -Quits if the learner has already learned everything
 - In order to never quit early, set to the same number as iterations
 
-QUIT_EARLY?_SAMPLE: how many samples should be used to evaluate whether the learner is done learning?
+SAMPLE_SIZE: how many samples should be used to evaluate whether the learner is done learning?
 -The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
 
-Advanced options:
-------------------
-MAX-DEPTH:
+TREE MAX-DEPTH:
 -For EDL, you can override the maximum depth of the tree that stores winners that have previously been calculated for tableau/ranking combinations.
 -By default, the maximum depth of the tree is set to 100, but you can reduce the depth to reduce the amount of memory used by the program.
 -For very large input files, this may speed up the program.

@@ -1,0 +1,21 @@
+4 morphs
+morph 1	
+UR [1]:	pa	0 0	
+UR [2]:	pa:	0 1	
+UR [3]:	pA	1 0	
+UR [4]:	pA:	1 1
+morph 2	
+UR [1]:	pa	0 0	
+UR [2]:	pa:	0 1	
+UR [3]:	pA	1 0	
+UR [4]:	pA:	1 1
+morph 3	
+UR [1]:	ka	0 0
+UR [2]:	ka:	0 1
+UR [3]:	kA	1 0
+UR [4]:	kA:	1 1
+morph 4	
+UR [1]:	ka	0 0
+UR [2]:	ka:	0 1
+UR [3]:	kA	1 0
+UR [4]:	kA:	1 1

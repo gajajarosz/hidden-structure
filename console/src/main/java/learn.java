@@ -17,7 +17,7 @@ public class learn {
         }else if (args[0].equals("GLA")){
             GLA.main(argslist);
         }else {
-            System.out.println("usage: run learner grammar_file dist_file iterations fin_sample learner_type grammar_sample_size init_bias learning_rate (print args) (maxdepth)");
+            System.out.println("usage: run learner grammar_file dist_file iterations fin_sample learner_type grammar_sample_size init_bias learning_rate (for EDL: ur_learning ur_file phono_iterations)(print args) (maxdepth)");
             System.exit(-1);
         }
     }

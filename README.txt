@@ -1,12 +1,12 @@
-UMASS HIDDEN STRUCTURE LEARNERS V1
+HIDDEN STRUCTURE SUITE V2
 
-This is the first release of a suite of constraint-based hidden structure learning algorithms, including:
+This software package consists of a suite of constraint-based hidden structure learning algorithms, including:
 - Gradual Learning Algorithm (GLA; Boersma 1997, Boersma & Hayes 2001) with Robust Interpretive Parsing (RIP; Boersma 2003, Boersma & Pater 2016), with Resampling RIP (RRIP; Jarosz 2013, Jarosz 2016a), and Expected Interpretive Parsing (EIP: Jarosz 2013, Jarosz 2016a)
 ———— All three GLA parsing strategies can be used with either Stochastic OT (Boersma 1997, Boersma & Hayes 2001) or Noisy HG (Boersma & Pater 2016)
 - Expectation Driven Learning (EDL: Jarosz 2015, Jarosz 2016b, Nazarov 2016, Nazarov & Jarosz 2017, Nazarov 2018) for pairwise ranking grammars (Jarosz 2015) 
 ———— There are both batch and online versions of EDL
 
-V1 can handle structural ambiguity (e.g. hidden prosodic structure) but assumes underlying representations are provided to the learner.
+All learners in V2 can handle structural ambiguity (e.g. hidden prosodic structure), and the EDL learners (both batch and online) have the option of also learning underlying representations.
 
 RUNNING THE PROGRAM
 
@@ -20,7 +20,7 @@ Development: If you are interested in working with the source code and/or making
 
 SOFTWARE CREDITS, CITING, & CONTACT INFO
 
-Jarosz, Gaja & Anderson, Carolyn. 2018. UMass Hidden Structure Learners: Version 1. http://github.com/gajajarosz/hidden-structure
+Jarosz, Gaja & Anderson, Carolyn. 2018. UMass Hidden Structure Learners: Version 2. http://github.com/gajajarosz/hidden-structure
 Jarosz, Gaja. 2013. Learning with Hidden Structure in Optimality Theory and Harmonic Grammar: Beyond Robust Interpretive Parsing. Phonology 30(1). 27–71.
 Jarosz, Gaja. 2015. Expectation Driven Learning of Phonology. University of Massachusetts, Amherst, ms.
 
@@ -33,6 +33,7 @@ Contact Gaja Jarosz (last name __ at __ linguist.umass.edu) with questions.
 Sample grammar and distribution files in the sample_files directory:
 — TS... languages were defined by Tesar & Smolensky (2000), and the learning files were created by Paul Boersma
 - Pater2008... language is defined by Pater (2008) and written by Gaja Jarosz
+- PAKA... input files were defined by Tesar et al. (2003) and Tesar (2006) and written by Gaja Jarosz
 
 REFERENCES
 
@@ -47,4 +48,7 @@ Nazarov, Aleksei. 2016. Extending Hidden Structure Learning: Features, Opacity, 
 Nazarov, Aleksei & Gaja Jarosz. 2017. Learning Parametric Stress without Domain-Specific Mechanisms. Proceedings of the Annual Meetings on Phonology 4(0).
 Nazarov, Aleksei. 2018. Learning within- and between-word variation in probabilistic OT grammars. Proceedings of the Annual Meeting on Phonology 2017.
 Pater, Joe. 2008. Gradual Learning and Convergence. Linguistic Inquiry 39(2). 334–345. doi:10.1162/ling.2008.39.2.334.
+Tesar B, Smolensky P. 2000. Cambridge, Massachusetts: MIT Press
+Tesar B. 2006. Faithful Contrastive Features in Learning. Cognitive Science. 30(5):863–903
+Tesar B, Alderete J, Horwood G, Merchant N, Nishitani K, Prince A. 2003. Surgery in Language Learning. In Proceedings of the 22nd West Coast Conference on Formal Linguistics, pp. 477–90
 

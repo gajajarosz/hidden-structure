@@ -1,9 +1,11 @@
 
-The file formats are modeled after the files used in Praat. 
+The grammar and distribution file formats are modeled after the files used in Praat. 
 
 The following describes the lines the program is looking for in each file. Lines not in any of these formats are ignored.
 
+-------------------------
 GRAMMAR FILE FORMAT
+-------------------------
 
 C constraints
 - where C is 1 or more integers (indicating the number of constraints there will be)
@@ -33,8 +35,9 @@ input [i]: "IN" j
 - OUT is the output candidate. If you are doing hidden structure learning, leave out the hidden structure in the candidate, here and in the output form in the distribution file. For example, if your hidden structure is feet, don’t put feet in OUT. You may have several candidates where OUT looks the same but the vector of violations differs since these candidates have different hidden structures - that’s ok. If you wish, you can add a space after the vector of violations followed by a version of OUT with hidden structure, which the program won’t extract.
 - c1 ... cC is a vector of violations for the C constraints separated by whitespace
 
-
+-------------------------
 DISTRIBUTION FILE FORMAT
+-------------------------
 
 P pairs
 - P is the number of input-output pairs (lines) that follow
@@ -44,10 +47,24 @@ P pairs
 - opt is not currently used by the program
 - OUT is the output form that must be in the same format as the output candidates in the grammar file. The learner will be trying to select the output candidates that match this output exactly. If you are learning with hidden structure, leave out the hidden structure from OUT, just as in the grammar file.
 - F is an integer frequency (count) of this data form
-- L is an integer and unique identifier of this data form. If your data is categorical, each input-output pair should have a unique identifier. If your data has variation, there may be multiple pairs (lines) with the same identifier.
-- IN is the underlying representation and must match the IN format in your grammar file tableaux exactly.
+- L is an integer and unique identifier of this data form. If your data is categorical, each input-output pair should have a unique identifier. If your data has variation, there may be multiple pairs (lines) with the same identifier. If you are doing UR learning, each input should be specified as a sequence of morph identifiers separated by ‘,‘. See PAKA_URDist.txt for an example, and define features for each morpheme identifier in the UR FILE (below). Morph identifiers must be consecutive integers starting at 1
+- IN is the underlying representation and must match the IN format in your grammar file tableaux exactly. If doing UR learning, IN should be a sequence of morpheme UR separated by ‘-‘.
 
 
+-------------------------
+UR FILE FORMAT
+-------------------------
+M morphs
+- M is the number of morphs in the learning data. 
+- Morph identifiers must be consecutive integers starting at 1. 
+- These identifiers must match the identifiers in column ‘L’ of the Distribution File (above).
 
+morph K
+- indicates the start of the URs for morpheme with the identifier ‘K’
+
+UR [i]: FORM	f1 f2 ... fF
+- i is the number of the UR for that morph
+- FORM is the phonological underlying representation of each morph. The software concatenates morph URs using ‘-‘ for multi-morphemic forms specified in the Distribution File.
+- f1 ... fF is a space-separated sequence of UR feature settings. The set of UR features is independently specified for each morph - that is, neither the content nor the number of UR features generalizes across morphs. You are free to define some morphs as having e.g. 10 UR features and others as having just 1, and these features need not correspond to the same distinctions across morphs. UR features currently must be binary (if a morph only has one possible UR, you must make one feature for it and specify the same UR FORM for both values of that feature.
  
  

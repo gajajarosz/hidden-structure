@@ -145,28 +145,80 @@ public class GUI extends Application {
         Tooltip.install(emodel, emodelTooltip);
         emodel.setPromptText("Learner");
         TextField ss = new TextField("100"); //Sample size textfield
+        ss.setPrefColumnCount(4);
         Label ssl = new Label("Sample Size: ");
         Tooltip ssTooltip = new Tooltip();
         ssTooltip.setText("How many samples should be taken to test each pairwise \nranking during learning?");
         Tooltip.install(ssl, ssTooltip);
         TextField edllr = new TextField("0.1"); //Learning rate text field
+        edllr.setPrefColumnCount(4);
         Label edllrl = new Label("Learning rate: ");
         Tooltip edllrTooltip = new Tooltip();
         edllrTooltip.setText("This only applies to the online version. \nSet to .1 by default.");
         Tooltip.install(edllrl, edllrTooltip);
+        // adding EDL UR options here
+        CheckBox eur = new CheckBox();
+        Label eurl = new Label("UR Learning?");
+        Tooltip eurTooltip = new Tooltip();
+        eurTooltip.setText("Check this box to learn underlying representations");
+        Tooltip.install(eurl, eurTooltip);
+        // adding UR file chooser
+        TextField urf = new TextField ();
+        urf.setPrefColumnCount(8);
+        HBox urfile = new HBox();
+        urfile.getChildren().addAll(urf);
+        urfile.setSpacing(5);
+        TextField urPath = new TextField();
+
+        final FileChooser urChooser = new FileChooser();
+        final Button urButton = new Button("Upload UR file");
+        Tooltip urTooltip = new Tooltip();
+        urTooltip.setText("UR file stores underlying forms and their parameters");
+        Tooltip.install(urButton, urTooltip);
+
+        urButton.setOnAction(
+                   new EventHandler<ActionEvent>() { //Filepicker for the distribution file
+                   @Override
+                   public void handle(final ActionEvent e) {
+                       File urfile = urChooser.showOpenDialog(primaryStage);
+                       if (urfile != null) {
+                       //openFile(file);
+                       urf.setText(urfile.getName());
+                       urPath.setText(urfile.getAbsolutePath());
+                       }
+                   }
+                   });
+
+        TextField phono = new TextField("0"); //Sample size textfield
+        phono.setPrefColumnCount(4);
+        Label phonol = new Label("Phono. Iterations: ");
+        Tooltip phonoTooltip = new Tooltip();
+        phonoTooltip.setText("How many iterations of phonotactic learning (no UR learning)\nshould take place?");
+        Tooltip.install(phonol, phonoTooltip);
+
         edlogrid.add(emodel,0,0);
         edlogrid.add(ssl, 0, 1);
         edlogrid.add(ss, 1, 1);
         edlogrid.add(edllrl,0,2);
         edlogrid.add(edllr,1,2);
+        edlogrid.add(eurl,0,3);
+        edlogrid.add(eur,1,3);
+        edlogrid.add(urButton,0,4);
+        edlogrid.add(urfile, 1,4);
+        edlogrid.add(phonol,0,5);
+        edlogrid.add(phono,1,5);
         edlo.setText("EDL Options");
         edlo.setContent(edlogrid);
         edlo.setExpanded(false);
         edlo.setVisible(false);
+        urButton.setVisible(false);
+        urfile.setVisible(false);
+        phono.setVisible(false);
+        phonol.setVisible(false);
         grid.add(edlo,0,6);
 
-        //This event listener hides the learning rate label and textfield if batch is selected
-        emodel.getSelectionModel().selectedIndexProperty().addListener(//Display either EDL or GLA options based on which is selected
+        //This event listener hides the learning rate label and textfield if user selects batch
+        emodel.getSelectionModel().selectedIndexProperty().addListener(
 								       new ChangeListener<Number>() {
 									   public void changed(ObservableValue ov, Number value, Number new_value) {
 									       System.out.println(new_value);
@@ -182,6 +234,27 @@ public class GUI extends Application {
 									       }
 									   }
 								       });
+
+        //This event listener displays the UR file and phonotatic options if user checks ur learning
+        eur.selectedProperty().addListener(
+                                       new ChangeListener<Boolean>() {
+                                       public void changed(ObservableValue ov, Boolean value, Boolean new_value) {
+                                           System.out.println(new_value);
+                                           if(new_value){
+                                           System.out.println("True!");
+                                           urButton.setVisible(true);
+                                            urfile.setVisible(true);
+                                            phono.setVisible(true);
+                                            phonol.setVisible(true);
+                                           }else{
+                                            urButton.setVisible(false);
+                                            urfile.setVisible(false);
+                                            phono.setVisible(false);
+                                            phonol.setVisible(false);
+                                           }
+                                       }
+                                       });
+
 
         TitledPane glao = new TitledPane();//Options for the GLA learner
         GridPane glaogrid = new GridPane();
@@ -199,11 +272,13 @@ public class GUI extends Application {
         Tooltip.install(gramtype, typeTooltip);
         gramtype.setPromptText("Grammar Type");
         TextField lr = new TextField("0.1");
+        lr.setPrefColumnCount(4);
         Label lrl = new Label("Learning Rate: ");
         Tooltip lrTooltip = new Tooltip();
         lrTooltip.setText("How much weights or ranking values are nudged when updated. \nA common learning rate is around .1");
         Tooltip.install(lrl, lrTooltip);
         TextField n = new TextField("2");
+        n.setPrefColumnCount(4);
         Label nl = new Label("Noise: ");
         Tooltip nTooltip = new Tooltip();
         nTooltip.setText("How variable weights or ranking values are in OT or HG. \nNoise is often set to 2");
@@ -253,7 +328,8 @@ public class GUI extends Application {
         ibTooltip.setText("Initial Bias means that the weights or ranks given in the grammar file \nwill be used to initialize the grammar");
         Tooltip.install(ibl, ibTooltip);
         TextField finEvalSample = new TextField("1000");
-        Label fesl = new Label("Final Evaluation Sampling: ");
+        finEvalSample.setPrefColumnCount(4);
+        Label fesl = new Label("Final Eval. Sample: ");
         Tooltip fesTooltip = new Tooltip();
         fesTooltip.setText("Final Evaluation Sampling is the number of samples used \nto evaluate the final grammar.");
         Tooltip.install(fesl, fesTooltip);
@@ -271,18 +347,21 @@ public class GUI extends Application {
         eogrid.setVgap(4);
         eogrid.setPadding(new Insets(5, 5, 5, 5));
         TextField quitFreq = new TextField("100");
-        Label qfl = new Label("Check to Quit Early @ Iteration: ");
+        quitFreq.setPrefColumnCount(4);
+        Label qfl = new Label("Quit Early Freq.: ");
         Tooltip qfTooltip = new Tooltip();
         qfTooltip.setText("How often the program checks to see if a successful grammar\nhas already been learned. If the learning problem is simple,\nsetting a small number of generations will likely make \nthe program more efficient; if the learning problem is difficult \nand early success if unlikely, then a high value here will increase efficiency.");
         Tooltip.install(qfl, qfTooltip);
         TextField quitSample = new TextField("100");
-        Label qsl = new Label("Sampling for Quit Early: ");
+        quitSample.setPrefColumnCount(4);
+        Label qsl = new Label("Sampling Size: ");
         Tooltip qsTooltip = new Tooltip();
         qsTooltip.setText("How many samples are used to evaluate whether a successful grammar\nhas already been learned. High values, above 100,\nwill improve accuracy at the expense of efficient performance.");
         Tooltip.install(qsl, qsTooltip);
         TextField maxDepth = new TextField();
         maxDepth.setText("8");
-        Label mdl = new Label("MaxDepth of Ranking Tree: ");
+        maxDepth.setPrefColumnCount(4);
+        Label mdl = new Label("Tree MaxDepth: ");
         Tooltip mdTooltip = new Tooltip();
         mdTooltip.setText("Sets a maximum depth of the ranking tree; to increase efficiency, \nit is possible to cap the depth of data structures.\nA reasonable value may be 8. For grammars with more than \naround 12 constraints this number may need to be lowered to avoid \nrunnig out of memory.");
         Tooltip.install(mdl, mdTooltip);
@@ -312,34 +391,37 @@ public class GUI extends Application {
         pogrid.add(new Separator(),0,2);
 
         pogrid.add(new Label("Intermediate evaluation:"),0,3); //Intermediate evauation options
-        Label eil = new Label("Evaluate @ Iteration: ");
+        Label eil = new Label("Evaluation Frequency:");
         Tooltip eiTooltip = new Tooltip();
         eiTooltip.setText("How often should learner be evaluated on their progress?");
         Tooltip.install(eil, eiTooltip);
         pogrid.add(eil,0,4);
-        TextField interEvalFreq = new TextField("100");
+        TextField interEvalFreq = new TextField("1");
+        interEvalFreq.setPrefColumnCount(4);
         pogrid.add(interEvalFreq,1,4);
 
-        Label eisl = new Label("Sampling for Intermediate Evaluation: ");
+        Label eisl = new Label("Sample size: ");
         Tooltip eisTooltip = new Tooltip();
         eisTooltip.setText("How many samples are used to evaluate whether a successful grammar\nhas already been learned. High values, above 100,\nwill improve accuracy at the expense of efficient performance.");
         Tooltip.install(eisl, eisTooltip);
         pogrid.add(eisl,0,5);
         TextField interEvalSample = new TextField("100");
+        interEvalSample.setPrefColumnCount(4);
         pogrid.add(interEvalSample,1,5);
 
         CheckBox interEvalGram = new CheckBox();
+        interEvalGram.setSelected(true);
         CheckBox interEvalAcc = new CheckBox();
 
-        pogrid.add(new Label("Print Grammar?"), 0, 6);
+        pogrid.add(new Label("Print Grammar? "), 0, 6);
         pogrid.add(interEvalGram, 1, 6);
-        pogrid.add(new Label("Print Accuracy Per Output?"), 0, 7);
+        pogrid.add(new Label("Print Accuracy Per Output? "), 0, 7);
         pogrid.add(interEvalAcc, 1, 7);
         pogrid.add(new Separator(),0,8);
 
-        pogrid.add(new Label("Final evaluation:"),0,9); //Final evaluation options
+        pogrid.add(new Label("Final evaluation: "),0,9); //Final evaluation options
         CheckBox finalAcc = new CheckBox();
-        pogrid.add(new Label("Print Accuracy Per Output?"), 0, 11);
+        pogrid.add(new Label("Print Accuracy Per Output? "), 0, 11);
         pogrid.add(finalAcc, 1, 11);
         po.setText("Print Options");
         po.setContent(pogrid);
@@ -378,7 +460,7 @@ public class GUI extends Application {
 		    String chosenQuitFreq = quitFreq.getText(); //Quit early frequency
 		    String chosenQuitSample = quitSample.getText(); //Number of quit early samples
 		    String chosenMaxDepth = maxDepth.getText(); //Max depth option
-
+            String chosenPhono = phono.getText();
 		    String chosenInterEvalFreq = interEvalFreq.getText(); //Intermediate evaluation options
 		    String chosenInterEvalSample = interEvalSample.getText();
 		    String chosenPrintInput; //Print options
@@ -439,39 +521,52 @@ public class GUI extends Application {
 					    if(ss.getText().equals("")){//Throw errors if something hasn't been specified
 						actiontarget.setText("Error: please specify sample size!");
 					    }else{
-						String chosenSampleSize = ss.getText();
+						  String chosenSampleSize = ss.getText();
 						if(edllr.getText().equals("")) {
 						    actiontarget.setText("Error: please specify the learning rate!");
 						}else{
-						    //Else run learner with given parameters
-						    String chosenEDLLearningRate = edllr.getText();
-						    System.out.println("All EDL parameters ok!");
-						    String chosenFinEvalSample = finEvalSample.getText();//eventually move
-						    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenEDLLearningRate,chosenPrintInput,chosenFinalAcc,chosenInterEval,chosenInterEvalFreq,chosenInterEvalSample,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
-						    System.out.println(Arrays.toString(args));
-						    EDL.writer = new GuiWriter(ta);//Create a writer to output results
-						    new Thread () {
-							@Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
-							    EDL.main(args);
-							    Platform.runLater(new Runnable() {
-								    public void run() {
-									actiontarget.setText("Writing results to file...");
-									try {
-									    String res = EDL.writer.getText(); //Display output in textbox
-									    //Write output to file:
-									    Files.write(
-											Paths.get(resName_),
-											res.getBytes(),
-											StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-									    actiontarget.setText("All done!");
-									    EDL.writer.clear(); //Clear old output (otherwise, each run is written to file multiple times
-									} catch (IOException uhoh) {
-									    uhoh.printStackTrace();
-									}
-								    };
-								});
-							}
-						    }.start();
+                            String chosenUR;
+                            if(eur.isSelected()){
+                                chosenUR = "true";
+                            }else{
+                                chosenUR = "false";
+                            }
+                            if(chosenUR=="true" && urf.getText().equals("")){
+                                actiontarget.setText("Error: please upload UR file!");
+                            }else{
+                                String chosenURFile = urPath.getText();
+    						    //Else run learner with given parameters
+    						    String chosenEDLLearningRate = edllr.getText();
+    						    System.out.println("All EDL parameters ok!");
+    						    String chosenFinEvalSample = finEvalSample.getText();//eventually move
+    						    String[] args = {chosenGrammar, chosenDist, chosenIt, chosenFinEvalSample, chosenLearnerNum, chosenSampleSize,chosenBias,chosenEDLLearningRate,chosenUR,chosenURFile,chosenPhono,chosenPrintInput,chosenFinalAcc,chosenInterEval,chosenInterEvalFreq,chosenInterEvalSample,chosenQuitFreq,chosenQuitSample, chosenMaxDepth};
+    						    System.out.println(Arrays.toString(args));
+    						    EDL.writer = new GuiWriter(ta);//Create a writer to output results
+    						    new Thread () {
+    							@Override public void run () {//Must create new thread so that the GUI doesn't freeze while the learner is running
+    							    EDL.main(args);
+    							    Platform.runLater(new Runnable() {
+    								    public void run() {
+    									actiontarget.setText("Writing results to file...");
+    									try {
+    									    String res = EDL.writer.getText(); //Display output in textbox
+    									    //Write output to file:
+    									    Files.write(
+    											Paths.get(resName_),
+    											res.getBytes(),
+    											StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+    									    actiontarget.setText("All done!");
+    									    EDL.writer.clear(); //Clear old output (otherwise, each run is written to file multiple times
+    									} catch (IOException uhoh) {
+    									    uhoh.printStackTrace();
+    									}
+    								    };
+    								});
+    							}
+    						    }.start();
+                            }
+
+
 						}
 					    }
 					}

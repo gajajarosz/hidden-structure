@@ -51,7 +51,7 @@ public class GLA {
                     Matcher m1 = pattern.matcher(line);
                     if (m1.matches()) {
                         String parameter = m1.group(1);
-                        writer.println("Parameter is:___" + parameter + "___");
+                        //writer.println("Parameter is:___" + parameter + "___");
                         
                         if (parameter.equals("GRAMMAR_FILE")) {
                             String gramdirectory = m1.group(2);
@@ -62,9 +62,9 @@ public class GLA {
                             writer.println("Opening distribution file: " + distdirectory + "...");
                             df = new DistFile(distdirectory, writer);
                             
-                        } else if (parameter.equals("NUM_SAMPLES")) {
+                        } else if (parameter.equals("ITERATIONS")) {
                             num_samples = Integer.valueOf(m1.group(2));
-                            writer.println("Setting number of samples to: " + num_samples);
+                            writer.println("Setting iterations to: " + num_samples);
                             
                         } else if (parameter.equals("FINAL_EVAL_SAMPLE")) {
                             final_eval_sample = Integer.valueOf(m1.group(2));
@@ -87,20 +87,29 @@ public class GLA {
                             writer.println("Setting noise bias to: " + noise);
                             
                         } else if (parameter.equals("INITIAL_BIAS")) {
-                            bias = Integer.valueOf(m1.group(2));
-                            writer.println("Setting initial bias to: " + bias);
+                            if (m1.group(2).equals("true") || m1.group(2).equals("1")){
+                                bias = 1;
+                                writer.println("Setting initial bias to: true");
+                            } else {
+                                writer.println("Setting initial bias to: false");                                
+                            }
                             
                         } else if (parameter.equals("NEGOK")) {
                             NegOK = Boolean.valueOf(m1.group(2));
                             writer.println("Setting NEGOK to: " + NegOK);
                             
-                        } else if (parameter.equals("FINAL_EVAL")) {
-                            final_eval = Integer.valueOf(m1.group(2));
-                            writer.println("Setting final evaluation to: " + final_eval);
+                        } else if (parameter.equals("FINAL_EVAL_ACC")) {
+                            if (m1.group(2).equals("true") || m1.group(2).equals("0")){
+                                final_eval = 0;
+                                writer.println("Setting final evaluation accuracy to: true");
+                            } else {
+                                final_eval = 1;
+                                writer.println("Setting final evaluation accuracy to: false");
+                            }
                             
                         } else if (parameter.equals("MINI_EVAL")) {
                             mini_eval = Integer.valueOf(m1.group(2));
-                            writer.println("Setting mini evaluation size to: " + mini_eval);
+                            writer.println("Setting mini evaluation to: " + mini_eval);
                             
                         } else if (parameter.equals("MINI_EVAL_FREQ")) {
                             mini_eval_freq = Integer.valueOf(m1.group(2));
@@ -110,17 +119,22 @@ public class GLA {
                             mini_eval_sample = Integer.valueOf(m1.group(2));
                             writer.println("Setting mini evaluation sample to: " + mini_eval_sample);
                             
-                        } else if (parameter.equals("QUIT_EARLY")) {
+                        } else if (parameter.equals("QUIT_EARLY_FREQ")) {
                             quit_early = Integer.valueOf(m1.group(2));
-                            writer.println("Setting quit_early to: " + quit_early);
+                            writer.println("Setting quit early frequency to: " + quit_early);
                             
                         } else if (parameter.equals("QUIT_EARLY_SAMPLE")) {
                             quit_early_sample = Integer.valueOf(m1.group(2));
                             writer.println("Setting quit early sample to: " + quit_early_sample);
                             
                         } else if (parameter.equals("PRINT_INPUT")) {
-                            print_input = Integer.valueOf(m1.group(2));
-                            writer.println("Setting print input to: " + print_input);
+                            if (m1.group(2).equals("false") || m1.group(2).equals("1")){
+                                // 1 means not printing input here
+                                print_input = 1;
+                                writer.println("Setting print input to: false");
+                            } else {
+                                writer.println("Setting print input to: true");
+                            } 
                             
                         } else {
                             writer.println("The following lines from the parameter file do not match the specified format and will be ignored: \n>>>" + line);
@@ -153,7 +167,7 @@ public class GLA {
             NegOK = Boolean.parseBoolean(args[9]);
             writer.println(args.length);
             
-            if (args.length == 17) {
+            if (args.length > 11) {
                 writer.println("Setting print_input? to: " + args[10]);
                 print_input = Integer.parseInt(args[10]);
                 writer.println("Setting final-eval to: " + args[11]);
@@ -164,9 +178,9 @@ public class GLA {
                 mini_eval_freq = Integer.parseInt(args[13]);
                 writer.println("Setting mini-eval-sample to: " + args[14]);
                 mini_eval_sample = Integer.parseInt(args[14]);
-                writer.println("Setting quit_early? to: " + args[15]);
+                writer.println("Setting quit early frequency to: " + args[15]);
                 quit_early = Integer.parseInt(args[15]);
-                writer.println("Setting quit_early_sample? to: " + args[16]);
+                writer.println("Setting quit early sample to: " + args[16]);
                 quit_early_sample = Integer.parseInt(args[16]);
             }
         }

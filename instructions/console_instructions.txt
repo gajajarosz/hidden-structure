@@ -1,98 +1,116 @@
-Running from command line
---------------------------
+------------------------------------------------------------------------------
+Running from the command line with Specification File
+------------------------------------------------------------------------------
 In order to run this code, you will need java and java runtime environment installed (https://www.java.com/en/download/help/download_options.xml), and your computer will have to know where to find java (potentially helpful link: https://www.java.com/en/download/help/path.xml).
 
 
 +The project currently uses the build tool SBT, which you'll need to install (http://www.scala-sbt.org/download.html)
 + To compile the project type "sbt compile". This will create two files (1) console.jar and (2) gui.jar.
-+ To run the console program, type "java -jar console.jar learner sample_files/learner_SampleParameter.txt"
++ The command to run the console at the command line are: "java -jar console.jar LEARNER SPEC_FILE"
 
-The "learner" argument should be either "EDL" or "GLA". The parameter txt file is either EDL_SampleParameter.txt or GLA_SampleParameter.txt
+The "LEARNER" argument should be either "EDL" or "GLA". The "SPEC_FILE" specifies all the learning parameters, and has the formats exemplified by EDL_SampleParameter.txt, EDL_SampleParameterUR.txt and GLA_SampleParameter.txt. 
+Sample specification, grammar, distribution, and UR files are located in the sample_files directory. The learning parameters are a little different for EDL and GLA so be sure to follow the format for the appropriate learner. The program will ignore lines that don’t match the specified format exactly. 
 
-Both EDL and GLA are run using the learn.java program and the EDL/GLA_SampleParameter.txt files are located sample_files. The various parameters can be updated in the corresponding txt files. The following arguments, and subsequent parameters, are shared by both EDL and GLA:
+------------------------------------------------------------------------------
+PARAMETERS SHARED BY EDL AND GLA
+------------------------------------------------------------------------------
 
 "GRAMMAR_FILE"
-- should be in the same format as provided TS2000Grammar_secondary.txt. Any lines in the file that don’t match this format will be ignored. This format is based on the format used in Praat. See FileFormats_instructions.txt for more info.
+- should be in the same format as provided TS2000Grammar_secondary.txt and PAKAGrammar.txt. Any lines in the file that don’t match this format will be ignored. This format is based on the format used in Praat. See FileFormats_instructions.txt for more info.
 Default: TS2000Grammar_secondary.txt
 
 "DIST_FILE"
-- should be in the same format as provided TS1_Dist.txt. Any lines in the file that don’t match this format will be ignored. This format is based on the format used in Praat. See FileFormats_instructions.txt for more info.
+- should be in the same format as provided TS1_Dist.txt and PAKA_Dist4.txt. Any lines in the file that don’t match this format will be ignored. This format is based on the format used in Praat. See FileFormats_instructions.txt for more info.
 Default: TS1_Dist.txt
 
 "FINAL_EVAL_SAMPLE"
 -How many samples are used to evaluate in the final evaluation
 Default: 1000
 
+"ITERATIONS" 
+- this is the number of passes through the data
+- For GLA, reasonable values are around 100-1000 (higher for complex data)
+- The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations starts at around 100
+- The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
+Default: 100
+
+"LEARNING_RATE"	
+- EDL: How much parameter probabilities get nudged when there’s an update, relevant only for Online EDL but must be specified for both EDL learners
+- GLA: How much constraint ranking/weighting values get nudged when there’s an update
+Default:0.1
+
 "INITIAL_BIAS"
 - If your grammar file encodes ranking preferences for the initial grammar, you can set this to 1 to begin learning with a grammar where pairwise rankings begin at .9 for preferred pairwise rankings.
 - See FileFormats_instructions.txt for more info.
-Default:0
+Default: false
 
- ---------------------------------------------------------------------------------------------------------------------------
-
-EDL
+------------------------------------------------------------------------------
+EDL PARAMETERS
+------------------------------------------------------------------------------
 
 The following arguments are those specific to running EDL. Values can be edited in the EDL_SampleParameter.txt file:
 
 "LEARNER"
-1 - batch - Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_batch()
-2 - online - Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_online()
-Default:1
+- batch: Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_batch()
+- online: Expectation Driven Learner in Jarosz (2015). Runs the learning function EDL_online()
+Default: batch
 
-"GRAMMAR_SAMPLE_SIZE"
-- this is the number of times that a grammar is sampled when each pair of constraints is considered during learning
-- reasonable values are 50-100
-Default:100
-
-"LEARNING_RATE"	
-- Learning rate, relevant only for Online EDL but currently must be specified for both learners
-Default:0.1
-
-"ITERATIONS" 
-- this is the number of passes through the data
-- For GLA, reasonable values are around 100-1000 (higher for complex data)
-- The batch EDL learner sees every data point at each iteration, so a reasonable number of iterations is around 100
-- The online EDL learner sees only 1 data point at each iteration, so a comparable number of iterations is 100*the number of data points
-Default: 200
+"SAMPLE_SIZE"
+- This is the number of times that a grammar is sampled when each pair of constraints (or each pair of UR features) is considered during learning
+- Reasonable values are 50-100
+Default:50
 
 "MAXDEPTH"
--To speed-up run-time we use a tree to keep track of previously generated winners for a given input and ranking prefix.
-  This avoids repeating the optimization process over and over again, but for high numbers of constraints, this can cause the program to run out of memory if the tree is allowed to get too big.
-  This parameter controls the maximum depth (size) of the tree.
--By default, the maximum depth of the tree is set to 8, but you can reduce the depth to reduce the amount of memory used by the program.
--To specify the maximum depth, edit the second column in the EDL_SampleParameter.txt file after "MAXDEPTH" : 
+- To speed-up run-time we use a tree to keep track of previously generated winners for a given input and ranking prefix.
+- This avoids repeating the optimization process over and over again, but for high numbers of constraints, this can cause the program to run out of memory if the tree is allowed to get too big.
+- This parameter controls the maximum depth (size) of the tree.
+- By default, the maximum depth of the tree is set to 8, but you can reduce the depth to reduce the amount of memory used by the program.
 
 To run EDL, use this syntax at the command prompt:
 
 java -jar console.jar EDL sample_files/EDL_SampleParameter.txt
 
-
-____You may want to redirect the output to a file or pipe it to less like this:
+You may want to redirect the output to a file or pipe it to less like this:
 
 java -jar console.jar EDL sample_files/EDL_SampleParameter.txt > output.txt
-java -jar console.jar EDL sample_files/EDL_SampleParameter.txt | less_____
+java -jar console.jar EDL sample_files/EDL_SampleParameter.txt | less
 
-----------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+EDL UR PARAMETERS
+------------------------------------------------------------------------------
+"UR_LEARNING"
+- false: learner uses the provided URs in the Distribution file for learning
+- true: learner has to learn UR features, and these are specified in the UR_FILE
+Default: false
 
-GLA
+"UR_FILE"
+- file that specifies the range of URs and their binary features for each morpheme in the data (Distribution) file
+- this file is only consulted if UR_LEARNING is set to true
+
+"PHONO_ITERATIONS"
+- How many iterations of phonotactic learning (learning without adjusting the URs) should occur
+- In order for any UR learning to occur, this value must be less than the value specified for ITERATIONS
+- The learner initially sets all UR features to uniform (e.g. 50% probability of each feature value) 
+- this value is consulted only if UR_LEARNING is set to true
+Default: 0
+
+------------------------------------------------------------------------------
+GLA PARAMETERS
+------------------------------------------------------------------------------
 
 The following arguments are those specific to running GLA. Values can be edited in the GLA_SampleParameter.txt file:
 
 "LEARNER"
-EIP - Expected Interpretive Parsing in Jarosz (2013)
-RIP - is the original RIP as proposed for Stochastic OT by Boersma (2003)
-RRIP - Resampling RIP in Jarosz (2013)
-randRIP - baseline model which generates a random output as the ‘winner’ when there’s an error
-Baseline - baseline model: generates a brand new ranking/weighting when there’s an error
-Default:EIP
+- EIP: Expected Interpretive Parsing in Jarosz (2013)
+- RIP: is the original RIP as proposed for Stochastic OT by Boersma (2003)
+- RRIP: Resampling RIP in Jarosz (2013)
+- randRIP: baseline model which generates a random output as the ‘winner’ when there’s an error
+- Baseline: baseline model: generates a brand new ranking/weighting when there’s an error
+Default: EIP
 
 "LEARNING_MODEL"
 - set this to OT, HG, or ME (maxent)
 Default: OT
-
-"LEARNING_RATE"	
-- How much constraint ranking/weighting values get nudged when there’s an update
-Default: 0.1
 
 "NOISE_BIAS"
 - what’s the variance around the ranking/weighting value
@@ -101,34 +119,30 @@ Default: 2
 "NEGOK"	
 - Indicates whether the learner be allowed to use negative weights.
 - Set to 0 to keep weights non-negative (any negative weight is replaced with 0 in updating and in sampling).
-Default: 0
-
-"NUM_SAMPLES"
-- Similar to "ITERATIONS"
-Default: 1000
+Default: false
 
 To run GLA, use this syntax at the command prompt:
 
 java -jar console.jar GLA sample_files/GLA_SampleParameter.txt
 
-____You may want to redirect the output to a file or pipe it to less like this:
+You may want to redirect the output to a file or pipe it to less like this:
 
 java -jar console.jar GLA sample_files/GLA_SampleParameter.txt > output.txt
-java -jar console.jar GLA sample_files/GLA_SampleParameter.txt | less_____
+java -jar console.jar GLA sample_files/GLA_SampleParameter.txt | less
 
-----------------------------------------------------------------------------------------------------------------------------
-
-Print options
+------------------------------------------------------------------------------
+ADVANCED PRINT OPTIONS
+------------------------------------------------------------------------------
 
 "PRINT_INPUT"
-- 0 : prints grammar and input
-- 1 : doesn't print input
-- Default: 0
+- true : prints grammar and input
+- false : doesn't print input
+- Default: true
 
-"FINAL_EVAL"
-- 0 : prints final grammar; accuracy on each output; total error and log likelihood
-- 1 : prints final grammar; total error and log likelihood
-- Default: 0
+"FINAL_EVAL_ACC"
+- true : prints final grammar; accuracy on each output; total error and log likelihood
+- false : prints final grammar; total error and log likelihood
+- Default: true
 
 "MINI_EVAL"
 - 0: prints grammar; accuracy on each output; total error and log likelihood
@@ -142,23 +156,23 @@ Print options
 - Default: 1
 
 "MINI_EVAL_SAMPLE"
--How many samples are used to evaluate in a mini-evaluation
--Default: 100
+- How many samples are used to evaluate in a mini-evaluation
+- Default: 100
 
-"QUIT_EARLY"
--How often the program checks to see if it can quit early
--Quits if the learner has already learned everything
+"QUIT_EARLY_FREQ"
+- How often the program checks to see if it can quit early
+- Quits if the learner has already learned everything
 - In order to not try to quit early, set to the same number as iterations
 -Default: 100
 
 "QUIT_EARLY_SAMPLE"
--How many samples are used to evaluate whether the learner is done learning
--The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
--Default: 100
+- How many samples are used to evaluate whether the learner is done learning
+- The fewer samples, the faster the program, but the greater the risk of quitting before the learner has really finished learning
+- Default: 100
 
-----------------------------------------------------------------------------------------------------------------------------
-
+------------------------------------------------------------------------------
 Updating the sample parameter txt files
+------------------------------------------------------------------------------
 
 In order to specify particular values you want to run, edit the *second* column of either the EDL or GLA _SampleParameter.txt files. Editing the files is not necessary as the program will run with the default settings. Save after editing the files; you do *not* need to re-compile the program. 
 
@@ -175,5 +189,4 @@ to
 
 -Save
 
-The program will now run accordingly. Avoid changing the left most column, as this will result in an error.
-
+The program will now run accordingly. Avoid changing the leftmost column, as this will result in an error.
