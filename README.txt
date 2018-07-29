@@ -20,7 +20,7 @@ Development: If you are interested in working with the source code and/or making
 
 SOFTWARE CREDITS, CITING, & CONTACT INFO
 
-Jarosz, Gaja & Anderson, Carolyn. 2018. UMass Hidden Structure Learners: Version 2. http://github.com/gajajarosz/hidden-structure
+Jarosz, Gaja & Anderson, Carolyn. 2018. Hidden Structure Suite: Version 2. http://github.com/gajajarosz/hidden-structure
 Jarosz, Gaja. 2013. Learning with Hidden Structure in Optimality Theory and Harmonic Grammar: Beyond Robust Interpretive Parsing. Phonology 30(1). 27–71.
 Jarosz, Gaja. 2015. Expectation Driven Learning of Phonology. University of Massachusetts, Amherst, ms.
 
