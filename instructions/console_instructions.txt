@@ -94,6 +94,15 @@ Default: false
 - this value is consulted only if UR_LEARNING is set to true
 Default: 0
 
+To run EDL UR, use this syntax at the command prompt:
+
+java -jar console.jar EDL parameter_files/EDL_SampleParameterUR.txt
+
+You may want to redirect the output to a file or pipe it to less like this:
+
+java -jar console.jar EDL parameter_files/EDL_SampleParameterUR.txt > output.txt
+java -jar console.jar EDL parameter_files/EDL_SampleParameterUR.txt | less
+
 ------------------------------------------------------------------------------
 GLA PARAMETERS
 ------------------------------------------------------------------------------
