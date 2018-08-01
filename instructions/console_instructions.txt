@@ -68,12 +68,12 @@ Default:50
 
 To run EDL, use this syntax at the command prompt:
 
-java -jar console.jar EDL sample_files/EDL_SampleParameter.txt
+java -jar console.jar EDL parameter_files/EDL_SampleParameter.txt
 
 You may want to redirect the output to a file or pipe it to less like this:
 
-java -jar console.jar EDL sample_files/EDL_SampleParameter.txt > output.txt
-java -jar console.jar EDL sample_files/EDL_SampleParameter.txt | less
+java -jar console.jar EDL parameter_files/EDL_SampleParameter.txt > output.txt
+java -jar console.jar EDL parameter_files/EDL_SampleParameter.txt | less
 
 ------------------------------------------------------------------------------
 EDL UR PARAMETERS
@@ -127,8 +127,8 @@ java -jar console.jar GLA sample_files/GLA_SampleParameter.txt
 
 You may want to redirect the output to a file or pipe it to less like this:
 
-java -jar console.jar GLA sample_files/GLA_SampleParameter.txt > output.txt
-java -jar console.jar GLA sample_files/GLA_SampleParameter.txt | less
+java -jar console.jar GLA parameter_files/GLA_SampleParameter.txt > output.txt
+java -jar console.jar GLA parameter_files/GLA_SampleParameter.txt | less
 
 ------------------------------------------------------------------------------
 ADVANCED PRINT OPTIONS
