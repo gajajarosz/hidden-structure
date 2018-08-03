@@ -8,8 +8,7 @@ In order to run this code, you will need java and java runtime environment insta
 + To compile the project type "sbt compile". This will create two files (1) console.jar and (2) gui.jar.
 + The command to run the console at the command line are: "java -jar console.jar LEARNER SPEC_FILE"
 
-The "LEARNER" argument should be either "EDL" or "GLA". The "SPEC_FILE" specifies all the learning parameters, and has the formats exemplified by EDL_SampleParameter.txt, EDL_SampleParameterUR.txt and GLA_SampleParameter.txt. 
-Sample specification, grammar, distribution, and UR files are located in the sample_files directory. The learning parameters are a little different for EDL and GLA so be sure to follow the format for the appropriate learner. The program will ignore lines that don’t match the specified format exactly. 
+The "LEARNER" argument should be either "EDL" or "GLA". The "SPEC_FILE" specifies all the learning parameters, and has the formats exemplified by EDL_SampleParameter.txt, EDL_SampleParameterUR.txt and GLA_SampleParameter.txt, which are in the parameter_files directory. Sample grammar, distribution, and UR files are located in the sample_files directory. The learning parameters are a little different for EDL and GLA so be sure to follow the format for the appropriate learner. The program will ignore lines that don’t match the specified format exactly. 
 
 ------------------------------------------------------------------------------
 PARAMETERS SHARED BY EDL AND GLA
@@ -132,7 +131,7 @@ Default: false
 
 To run GLA, use this syntax at the command prompt:
 
-java -jar console.jar GLA sample_files/GLA_SampleParameter.txt
+java -jar console.jar GLA parameter_files/GLA_SampleParameter.txt
 
 You may want to redirect the output to a file or pipe it to less like this:
 
