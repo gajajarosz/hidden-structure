@@ -112,7 +112,7 @@ public class BuildTab {
 		return con_mappings;
 	}
 
-	public static Map<String, int[]> get_tab (String UR, String gen_file, String con_file, boolean verbose){ 
+	public static Tableau get_tab (String UR, String gen_file, String con_file, boolean verbose){ 
 	//This function takes a UR and GEN/CON file names, then tells
 	//you what the SR will be, given the GEN and CON input files.
 		
@@ -216,28 +216,48 @@ public class BuildTab {
 			print_tab(current_input, current_mSeq, CON_names, candidates, violProfiles);
 		}
 		
-		//Here's where the actual magic happens:
-		HashMap<String, int[]> output = new HashMap<String, int[]>();
+		//Convert everything to a format that EDL.java can use:
+		Candidate[] output_cands = new Candidate[candidates.size()];
 		for (int cand_i = 0; cand_i < candidates.size(); cand_i++){
-			output.put(candidates.get(cand_i).replace("_",""), violProfiles.get(cand_i));
+			Candidate this_cand = new Candidate();
+			this_cand.form = candidates.get(cand_i).replace("_","");
+			this_cand.violations = violProfiles.get(cand_i);
+			output_cands[cand_i] = this_cand;
 		}
+		Tableau output = new Tableau();
+		output.uf = UR;
+		output.cands = output_cands;
 		
 		return output;
 	}
 	
 	public static void print_tab (String INPUT, String MSEQ, String[] CONSTS, ArrayList<String> CANDS, ArrayList<int[]> VIOLS){
 		//Just print a tableau:
-		System.out.print("/"+INPUT+MSEQ+"/\t");
-		System.out.println(join_array(CONSTS, "\t"));
+		System.out.print("/"+INPUT+MSEQ+"/\t"); //Input
+		System.out.println(join_array(CONSTS, "\t"));//Constraints
 		System.out.println("--------------------------------------------------------");
-		for (int cand_i=0; cand_i < CANDS.size();cand_i++){
-			System.out.print(CANDS.get(cand_i).replace("_","")+"\t");
+		for (int cand_i=0; cand_i < CANDS.size();cand_i++){ 
+			System.out.print(CANDS.get(cand_i).replace("_","")+"\t");//Candidate
 			for (int con_j=0; con_j < CONSTS.length; con_j++){
-				System.out.print(VIOLS.get(cand_i)[con_j]);
+				System.out.print(VIOLS.get(cand_i)[con_j]);//Violation for each constraint
 				System.out.print("\t");
 			}
 			System.out.print("\n");
 		} 
 		System.out.print("\n\n\n");
 	}
+	
+   public static class Candidate {
+		Candidate() {}
+
+		public int[] violations; //Violation profile
+		public String form; //SR
+   }
+	
+	public static class Tableau {
+		public String uf; //Underlying form (string)
+		public Candidate[] cands; //Candidate object (see class above)
+    }
+	
 }
+
