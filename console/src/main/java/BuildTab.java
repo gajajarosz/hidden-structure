@@ -99,10 +99,10 @@ public class BuildTab {
 				}
 				else{
 					Constraint c = new Constraint(
-													con_columns[0],
-													con_family,
-													c_line.replace(con_columns[0]+"\t", "").split("\t")
-												  );
+						con_columns[0],
+						con_family,
+						c_line.replace(con_columns[0]+"\t", "").split("\t")
+					);
 					con_mappings.put(c.label, c);
 				}
 			}
