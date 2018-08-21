@@ -11,7 +11,7 @@ public class Constraint {
 	
 	public Constraint(String this_label, String this_family, String[] loci){
 		this.label = this_label; //Custom name--doesn't matter really
-		this.family = this_family; //Right now this can only handle markedness and faithfulness
+		this.family = this_family; //Right now this can only handle markedness, faithfulness, and SMR
 		
 		if (this.family.equals("markedness")){
 			this.marked_regex = loci[0];
@@ -72,16 +72,26 @@ public class Constraint {
 				String vacuousTracker = "";
 				for (int con_i = 0; con_i < relevantCons.length; con_i++){
 					if (SR_mSeq.contains(relevantCons[con_i])){
+						//If a relevant constraint is present in the 
+						//candidate's MSeq...
 						vacuousTracker = vacuousTracker + "0";
 					}
 					else {
+						//If a relevant constraint is missing from 
+						//the candidate's MSeq...
 						vacuousTracker = vacuousTracker + "1";
 					}
 				}
 				if (vacuousTracker.contains("1")){
+					//If all of the constraints that the SMR
+					//constraint refers to aren't present in the 
+					//candidate's MSeq, it's vacuous.
 					viol_count = 0;
 				}
 				else{
+					//If the SM constraint isn't vacuous, check
+					//the ordering in the candidate's MSeq:
+					//(need to fix this to deal with >2 constraints)
 					if (SR.contains(this.mSeq)){
 						viol_count = 0; //Correct ordering
 					}
