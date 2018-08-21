@@ -113,8 +113,9 @@ public class BuildTab {
 	}
 
 	public static Tableau get_tab (String UR, String gen_file, String con_file, boolean verbose){ 
-	//This function takes a UR and GEN/CON file names, then tells
-	//you what the SR will be, given the GEN and CON input files.
+	//This function takes a UR and GEN/CON file names, then outputs
+	//a Tableau object that's roughly equivalent to what GrammarFile.java
+	//creates from grammar files.
 		
 		//Get our GEN and CON:
 		Map<String, Map<String, String>> GEN = get_GEN(gen_file); //Dictionary of mappings from possible UR segs to SR segs
@@ -123,32 +124,26 @@ public class BuildTab {
 		Set<String> CON_set = CON.keySet();
 		String[] CON_names = CON_set.toArray(new String[CON_set.size()]);
 		
-		//Enter the HS derivation:
-		int iteration = 0;
-		boolean optimizing = true;
-		String current_input = UR;
-		String current_mSeq = "";
 		//Separate the phonological input from any MSeqs that the input may contain:
-		if (current_input.contains("<")){
-			String[] inputElements = current_input.split("<");
-			current_input = inputElements[0];
-			current_mSeq = "<"+inputElements[1];
+		String current_mSeq = "";
+		if (isSMR){
+			if (UR.contains("<")){
+				String[] inputElements = UR.split("<");
+				UR = inputElements[0];
+				current_mSeq = "<"+inputElements[1];
+			}
 		}
 		
 		//Break input up into an array:
-		String input_array[] = current_input.split("");
+		String input_array[] = UR.split("");
 		
-		//Produce candidates for the given input:
-		ArrayList<String> candidates = new ArrayList<String>();
-		ArrayList<int[]> violProfiles = new ArrayList<int[]>();
-		
-		//Faithful candidate:
-		candidates.add(current_input);
-		int candViols[] = new int[CON_names.length];
-		String inputViols[] = new String[CON_names.length];
+		//Find the violation profile for the faithful candidate
+		int candViols[] = new int[CON_names.length]; //Array that holds each candidate's violation profile
+		String inputViols[] = new String[CON_names.length]; //Faithful candidate violation profile (+con types)
 		for (int con_index = 0; con_index<CON_names.length;con_index++){
-			candViols[con_index] = CON.get(CON_names[con_index]).get_viols(current_input, current_input);
+			candViols[con_index] = CON.get(CON_names[con_index]).get_viols(UR, UR);
 			inputViols[con_index] = String.valueOf(candViols[con_index]);
+			//The next bit it important for SMR constraints:
 			if (CON.get(CON_names[con_index]).family.equals("markedness")){
 				inputViols[con_index] = inputViols[con_index] + ",M";
 			}
@@ -156,24 +151,29 @@ public class BuildTab {
 				inputViols[con_index] = inputViols[con_index] + ",-";
 			}
 		}
-		//System.out.println(join_array(inputViols, "\t"));
-		violProfiles.add(candViols.clone());
 		
-		//Changed candidates:
+		//Fill in violProfiles for the non-faithful candidates:
+		ArrayList<String> candidates = new ArrayList<String>(); //List of all the candidates
+		candidates.add(UR); //Add the faithful candidate into the list
+		ArrayList<int[]> violProfiles = new ArrayList<int[]>(); //All the violation profiles
+		violProfiles.add(candViols.clone()); //Add the faithful candidate into the list
 		for (String function : GEN_functions){
-			Set<String> changable_segs = GEN.get(function).keySet();
+			//Step through each function that GEN has, applying it to each relevant segment
+			//in the input (only one change per candidate--a la HS).
+			Set<String> changable_segs = GEN.get(function).keySet();//All segments GEN can change
 			for (String changable_seg : changable_segs){
 				for (int input_i=0; input_i < input_array.length; input_i++){
 					if (input_array[input_i].equals(changable_seg)){
-							String[] newCandidate_array = new String [input_array.length];
-							for (int input_j=0; input_j < input_array.length; input_j++){
-								if (input_j == input_i){
-									newCandidate_array[input_i] = GEN.get(function).get(input_array[input_i]);
-								}
-								else{
-									newCandidate_array[input_j] = input_array[input_j];
-								}
+						//If this segment in the input is changable by GEN, do that.
+						String[] newCandidate_array = new String [input_array.length];
+						for (int input_j=0; input_j < input_array.length; input_j++){
+							if (input_j == input_i){
+								newCandidate_array[input_i] = GEN.get(function).get(input_array[input_i]);
 							}
+							else{
+								newCandidate_array[input_j] = input_array[input_j];
+							}
+						}
 						String newCandidate = join_array(newCandidate_array, ""); //Convert cand to string
 
 						//Add MSeqs to the candidate if we need them for this CON:
@@ -182,8 +182,11 @@ public class BuildTab {
 							for (int con_index = 0; con_index < inputViols.length; con_index++){
 								String[] this_viol = inputViols[con_index].split(",");
 								if (this_viol[1].equals("M") && this_viol[0].equals("1")){
-									if (CON.get(CON_names[con_index]).get_viols(current_input, newCandidate) == 0){
-										new_mSeq = new_mSeq + CON_names[con_index] + "&";
+									//If the input violated this markedness constraint...
+									if (CON.get(CON_names[con_index]).get_viols(UR, newCandidate) == 0){
+										//...and this candidate doesn't...
+										new_mSeq = new_mSeq + CON_names[con_index] + "&";//I use "&" instead of "+"
+										//...Add this constraint to the MSeq.
 									}
 								}
 							}
@@ -202,7 +205,7 @@ public class BuildTab {
 						
 						//Calculate candidate's constraint violations:
 						for (int con_index = 0; con_index<CON_names.length;con_index++){
-							int viol = CON.get(CON_names[con_index]).get_viols(current_input, newCandidate);
+							int viol = CON.get(CON_names[con_index]).get_viols(UR, newCandidate);
 							candViols[con_index] = viol;
 						}
 						violProfiles.add(candViols.clone()); //Add to viol profile list
@@ -211,9 +214,9 @@ public class BuildTab {
 			}
 		}
 
-		//This class can also print out pretty tableaux if you want it to:
+		//This class can also print out pretty tableaux to the console if you want it to:
 		if (verbose) {
-			print_tab(current_input, current_mSeq, CON_names, candidates, violProfiles);
+			print_tab(UR, current_mSeq, CON_names, candidates, violProfiles);
 		}
 		
 		//Convert everything to a format that EDL.java can use:
