@@ -1,0 +1,12 @@
+8	constraints
+constraint	[1]:	"HaveNuc" 0
+constraint	[2]:	"Max(V)" 0
+constraint	[3]:	"SM(*VV, *Ti)" 0
+constraint	[4]:	"SM(*Ti, *VV)" 0
+constraint	[5]:	"*VV" 0
+constraint	[6]:	"Max(V_2)" 0
+constraint	[7]:	"Ident(ant)" 0
+constraint	[8]:	"*Ti" 0
+1	tableaus
+input	[1]:	"NONE"	1
+	candidate	[1]:	"NONE"	0	0	0	0	0	0	0	0	

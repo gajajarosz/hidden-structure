@@ -19,7 +19,7 @@ public class Constraint {
 		}
 		if (this.family.equals("faithfulness")){
 			this.faith_input = loci[0].split(",");
-			this.faith_output = loci[1].split(",");
+			this.faith_output = loci[1].split(",");			
 		}
 		if (this.family.equals("serialMarkedness")){
 			this.mSeq = loci[0];
@@ -36,11 +36,15 @@ public class Constraint {
 			SR = SR.replace("_", ""); //Get rid of empty symbols
 			SR = SR.split("<")[0]; //Get rid of mSeqs
 			SR = "_"+SR+"_"; //Add symbols to beginning and end
+			//System.out.print(this.label+" ");
+			//System.out.print(SR+" ");
+			//System.out.print(this.marked_regex+" ");
 			Pattern my_regex = Pattern.compile(this.marked_regex);
 			Matcher viol_detect = my_regex.matcher(SR);
 			while (viol_detect.find()){
 				viol_count++; //Count viols
 			}
+			//System.out.println(viol_count+" ");
 		}
 		//Faithfulness constraints:
 		else if (this.family.equals("faithfulness")){

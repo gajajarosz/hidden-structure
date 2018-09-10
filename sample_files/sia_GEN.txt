@@ -1,0 +1,10 @@
+function:	palatalization
+k	c
+g	j
+t	c
+d	j
+function:	vowel deletion
+i	_
+a	_
+I	_
+A	_

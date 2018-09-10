@@ -1,0 +1,11 @@
+type:	markedness
+*Ti	[td][iI]
+*VV	[iaIA][iaIA]
+HaveNuc	_[tdcjkg]*_
+type:	faithfulness
+Max(V)	i,a,I,A	_,_,_,_
+Max(V_2)	I,A	_,_
+Ident(ant)	t,d,k,g,c,j	c,j,c,j,t,d
+type:	serialMarkedness
+SM(*Ti, *VV)	*Ti,*VV
+SM(*VV, *Ti)	*VV,*Ti

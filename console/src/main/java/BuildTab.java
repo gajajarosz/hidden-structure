@@ -32,7 +32,6 @@ public class BuildTab {
 		
 		//Setting up buffered readers:
 		BufferedReader gf_reader = null;
-		BufferedReader cf_reader = null;
 		try {
 			//GEN
 			File gf = new File(file_name);
@@ -114,17 +113,10 @@ public class BuildTab {
 		return con_mappings;
 	}
 
-	public static Tableau get_tab (String UR, String gen_file, String con_file, boolean verbose){ 
-	//This function takes a UR and GEN/CON file names, then outputs
+	public static Tableau get_tab (String UR, Map<String, Map<String, String>> GEN, Map<String, Constraint> CON, String[] GEN_functions, String[] CON_names, int CON_num, int func_num, String[][] changableSegs, boolean verbose){ 
+	//This function takes a UR and GEN/CON dictionaries, then outputs
 	//a Tableau object that's roughly equivalent to what GrammarFile.java
 	//creates from grammar files.
-		
-		//Get our GEN and CON:
-		Map<String, Map<String, String>> GEN = get_GEN(gen_file); //Dictionary of mappings from possible UR segs to SR segs
-		Map<String, Constraint> CON = get_CON(con_file); //Dictionary of constraint names to Constraint objects 
-		Set<String> GEN_functions = GEN.keySet();
-		Set<String> CON_set = CON.keySet();
-		String[] CON_names = CON_set.toArray(new String[CON_set.size()]);
 		
 		//Separate the phonological input from any MSeqs that the input may contain:
 		String current_mSeq = "";
@@ -140,10 +132,11 @@ public class BuildTab {
 		String input_array[] = UR.split("");
 		
 		//Find the violation profile for the faithful candidate
-		int candViols[] = new int[CON_names.length]; //Array that holds each candidate's violation profile
-		String inputViols[] = new String[CON_names.length]; //Faithful candidate violation profile (+con types)
-		for (int con_index = 0; con_index<CON_names.length;con_index++){
-			candViols[con_index] = CON.get(CON_names[con_index]).get_viols(UR, UR);
+		int candViols[] = new int[CON_num]; //Array that holds each candidate's violation profile
+		String inputViols[] = new String[CON_num]; //Faithful candidate violation profile (+con types)
+		for (int con_index = 0; con_index<CON_num;con_index++){
+			Constraint this_constraint = CON.get(CON_names[con_index]);
+			candViols[con_index] = this_constraint.get_viols(UR, UR);
 			inputViols[con_index] = String.valueOf(candViols[con_index]);
 			//The next bit it important for SMR constraints:
 			if (CON.get(CON_names[con_index]).family.equals("markedness")){
@@ -159,11 +152,14 @@ public class BuildTab {
 		candidates.add(UR); //Add the faithful candidate into the list
 		ArrayList<int[]> violProfiles = new ArrayList<int[]>(); //All the violation profiles
 		violProfiles.add(candViols.clone()); //Add the faithful candidate into the list
-		for (String function : GEN_functions){
+		for (int gf_i = 0; gf_i < func_num; gf_i++){
+			//Map<String, String> function = GEN.get(GEN_functions[gf_i]);
+			String function = GEN_functions[gf_i];
 			//Step through each function that GEN has, applying it to each relevant segment
 			//in the input (only one change per candidate--a la HS).
-			Set<String> changable_segs = GEN.get(function).keySet();//All segments GEN can change
-			for (String changable_seg : changable_segs){
+			
+			for (int cs_i=0; cs_i < changableSegs[gf_i].length; cs_i++){
+				String changable_seg = changableSegs[gf_i][cs_i];
 				for (int input_i=0; input_i < input_array.length; input_i++){
 					if (input_array[input_i].equals(changable_seg)){
 						//If this segment in the input is changable by GEN, do that.
@@ -207,9 +203,13 @@ public class BuildTab {
 						
 						//Calculate candidate's constraint violations:
 						for (int con_index = 0; con_index<CON_names.length;con_index++){
+							//System.out.print(UR+"->"+newCandidate+"\t");
+							//System.out.print(CON_names[con_index]+"\t");
 							int viol = CON.get(CON_names[con_index]).get_viols(UR, newCandidate);
+							//System.out.print("In BUILDTAB: "+viol+"\n");
 							candViols[con_index] = viol;
 						}
+
 						violProfiles.add(candViols.clone()); //Add to viol profile list
 					}
 				}
@@ -226,6 +226,7 @@ public class BuildTab {
 		for (int cand_i = 0; cand_i < candidates.size(); cand_i++){
 			Candidate this_cand = new Candidate();
 			this_cand.form = candidates.get(cand_i).replace("_","");
+			this_cand.oform = this_cand.form;
 			this_cand.violations = violProfiles.get(cand_i);
 			output_cands[cand_i] = this_cand;
 		}
@@ -257,6 +258,7 @@ public class BuildTab {
 
 		public int[] violations; //Violation profile
 		public String form; //SR
+		public String oform; //Also the SR
    }
 	
 	public static class Tableau {

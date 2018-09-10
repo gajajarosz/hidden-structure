@@ -1,0 +1,33 @@
+"GRAMMAR_FILE"		:	HS
+"DIST_FILE"		:	sample_files/sia_feeding_Dist.txt
+"FINAL_EVAL_SAMPLE"	:	1000
+"ITERATIONS"   		:	10
+"LEARNING_RATE"		:	0.1
+"INITIAL_BIAS"		:	false
+
+/*EDL Options*/
+"LEARNER"		:	online
+"SAMPLE_SIZE"		:  	100
+"MAXDEPTH"		:	8
+
+/*EDL UR Options*/
+"UR_LEARNING"		:	false
+"UR_FILE"		:	NA
+"PHONO_ITERATIONS"	:	0
+
+/*EDL HS Options*/	
+"HARMONIC_SERIALISM"	:	true
+"CON_FILE"		:	sample_files/sia_CON.txt
+"GEN_FILE"		:	sample_files/sia_GEN.txt
+
+/*PRINT OPTIONS*/
+"PRINT_INPUT"		:	true
+"FINAL_EVAL_ACC" 	: 	true
+"MINI_EVAL"		:	100
+"MINI_EVAL_FREQ"	:	100
+"MINI_EVAL_SAMPLE"	:	100
+"QUIT_EARLY_FREQ"	:	100
+"QUIT_EARLY_SAMPLE"	:	100
+
+
+

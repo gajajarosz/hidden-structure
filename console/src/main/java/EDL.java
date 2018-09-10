@@ -37,7 +37,20 @@ public class EDL {
     public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
     public static Writer writer = new SystemWriter();
     public static BufferedReader stream;
-    
+	//BEGIN MY STUFF
+	public static boolean harmSerial = false;
+	public static String confile;
+	public static String genfile;
+	public static Map<String, Map<String, String>> GEN = new HashMap<>();
+	public static Map<String, Constraint> CON = new  HashMap<>();
+	public static String[] GEN_functions;
+	public static Set<String> CON_set;
+	public static String[] CON_names;
+	public static int CON_num;	
+	public static int func_num;
+	public static String[][] changeSegLists;
+    //END MY STUFF
+	
     public static void main(String[] args) {
         if(args.length == 1) {
             writer.println("Opening parameter file: " + args[0] + "...");
@@ -58,9 +71,11 @@ public class EDL {
                     Matcher m1 = pattern.matcher(line);
                     if (m1.matches()) {
                         String parameter = m1.group(1);
-
                         if (parameter.equals("GRAMMAR_FILE")) {
                             String gramdirectory = m1.group(2);
+							if (gramdirectory.equals("HS")){
+								continue;
+							}
                             writer.println("Opening grammar file: " + gramdirectory + "...");
                             gf = new GrammarFile(gramdirectory, writer);
                         } else if (parameter.equals("DIST_FILE")) {
@@ -140,7 +155,23 @@ public class EDL {
                         } else if (parameter.equals("MAXDEPTH")) {
                             maxdepth = Integer.valueOf(m1.group(2));
                             writer.println("Setting MAXDEPTH to: " + maxdepth);
+                        } 
+						//BEGIN MY STUFF
+						else if (parameter.equals("HARMONIC_SERIALISM")){
+                            if (m1.group(2).equals("true") || m1.group(2).equals("1")){
+                                harmSerial = true;
+                                writer.println("Setting Harmonic Serialism to: true");
+                            } else {
+                                writer.println("Setting Harmonic Serialism to: false");
+                            }
+						} else if (parameter.equals("CON_FILE")) {
+                            confile = m1.group(2);
+                            writer.println("Setting CON file to: " + confile);
+                        } else if (parameter.equals("GEN_FILE")) {
+                            genfile = m1.group(2);
+                            writer.println("Setting GEN file to: " + genfile);
                         }
+						//END MY STUFF
                         else {
                             writer.println("The following lines from the parameter file do not match the specified format and will be ignored: \n>>>" + line);
                         }
@@ -151,6 +182,50 @@ public class EDL {
                 writer.println(ioe + "\nError reading the parameter file: " + args[0] + ". Exiting...");
                 System.exit(-1);
             }
+			
+			//BEGIN MY STUFF
+			if (harmSerial){
+				//Grabs CON:		
+				CON = BuildTab.get_CON(confile);
+				Set<String> CON_set = CON.keySet();
+				CON_names = CON_set.toArray(new String[CON_set.size()]);
+				CON_num = CON_set.size();
+				
+				//Grabs GEN:
+				GEN = BuildTab.get_GEN (genfile);
+ 				Set<String> GEN_set = GEN.keySet();
+				GEN_functions = GEN_set.toArray(new String[GEN_set.size()]);
+
+				func_num = GEN_functions.length;
+				changeSegLists = new String[func_num][]; //need this to work
+				for (int f = 0; f < GEN_functions.length; f++){
+					Set<String> this_seg_set = GEN.get(GEN_functions[f]).keySet();
+					String[] this_seg_array = this_seg_set.toArray(new String[this_seg_set.size()]);
+					changeSegLists[f] = this_seg_array;
+				}
+				
+				//Create a fake grammar file (kind of a hack)
+				try {
+					BufferedWriter dummy_File = new BufferedWriter(new FileWriter("sample_files/dummyFile.txt"));
+					dummy_File.write(CON_num+"\tconstraints\n");
+					for (int c = 0; c < CON_num; c++){
+						dummy_File.write("constraint\t["+(c+1)+"]:\t\""+CON_names[c]+"\" 0\n");
+					}
+					dummy_File.write("1\ttableaus\n");
+					dummy_File.write("input	[1]:	\"NONE\"	1\n");
+					dummy_File.write("	candidate	[1]:	\"NONE\"	");
+					for (int c = 0; c < CON_num; c++){
+						dummy_File.write("0\t");
+					}
+			 
+					dummy_File.close();
+				}
+				catch (IOException e) {}
+				
+				gf = new GrammarFile("sample_files/dummyFile.txt", writer);			
+			//END MY STUFF
+			}
+		
         }
         else if(args.length > 1) {
             
@@ -235,8 +310,8 @@ public class EDL {
         }
         
         writer.println("\nVIOLATION VECTORS FOR THE FIRST TABLEAU:");
-        for (int j = 0; j < gf.tableaux[0].cands.length; j++) {
-            writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
+        for (int j = 0; j < gf.tableaux[0].cands.length; j++) {//done
+            writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));//done
         }
         
         if (learner == 1) {
@@ -552,8 +627,18 @@ public class EDL {
                                         input = output.sample_UR();
                                     }
                                     //compute learner's winner and compare to actual output
-                                    GrammarFile.Tableau tab = find_tab(input); //find the tableau
-                                    String winner = optimize(input, tab, rank);
+									//BEGIN MY STUFF
+									String winner;
+									if (harmSerial){
+										winner = optimizeDerivation(input, rank);
+									}
+									else{
+										GrammarFile.Tableau tab = find_tab(input);
+										winner = optimize(input, tab, rank);
+									}
+									//END MY STUFF
+                                    //GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                                    //String winner = optimize(input, tab, rank);
                                     if (winner.equals(output.form)) {
                                         output_counts[r][c]++;
                                     }
@@ -580,8 +665,18 @@ public class EDL {
                                         input = output.sample_UR();
                                     }
                                     //compute learner's winner and compare to actual output
-                                    GrammarFile.Tableau tab = find_tab(input); //find the tableau
-                                    String winner = optimize(input, tab, rank);
+									//BEGIN MY STUFF
+									String winner;
+									if (harmSerial){
+										winner = optimizeDerivation(input, rank);
+									}
+									else{
+										GrammarFile.Tableau tab = find_tab(input);
+										winner = optimize(input, tab, rank);
+									}
+									//END MY STUFF
+                                    //GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                                    //String winner = optimize(input, tab, rank);
                                     //if equal, add matrix of ranking into collected samples
                                     if (winner.equals(output.form)) {
                                         //writer.println("\t\t" + output.form + " was correctly generated as " + winner);
@@ -761,9 +856,17 @@ public class EDL {
                 if (single != null) {
                     int[] rank = gr.find_order(single);
                     //compute learner's winner and compare to actual output
-                    
-                    GrammarFile.Tableau tab = find_tab(input); //find the tableau
-                    winner = optimize(input, tab, rank);
+					//BEGIN MY STUFF
+					if (harmSerial){
+						winner = optimizeDerivation(input, rank);
+					}
+					else{
+						GrammarFile.Tableau tab = find_tab(input);
+						winner = optimize(input, tab, rank);
+					}
+					//END MY STUFF
+                    //GrammarFile.Tableau tab = find_tab(input); //find the tableau
+                    //winner = optimize(input, tab, rank);
                     //if equal, add matrix of ranking into collected samples
                     if (winner.equals(output.form)) {
                         corr++;
@@ -845,7 +948,68 @@ public class EDL {
             return winner;
         }
     }
-    
+//BEGIN MY STUFF	
+    public static String optimizeStep (String input, BuildTab.Tableau tab, int[] rank) {
+        List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
+		int stop = rank.length;
+		
+		for (int j = 0; j < rank.length; j++) {
+			//System.out.println(CON_names[j]);
+			//figuring out minimum violation for remaining candidates
+			int min_vios = -1;
+			List<Integer> cwinners = new LinkedList<Integer>(); //tracks winning candidates for each constraint
+			for (int i: winners) {
+				//System.out.print("Violations for "+input+"->"+tab.cands[i].form+" ");
+				//System.out.println(tab.cands[i].violations[rank[j]]);
+				if (min_vios == -1) {
+					min_vios = tab.cands[i].violations[rank[j]];
+					cwinners.add(i); //add the first remaining candidate to cwinner
+				} else if (tab.cands[i].violations[rank[j]] < min_vios) {
+					//If you find a new minimum number of violations for this constraint, current candidate
+					//becomes the best candidate
+					min_vios = tab.cands[i].violations[rank[j]];
+					cwinners.clear(); //remove previous winners (they have more violations)
+					cwinners.add(i);
+				} else if (tab.cands[i].violations[rank[j]] == min_vios) {
+					//add current candidate to winners if it has an equal number of violations as the minimum
+					cwinners.add(i);
+				}
+			}
+			if (cwinners.size() > 0) {
+				winners = cwinners; //remove winners that are not winners on this constraint
+			}
+			if (winners.size() < 2 || cwinners.size() == 0) {
+				//If there is only one remaining candidate or all candidates have been eliminated
+				stop = j;
+				break;
+			}
+		}
+		String winner = tab.cands[winners.get(0)].oform; //If there are more than one winners, this chooses the last one in tableau
+		track(stop, rank, winner, input); //Add to prefix tree to avoid repeat calculations
+		return winner;
+     
+    }
+	
+	public static String optimizeDerivation (String input, int[] rank){
+		BuildTab.Tableau tab = BuildTab.get_tab(input, GEN, CON,
+											GEN_functions, CON_names,
+											CON_num, func_num, changeSegLists, false);
+		String winner = optimizeStep(input, tab, rank);
+		
+		while (winner != input){
+			input = winner;
+			tab = BuildTab.get_tab(input, GEN, CON,
+									GEN_functions, CON_names,
+									CON_num, func_num, changeSegLists, false);
+			winner = optimizeStep(input, tab, rank);
+			//System.out.println("Input: "+input);
+			//System.out.println("Winner: "+winner);
+			//System.out.print("Ranking: ");
+		}
+
+		return winner;		
+	}
+//END MY STUFF    
     public static String prevFound(int[] rank, String input) {
         //returns the previously found winner if there is one
         String winner = "";
