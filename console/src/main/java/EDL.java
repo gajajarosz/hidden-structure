@@ -37,7 +37,7 @@ public class EDL {
     public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
     public static Writer writer = new SystemWriter();
     public static BufferedReader stream;
-	//BEGIN MY STUFF
+	//BEGIN HS CODE
 	public static boolean harmSerial = false;
 	public static String confile;
 	public static String genfile;
@@ -49,7 +49,7 @@ public class EDL {
 	public static int CON_num;	
 	public static int func_num;
 	public static String[][] changeSegLists;
-    //END MY STUFF
+    //END HS CODE
 	
     public static void main(String[] args) {
         if(args.length == 1) {
@@ -156,7 +156,7 @@ public class EDL {
                             maxdepth = Integer.valueOf(m1.group(2));
                             writer.println("Setting MAXDEPTH to: " + maxdepth);
                         } 
-						//BEGIN MY STUFF
+						//BEGIN HS CODE
 						else if (parameter.equals("HARMONIC_SERIALISM")){
                             if (m1.group(2).equals("true") || m1.group(2).equals("1")){
                                 harmSerial = true;
@@ -171,7 +171,7 @@ public class EDL {
                             genfile = m1.group(2);
                             writer.println("Setting GEN file to: " + genfile);
                         }
-						//END MY STUFF
+						//END HS CODE
                         else {
                             writer.println("The following lines from the parameter file do not match the specified format and will be ignored: \n>>>" + line);
                         }
@@ -183,7 +183,7 @@ public class EDL {
                 System.exit(-1);
             }
 			
-			//BEGIN MY STUFF
+			//BEGIN HS CODE
 			if (harmSerial){
 				//Grabs CON:		
 				CON = BuildTab.get_CON(confile);
@@ -223,7 +223,7 @@ public class EDL {
 				catch (IOException e) {}
 				
 				gf = new GrammarFile("sample_files/dummyFile.txt", writer);			
-			//END MY STUFF
+			//END HS CODE
 			}
 		
         }
@@ -627,7 +627,7 @@ public class EDL {
                                         input = output.sample_UR();
                                     }
                                     //compute learner's winner and compare to actual output
-									//BEGIN MY STUFF
+									//BEGIN HS CODE
 									String winner;
 									if (harmSerial){
 										winner = optimizeDerivation(input, rank);
@@ -636,7 +636,7 @@ public class EDL {
 										GrammarFile.Tableau tab = find_tab(input);
 										winner = optimize(input, tab, rank);
 									}
-									//END MY STUFF
+									//END HS CODE
                                     //GrammarFile.Tableau tab = find_tab(input); //find the tableau
                                     //String winner = optimize(input, tab, rank);
                                     if (winner.equals(output.form)) {
@@ -665,7 +665,7 @@ public class EDL {
                                         input = output.sample_UR();
                                     }
                                     //compute learner's winner and compare to actual output
-									//BEGIN MY STUFF
+									//BEGIN HS CODE
 									String winner;
 									if (harmSerial){
 										winner = optimizeDerivation(input, rank);
@@ -674,7 +674,7 @@ public class EDL {
 										GrammarFile.Tableau tab = find_tab(input);
 										winner = optimize(input, tab, rank);
 									}
-									//END MY STUFF
+									//END HS CODE
                                     //GrammarFile.Tableau tab = find_tab(input); //find the tableau
                                     //String winner = optimize(input, tab, rank);
                                     //if equal, add matrix of ranking into collected samples
@@ -856,7 +856,7 @@ public class EDL {
                 if (single != null) {
                     int[] rank = gr.find_order(single);
                     //compute learner's winner and compare to actual output
-					//BEGIN MY STUFF
+					//BEGIN HS CODE
 					if (harmSerial){
 						winner = optimizeDerivation(input, rank);
 					}
@@ -864,7 +864,7 @@ public class EDL {
 						GrammarFile.Tableau tab = find_tab(input);
 						winner = optimize(input, tab, rank);
 					}
-					//END MY STUFF
+					//END HS CODE
                     //GrammarFile.Tableau tab = find_tab(input); //find the tableau
                     //winner = optimize(input, tab, rank);
                     //if equal, add matrix of ranking into collected samples
@@ -948,7 +948,7 @@ public class EDL {
             return winner;
         }
     }
-//BEGIN MY STUFF	
+//BEGIN HS CODE	
     public static String optimizeStep (String input, BuildTab.Tableau tab, int[] rank) {
         List<Integer> winners = initializeList(tab.cands.length); //create array that stores information about which candidates are still in the running
 		int stop = rank.length;
@@ -1009,7 +1009,8 @@ public class EDL {
 
 		return winner;		
 	}
-//END MY STUFF    
+//END HS CODE    
+
     public static String prevFound(int[] rank, String input) {
         //returns the previously found winner if there is one
         String winner = "";
