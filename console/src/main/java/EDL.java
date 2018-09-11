@@ -67,9 +67,11 @@ public class EDL {
                         String parameter = m1.group(1);
                         if (parameter.equals("GRAMMAR_FILE")) {
                             String gramdirectory = m1.group(2);
+							//BEGIN HS CODE
 							if (gramdirectory.equals("HS")){
 								continue;
 							}
+							//END HS CODE
                             writer.println("Opening grammar file: " + gramdirectory + "...");
                             gf = new GrammarFile(gramdirectory, writer);
                         } else if (parameter.equals("DIST_FILE")) {
@@ -180,31 +182,9 @@ public class EDL {
 			//BEGIN HS CODE
 			if (harmSerial){		
 				CON = BuildTab.get_CON(confile); //Makes a CON object from the CON file
-				GEN = BuildTab.get_GEN (genfile); //Makes a GEN object from the GEN file
-				
-				//Create a fake grammar file (kind of a hack)
-				try {
-					BufferedWriter dummy_File = new BufferedWriter(new FileWriter("sample_files/dummyFile.txt"));
-					dummy_File.write(CON.size()+"\tconstraints\n");
-					int c_num = 0;
-					for (String c : CON.keySet()){
-						dummy_File.write("constraint\t["+(c_num+1)+"]:\t\""+c+"\" 0\n");
-						c_num ++;
-					}
-					dummy_File.write("1\ttableaus\n");
-					dummy_File.write("input	[1]:	\"NONE\"	1\n");
-					dummy_File.write("	candidate	[1]:	\"NONE\"	");
-					for (int c = 0; c < CON.size(); c++){
-						dummy_File.write("0\t");
-					}
-			 
-					dummy_File.close();
-				}
-				catch (IOException e) {}
-				
-				gf = new GrammarFile("sample_files/dummyFile.txt", writer);			
-			//END HS CODE
+				GEN = BuildTab.get_GEN (genfile); //Makes a GEN object from the GEN file		
 			}
+			//END HS CODE
 		
         }
         else if(args.length > 1) {
@@ -281,14 +261,17 @@ public class EDL {
         // initialize grammar to uniform - make ll_grammar
 		//BEGIN HS CODE
 		if (harmSerial){
-			gr = new RandomExtension(gf, writer);
+			gr = new RandomExtension(CON, writer);
+			prior = new RandomExtension(CON, writer);
+			prior.bias_grammar();
 		}
 		else {
 			gr = new RandomExtension(gf, writer);
+			prior = new RandomExtension(gf, writer);
+			prior.bias_grammar();
 		}
 		//END HS CODE
-        prior = new RandomExtension(gf, writer);
-        prior.bias_grammar();
+
         if (init_bias == 1) {
             gr.bias_grammar();
         }
@@ -297,9 +280,21 @@ public class EDL {
         }
         
         writer.println("\nVIOLATION VECTORS FOR THE FIRST TABLEAU:");
-        for (int j = 0; j < gf.tableaux[0].cands.length; j++) {//done
-            writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));//done
-        }
+		//BEGIN HS CODE
+		if (harmSerial){
+			String first_input = df.outputs[0].inputs[0];
+			BuildTab.Tableau first_tab = BuildTab.get_tab(first_input, GEN, CON, false);
+			for (int j = 0; j < first_tab.cands.length; j++) {
+				writer.println(Arrays.toString(first_tab.cands[j].violations));
+			}
+		}
+		else{
+			for (int j = 0; j < gf.tableaux[0].cands.length; j++) {
+				writer.println(Arrays.toString(gf.tableaux[0].cands[j].violations));
+			}
+		}
+		//END HS CODE
+
         
         if (learner == 1) {
             EDL_batch();

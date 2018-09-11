@@ -2,6 +2,8 @@ package learner;
 //Support code for the EDL learner
 
 import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RandomExtension {
 
@@ -13,15 +15,23 @@ public class RandomExtension {
     private Writer writer;
 
     public RandomExtension(GrammarFile gf, Writer writer) {
-	this.uni_grammar(gf.constraints.length);
-	this.constraints = gf.constraints;
-	this.init = gf.init;
-	this.init_pairs();
-	this.writer = writer;
+		this.uni_grammar(gf.constraints.length);
+		this.constraints = gf.constraints;
+		this.init = gf.init;
+		this.init_pairs();
+		this.writer = writer;
+    }
+	
+	public RandomExtension(Map<String, Constraint> CON, Writer writer) {
+		this.uni_grammar(CON.size());
+		this.constraints = CON.keySet().toArray(new String[CON.keySet().size()]);;
+		this.init = new int[CON.size()]; //For now, these will all be set to zero
+		this.init_pairs();
+		this.writer = writer;
     }
 
     public RandomExtension() {
-	this.writer = new SystemWriter();
+		this.writer = new SystemWriter();
     }
 
     public static void main(String[] argv) {

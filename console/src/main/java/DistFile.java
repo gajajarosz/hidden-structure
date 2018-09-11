@@ -59,7 +59,7 @@ public class DistFile {
 		    //System.out.println("morphs: " + m2.group(4));
 		    //System.out.println("inputs: " + m2.group(6));
 
-		    //now setting target underlying forms - leaves the option to have multipe target URs available
+		    //now setting target underlying forms - leaves the option to have multiple target URs available
 		    outputs[curPair].inputs = m2.group(5).split("\\s+");
 		    outputs[curPair].dist = new double[outputs[curPair].inputs.length];
 		    for (int i = 0; i < outputs[curPair].inputs.length; i++) {
