@@ -350,8 +350,16 @@ public class EDL {
                                     if (ur_learning){
                                         input = output.sample_UR();
                                     }
-                                    GrammarFile.Tableau tab = find_tab(input);
-                                    String winner = optimize(input, tab, rank);
+									//BEGIN HS CODE
+									String winner;
+									if (harmSerial){
+										winner = optimizeDerivation(input, rank);
+									}
+									else{
+										GrammarFile.Tableau tab = find_tab(input);
+										winner = optimize(input, tab, rank);
+									}
+									//END HS CODE
                                     if (winner.equals(output.form)) {
                                         // this sum divided by a constant (s) estimates the joint probability of o and r>c
                                         sum[r][c][o]++;
@@ -380,8 +388,16 @@ public class EDL {
                                     if (ur_learning){
                                         input = output.sample_UR();
                                     }
-                                    GrammarFile.Tableau tab = find_tab(input);
-                                    String winner = optimize(input, tab, rank);
+									//BEGIN HS CODE
+									String winner;
+									if (harmSerial){
+										winner = optimizeDerivation(input, rank);
+									}
+									else{
+										GrammarFile.Tableau tab = find_tab(input);
+										winner = optimize(input, tab, rank);
+									}
+									//END HS CODE
                                     if (winner.equals(output.form)) {
                                         // this sum divided by a constant (s) estimates the joint probability of o and r>c
                                         sum[c][r][o]++;
@@ -430,8 +446,16 @@ public class EDL {
                                     if(single != null){
                                         int[] rank = gr.find_order(single);
                                         String input = output.sample_UR();
-                                        GrammarFile.Tableau tab = find_tab(input);
-                                        String winner = optimize(input, tab, rank);
+										//BEGIN HS CODE
+										String winner;
+										if (harmSerial){
+											winner = optimizeDerivation(input, rank);
+										}
+										else{
+											GrammarFile.Tableau tab = find_tab(input);
+											winner = optimize(input, tab, rank);
+										}
+										//END HS CODE
                                         if (winner.equals(output.form)){
                                             //update the expected counts for the Lexicon
                                             temp_zero++;
@@ -448,8 +472,16 @@ public class EDL {
                                     if(single != null){
                                         int[] rank = gr.find_order(single);
                                         String input = output.sample_UR();
-                                        GrammarFile.Tableau tab = find_tab(input);
-                                        String winner = optimize(input, tab, rank);
+										//BEGIN HS CODE
+										String winner;
+										if (harmSerial){
+											winner = optimizeDerivation(input, rank);
+										}
+										else{
+											GrammarFile.Tableau tab = find_tab(input);
+											winner = optimize(input, tab, rank);
+										}
+										//END HS CODE
                                         if (winner.equals(output.form)){
                                             //update the expected counts for the Lexicon
                                             temp_one++;
@@ -701,8 +733,16 @@ public class EDL {
                                 if(single != null){
                                     int[] rank = gr.find_order(single);
                                     String input = output.sample_UR();
-                                    GrammarFile.Tableau tab = find_tab(input);
-                                    String winner = optimize(input, tab, rank);
+ 									//BEGIN HS CODE
+									String winner;
+									if (harmSerial){
+										winner = optimizeDerivation(input, rank);
+									}
+									else{
+										GrammarFile.Tableau tab = find_tab(input);
+										winner = optimize(input, tab, rank);
+									}
+									//END HS CODE
                                     if (winner.equals(output.form)){
                                         //update the expected counts for the Lexicon
                                         output.morphs[m].zero_counts[p]++;
@@ -719,8 +759,16 @@ public class EDL {
                                 if(single != null){
                                     int[] rank = gr.find_order(single);
                                     String input = output.sample_UR();
-                                    GrammarFile.Tableau tab = find_tab(input);
-                                    String winner = optimize(input, tab, rank);
+									//BEGIN HS CODE
+									String winner;
+									if (harmSerial){
+										winner = optimizeDerivation(input, rank);
+									}
+									else{
+										GrammarFile.Tableau tab = find_tab(input);
+										winner = optimize(input, tab, rank);
+									}
+									//END HS CODE
                                     if (winner.equals(output.form)){
                                         //update the expected counts for the Lexicon
                                         output.morphs[m].one_counts[p]++;

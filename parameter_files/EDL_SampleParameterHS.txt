@@ -1,12 +1,12 @@
 "GRAMMAR_FILE"		:	HS
-"DIST_FILE"		:	sample_files/sia_feeding_Dist.txt
+"DIST_FILE"		:	sample_files/sia_counterbleeding_Dist.txt
 "FINAL_EVAL_SAMPLE"	:	1000
-"ITERATIONS"   		:	10
+"ITERATIONS"   		:	1000
 "LEARNING_RATE"		:	0.1
 "INITIAL_BIAS"		:	false
 
 /*EDL Options*/
-"LEARNER"		:	online
+"LEARNER"		:	batch
 "SAMPLE_SIZE"		:  	100
 "MAXDEPTH"		:	8
 
