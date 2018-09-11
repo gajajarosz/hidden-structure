@@ -113,7 +113,7 @@ public class BuildTab {
 		return con_mappings;
 	}
 
-	public static Tableau get_tab (String UR, Map<String, Map<String, String>> GEN, Map<String, Constraint> CON, String[] GEN_functions, String[] CON_names, int CON_num, int func_num, String[][] changableSegs, boolean verbose){ 
+	public static Tableau get_tab (String UR, Map<String, Map<String, String>> GEN, Map<String, Constraint> CON, boolean verbose){ 
 	//This function takes a UR and GEN/CON dictionaries, then outputs
 	//a Tableau object that's roughly equivalent to what GrammarFile.java
 	//creates from grammar files.
@@ -128,13 +128,15 @@ public class BuildTab {
 			}
 		}
 		
-		//Break input up into an array:
+		//Make some necessary arrays:
 		String input_array[] = UR.split("");
+		String[] CON_names = CON.keySet().toArray(new String[CON.keySet().size()]);
+		
 		
 		//Find the violation profile for the faithful candidate
-		int candViols[] = new int[CON_num]; //Array that holds each candidate's violation profile
-		String inputViols[] = new String[CON_num]; //Faithful candidate violation profile (+con types)
-		for (int con_index = 0; con_index<CON_num;con_index++){
+		int candViols[] = new int[CON.size()]; //Array that holds each candidate's violation profile
+		String inputViols[] = new String[CON.size()]; //Faithful candidate violation profile (+con types)
+		for (int con_index = 0; con_index<CON.size();con_index++){
 			Constraint this_constraint = CON.get(CON_names[con_index]);
 			candViols[con_index] = this_constraint.get_viols(UR, UR);
 			inputViols[con_index] = String.valueOf(candViols[con_index]);
@@ -152,21 +154,21 @@ public class BuildTab {
 		candidates.add(UR); //Add the faithful candidate into the list
 		ArrayList<int[]> violProfiles = new ArrayList<int[]>(); //All the violation profiles
 		violProfiles.add(candViols.clone()); //Add the faithful candidate into the list
-		for (int gf_i = 0; gf_i < func_num; gf_i++){
-			//Map<String, String> function = GEN.get(GEN_functions[gf_i]);
-			String function = GEN_functions[gf_i];
+		for (String func_name : GEN.keySet()){
+			Map<String, String> function = GEN.get(func_name);
+			//String function = GEN_functions[gf_i];
 			//Step through each function that GEN has, applying it to each relevant segment
 			//in the input (only one change per candidate--a la HS).
 			
-			for (int cs_i=0; cs_i < changableSegs[gf_i].length; cs_i++){
-				String changable_seg = changableSegs[gf_i][cs_i];
+			for (String changable_seg : function.keySet()){
+				//String changable_seg = changableSegs[gf_i][cs_i];
 				for (int input_i=0; input_i < input_array.length; input_i++){
 					if (input_array[input_i].equals(changable_seg)){
 						//If this segment in the input is changable by GEN, do that.
 						String[] newCandidate_array = new String [input_array.length];
 						for (int input_j=0; input_j < input_array.length; input_j++){
 							if (input_j == input_i){
-								newCandidate_array[input_i] = GEN.get(function).get(input_array[input_i]);
+								newCandidate_array[input_i] = function.get(input_array[input_i]);
 							}
 							else{
 								newCandidate_array[input_j] = input_array[input_j];

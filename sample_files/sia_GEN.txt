@@ -6,5 +6,3 @@ d	j
 function:	vowel deletion
 i	_
 a	_
-I	_
-A	_

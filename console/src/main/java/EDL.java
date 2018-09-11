@@ -43,12 +43,6 @@ public class EDL {
 	public static String genfile;
 	public static Map<String, Map<String, String>> GEN = new HashMap<>();
 	public static Map<String, Constraint> CON = new  HashMap<>();
-	public static String[] GEN_functions;
-	public static Set<String> CON_set;
-	public static String[] CON_names;
-	public static int CON_num;	
-	public static int func_num;
-	public static String[][] changeSegLists;
     //END HS CODE
 	
     public static void main(String[] args) {
@@ -184,37 +178,23 @@ public class EDL {
             }
 			
 			//BEGIN HS CODE
-			if (harmSerial){
-				//Grabs CON:		
-				CON = BuildTab.get_CON(confile);
-				Set<String> CON_set = CON.keySet();
-				CON_names = CON_set.toArray(new String[CON_set.size()]);
-				CON_num = CON_set.size();
-				
-				//Grabs GEN:
-				GEN = BuildTab.get_GEN (genfile);
- 				Set<String> GEN_set = GEN.keySet();
-				GEN_functions = GEN_set.toArray(new String[GEN_set.size()]);
-
-				func_num = GEN_functions.length;
-				changeSegLists = new String[func_num][]; //need this to work
-				for (int f = 0; f < GEN_functions.length; f++){
-					Set<String> this_seg_set = GEN.get(GEN_functions[f]).keySet();
-					String[] this_seg_array = this_seg_set.toArray(new String[this_seg_set.size()]);
-					changeSegLists[f] = this_seg_array;
-				}
+			if (harmSerial){		
+				CON = BuildTab.get_CON(confile); //Makes a CON object from the CON file
+				GEN = BuildTab.get_GEN (genfile); //Makes a GEN object from the GEN file
 				
 				//Create a fake grammar file (kind of a hack)
 				try {
 					BufferedWriter dummy_File = new BufferedWriter(new FileWriter("sample_files/dummyFile.txt"));
-					dummy_File.write(CON_num+"\tconstraints\n");
-					for (int c = 0; c < CON_num; c++){
-						dummy_File.write("constraint\t["+(c+1)+"]:\t\""+CON_names[c]+"\" 0\n");
+					dummy_File.write(CON.size()+"\tconstraints\n");
+					int c_num = 0;
+					for (String c : CON.keySet()){
+						dummy_File.write("constraint\t["+(c_num+1)+"]:\t\""+c+"\" 0\n");
+						c_num ++;
 					}
 					dummy_File.write("1\ttableaus\n");
 					dummy_File.write("input	[1]:	\"NONE\"	1\n");
 					dummy_File.write("	candidate	[1]:	\"NONE\"	");
-					for (int c = 0; c < CON_num; c++){
+					for (int c = 0; c < CON.size(); c++){
 						dummy_File.write("0\t");
 					}
 			 
@@ -299,7 +279,14 @@ public class EDL {
             writer.println("\nSTARTING LEXICON:\n" + df);
         }
         // initialize grammar to uniform - make ll_grammar
-        gr = new RandomExtension(gf, writer);
+		//BEGIN HS CODE
+		if (harmSerial){
+			gr = new RandomExtension(gf, writer);
+		}
+		else {
+			gr = new RandomExtension(gf, writer);
+		}
+		//END HS CODE
         prior = new RandomExtension(gf, writer);
         prior.bias_grammar();
         if (init_bias == 1) {
@@ -991,20 +978,13 @@ public class EDL {
     }
 	
 	public static String optimizeDerivation (String input, int[] rank){
-		BuildTab.Tableau tab = BuildTab.get_tab(input, GEN, CON,
-											GEN_functions, CON_names,
-											CON_num, func_num, changeSegLists, false);
+		BuildTab.Tableau tab = BuildTab.get_tab(input, GEN, CON, false);
 		String winner = optimizeStep(input, tab, rank);
 		
 		while (winner != input){
 			input = winner;
-			tab = BuildTab.get_tab(input, GEN, CON,
-									GEN_functions, CON_names,
-									CON_num, func_num, changeSegLists, false);
+			tab = BuildTab.get_tab(input, GEN, CON, false);
 			winner = optimizeStep(input, tab, rank);
-			//System.out.println("Input: "+input);
-			//System.out.println("Winner: "+winner);
-			//System.out.print("Ranking: ");
 		}
 
 		return winner;		
