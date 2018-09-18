@@ -36,15 +36,11 @@ public class Constraint {
 			SR = SR.replace("_", ""); //Get rid of empty symbols
 			SR = SR.split("<")[0]; //Get rid of mSeqs
 			SR = "_"+SR+"_"; //Add symbols to beginning and end
-			//System.out.print(this.label+" ");
-			//System.out.print(SR+" ");
-			//System.out.print(this.marked_regex+" ");
 			Pattern my_regex = Pattern.compile(this.marked_regex);
 			Matcher viol_detect = my_regex.matcher(SR);
 			while (viol_detect.find()){
 				viol_count++; //Count viols
 			}
-			//System.out.println(viol_count+" ");
 		}
 		//Faithfulness constraints:
 		else if (this.family.equals("faithfulness")){
@@ -96,8 +92,8 @@ public class Constraint {
 				else{
 					//If the SM constraint isn't vacuous, check
 					//the ordering in the candidate's MSeq:
-					//(need to fix this to deal with >2 constraints)
-					if (SR.contains(this.mSeq)){
+					String mSeqRegex = "\\Q"+this.mSeq.replace(",","\\E.*,.*\\Q")+"\\E";
+					if (SR.matches(mSeqRegex)){
 						viol_count = 0; //Correct ordering
 					}
 					else {
