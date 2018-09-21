@@ -1,0 +1,10 @@
+"ooTextFile"				
+PairDistribution
+Description: Pal first then del (counterfeeding tai). {ti<VV,*VV} >> *ti
+6 pairs				
+"x"	"cI"		18	1	tI
+"x"	"tA"		18	2	tA
+"x"	"tI"		18	3	taI
+"x"	"kI"		18	4	kI
+"x"	"kA"		18	5	kA
+"x"	"kI"		18	6	kaI
