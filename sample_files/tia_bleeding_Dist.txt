@@ -2,9 +2,9 @@
 PairDistribution
 Description: Del first then pal (bleeding tia).
 6 pairs				
-"x"	"ci"		18	1	tI
-"x"	"ta"		18	2	tA
-"x"	"ta"		18	3	tiA
-"x"	"ki"		18	4	kI
-"x"	"ka"		18	5	kA
-"x"	"ka"		18	6	kiA
+"x"	"cI"		18	1	tI
+"x"	"tA"		18	2	tA
+"x"	"tA"		18	3	tiA
+"x"	"kI"		18	4	kI
+"x"	"kA"		18	5	kA
+"x"	"kA"		18	6	kiA
