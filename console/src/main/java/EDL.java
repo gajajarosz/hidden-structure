@@ -1029,7 +1029,9 @@ public class EDL {
 			tab = BuildTab.get_tab(input, GEN, CON, false);
 			winner = optimizeStep(input, tab, rank);
 		}
-
+		
+		winner = winner.replaceAll("<.*>","");
+		
 		return winner;		
 	}
 //END HS CODE    

@@ -92,7 +92,7 @@ public class Constraint {
 				else{
 					//If the SM constraint isn't vacuous, check
 					//the ordering in the candidate's MSeq:
-					String mSeqRegex = "\\Q"+this.mSeq.replace(",","\\E.*,.*\\Q")+"\\E";
+					String mSeqRegex = ".*\\Q"+this.mSeq.replace(",","\\E.*,.*\\Q")+"\\E.*";
 					if (SR.matches(mSeqRegex)){
 						viol_count = 0; //Correct ordering
 					}

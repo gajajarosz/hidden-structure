@@ -1,13 +1,13 @@
 "GRAMMAR_FILE"		:	HS
-"DIST_FILE"		:	sample_files/sia_counterbleeding_Dist.txt
+"DIST_FILE"		:	sample_files/tia_counterfeeding_Dist.txt
 "FINAL_EVAL_SAMPLE"	:	1000
-"ITERATIONS"   		:	100
+"ITERATIONS"   		:	15
 "LEARNING_RATE"		:	0.1
 "INITIAL_BIAS"		:	false
 
 /*EDL Options*/
 "LEARNER"		:	batch
-"SAMPLE_SIZE"		:  	100
+"SAMPLE_SIZE"		:  	1000
 "MAXDEPTH"		:	8
 
 /*EDL UR Options*/
@@ -17,14 +17,14 @@
 
 /*EDL HS Options*/	
 "HARMONIC_SERIALISM"	:	true
-"CON_FILE"		:	sample_files/sia_CON.txt
-"GEN_FILE"		:	sample_files/sia_GEN.txt
+"CON_FILE"		:	sample_files/tia_CON.txt
+"GEN_FILE"		:	sample_files/tia_GEN.txt
 
 /*PRINT OPTIONS*/
 "PRINT_INPUT"		:	true
 "FINAL_EVAL_ACC" 	: 	true
-"MINI_EVAL"		:	100
-"MINI_EVAL_FREQ"	:	100
+"MINI_EVAL"		:	0
+"MINI_EVAL_FREQ"	:	1
 "MINI_EVAL_SAMPLE"	:	100
 "QUIT_EARLY_FREQ"	:	100
 "QUIT_EARLY_SAMPLE"	:	100

@@ -120,16 +120,17 @@ public class BuildTab {
 		
 		//Separate the phonological input from any MSeqs that the input may contain:
 		String current_mSeq = "";
+		String bare_UR = UR;
 		if (isSMR){
 			if (UR.contains("<")){
 				String[] inputElements = UR.split("<");
-				UR = inputElements[0];
+				bare_UR = inputElements[0];
 				current_mSeq = "<"+inputElements[1];
 			}
 		}
 		
 		//Make some necessary arrays:
-		String input_array[] = UR.split("");
+		String input_array[] = bare_UR.split("");
 		String[] CON_names = CON.keySet().toArray(new String[CON.keySet().size()]);
 		
 		
