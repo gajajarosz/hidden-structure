@@ -37,7 +37,7 @@ public class EDL {
     public static HashMap<String, PrefixTree> intable = new HashMap<String,PrefixTree>();
     public static Writer writer = new SystemWriter();
     public static BufferedReader stream;
-	//BEGIN HS CODE
+    //BEGIN HS CODE
 	public static boolean harmSerial = false;
 	public static String confile;
 	public static String genfile;

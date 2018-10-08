@@ -12,91 +12,91 @@ constraint [6]: "IDLen" 1 100 ! ID-Len
 0 fixed rankings
 
 16 tableaus
-input [1]: "pa-ka" 2
-   candidate [1]: "pA-ka"	0 1 0 0 1 0
-   candidate [2]: "pa-kA" 	1 0 0 0 1 0
-input [2]: "pA-ka" 2
-   candidate [1]: "pA-ka"	0 1 0 0 0 0
-   candidate [2]: "pa-kA" 	1 0 0 0 2 0
-input [3]: "pa-kA" 2
-   candidate [1]: "pA-ka"	0 1 0 0 2 0
-   candidate [2]: "pa-kA" 	1 0 0 0 0 0
-input [4]: "pA-kA" 2
-   candidate [1]: "pA-ka"	0 1 0 0 1 0
-   candidate [2]: "pa-kA" 	1 0 0 0 1 0
-input [5]: "pa:-ka" 4
-   candidate [1]: "pA-ka"	0 1 0 0 1 1
-   candidate [2]: "pa-kA" 	1 0 0 0 1 1
-   candidate [3]: "pA:-ka"	0 1 1 0 1 0
-   candidate [4]: "pa:-kA"	1 0 1 1 1 0
-input [6]: "pA:-ka" 4
-   candidate [1]: "pA-ka"	0 1 0 0 0 1
-   candidate [2]: "pa-kA" 	1 0 0 0 2 1
-   candidate [3]: "pA:-ka"	0 1 1 0 0 0
-   candidate [4]: "pa:-kA"	1 0 1 1 2 0
-input [7]: "pa:-kA" 4
-   candidate [1]: "pA-ka"	0 1 0 0 2 1
-   candidate [2]: "pa-kA" 	1 0 0 0 0 1
-   candidate [3]: "pA:-ka"	0 1 1 0 2 0
-   candidate [4]: "pa:-kA"	1 0 1 1 0 0
-input [8]: "pA:-kA" 4
-   candidate [1]: "pA-ka"	0 1 0 0 1 1
-   candidate [2]: "pa-kA" 	1 0 0 0 1 1
-   candidate [3]: "pA:-ka"	0 1 1 0 1 0
-   candidate [4]: "pa:-kA"	1 0 1 1 1 0
-input [9]: "pa:-ka:" 8
-   candidate [1]: "pA-ka"		0 1 0 0 1 2
-   candidate [2]: "pa-kA" 		1 0 0 0 1 2
-   candidate [3]: "pA:-ka"		0 1 1 0 1 1
-   candidate [4]: "pa:-kA"		1 0 1 1 1 1
-   candidate [5]: "pA-ka:"		0 1 1 1 1 1
-   candidate [6]: "pa-kA:"		1 0 1 0 1 1
-   candidate [7]: "pA:-ka:" 	0 1 2 1 1 0
-   candidate [8]: "pa:-kA:"	1 0 2 1 1 0
-input [10]: "pA:-ka:" 8
-   candidate [1]: "pA-ka"		0 1 0 0 0 2
-   candidate [2]: "pa-kA" 		1 0 0 0 2 2
-   candidate [3]: "pA:-ka"		0 1 1 0 0 1
-   candidate [4]: "pa:-kA"		1 0 1 1 2 1
-   candidate [5]: "pA-ka:"		0 1 1 1 0 1
-   candidate [6]: "pa-kA:" 	1 0 1 0 2 1
-   candidate [7]: "pA:-ka:"	0 1 2 1 0 0
-   candidate [8]: "pa:-kA:"	1 0 2 1 2 0
-input [11]: "pa:-kA:" 8
-   candidate [1]: "pA-ka"		0 1 0 0 2 2
-   candidate [2]: "pa-kA" 		1 0 0 0 0 2
-   candidate [3]: "pA:-ka"		0 1 1 0 2 1
-   candidate [4]: "pa:-kA"		1 0 1 1 0 1
-   candidate [5]: "pA-ka:"		0 1 1 1 2 1
-   candidate [6]: "pa-kA:"		1 0 1 0 0 1
-   candidate [7]: "pA:-ka:"	0 1 2 1 2 0
-   candidate [8]: "pa:-kA:"	1 0 2 1 0 0
-input [12]: "pA:-kA:" 8
-   candidate [1]: "pA-ka"		0 1 0 0 1 2
-   candidate [2]: "pa-kA" 		1 0 0 0 1 2
-   candidate [3]: "pA:-ka"		0 1 1 0 1 1
-   candidate [4]: "pa:-kA"		1 0 1 1 1 1
-   candidate [5]: "pA-ka:"		0 1 1 1 1 1
-   candidate [6]: "pa-kA:" 	1 0 1 0 1 1
-   candidate [7]: "pA:-ka:"	0 1 2 1 1 0
-   candidate [8]: "pa:-kA:"	1 0 2 1 1 0
-input [13]: "pa-ka:" 4
-   candidate [1]: "pA-ka"	0 1 0 0 1 1
-   candidate [2]: "pa-kA" 	1 0 0 0 1 1
-   candidate [3]: "pA-ka:"	0 1 1 1 1 0
-   candidate [4]: "pa-kA:"	1 0 1 0 1 0
-input [14]: "pA-ka:" 4
-   candidate [1]: "pA-ka"	0 1 0 0 0 1
-   candidate [2]: "pa-kA" 	1 0 0 0 2 1
-   candidate [3]: "pA-ka:"	0 1 1 1 0 0
-   candidate [4]: "pa-kA:"	1 0 1 0 2 0
-input [15]: "pa-kA:" 4
-   candidate [1]: "pA-ka"	0 1 0 0 2 1
-   candidate [2]: "pa-kA" 	1 0 0 0 0 1
-   candidate [3]: "pA-ka:"	0 1 1 1 2 0
-   candidate [4]: "pa-kA:"	1 0 1 0 0 0
-input [16]: "pA-kA:" 4
-   candidate [1]: "pA-ka"	0 1 0 0 1 1
-   candidate [2]: "pa-kA" 	1 0 0 0 1 1
-   candidate [3]: "pA-ka:"	0 1 1 1 1 0
-   candidate [4]: "pa-kA:"	1 0 1 0 1 0
+input [1]: "paka" 2
+   candidate [1]: "pAka"	0 1 0 0 1 0
+   candidate [2]: "pakA" 	1 0 0 0 1 0
+input [2]: "pAka" 2
+   candidate [1]: "pAka"	0 1 0 0 0 0
+   candidate [2]: "pakA" 	1 0 0 0 2 0
+input [3]: "pakA" 2
+   candidate [1]: "pAka"	0 1 0 0 2 0
+   candidate [2]: "pakA" 	1 0 0 0 0 0
+input [4]: "pAkA" 2
+   candidate [1]: "pAka"	0 1 0 0 1 0
+   candidate [2]: "pakA" 	1 0 0 0 1 0
+input [5]: "pa:ka" 4
+   candidate [1]: "pAka"	0 1 0 0 1 1
+   candidate [2]: "pakA" 	1 0 0 0 1 1
+   candidate [3]: "pA:ka"	0 1 1 0 1 0
+   candidate [4]: "pa:kA"	1 0 1 1 1 0
+input [6]: "pA:ka" 4
+   candidate [1]: "pAka"	0 1 0 0 0 1
+   candidate [2]: "pakA" 	1 0 0 0 2 1
+   candidate [3]: "pA:ka"	0 1 1 0 0 0
+   candidate [4]: "pa:kA"	1 0 1 1 2 0
+input [7]: "pa:kA" 4
+   candidate [1]: "pAka"	0 1 0 0 2 1
+   candidate [2]: "pakA" 	1 0 0 0 0 1
+   candidate [3]: "pA:ka"	0 1 1 0 2 0
+   candidate [4]: "pa:kA"	1 0 1 1 0 0
+input [8]: "pA:kA" 4
+   candidate [1]: "pAka"	0 1 0 0 1 1
+   candidate [2]: "pakA" 	1 0 0 0 1 1
+   candidate [3]: "pA:ka"	0 1 1 0 1 0
+   candidate [4]: "pa:kA"	1 0 1 1 1 0
+input [9]: "pa:ka:" 8
+   candidate [1]: "pAka"		0 1 0 0 1 2
+   candidate [2]: "pakA" 		1 0 0 0 1 2
+   candidate [3]: "pA:ka"		0 1 1 0 1 1
+   candidate [4]: "pa:kA"		1 0 1 1 1 1
+   candidate [5]: "pAka:"		0 1 1 1 1 1
+   candidate [6]: "pakA:"		1 0 1 0 1 1
+   candidate [7]: "pA:ka:" 	0 1 2 1 1 0
+   candidate [8]: "pa:kA:"	1 0 2 1 1 0
+input [10]: "pA:ka:" 8
+   candidate [1]: "pAka"		0 1 0 0 0 2
+   candidate [2]: "pakA" 		1 0 0 0 2 2
+   candidate [3]: "pA:ka"		0 1 1 0 0 1
+   candidate [4]: "pa:kA"		1 0 1 1 2 1
+   candidate [5]: "pAka:"		0 1 1 1 0 1
+   candidate [6]: "pakA:" 	1 0 1 0 2 1
+   candidate [7]: "pA:ka:"	0 1 2 1 0 0
+   candidate [8]: "pa:kA:"	1 0 2 1 2 0
+input [11]: "pa:kA:" 8
+   candidate [1]: "pAka"		0 1 0 0 2 2
+   candidate [2]: "pakA" 		1 0 0 0 0 2
+   candidate [3]: "pA:ka"		0 1 1 0 2 1
+   candidate [4]: "pa:kA"		1 0 1 1 0 1
+   candidate [5]: "pAka:"		0 1 1 1 2 1
+   candidate [6]: "pakA:"		1 0 1 0 0 1
+   candidate [7]: "pA:ka:"	0 1 2 1 2 0
+   candidate [8]: "pa:kA:"	1 0 2 1 0 0
+input [12]: "pA:kA:" 8
+   candidate [1]: "pAka"		0 1 0 0 1 2
+   candidate [2]: "pakA" 		1 0 0 0 1 2
+   candidate [3]: "pA:ka"		0 1 1 0 1 1
+   candidate [4]: "pa:kA"		1 0 1 1 1 1
+   candidate [5]: "pAka:"		0 1 1 1 1 1
+   candidate [6]: "pakA:" 	1 0 1 0 1 1
+   candidate [7]: "pA:ka:"	0 1 2 1 1 0
+   candidate [8]: "pa:kA:"	1 0 2 1 1 0
+input [13]: "paka:" 4
+   candidate [1]: "pAka"	0 1 0 0 1 1
+   candidate [2]: "pakA" 	1 0 0 0 1 1
+   candidate [3]: "pAka:"	0 1 1 1 1 0
+   candidate [4]: "pakA:"	1 0 1 0 1 0
+input [14]: "pAka:" 4
+   candidate [1]: "pAka"	0 1 0 0 0 1
+   candidate [2]: "pakA" 	1 0 0 0 2 1
+   candidate [3]: "pAka:"	0 1 1 1 0 0
+   candidate [4]: "pakA:"	1 0 1 0 2 0
+input [15]: "pakA:" 4
+   candidate [1]: "pAka"	0 1 0 0 2 1
+   candidate [2]: "pakA" 	1 0 0 0 0 1
+   candidate [3]: "pAka:"	0 1 1 1 2 0
+   candidate [4]: "pakA:"	1 0 1 0 0 0
+input [16]: "pAkA:" 4
+   candidate [1]: "pAka"	0 1 0 0 1 1
+   candidate [2]: "pakA" 	1 0 0 0 1 1
+   candidate [3]: "pAka:"	0 1 1 1 1 0
+   candidate [4]: "pakA:"	1 0 1 0 1 0

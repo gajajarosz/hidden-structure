@@ -1,7 +1,7 @@
 "ooTextFile"
 "PairDistribution"
 4 pairs
-"pAka"	"pA-ka"		1	1,3	pa-ka
-"pakA:"	"pa-kA:"	1	1,4	pa-ka:
-"pA:ka"	"pA:-ka"	1	2,3	pa:-ka
-"pA:ka"	"pA:-ka"	1	2,4	pa:-ka:
+"pAka"	"pAka"		1	1,3	paka
+"pakA:"	"pakA:"	1	1,4	paka:
+"pA:ka"	"pA:ka"	1	2,3	pa:ka
+"pA:ka"	"pA:ka"	1	2,4	pa:ka:

@@ -298,9 +298,9 @@ public class DistFile {
 	    //for each morpheme in the output, sample each parameter settings, locate corresponding form, then concatenate
 	    String input = "";
 	    for(int m = 0; m < this.morphs.length; m++){
-		if(m > 0){
-		    input += "-";
-		}
+//		if(m > 0){
+//		    input += "-";
+//		}
 		Vector<Integer> cv = new Vector(this.morphs[m].dist.length);
 		//System.out.println("\t\tLooking at morph " + output.morphs[m].name);
 		for(int p = 0; p < this.morphs[m].dist.length; p++){

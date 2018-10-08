@@ -1,5 +1,5 @@
 "GRAMMAR_FILE"		:	HS
-"DIST_FILE"		:	sample_files/tia_counterfeeding_Dist.txt
+"DIST_FILE"		:	sample_files/tia_feeding_Dist.txt
 "FINAL_EVAL_SAMPLE"	:	1000
 "ITERATIONS"   		:	15
 "LEARNING_RATE"		:	0.1

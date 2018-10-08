@@ -1,0 +1,11 @@
+"ooTextFile"
+"PairDistribution"
+8 pairs
+"x"	"cI"	1	1,5	tI
+"x"	"tA"	1	1,6	tA
+"x"	"cI"	1	1,4,5	taI
+"x"	"kI"	1	2,5	kI
+"x"	"kA"	1	2,6	kA
+"x"	"kI"	1	2,4,5	kaI
+"x"	"i"	1	3	i
+"x"	"a"	1	4	a

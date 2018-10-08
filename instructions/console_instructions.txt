@@ -1,4 +1,4 @@
-------------------------------------------------------------------------------
+﻿------------------------------------------------------------------------------
 Running from the command line with Specification File
 ------------------------------------------------------------------------------
 In order to run this code, you will need java and java runtime environment installed (https://www.java.com/en/download/help/download_options.xml), and your computer will have to know where to find java (potentially helpful link: https://www.java.com/en/download/help/path.xml).
@@ -101,6 +101,34 @@ You may want to redirect the output to a file or pipe it to less like this:
 
 java -jar console.jar EDL parameter_files/EDL_SampleParameterUR.txt > output.txt
 java -jar console.jar EDL parameter_files/EDL_SampleParameterUR.txt | less
+
+------------------------------------------------------------------------------
+EDL HS PARAMETERS
+------------------------------------------------------------------------------
+"HARMONIC_SERIALISM"
+- false: learner works in parallel with the specified tableaux in the grammar file
+- true: learner uses an HS framework and creates its own tableaux for each input it encounters
+ 
+"CON_FILE"
+- File that specifies the constraints to be used and their definitions
+- Three types of constraints can currently be handled by Constraint.java:
+	> Markedness
+	> Faithfulness
+	> Serial Markedness (Jarosz 2016)
+- This file is only consulted if HARMONIC_SERIALISM is set to true
+
+"GEN_FILE"
+- File that specifies the functions that GEN can apply to inputs
+- Deletion and insertion should be represented using mappings to/from "_", respectively
+- This file is only consulted if HARMONIC_SERIALISM is set to true
+
+To run EDL HS, use this syntax at the command prompt:
+
+java -jar console.jar EDL parameter_files/EDL_SampleParameterHS.txt
+
+This can also be used in conjuction with UR learning. To see an example of this, run the following:
+
+java -jar console.jar EDL parameter_files/EDL_SampleParameterHSandUR.txt
 
 ------------------------------------------------------------------------------
 GLA PARAMETERS

@@ -1,4 +1,4 @@
-
+﻿
 The grammar and distribution file formats are modeled after the files used in Praat. 
 
 The following describes the lines the program is looking for in each file. Lines not in any of these formats are ignored.
@@ -48,7 +48,7 @@ P pairs
 - OUT is the output form that must be in the same format as the output candidates in the grammar file. The learner will be trying to select the output candidates that match this output exactly. If you are learning with hidden structure, leave out the hidden structure from OUT, just as in the grammar file.
 - F is an integer frequency (count) of this data form
 - L is an integer and unique identifier of this data form. If your data is categorical, each input-output pair should have a unique identifier. If your data has variation, there may be multiple pairs (lines) with the same identifier. If you are doing UR learning, each input should be specified as a sequence of morph identifiers separated by ‘,‘. See PAKA_URDist.txt for an example, and define features for each morpheme identifier in the UR FILE (below). Morph identifiers must be consecutive integers starting at 1
-- IN is the underlying representation and must match the IN format in your grammar file tableaux exactly. If doing UR learning, IN should be a sequence of morpheme UR separated by ‘-‘.
+- IN is the underlying representation and must match the IN format in your grammar file tableaux exactly.
 
 
 -------------------------
@@ -64,7 +64,37 @@ morph K
 
 UR [i]: FORM	f1 f2 ... fF
 - i is the number of the UR for that morph
-- FORM is the phonological underlying representation of each morph. The software concatenates morph URs using ‘-‘ for multi-morphemic forms specified in the Distribution File.
+- FORM is the phonological underlying representation of each morph. 
 - f1 ... fF is a space-separated sequence of UR feature settings. The set of UR features is independently specified for each morph - that is, neither the content nor the number of UR features generalizes across morphs. You are free to define some morphs as having e.g. 10 UR features and others as having just 1, and these features need not correspond to the same distinctions across morphs. UR features currently must be binary (if a morph only has one possible UR, you must make one feature for it and specify the same UR FORM for both values of that feature.
- 
- 
+
+-------------------------
+GEN FILE FORMAT
+-------------------------
+function:	LABEL
+- LABEL is an arbitrary label that you give to each function
+
+x	y
+- x is an input segment
+- y is the result of applying the relevant function to x
+- Deletion and insertion should be represented using mappings to/from "_", respectively
+
+-------------------------
+CON FILE FORMAT
+-------------------------
+type:	FAMILY
+- FAMILY refers to the constraint family that the below constraints belong to. 
+- Currently, three types of constraints can be handled by the learner: "markedness", "faithfulness", or "serialMarkedness"
+
+MARK	REGEX
+- MARK is the arbitrary label you give to a markedness constraint
+- REGEX is the regular expression representing the strings that violate the constraint
+
+FAITH i1,i2,...iI	o1,o2,...oO
+- FAITH is the arbitrary label you give to a faithfulness constraint
+- i1...iI is the comma-delimited list of input segments this constraint is sensitive to
+- o1...oO is the comma-delimited list of output segments this constraint is sensitive to
+- The mappings i1->o1, i2->o2, etc. will each incur a single violation for the faithfulness constraint
+
+SM	c1,c2,...cC
+- SM is the arbitrary label you give to a Serial Markedness constraint
+- c1...cC is a comma-delimited list of markedness constraints, in the order that the constraint enforces

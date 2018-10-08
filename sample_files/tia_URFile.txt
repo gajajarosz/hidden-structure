@@ -1,0 +1,19 @@
+6 morphs
+morph 1	
+UR [1]:	t	0	
+UR [2]:	c	1	
+morph 2	
+UR [1]:	k	0 	
+UR [2]:	k	1	
+morph 3	
+UR [1]:	i	0
+UR [2]:	_	1
+morph 4	
+UR [1]:	a	0
+UR [2]:	_	1
+morph 5	
+UR [1]:	I	0
+UR [2]:	I	1
+morph 6
+UR [1]:	A	0
+UR [2]:	A	1
