@@ -25,9 +25,9 @@ Jarosz, Gaja. 2013. Learning with Hidden Structure in Optimality Theory and Harm
 Jarosz, Gaja. 2015. Expectation Driven Learning of Phonology. University of Massachusetts, Amherst, ms.
 
 Gaja Jarosz wrote the code for the EDL and the GLA x (RIP, RRIP, EIP) x (OT, HG) algorithms
-Carolyn Anderson wrote the code to embed the algorithms within the current GUI and console environments, unify the system of parameters, and to optimize the run-time of grammar sampling.
-Andrew Lamont designed modules for HS learning and inference of abstract UR distributions (to be implemented at a future point).
-Brandon Prickett implemented HS modules (CON and GEN).
+Carolyn Anderson wrote the code to embed the algorithms within the current GUI and console environments, unify the system of parameters, and to optimize the run-time of grammar sampling for the EDL.
+Andrew Lamont designed modules for HS and for construction of abstract UR distributions from paradigmatic information (to be implemented at a future point).
+Brandon Prickett implemented HS modules (CON and GEN) for the EDL.
 Documentation and sample files were prepared jointly.
 
 Contact Gaja Jarosz (last name __ at __ linguist.umass.edu) with questions.
