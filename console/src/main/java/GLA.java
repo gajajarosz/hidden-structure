@@ -82,9 +82,9 @@ public class GLA {
                             rate = Double.parseDouble(m1.group(2));
                             writer.println("Setting learning rate to: " + rate);
                             
-                        } else if (parameter.equals("NOISE_BIAS")) {
+                        } else if (parameter.equals("NOISE")) {
                             noise = Double.parseDouble(m1.group(2));
-                            writer.println("Setting noise bias to: " + noise);
+                            writer.println("Setting noise to: " + noise);
                             
                         } else if (parameter.equals("INITIAL_BIAS")) {
                             if (m1.group(2).equals("true") || m1.group(2).equals("1")){

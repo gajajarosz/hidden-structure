@@ -1,4 +1,4 @@
-﻿------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 Running from the command line with Specification File
 ------------------------------------------------------------------------------
 In order to run this code, you will need java and java runtime environment installed (https://www.java.com/en/download/help/download_options.xml), and your computer will have to know where to find java (potentially helpful link: https://www.java.com/en/download/help/path.xml).
@@ -148,7 +148,7 @@ Default: EIP
 - set this to OT, HG, or ME (maxent)
 Default: OT
 
-"NOISE_BIAS"
+"NOISE"
 - what’s the variance around the ranking/weighting value
 Default: 2
 
