@@ -872,11 +872,16 @@ public class EDL {
             String winner = "";
             double rand = Math.random();
             output = df.outputs[o];
-            
+			
+			//BEGIN OUTPUT PROB PRINTING CODE
+			HashMap<String, Integer> SR_counts = new HashMap<String, Integer>();
+            String thisUR = output.targetInput;
+			//END OUTPUT PROB PRINTING CODE
+			
             //sample s times to check distribution
             for (int c = 0; c < s; c++) {
                 //sample a ur for the output form
-                String input = output.input;
+				String input = output.input;
                 if (ur_learning){
                     input = output.sample_UR();
                 }
@@ -901,12 +906,34 @@ public class EDL {
                     if (winner.equals(output.form)) {
                         corr++;
                     }
+					//BEGIN OUTPUT PROB PRINTING CODE
+					else{
+						if (SR_counts.containsKey(winner)){	
+							SR_counts.put(winner, SR_counts.get(winner)+1);
+						}
+						else{
+							SR_counts.put(winner, 1);
+						}
+					}
+					//END OUTPUT PROB PRINTING CODE
                     tot++;
                 }
             }
             if (i % mini_eval_freq == 0) {
                 if (mini_eval == 0 || (i == iterations && final_eval==0)) {
-                    writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
+					//BEGIN OUTPUT PROB PRINTING CODE
+					writer.println("Surface forms produced from "+thisUR);
+					writer.println("--------------------------------------------------------------");
+					writer.println("\tCorrect form - "+output.form+" (p="+String.valueOf((float) corr / tot)+")");
+					for (String badSR : SR_counts.keySet()){
+						double thisProb = (float) SR_counts.get(badSR)/ tot;
+						writer.println("\tIncorrect form - "+badSR+" (p="+String.valueOf(thisProb)+")");
+					}
+					writer.println("**************************************************************");
+					//END OUTPUT PROB PRINTING CODE
+					
+					
+                    //writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
             }else{
                 if (i == iterations) {

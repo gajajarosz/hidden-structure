@@ -55,6 +55,9 @@ public class DistFile {
 		    outputs[curPair] = new Output();
 		    outputs[curPair].form = m2.group(2);
 		    outputs[curPair].freq = Integer.valueOf(m2.group(3));
+			//BEGIN OUTPUT PROB PRINTING CODE
+			outputs[curPair].targetInput = m2.group(5);
+			//END OUTPUT PROB PRINTING CODE
 		    //System.out.println("output: " + outputs[curPair].form + " freq: " + outputs[curPair].freq);
 		    //System.out.println("morphs: " + m2.group(4));
 		    //System.out.println("inputs: " + m2.group(6));
@@ -284,6 +287,9 @@ public class DistFile {
 
     public class Output {
 	public int freq;
+	//BEGIN OUTPUT PROB PRINTING CODE
+	public String targetInput;
+	//END OUTPUT PROB PRINTING CODE
 	public double relfreq = 0.0;
 	public String form;
 	// this stores the assumed single (first) target UR
