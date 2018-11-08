@@ -46,14 +46,20 @@ public class GUI extends Application {
         grid.add(scenetitle, 0, 0, 2, 1);
 
         TextArea ta = new TextArea();
-        grid.add(ta,1,5);
+        grid.add(ta,0,10);
+        ta.setPrefColumnCount(40);
 
-        Label gramlabel = new Label("Grammar file:");//Grammar file upload box
+
+
+        Label gramlabel = new Label("Grammar file:    ");//Grammar file upload box
+        gramlabel.setStyle("-fx-text-fill: black;");
+        grid.add(gramlabel, 0, 0);
+
         Tooltip gramTooltip = new Tooltip();
         gramTooltip.setText("Grammar file contains constraints and tableaux");
         Tooltip.install(gramlabel, gramTooltip);
         TextField gr = new TextField ();
-        gr.setPrefColumnCount(8);
+        gr.setPrefColumnCount(35);
         HBox grammar = new HBox();
         grammar.getChildren().addAll(gramlabel,gr);
         grammar.setSpacing(5);
@@ -63,6 +69,7 @@ public class GUI extends Application {
         final Button gramButton = new Button("Upload file");
         grid.add(gramButton,1,1);
         TextField grPath = new TextField();
+
 
         gramButton.setOnAction(
 			       new EventHandler<ActionEvent>() { //Filepicker for the grammar file
@@ -77,12 +84,13 @@ public class GUI extends Application {
 				   }
 			       });
 
-        Label distlabel = new Label("Distribution File:");//Distibution file upload box
+        Label distlabel = new Label("Distribution file:");//Distibution file upload box
+        distlabel.setStyle("-fx-text-fill: black;");
         Tooltip distTooltip = new Tooltip();
         distTooltip.setText("Distribution file stores data forms and their frequencies");
         Tooltip.install(distlabel, distTooltip);
         TextField dist = new TextField ();
-        dist.setPrefColumnCount(8);
+        dist.setPrefColumnCount(35);
         HBox distfile = new HBox();
         distfile.getChildren().addAll(distlabel,dist);
         distfile.setSpacing(5);
@@ -106,23 +114,25 @@ public class GUI extends Application {
 				   }
 			       });
 
-        Label reslabel = new Label("Results file:");//Where to store results
+        Label reslabel = new Label("Results file:       ");//Where to store results
+        reslabel.setStyle("-fx-text-fill: black;");
         Tooltip resTooltip = new Tooltip();
         resTooltip.setText("The name of the output file to print results to.");
         Tooltip.install(reslabel, resTooltip);
         TextField resField = new TextField ();
-        resField.setPrefColumnCount(8);
+        resField.setPrefColumnCount(35);
         HBox resBox = new HBox();
         resBox.getChildren().addAll(reslabel,resField);
         resBox.setSpacing(5);
         grid.add(resBox, 0,3);
 
-        Label itlabel = new Label("Iterations:");//Iterations
+        Label itlabel = new Label("Iterations:          ");//Iterations
+        itlabel.setStyle("-fx-text-fill: black;");
         Tooltip itTooltip = new Tooltip();
         itTooltip.setText("Reasonable iterations are 1000 for online learners \nand 100 for batch learners");
         Tooltip.install(itlabel, itTooltip);
         TextField it = new TextField ("1000");
-        it.setPrefColumnCount(4);
+        it.setPrefColumnCount(7);
         HBox iterations = new HBox();
         iterations.getChildren().addAll(itlabel,it);
         iterations.setSpacing(5);
@@ -340,7 +350,7 @@ public class GUI extends Application {
         ao.setText("Advanced Options");
         ao.setContent(aogrid);
         ao.setExpanded(false);
-        grid.add(ao,0,7);
+        grid.add(ao,0,6);
 
         TitledPane eo = new TitledPane();//Efficiency options
         GridPane eogrid = new GridPane();
@@ -374,7 +384,7 @@ public class GUI extends Application {
         eo.setText("Efficiency Options");
         eo.setContent(eogrid);
         eo.setExpanded(false);
-        grid.add(eo,0,8);
+        grid.add(eo,0,7);
 
         TitledPane po = new TitledPane();//Output options
         GridPane pogrid = new GridPane();
@@ -426,7 +436,7 @@ public class GUI extends Application {
         po.setText("Print Options");
         po.setContent(pogrid);
         po.setExpanded(false);
-        grid.add(po,0,10);
+        grid.add(po,0,8);
 
         //grid.setGridLinesVisible(true);
 
@@ -434,7 +444,7 @@ public class GUI extends Application {
         Tooltip runTooltip = new Tooltip();
         //runTooltip.setText("Your parameter preferences will automatically be saved.");//Not yet
         Tooltip.install(btn, runTooltip);
-        grid.add(btn, 1, 3);
+        grid.add(btn, 0,9);
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 4);
@@ -631,7 +641,7 @@ public class GUI extends Application {
         //Window options:
         ScrollPane sp = new ScrollPane();//Scroll for GUI
         sp.setContent(grid);
-        Scene scene = new Scene(sp, 950, 550); //Size of GUI window
+        Scene scene = new Scene(sp, 700, 700); //Size of GUI window
         primaryStage.setScene(scene);
         primaryStage.show();
     }
