@@ -2,9 +2,9 @@
 PairDistribution
 Description: Del first then pal (feeding tai).
 6 pairs				
-"x"	"cI"		18	1	tI
-"x"	"tA"		18	2	tA
-"x"	"cI"		18	3	taI
-"x"	"kI"		18	4	kI
-"x"	"kA"		18	5	kA
-"x"	"kI"		18	6	kaI
+"x"	"ci"		18	1	ti
+"x"	"ta"		18	2	ta
+"x"	"ci"		18	3	tai
+"x"	"ki"		18	4	ki
+"x"	"ka"		18	5	ka
+"x"	"ki"		18	6	kai
