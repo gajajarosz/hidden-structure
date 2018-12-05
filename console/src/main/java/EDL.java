@@ -981,7 +981,17 @@ public class EDL {
         }
         if (i == iterations) {
             if (final_eval == 0 || final_eval == 1) {
-                writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
+				//BEGIN TEST DATA CODE
+				if (finishedFinalEval){
+					writer.println("TEST DATA :: Total error is " + error + " and log likelihood is " + log_likelihood);
+				}
+				else {
+					writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
+				}
+				//END TEST DATA CODE
+				
+				//Original final iteration error/likelihood message:
+                //writer.println("FINAL ITERATION :: Total error is " + error + " and log likelihood is " + log_likelihood);
             }
         }else{
             if (i % mini_eval_freq == 0) {
