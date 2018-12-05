@@ -44,6 +44,11 @@ public class EDL {
 	public static Map<String, Map<String, String>> GEN = new HashMap<>();
 	public static Map<String, Constraint> CON = new  HashMap<>();
     //END HS CODE
+	//BEGIN TEST DATA CODE
+	public static DistFile test_dist;
+	public static boolean testingData = false;
+	public static boolean finishedFinalEval = false;
+	//END TEST DATA CODE
 	
     public static void main(String[] args) {
         if(args.length == 1) {
@@ -168,6 +173,14 @@ public class EDL {
                             writer.println("Setting GEN file to: " + genfile);
                         }
 						//END HS CODE
+						//BEGIN TEST DATA CODE
+						else if (parameter.equals("TEST_DATA")) {
+                            distdirectory = m1.group(2);
+							testingData = true;
+                            writer.println("Opening test data file: " + distdirectory + "...");
+							test_dist = new DistFile(distdirectory, writer);
+						}
+						//END TEST DATA CODE
                         else {
                             writer.println("The following lines from the parameter file do not match the specified format and will be ignored: \n>>>" + line);
                         }
@@ -552,12 +565,12 @@ public class EDL {
                     }
                 }
                 if (i % quit_early != 0) {
-                    evaluate_grammar(mini_eval_sample, i);
+                    evaluate_grammar(mini_eval_sample, i, df);
                 }
             }
             
             if (i % quit_early == 0) {
-                if (evaluate_grammar(quit_early_sample, i)) {
+                if (evaluate_grammar(quit_early_sample, i, df)) {
                     writer.println("-reached perfection early ----- exiting now");
                     i = iterations;
                     break;
@@ -572,7 +585,7 @@ public class EDL {
             if (ur_learning){
                 writer.println("The final lexicon is:\n" + df);
             }
-            evaluate_grammar(final_eval_sample, i);
+            evaluate_grammar(final_eval_sample, i, df);
         }
     }
     
@@ -837,11 +850,11 @@ public class EDL {
 
                 }
                 if (i % quit_early != 0) {
-                    evaluate_grammar(mini_eval_sample, i);
+                    evaluate_grammar(mini_eval_sample, i, df);
                 }
             }
             if (i % quit_early == 0) {
-                if (evaluate_grammar(quit_early_sample, i)) {
+                if (evaluate_grammar(quit_early_sample, i, df)) {
                     writer.println("-reached perfection early ----- exiting now");
                     i = iterations;
                     break;
@@ -856,22 +869,29 @@ public class EDL {
             if (ur_learning){
                 writer.println("The new lexicon is:\n" + df);
             }
-            evaluate_grammar(final_eval_sample, i);
+            evaluate_grammar(final_eval_sample, i, df);
+			//BEGIN TEST DATA CODE
+			finishedFinalEval = true;
+			if (testingData){
+				writer.println("\nTesting grammar on held out data...");
+				evaluate_grammar(final_eval_sample, i, test_dist);
+			}
+			//END TEST DATA CODE 
         }
     }
     
-    public static boolean evaluate_grammar(int s, int i) {
+    public static boolean evaluate_grammar(int s, int i, DistFile this_df) {
         //now going to examine resulting grammar
         double log_likelihood = 0;
         int tot = 0;
         int corr = 0;
         double error = 0.0;
-        for (int o = 0; o < df.outputs.length; o++) { //for each output form
+        for (int o = 0; o < this_df.outputs.length; o++) { //for each output form
             
             DistFile.Output output = null;
             String winner = "";
             double rand = Math.random();
-            output = df.outputs[o];
+            output = this_df.outputs[o];
 			
 			//BEGIN OUTPUT PROB PRINTING CODE
 			HashMap<String, Integer> SR_counts = new HashMap<String, Integer>();
@@ -920,7 +940,7 @@ public class EDL {
                 }
             }
             if (i % mini_eval_freq == 0) {
-                if (mini_eval == 0 || (i == iterations && final_eval==0)) {
+                if ((mini_eval == 0 || (i == iterations && final_eval==0)) && !finishedFinalEval) {
 					//BEGIN OUTPUT PROB PRINTING CODE
 					writer.println("Surface forms produced from "+thisUR);
 					writer.println("--------------------------------------------------------------");
@@ -932,9 +952,21 @@ public class EDL {
 					writer.println("**************************************************************");
 					//END OUTPUT PROB PRINTING CODE
 					
-					
+					//Old evaluation code:
                     //writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
+				//BEGIN TEST DATA CODE
+				if (i == iterations && testingData && finishedFinalEval){
+					writer.println("Surface forms produced from novel UR: "+thisUR);
+					writer.println("--------------------------------------------------------------");
+					writer.println("\tCorrect form (test data) - "+output.form+" (p="+String.valueOf((float) corr / tot)+")");
+					for (String badSR : SR_counts.keySet()){
+						double thisProb = (float) SR_counts.get(badSR)/ tot;
+						writer.println("\tIncorrect form (test data) - "+badSR+" (p="+String.valueOf(thisProb)+")");
+					}
+					writer.println("**************************************************************");
+				}
+				//END TEST DATA CODE
             }else{
                 if (i == iterations) {
                     if (final_eval == 0) {
