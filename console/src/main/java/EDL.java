@@ -47,7 +47,6 @@ public class EDL {
 	//BEGIN TEST DATA CODE
 	public static DistFile test_dist;
 	public static boolean testingData = false;
-	public static boolean finishedFinalEval = false;
 	//END TEST DATA CODE
 	
     public static void main(String[] args) {
@@ -565,12 +564,12 @@ public class EDL {
                     }
                 }
                 if (i % quit_early != 0) {
-                    evaluate_grammar(mini_eval_sample, i, df);
+                    evaluate_grammar(mini_eval_sample, i, df, false);
                 }
             }
             
             if (i % quit_early == 0) {
-                if (evaluate_grammar(quit_early_sample, i, df)) {
+                if (evaluate_grammar(quit_early_sample, i, df, false)) {
                     writer.println("-reached perfection early ----- exiting now");
                     i = iterations;
                     break;
@@ -585,7 +584,7 @@ public class EDL {
             if (ur_learning){
                 writer.println("The final lexicon is:\n" + df);
             }
-            evaluate_grammar(final_eval_sample, i, df);
+            evaluate_grammar(final_eval_sample, i, df, false);
         }
     }
     
@@ -850,12 +849,16 @@ public class EDL {
 
                 }
                 if (i % quit_early != 0) {
-                    evaluate_grammar(mini_eval_sample, i, df);
+                    evaluate_grammar(mini_eval_sample, i, df, false);
+					writer.println("\nTesting grammar on held out data...");
+					evaluate_grammar(mini_eval_sample, i, test_dist, true);
                 }
             }
             if (i % quit_early == 0) {
-                if (evaluate_grammar(quit_early_sample, i, df)) {
+                if (evaluate_grammar(quit_early_sample, i, df, false)) {
                     writer.println("-reached perfection early ----- exiting now");
+					writer.println("\nTesting grammar on held out data (exit early condition met)...");
+					evaluate_grammar(quit_early_sample, i, test_dist, true);
                     i = iterations;
                     break;
                 }
@@ -863,24 +866,23 @@ public class EDL {
         }
         
         //now going to examine resulting grammar
-        if (final_eval == 0 || final_eval == 1) {
+        if (final_eval == 0 || final_eval == 1) {z
             writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
             writer.println("The final grammar is:\n" + gr);
             if (ur_learning){
                 writer.println("The new lexicon is:\n" + df);
             }
-            evaluate_grammar(final_eval_sample, i, df);
+            evaluate_grammar(final_eval_sample, i, df, false);
 			//BEGIN TEST DATA CODE
-			finishedFinalEval = true;
 			if (testingData){
 				writer.println("\nTesting grammar on held out data...");
-				evaluate_grammar(final_eval_sample, i, test_dist);
+				evaluate_grammar(final_eval_sample, i, test_dist, true);
 			}
 			//END TEST DATA CODE 
         }
     }
     
-    public static boolean evaluate_grammar(int s, int i, DistFile this_df) {
+    public static boolean evaluate_grammar(int s, int i, DistFile this_df, boolean evalOnTest) {
         //now going to examine resulting grammar
         double log_likelihood = 0;
         int tot = 0;
@@ -940,7 +942,7 @@ public class EDL {
                 }
             }
             if (i % mini_eval_freq == 0) {
-                if ((mini_eval == 0 || (i == iterations && final_eval==0)) && !finishedFinalEval) {
+                if ((mini_eval == 0 || (i == iterations && final_eval==0)) && !evalOnTest) {
 					//BEGIN OUTPUT PROB PRINTING CODE
 					writer.println("Surface forms produced from "+thisUR);
 					writer.println("--------------------------------------------------------------");
@@ -956,7 +958,7 @@ public class EDL {
                     //writer.println("Output " + output.form + " " + ((float) corr / tot) + " correct - observed freq is " + output.freq);
                 }
 				//BEGIN TEST DATA CODE
-				if (i == iterations && testingData && finishedFinalEval){
+				if (testingData && evalOnTest){
 					writer.println("Surface forms produced from novel UR: "+thisUR);
 					writer.println("--------------------------------------------------------------");
 					writer.println("\tCorrect form (test data) - "+output.form+" (p="+String.valueOf((float) corr / tot)+")");
@@ -982,7 +984,7 @@ public class EDL {
         if (i == iterations) {
             if (final_eval == 0 || final_eval == 1) {
 				//BEGIN TEST DATA CODE
-				if (finishedFinalEval){
+				if (evalOnTest){
 					writer.println("TEST DATA :: Total error is " + error + " and log likelihood is " + log_likelihood);
 				}
 				else {
