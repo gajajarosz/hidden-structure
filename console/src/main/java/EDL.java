@@ -52,6 +52,7 @@ public class EDL {
     public static void main(String[] args) {
         if(args.length == 1) {
             writer.println("Opening parameter file: " + args[0] + "...");
+			writer.println("!!!\n\tDEBUGGING\n!!!");
             
             try {
                 stream = new BufferedReader(new FileReader(args[0]));
@@ -850,15 +851,23 @@ public class EDL {
                 }
                 if (i % quit_early != 0) {
                     evaluate_grammar(mini_eval_sample, i, df, false);
-					writer.println("\nTesting grammar on held out data...");
-					evaluate_grammar(mini_eval_sample, i, test_dist, true);
+					//BEGIN TEST DATA CODE
+					if (testingData){
+						writer.println("\nTesting grammar on held out data...");
+						evaluate_grammar(mini_eval_sample, i, test_dist, true);
+					}
+					//END TEST DATA CODE
                 }
             }
             if (i % quit_early == 0) {
                 if (evaluate_grammar(quit_early_sample, i, df, false)) {
                     writer.println("-reached perfection early ----- exiting now");
-					writer.println("\nTesting grammar on held out data (exit early condition met)...");
-					evaluate_grammar(quit_early_sample, i, test_dist, true);
+					//BEGIN TEST DATA CODE
+					if (testingData){
+						writer.println("\nTesting grammar on held out data (exit early condition met)...");
+						evaluate_grammar(quit_early_sample, i, test_dist, true);
+					}
+					//END TEST DATA CODE
                     i = iterations;
                     break;
                 }
@@ -866,7 +875,7 @@ public class EDL {
         }
         
         //now going to examine resulting grammar
-        if (final_eval == 0 || final_eval == 1) {z
+        if (final_eval == 0 || final_eval == 1) {
             writer.println("------------------EVALUATING-------------FINAL----------------GRAMMAR--------------------");
             writer.println("The final grammar is:\n" + gr);
             if (ur_learning){
@@ -1162,4 +1171,3 @@ public class EDL {
         return tab;
     }
 }
-
